@@ -1,0 +1,92 @@
+nav.toolbar
+{    
+	width: 90%;
+	margin: 0 auto;
+	position: absolute;
+	top: 0;
+	right: 0;
+
+	.tool 
+	{
+		float: right;
+	}
+
+}
+
+
+
+// This is the sliding panel for the map layers/tools
+
+.sliding-panel-content
+{
+	position: fixed;
+	top: 5em;
+	right: 0px;
+	bottom: auto;
+	left: auto;
+	height: auto;
+	width: 220px;
+	-webkit-transform: translateX(420px);
+	-moz-transform: translateX(420px);
+	-ms-transform: translateX(420px);
+	-o-transform: translateX(420px);
+	transform: translateX(420px);
+	-webkit-transition: all 0.25s linear;
+	-moz-transition: all 0.25s linear;
+	transition: all 0.25s linear;
+	background: #efefef;
+	z-index: 999999;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+
+	&.is-visible
+	{
+		-webkit-transform: translateX(0);
+		-moz-transform: translateX(0);
+		-ms-transform: translateX(0);
+		-o-transform: translateX(0);
+		transform: translateX(0);
+	}
+
+	ul
+	{
+		padding: 0;
+		margin: 0;
+
+		li 
+		{
+			margin-left: 0;
+			a 
+			{
+				border-bottom: 1px solid #333;
+				color: #2caae4;
+				display: block;
+				font-weight: bold;
+				padding: 1em 0.25em;
+				text-decoration: none;		
+				
+				&[data-visible="off"]
+				{
+					i.fa-eye-slash
+					{
+						display: inline-block;
+					}
+
+					i.fa-eye 
+					{
+						display: none;
+					}
+				}
+
+				&:hover
+				{
+					background-color: #8fc64e;
+				    color: #fff;
+				}
+			}
+
+		}
+
+	}
+}
+

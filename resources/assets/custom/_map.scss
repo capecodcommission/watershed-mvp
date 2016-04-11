@@ -1,0 +1,18 @@
+#map {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		height: 100%;
+		width: 100%;
+		z-index: -10;
+}
+
+.secondary.start
+{
+	width: 30%;
+	float: left;
+	background: #efefef;
+	border-radius: 25px;
+	padding: 1.5em;
+}
