@@ -18,6 +18,9 @@ class WizardController extends Controller
     	$subembayments = DB::table('CapeCodMA.SubEmbayments')
     		->select('SUBEM_NAME', 'SUBEM_DISP', 'Nload_Total', 'Total_Tar_Kg', 'MEP_Total_Tar_Kg')
     		->where('EMBAY_ID', $embayment->EMBAY_ID)->get();
+
+    	$nitrogen = DB::select('exec CapeCodMA.GET_EmbaymentNitrogen ' . $id);
+    	// dd($nitrogen);
     	// dd($subembayments);
     	
     	// Need to create a new scenario or find existing one that the user is editing
@@ -27,7 +30,7 @@ class WizardController extends Controller
 
 
 
-    	return view('layouts/wizard', ['embayment'=>$embayment, 'subembayments'=>$subembayments]);
+    	return view('layouts/wizard', ['embayment'=>$embayment, 'subembayments'=>$subembayments, 'nitrogen'=>$nitrogen[0]]);
 
 
     }

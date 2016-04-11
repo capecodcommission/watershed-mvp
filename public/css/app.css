@@ -6132,9 +6132,37 @@ nav.toolbar {
           display: inline-block; }
         .sliding-panel-content ul li a[data-visible="off"] i.fa-eye {
           display: none; }
+        .sliding-panel-content ul li a[data-visible="on"] i.fa-eye {
+          display: inline-block; }
+        .sliding-panel-content ul li a[data-visible="on"] i.fa-eye-slash {
+          display: none; }
         .sliding-panel-content ul li a:hover {
           background-color: #8fc64e;
           color: #fff; }
+
+#progress {
+  width: 250px;
+  position: absolute;
+  left: 0;
+  top: 8em;
+  background: #fff; }
+  #progress .subembayment {
+    width: 100%;
+    /* background: #1565c0; */
+    background: #efefef;
+    border-bottom: 1px solid #efefef; }
+    #progress .subembayment span {
+      display: block;
+      height: 2em;
+      padding-left: .5em;
+      color: #ffffff; }
+    #progress .subembayment .stats {
+      display: none;
+      background-color: #ddd;
+      margin-bottom: 0;
+      padding-left: 1em; }
+    #progress .subembayment:hover .stats {
+      display: block; }
 
 /*# sourceMappingURL=main.css.map */
 

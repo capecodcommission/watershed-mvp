@@ -1,0 +1,40 @@
+#progress
+{
+	width: 250px;
+	position: absolute;
+	left: 0;
+	top: 8em;
+	background: #fff;
+
+	.subembayment
+	{
+		width: 100%;
+		/* background: #1565c0; */
+		background: #efefef;
+		border-bottom: 1px solid #efefef;
+
+		span 
+		{
+			display: block;
+			height: 2em;
+			padding-left: .5em;
+			color: $white;	
+		}
+
+		.stats
+		{
+			display:none;
+			background-color: $light-gray;
+			margin-bottom: 0;
+			padding-left: 1em;
+		}
+
+		&:hover
+		{
+			.stats
+			{
+				display: block;
+			}
+		}
+	}
+}

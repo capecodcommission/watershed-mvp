@@ -77,6 +77,18 @@ nav.toolbar
 						display: none;
 					}
 				}
+				&[data-visible="on"]
+				{
+					i.fa-eye
+					{
+						display: inline-block;
+					}
+
+					i.fa-eye-slash
+					{
+						display: none;
+					}
+				}
 
 				&:hover
 				{
