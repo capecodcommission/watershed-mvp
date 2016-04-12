@@ -16,7 +16,7 @@
 		<div class="acc_cCont">
 		<p>Total Unattenuated Load for this watershed: {{$nitrogen->Total_UnAtt}}kg</p>
 			<p>Total Attenuated Load for this watershed: {{$nitrogen->Total_Att}}kg</p>
-			<p><a href="test-data.php?id=">See query and test the values</a></p>
+			<p><a href="{{url('test', $embayment->EMBAY_ID)}}">See query and test the values</a></p>
 			<p>Nitrogen is treated at different entrance points:</p>
 			<ul>
 				<li>Fertilizer (applied to the ground directly)</li>
@@ -55,7 +55,7 @@
 				
 			</div> -->
 			 <div class="technology">
-				<a href="embeds/tech.php" class="popdown"><img src="http://www.cch2o.org/Matrix/icons/npk_mgt.svg"></a><br />Fertilizer Management			
+				<a href="{{url('tech/25')}}" class="popdown"><img src="http://www.cch2o.org/Matrix/icons/npk_mgt.svg"></a><br />Fertilizer Management			
 			</div>
 		
 		</div>
@@ -77,38 +77,38 @@
 				<p>Choose a technology to treat Nitrogen from Stormwater in your watershed.</p>
 				<div class="technology_list">
 					<div class="technology">
-						<a href="embeds/tech-storm.php" class="popdown">
+						<a href="{{url('/tech/26')}}" class="popdown">
 							<img src="http://www.cch2o.org/Matrix/icons/stormwater_bmps.svg"><br />
 							 Stormwater Management
 						</a>
 					</div>
 					<div class="technology">
-						<a href="embeds/tech-stormwater.php" class="popdown">
+						<a href="{{url('/tech/8')}}" class="popdown">
 							<img src="http://www.cch2o.org/Matrix/icons/stormwater_bmps.svg"><br />
 							 Gravel Wetland
 						</a>
 					</div>
 					<div class="technology">
-						<a href="http://www.cch2o.org/Matrix/detail.php?treatment=9" target="_blank">
+						<a href="{{url('/tech/9')}}"  class="popdown">
 							<img src="http://www.cch2o.org/Matrix/icons/stormwater_bmps.svg"><br />
 							 Bioretention/Soil Media Filters
 						</a>
 					</div>
 
 					<div class="technology">
-						<a href="http://www.cch2o.org/Matrix/detail.php?treatment=6" target="_blank">
+						<a href="{{url('/tech/6')}}"  class="popdown">
 							<img src="http://www.cch2o.org/Matrix/icons/stormwater_bmps.svg"><br />
 							Phytobuffers
 						</a>
 					</div>
 					<div class="technology">
-						<a href="http://www.cch2o.org/Matrix/detail.php?treatment=7" target="_blank">
+						<a href="{{url('/tech/7')}}"  class="popdown">
 							<img src="http://www.cch2o.org/Matrix/icons/stormwater_bmps.svg"><br />
 							Vegetated Swale
 						</a>
 					</div>	 
 					<div class="technology">
-						<a href="http://www.cch2o.org/Matrix/detail.php?treatment=10" target="_blank">
+						<a href="{{url('/tech/10')}}"  class="popdown">
 							<img src="http://www.cch2o.org/Matrix/icons/stormwater_bmps.svg"><br />
 							Constructed Wetlands
 						</a>
@@ -154,13 +154,13 @@
 			<p>Choose a technology to treat Groundwater Nitrogen in your watershed.</p>
 			<div class="technology_list">
 				<div class="technology">
-					<a href="http://www.cch2o.org/Matrix/detail.php?treatment=3" target="_blank">
+					<a href="{{url('/tech/3')}}"  class="popdown">
 						<img src="http://www.cch2o.org/Matrix/icons/constructed_wetland.svg" alt=""><br />
 						Constructed Wetlands
 					</a>
 				</div>
 				<div class="technology">
-					<a href="http://www.cch2o.org/Matrix/detail.php?treatment=2" target="_blank">
+					<a href="{{url('/tech/2')}}"  class="popdown">
 						<img src="http://www.cch2o.org/Matrix/icons/constructed_wetland.svg" alt=""><br />
 						Constructed Wetlands - Subsurface Flow
 					</a>

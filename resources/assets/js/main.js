@@ -25,23 +25,17 @@ new Vue({
 				el: 'body',
 				data:
 				{
-					// unatt: <?php echo round($row['Total_UnAtt'], 2);?>,
-					// att: <?php echo round($row['Total_Att'], 2);?>,
-					// effective: 0,
-					// total_unatt: <?php echo ($row['Total_UnAtt']);?>,
-					// total_att: <?php echo ($row['Total_Att']);?>,
-					// fert_unatt: <?php echo ($row['Total_UnAtt_Fert']);?>,
-					// fert_att: <?php echo ($row['Total_Att_Fert']);?>,
-					// fert_percent: 0
-
-					unatt: 0,
-					att: 0,
+					unatt: nitrogen.Total_UnAtt,
+					att: nitrogen.Total_Att,
 					effective: 0,
-					total_unatt: 100,
-					total_att: 100,
-					fert_unatt: 100,
-					fert_att: 100,
-					fert_percent: 0
+					total_unatt: nitrogen.Total_UnAtt,
+					total_att: nitrogen.Total_Att,
+					fert_unatt: nitrogen.Total_UnAtt_Fert,
+					fert_att: nitrogen.Total_Att_Fert,
+					fert_percent: 0,
+					storm_unatt: nitrogen.Total_UnAtt_Storm,
+					storm_att: nitrogen.Total_Att_Storm,
+					storm_percent: 0
 				},
 				// components: {subembayment},
 				
@@ -54,20 +48,34 @@ new Vue({
 					},
 					fert_unatt_treated: function()
 					{
-						return Math.round(this.fert_unatt * ((100 - this.effective)/100));
+						return Math.round(this.fert_unatt * ((100 - this.fert_percent)/100));
 					},
 					fert_treated: function()
 					{
-						return Math.round(this.fert_att * ((100 - this.effective)/100));
+						return Math.round(this.fert_att * ((100 - this.fert_percent)/100));
 						
 					},
 					fert_difference: function()
 					{
 						return Math.round( this.fert_att - this.fert_treated);
-					},			
+					},		
+					storm_unatt_treated: function()
+					{
+						return Math.round(this.storm_unatt * ((100 - this.storm_percent)/100));
+					},
+					storm_treated: function()
+					{
+						return Math.round(this.storm_att * ((100 - this.storm_percent)/100));
+						
+					},
+					storm_difference: function()
+					{
+						return Math.round( this.storm_att - this.storm_treated);
+					},	
+
 					total_treated: function()
 					{
-						return (this.total_att - this.fert_difference);
+						return (this.total_att - this.fert_difference - this.storm_difference);
 					},
 					difference: function()
 					{

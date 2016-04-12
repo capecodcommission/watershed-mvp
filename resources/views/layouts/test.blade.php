@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<title>Testing Nitrogen Values</title>
-		<link rel="stylesheet" href="/css/app.css">
+		<link rel="stylesheet" href="{{url('/css/app.css')}}">
 
 	</head>
 	<body>
@@ -97,10 +97,13 @@
 			<p><sup>2</sup>Groundwater starting values are calculated by adding the <strong>unattenuated</strong> Nitrogen totals for Fertilizer, Stormwater, and Septic <strong>after treatment</strong> and then the atmospheric load* is added.</p>
 			<p><sup>3</sup> Embayment starting value is the Groundwater attenuated/treated value (the net N after all treatments and attenuation have been applied).</p>
 			<p>* Currently don't have a value to use for atmospheric load so right now this is 0.</p>
-			<p>Go <a href="map">back to the map</a>.</p>
+			<p>Go <a href="{{url('map', $embayment->EMBAY_ID)}}">back to the map</a>.</p>
 
 
 		</div>
-		<script src="/js/main.js"></script>
+		<script src="{{url('/js/main.js')}}"></script>
+		<script>
+			console.log(nitrogen);
+		</script>
 	</body>
 </html>
