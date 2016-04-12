@@ -14,3 +14,5 @@
 Route::get('/', 'StartController@index');
 
 Route::get('/map/{embayment}', 'WizardController@start');
+
+Route::get('/test/{embayment}', 'WizardController@test');
