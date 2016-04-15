@@ -36,6 +36,10 @@
 		<script type="text/javascript">
 		$(document).ready(function(){
 			$('.popdown').popdown();
+			$('#closeACC').on('click', function(event){
+				$('.state').prop('checked', false);
+				// console.log('clicked');
+			});
 		});
 	</script>
 </body>

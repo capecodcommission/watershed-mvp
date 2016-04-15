@@ -14,6 +14,7 @@
 		</header>
 		</div>
 		<div class="acc_cCont">
+		<span id="closeACC">X</span>
 		<p>Total Unattenuated Load for this watershed: {{$nitrogen->Total_UnAtt}}kg</p>
 			<p>Total Attenuated Load for this watershed: {{$nitrogen->Total_Att}}kg</p>
 			<p><a href="{{url('test', $embayment->EMBAY_ID)}}">See query and test the values</a></p>

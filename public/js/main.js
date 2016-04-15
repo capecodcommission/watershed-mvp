@@ -11710,7 +11710,9 @@ new Vue({
 		fert_percent: 0,
 		storm_unatt: nitrogen.Total_UnAtt_Storm,
 		storm_att: nitrogen.Total_Att_Storm,
-		storm_percent: 0
+		storm_percent: 0,
+		atmosphere_unatt: nitrogen.Total_UnAtt_Atmosphere,
+		atmosphere_att: nitrogen.Total_Att_Atmosphere
 	},
 	// components: {subembayment},
 
@@ -11742,6 +11744,12 @@ new Vue({
 		},
 		difference: function difference() {
 			return this.total_att - this.total_treated;
+		},
+		groundwater_unatt: function groundwater_unatt() {
+			return this.fert_unatt_treated + this.storm_unatt_treated + this.atmosphere_unatt;
+		},
+		groundwater_att: function groundwater_att() {
+			return this.fert_treated + this.storm_treated + this.atmosphere_att;
 		}
 
 	}

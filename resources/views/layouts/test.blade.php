@@ -51,12 +51,12 @@
 					</tr>
 					<tr>
 						<td>Atmospheric*</td>
-						<td>?</td>
-						<td>?</td>
+						<td>@{{atmosphere_unatt|round 0}}kg</td>
+						<td>@{{atmosphere_att| round 0}}</td>
 						<td>Can't be treated</td>
-						<td>?</td>
-						<td>?</td>
-						<td></td>
+						<td>@{{atmosphere_unatt|round 0}}kg</td>
+						<td>@{{atmosphere_att|round 0}}kg</td>
+						<td>0</td>
 					</tr>
 					<tr>
 						<td>Groundwater<sup>2</sup></td>
@@ -103,7 +103,7 @@
 		</div>
 		<script src="{{url('/js/main.js')}}"></script>
 		<script>
-			console.log(nitrogen);
+			// console.log(nitrogen);
 		</script>
 	</body>
 </html>
