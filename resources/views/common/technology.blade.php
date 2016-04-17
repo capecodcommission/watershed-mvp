@@ -43,16 +43,16 @@
 				<tr>
 					<td>@{{ fert_unatt | round }}kg</td>
 					<td>@{{fert_att | round }}kg</td>
-					<td>@{{fert_unatt_treated}}kg</td>
-					<td>@{{fert_treated}}kg</td>
-					<td>@{{fert_difference}}kg</td> 
+					<td>@{{fert_unatt_treated |round}}kg</td>
+					<td>@{{fert_treated | round}}kg</td>
+					<td>@{{fert_difference | round}}kg</td> 
 				</tr>
 				
 			</tbody>
 		</table>
 			<p>
 				Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.<br />
-				<input type="range" id="effective" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="effective">
+				<input type="range" id="effective" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="fert_percent">
 			</p>
 			<!-- <p><a href="#" class="button">Apply</a></p> -->
 	</section>

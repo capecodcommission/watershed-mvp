@@ -21,6 +21,10 @@ class WizardController extends Controller
 			->where('EMBAY_ID', $embayment->EMBAY_ID)->get();
 
 		$nitrogen = DB::select('exec CapeCodMA.GET_EmbaymentNitrogen ' . $id);
+
+		JavaScript::put([
+				'nitrogen' => $nitrogen[0]
+			]);
 		// dd($nitrogen);
 		// dd($subembayments);
 		
@@ -31,7 +35,7 @@ class WizardController extends Controller
 
 
 
-		return view('layouts/wizard', ['embayment'=>$embayment, 'subembayments'=>$subembayments, 'nitrogen'=>$nitrogen[0]]);
+		return view('layouts/wizard', ['embayment'=>$embayment, 'subembayments'=>$subembayments]);
 
 
 	}

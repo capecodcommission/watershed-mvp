@@ -24,8 +24,8 @@
 				<tbody>
 					<tr>
 						<td>Fertilizer</td>
-						<td>@{{ fert_unatt | round }}kg</td>
-						<td>@{{ fert_att | round }}kg</td>
+						<td>@{{fert_unatt | round}}kg</td>
+						<td>@{{fert_att | round }}kg</td>
 						<td><input type="range" id="percent" min="0" value="10" max="100" v-model="fert_percent"> (@{{fert_percent}}%)</td>
 						<td>@{{fert_unatt_treated | round }}kg</td>
 						<td>@{{fert_treated | round }}kg <sup>1</sup></td>
@@ -34,7 +34,7 @@
 					<tr>
 						<td>Stormwater</td>
 						<td>@{{storm_unatt | round 0}}kg</td>
-						<td>@{{storm_att | round }}kg</td>
+						<td>@{{storm_att | round 2 }}kg</td>
 						<td><input type="range" id="storm-percent" min="0" value="10" max="100" v-model="storm_percent"> (@{{storm_percent}}%)</td>
 						<td>@{{storm_unatt_treated | round }}kg</td>
 						<td>@{{storm_treated | round }}kg</td>
@@ -50,7 +50,7 @@
 						<td></td>
 					</tr>
 					<tr>
-						<td>Atmospheric*</td>
+						<td>Atmospheric</td>
 						<td>@{{atmosphere_unatt|round 0}}kg</td>
 						<td>@{{atmosphere_att| round 0}}</td>
 						<td>Can't be treated</td>
@@ -94,16 +94,16 @@
 
 			<h3>Notes/Explanations</h3>
 			<p><sup>1</sup> The total treated Fertilizer load is determined by reducing the unattenuated fertilizer load (@{{fert_att}}) by the percentage selected (@{{fert_percent}}%) and then applying the attenuation. </p>
-			<p><sup>2</sup>Groundwater starting values are calculated by adding the <strong>unattenuated</strong> Nitrogen totals for Fertilizer, Stormwater, and Septic <strong>after treatment</strong> and then the atmospheric load* is added.</p>
+			<p><sup>2</sup>Groundwater starting values are calculated by adding the <strong>unattenuated</strong> Nitrogen totals for Fertilizer, Stormwater, and Septic <strong>after treatment</strong> and then the atmospheric load is added.</p>
 			<p><sup>3</sup> Embayment starting value is the Groundwater attenuated/treated value (the net N after all treatments and attenuation have been applied).</p>
-			<p>* Currently don't have a value to use for atmospheric load so right now this is 0.</p>
+		
 			<p>Go <a href="{{url('map', $embayment->EMBAY_ID)}}">back to the map</a>.</p>
 
 
 		</div>
 		<script src="{{url('/js/main.js')}}"></script>
 		<script>
-			// console.log(nitrogen);
+			console.log(nitrogen);
 		</script>
 	</body>
 </html>

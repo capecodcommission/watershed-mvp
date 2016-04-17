@@ -1,9 +1,11 @@
 var Vue = require('vue');
-var VueResource = require('vue-resource');
-Vue.use(VueResource);
+// var VueResource = require('vue-resource');
 
-var VueFilter = require('vue-filter');
-Vue.use(VueFilter);
+
+// var VueFilter = require('vue-filter');
+// Vue.use(VueResource, VueFilter);
+Vue.use(require('vue-filter'));
+Vue.use(require('vue-resource'));
 
 Vue.component('subembayment', {
 		template: '#subembayment-template',
@@ -25,19 +27,19 @@ new Vue({
 				el: 'body',
 				data:
 				{
-					unatt: nitrogen.Total_UnAtt,
-					att: nitrogen.Total_Att,
+					unatt: parseFloat(nitrogen.Total_UnAtt),
+					att: parseFloat(nitrogen.Total_Att),
 					effective: 0,
-					total_unatt: nitrogen.Total_UnAtt,
-					total_att: nitrogen.Total_Att,
-					fert_unatt: nitrogen.Total_UnAtt_Fert,
-					fert_att: nitrogen.Total_Att_Fert,
+					total_unatt: parseFloat(nitrogen.Total_UnAtt),
+					total_att: parseFloat(nitrogen.Total_Att),
+					fert_unatt: parseFloat(nitrogen.Total_UnAtt_Fert),
+					fert_att: parseFloat(nitrogen.Total_Att_Fert),
 					fert_percent: 0,
-					storm_unatt: nitrogen.Total_UnAtt_Storm,
-					storm_att: nitrogen.Total_Att_Storm,
+					storm_unatt: parseFloat(nitrogen.Total_UnAtt_Storm),
+					storm_att: parseFloat(nitrogen.Total_Att_Storm),
 					storm_percent: 0,
-					atmosphere_unatt: nitrogen.Total_UnAtt_Atmosphere,
-					atmosphere_att: nitrogen.Total_Att_Atmosphere
+					atmosphere_unatt: parseFloat(nitrogen.Total_UnAtt_Atmosphere),
+					atmosphere_att: parseFloat(nitrogen.Total_Att_Atmosphere)
 				},
 				// components: {subembayment},
 				
@@ -50,29 +52,29 @@ new Vue({
 					},
 					fert_unatt_treated: function()
 					{
-						return Math.round(this.fert_unatt * ((100 - this.fert_percent)/100));
+						return (this.fert_unatt * ((100 - this.fert_percent)/100));
 					},
 					fert_treated: function()
 					{
-						return Math.round(this.fert_att * ((100 - this.fert_percent)/100));
+						return (this.fert_att * ((100 - this.fert_percent)/100));
 						
 					},
 					fert_difference: function()
 					{
-						return Math.round( this.fert_att - this.fert_treated);
+						return ( this.fert_att - this.fert_treated);
 					},		
 					storm_unatt_treated: function()
 					{
-						return Math.round(this.storm_unatt * ((100 - this.storm_percent)/100));
+						return (this.storm_unatt * ((100 - this.storm_percent)/100));
 					},
 					storm_treated: function()
 					{
-						return Math.round(this.storm_att * ((100 - this.storm_percent)/100));
+						return (this.storm_att * ((100 - this.storm_percent)/100));
 						
 					},
 					storm_difference: function()
 					{
-						return Math.round( this.storm_att - this.storm_treated);
+						return ( this.storm_att - this.storm_treated);
 					},	
 
 					total_treated: function()

@@ -15,8 +15,8 @@
 		</div>
 		<div class="acc_cCont">
 		<span id="closeACC">X</span>
-		<p>Total Unattenuated Load for this watershed: {{$nitrogen->Total_UnAtt}}kg</p>
-			<p>Total Attenuated Load for this watershed: {{$nitrogen->Total_Att}}kg</p>
+		<p>Total Unattenuated Load for this watershed: @{{unatt|round}}kg</p>
+			<p>Total Attenuated Load for this watershed: @{{att|round}}kg</p>
 			<p><a href="{{url('test', $embayment->EMBAY_ID)}}">See query and test the values</a></p>
 			<p>Nitrogen is treated at different entrance points:</p>
 			<ul>
@@ -47,8 +47,8 @@
 		</header>
 		</div>
 		<div class="acc_cCont">
-		<p>Total Unattenuated Load from Fertilizer: {{$nitrogen->Total_UnAtt_Fert}}kg</p>
-				<p>Total Attenuated Load from Fertilizer: {{$nitrogen->Total_Att_Fert}}kg</p>
+		<p>Total Unattenuated Load from Fertilizer: @{{fert_unatt|round}}kg</p>
+				<p>Total Attenuated Load from Fertilizer: @{{fert_att | round }}kg</p>
 
 		<p>Choose a technology to treat Nitrogen from Fertilizer in your watershed.</p>
 <!-- 			 <div class="technology">
@@ -73,8 +73,8 @@
 				</header>
 			</div>
 			<div class="acc_cCont">
-				<p>Unattenuated Nitrogen from Stormwater: {{$nitrogen->Total_UnAtt_Storm}}kg</p>
-				<p>Attenuated Nitrogen from Stormwater: {{$nitrogen->Total_Att_Storm}}kg</p>
+				<p>Unattenuated Nitrogen from Stormwater: @{{storm_unatt|round}}kg</p>
+				<p>Attenuated Nitrogen from Stormwater: @{{storm_att|round}}kg</p>
 				<p>Choose a technology to treat Nitrogen from Stormwater in your watershed.</p>
 				<div class="technology_list">
 					<div class="technology">
@@ -132,8 +132,8 @@
 		</header>
 		</div>
 		<div class="acc_cCont">
-		<p>Unattenuated Nitrogen from Septic: {{$nitrogen->Total_UnAtt_Septic}}kg</p>
-			<p>Attenuated Nitrogen from Septic: {{$nitrogen->Total_Att_Septic}}kg</p>
+		<p>Unattenuated Nitrogen from Septic: -- kg</p>
+			<p>Attenuated Nitrogen from Septic: -- kg</p>
 		</div>
 	</article>
 	</aside>
