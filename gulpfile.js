@@ -35,7 +35,7 @@ elixir(function(mix) {
     .version('public/css/app.css')
 
     .scripts ([
-            paths.assets + 'jquery/dist/jquery.min.js',
+            // paths.assets + 'jquery/dist/jquery.min.js',
             paths.js + 'app.js'
         ], "public/js/app.js", "./")
 

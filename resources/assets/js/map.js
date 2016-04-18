@@ -19,13 +19,32 @@ require([
 	"esri/SpatialReference",
 	// "esri/toolbars/draw",
 	// "esri/graphic",
-	// "dijit/registry",
-	// "dijit/form/Button",
-	// "dijit/layout/ContentPane", 
+	"dijit/registry",
+	"dijit/form/Button",
+	"dijit/layout/BorderContainer", 
+	"dijit/layout/ContentPane", 
+	"dijit/TitlePane",
+	"dojo/parser",
 	"dojo/domReady!"
 ],
-function(Map, ArcGISDynamicMapServiceLayer, ImageParameters, FeatureLayer, Query, QueryTask, LayerList, arcgisUtils, BasemapGallery, Extent, SpatialReference ) 
+function(
+			Map, 
+			ArcGISDynamicMapServiceLayer, 
+			ImageParameters, 
+			FeatureLayer, 
+			Query, 
+			QueryTask, 
+			LayerList, 
+			BasemapGallery, 
+			arcgisUtils,
+			Extent, 
+			BorderContainer,
+			ContentPane,
+			// SpatialReference, 
+			parser
+		) 
 {
+	 // parser.parse();
 
 	map = new Map("map", {
 		center: [-70.35, 41.68],
@@ -36,19 +55,78 @@ function(Map, ArcGISDynamicMapServiceLayer, ImageParameters, FeatureLayer, Query
 	});
 	// map.on("load", createToolbar);
 
-// var basemapGallery = new BasemapGallery({
-//       showArcGISBasemaps: true,
-//       map: map
-//     }, "basemapGallery");
-
-//     basemapGallery.startup();
-
-//     basemapGallery.on("error", function (msg) {
-//       console.log("basemap gallery error:  ", msg);
-//     });
-// Add all the layers we will want to display; Hide them initially and allow the user to turn on/off each layer
+	// var basemapGallery = new BasemapGallery({
+ //        showArcGISBasemaps: true,
+ //        map: map
+ //      }, "basemapGallery");
+ //      basemapGallery.startup();
+      
+ //      basemapGallery.on("error", function(msg) {
+ //        console.log("basemap gallery error:  ", msg);
+ //      });
 
 
+	var extent;
+	var layerDefs = [];
+	var queryTask = new QueryTask("http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/4");
+
+	var query = new Query();
+	query.returnGeometry = true;
+	query.outFields = ["*"];
+	query.where = "EMBAY_ID =" + selectlayer;
+	queryTask.execute(query, showResults);
+
+	function showResults(results) 
+	{
+		var resultItems = [];
+		var resultCount = results.features.length;
+		for (var i = 0; i < resultCount; i++) 
+		{
+			var featureAttributes = results.features[i].attributes;
+			watershed = featureAttributes['EMBAY_DISP'];
+		}
+
+		var featureSet = results || {};
+		var features = featureSet.features || [];
+
+		extent = esri.graphicsExtent(features);
+		// console.log(features.length);
+		if (!extent && features.length == 1) 
+		{
+			var point = features[0];
+			map.centerAndZoom(point, 12);
+		}
+		else 
+		{
+			map.setExtent(extent, true);
+		}
+
+		var imageParameters = new ImageParameters();
+		// layerDefs[0] = "Embayment='" + watershed + "'";
+		layerDefs[4] = "EMBAY_ID=" + selectlayer;
+		// layerDefs[11] = "Subembayments";
+		// layerDefs[4] = 'towns';
+		// layerDefs[1] = 'wastewater';
+		imageParameters.layerDefinitions = layerDefs;
+		imageParameters.layerIds = [4];
+		imageParameters.layerOption = ImageParameters.LAYER_OPTION_SHOW;
+		imageParameters.transparent = true;
+
+
+		var graphicsAreaLayer = new esri.layers.GraphicsLayer();
+		graphicsAreaLayer.disableMouseEvents();
+		map.addLayer(graphicsAreaLayer);
+
+		//construct ArcGISDynamicMapServiceLayer with imageParameters from above
+		// var dynamicMapServiceLayer = new ArcGISDynamicMapServiceLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/Projects/208_Plan/MapServer", { "imageParameters": imageParameters});
+		var dynamicMapServiceLayer = new ArcGISDynamicMapServiceLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer", { "imageParameters": imageParameters});
+
+
+		map.addLayer(dynamicMapServiceLayer);
+	
+
+
+	}
 
 var Subwatersheds = new FeatureLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/Projects/208_Plan/MapServer/22",
 		{
@@ -385,69 +463,5 @@ $('#flowthrough').on('click', function(e){
 	}
 	// 
 });
-
-
-	var layerDefs = [];
-	var queryTask = new QueryTask("http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/4");
-
-	var query = new Query();
-	query.returnGeometry = true;
-	query.outFields = ["*"];
-	query.where = "EMBAY_ID =" + selectlayer;
-	queryTask.execute(query, showResults);
-
-	function showResults(results) 
-	{
-		var resultItems = [];
-		var resultCount = results.features.length;
-		for (var i = 0; i < resultCount; i++) 
-		{
-			var featureAttributes = results.features[i].attributes;
-			watershed = featureAttributes['EMBAY_DISP'];
-		}
-
-		var featureSet = results || {};
-		var features = featureSet.features || [];
-
-		var extent = esri.graphicsExtent(features);
-		// console.log(features.length);
-		if (!extent && features.length == 1) 
-		{
-			var point = features[0];
-			map.centerAndZoom(point, 12);
-		}
-		else 
-		{
-			map.setExtent(extent, true);
-		}
-
-		var imageParameters = new ImageParameters();
-		// layerDefs[0] = "Embayment='" + watershed + "'";
-		layerDefs[4] = "EMBAY_ID=" + selectlayer;
-		// layerDefs[11] = "Subembayments";
-		// layerDefs[4] = 'towns';
-		// layerDefs[1] = 'wastewater';
-		imageParameters.layerDefinitions = layerDefs;
-		imageParameters.layerIds = [4];
-		imageParameters.layerOption = ImageParameters.LAYER_OPTION_SHOW;
-		imageParameters.transparent = true;
-
-
-		var graphicsAreaLayer = new esri.layers.GraphicsLayer();
-		graphicsAreaLayer.disableMouseEvents();
-		map.addLayer(graphicsAreaLayer);
-
-		//construct ArcGISDynamicMapServiceLayer with imageParameters from above
-		// var dynamicMapServiceLayer = new ArcGISDynamicMapServiceLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/Projects/208_Plan/MapServer", { "imageParameters": imageParameters});
-		var dynamicMapServiceLayer = new ArcGISDynamicMapServiceLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer", { "imageParameters": imageParameters});
-
-
-		map.addLayer(dynamicMapServiceLayer);
-	
-
-
-	}
-
-
 
 });

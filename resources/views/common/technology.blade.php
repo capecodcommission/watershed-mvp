@@ -41,6 +41,10 @@
 			</thead>
 			<tbody>
 				<tr>
+				<!-- 
+						need to change this so it shows & updates the relevant N load (storm, fert, septic, etc.) that each technology is acting on. 
+						also, the "fert_percent" slider below needs to change based on which N load is being treated for this particular technology
+				 -->
 					<td>@{{ fert_unatt | round }}kg</td>
 					<td>@{{fert_att | round }}kg</td>
 					<td>@{{fert_unatt_treated |round}}kg</td>
@@ -59,30 +63,36 @@
 </div>
 
 <script>
+$(document).ready(function(){
 		$('#select_area').on('click', function(f){
-		f.preventDefault();
-		$('#popdown-opacity').hide();
-		map.on('click', function(e){
-			console.log(e.mapPoint.x, e.mapPoint.y);
-
-				var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y;
-				$.ajax({
-					dataType: 'json',
-					method: 'GET',
-					url: url
-					// ,
-					// data: { x: e.mapPoint.x, y: e.mapPoint.y }
-				})
-					.done(function(msg){
-						console.log(msg);
-						// var sub = json_decode(msg);
-						// console.log(sub);
-						$('#'+msg.SUBEM_NAME+'> .stats').show();
-						// $('.notification_count').remove();
-						$('#popdown-opacity').show();
-						$('.select > span').text('Selected: '+msg.SUBEM_DISP);
+			f.preventDefault();
+			console.log('button clicked');
+				$('#popdown-opacity').hide();
+				console.log('hidden');
+				console.log(map);
+				map.on('click', function(e){
+					console.log(e);
+				console.log(e.mapPoint.x, e.mapPoint.y);
+				
+					var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y;
+					$.ajax({
+						// dataType: 'json',
+						method: 'GET',
+						url: url
+						// ,
+						// data: { x: e.mapPoint.x, y: e.mapPoint.y }
 					})
+						.done(function(msg){
+							console.log(msg);
+							// var sub = json_decode(msg);
+							// console.log(sub);
+							$('#'+msg.SUBEM_NAME+'> .stats').show();
+							// $('.notification_count').remove();
+							$('#popdown-opacity').show();
+							$('.select > span').text('Selected: '+msg.SUBEM_DISP);
+						})
 
+			});
 		});
 	});
 </script>

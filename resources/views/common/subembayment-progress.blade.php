@@ -3,11 +3,11 @@
 	<h2>Subembayments for {{$embayment->EMBAY_DISP}}</h2>
 	@foreach($subembayments as $subem)
 		<subembayment 
-			title="{{$subem->SUBEM_DISP}}" 
-			percent="{{$subem->Total_Tar_Kg/$subem->Nload_Total}}" 
-			NLoad_Orig = '{{$subem->Nload_Total}}' 
-			NLoad_Target='{{$subem->Total_Tar_Kg}}' 
-			id="{{$subem->SUBEM_NAME}}"
+			title="{{$subem->subem_disp}}" 
+			percent="{{$subem->Total_Tar_Kg/$subem->NLoad_Unatt}}" 
+			NLoad_Orig = {{$subem->NLoad_Unatt}} 
+			NLoad_Target= {{$subem->Total_Tar_Kg}}
+			id="{{$subem->subem_name}}"
 			:my-effective="effective" >
 		</subembayment>
 	@endforeach
@@ -25,10 +25,12 @@
 			<div class="stats">
 				<p>
 					Percent of Reduction from treatment: @{{myEffective}}%<br />
-					Original Unattenuated Nitrogen: @{{NLoad_Orig}}kg<br />
+					Original Unattenuated Nitrogen: @{{NLoad_Orig|round}}kg<br />
 					Current Unattenuated Scenario: @{{NLoad_Current| round }}kg <br />
 					Target: @{{NLoad_Target}}kg
 				</p>
 			</div>
 		</div>
 	</template>
+
+	{{-- 	 percent="{{$subem->Total_Tar_Kg/$subem->Nload_Total}}"   --}}

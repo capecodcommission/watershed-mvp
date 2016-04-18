@@ -1,10 +1,18 @@
 <div class="tool" style="padding: .8em 1em;">		
 <label><i class="fa fa-globe fa-2x js-menu-trigger sliding-panel-button"></i>
 </label>
-
+    <div style="position:absolute; right:80px; top:20px; z-Index:100;">
+        <div data-dojo-type="dijit/TitlePane"
+             data-dojo-props="title:'Switch Basemap', closable:false, open:false">
+            <div data-dojo-type="dijit/layout/ContentPane" style="width:380px; height:280px; overflow:auto;">
+                <div id="basemapGallery"></div>
+            </div>
+        </div>
+    </div>
 		<div class="js-menu sliding-panel-content is-visible">
 			<div class="info"  data-dojo-type="dijit/layout/ContentPane">
 			<h4>Map Layers</h4>
+
 
 				<ul id="layers">
 					<li>

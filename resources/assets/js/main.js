@@ -5,7 +5,7 @@ var Vue = require('vue');
 // var VueFilter = require('vue-filter');
 // Vue.use(VueResource, VueFilter);
 Vue.use(require('vue-filter'));
-Vue.use(require('vue-resource'));
+// Vue.use(require('vue-resource'));
 
 Vue.component('subembayment', {
 		template: '#subembayment-template',
