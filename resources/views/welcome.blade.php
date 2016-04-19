@@ -73,23 +73,27 @@
 						<p>You can select a watershed from the list below, or click on the map to get started.</p>
 					
 						<p>Select your embayment from the list or click on the map to get started. 
-							<select id="ddlEmbayment" class="Filter" >
+							<select id="embayment" class="Filter" >
 								<option value="">Select an embayment</option>
 								@foreach ($embayments as $embayment)
 									<option value="{{$embayment->EMBAY_ID}}">{{$embayment->EMBAY_DISP}}</option>
 								@endforeach
-							<?php 
-								// foreach ($embay_list as $embayment) {
-								// 	echo "<option value='" . $embayment['embay_id'] . "'>" . $embayment['embay_disp'] . "</option>";
-								// }
-
-							?>
 							</select>
 						</p>
 					</fieldset>
 					<p>
-						<a href="/map" id="startwizard" class="button">Get Started</a>
+						<a href="{{url('/map')}}" id="startwizard" class="button">Get Started</a>
 					</p>
 		</div>
+		 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.js"></script>
+		<script>
+			$(document).ready(function(){
+				$('#embayment').on('change', function(){
+					var watershed = $(this).val();
+					$('#startwizard').attr('href', "{{url('/map')}}/"+watershed);
+				});
+			});
+		</script>
+		
 </body>
 </html>

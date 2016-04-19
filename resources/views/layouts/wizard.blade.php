@@ -41,13 +41,10 @@
 			$('.popdown').popdown();
 			$('#closeACC').on('click', function(event){
 				$('.state').prop('checked', false);
-				// console.log('clicked');
 			});
-			// $(map).on('click', function(e){
-			// 		console.log(e);
-			// 	});
-			console.log(map);
+
 		});
 	</script>
+	
 </body>
 </html>

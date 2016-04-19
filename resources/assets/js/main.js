@@ -5,7 +5,7 @@ var Vue = require('vue');
 // var VueFilter = require('vue-filter');
 // Vue.use(VueResource, VueFilter);
 Vue.use(require('vue-filter'));
-// Vue.use(require('vue-resource'));
+Vue.use(require('vue-resource'));
 
 Vue.component('subembayment', {
 		template: '#subembayment-template',
@@ -22,8 +22,24 @@ Vue.component('subembayment', {
 		}
 	});
 
+Vue.component('Treatment', {
+	props: [
+				'TreatmentID',
+				'TreatmentType_ID',
+				'Treatment_PerReduce',
+				'ScenarioID'
+			]
+});
+
 
 new Vue({
+				http: {
+				  // root: '/root',
+				  headers: {
+					// 'X-CSRF-TOKEN': document.querySelector('#token').getAttribute('value')
+					'X-CSRF-TOKEN': 'IonQmqAAs09oCEnlKfmYSuW5OoXQgQaswjCVLRWL'
+				  }
+				},
 				el: 'body',
 				data:
 				{
@@ -41,8 +57,25 @@ new Vue({
 					atmosphere_unatt: parseFloat(nitrogen.Total_UnAtt_Atmosphere),
 					atmosphere_att: parseFloat(nitrogen.Total_Att_Atmosphere)
 				},
-				// components: {subembayment},
+				// components: {subembayment, Treatment},
 				
+				methods: {
+					AddNewTreatment: function() {
+						// console.log(id.TreatmentType_ID);
+						console.log(this.Treatment);
+						this.$http.post('/api/treatments/', this.Treatment, function(data){
+							console.log(data);
+						});
+					},
+
+					EditTreatment: function(id) {
+						var treatment = this.Treatment;
+						this.$http.patch('/api/treatments/' + id, treatment, function (data) {
+							console.log(data)
+						})
+					}
+				},
+
 				computed:
 				{
 					treated: function()

@@ -47,17 +47,15 @@
 		</header>
 		</div>
 		<div class="acc_cCont">
-		<p>Total Unattenuated Load from Fertilizer: @{{fert_unatt|round}}kg</p>
-				<p>Total Attenuated Load from Fertilizer: @{{fert_att | round }}kg</p>
-
-		<p>Choose a technology to treat Nitrogen from Fertilizer in your watershed.</p>
-<!-- 			 <div class="technology">
-				<a href="http://www.cch2o.org/Matrix/detail.php?treatment=25" target="_blank"><img src="http://www.cch2o.org/Matrix/icons/npk_mgt.svg"></a><br />Fertilizer Management
-				
-			</div> -->
-			 <div class="technology">
-				<a href="{{url('tech/25')}}" class="popdown"><img src="http://www.cch2o.org/Matrix/icons/npk_mgt.svg"></a><br />Fertilizer Management			
-			</div>
+			<p>Total Unattenuated Load from Fertilizer: @{{fert_unatt|round}}kg</p>
+			<p>Total Attenuated Load from Fertilizer: @{{fert_att | round }}kg</p>
+			<p>Choose a technology to treat Nitrogen from Fertilizer in your watershed.</p>
+			
+			
+				 <div class="technology">
+					<a href="/tech/25" class="popdown"><img src="http://www.cch2o.org/Matrix/icons/npk_mgt.svg"></a><br />Fertilizer Management			
+				</div>
+			
 		
 		</div>
 	</article>

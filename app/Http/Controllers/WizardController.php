@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\Embayment;
 use DB;
 use JavaScript;
+use App\Treatment;
 
 class WizardController extends Controller
 {
@@ -26,18 +27,13 @@ class WizardController extends Controller
 		JavaScript::put([
 				'nitrogen' => $nitrogen[0]
 			]);
-		// dd($nitrogen);
-		// dd($subembayments);
 		
 		// Need to create a new scenario or find existing one that the user is editing
 		// Is user logged in?
 
 		// Need to get list of Technologies (Tech_Matrix)
 
-
-
 		return view('layouts/wizard', ['embayment'=>$embayment, 'subembayments'=>$subembayments]);
-
 
 	}
 
@@ -61,18 +57,9 @@ class WizardController extends Controller
 		 JavaScript::put([
 				'nitrogen' => $nitrogen[0]
 			]);
-		// dd($nitrogen);
-		// dd($subembayments);
-		
-		// Need to create a new scenario or find existing one that the user is editing
-		// Is user logged in?
-
-		// Need to get list of Technologies (Tech_Matrix)
-
-
 
 		return view('layouts/test', ['embayment'=>$embayment, 'subembayments'=>$subembayments]);
-
-
 	}
+
+	
 }
