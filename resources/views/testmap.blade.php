@@ -18,24 +18,54 @@
   <script src="https://js.arcgis.com/3.16/"></script>
   <script> 
 	var map;
+	
+
 	require([
-	  "esri/map", 
-	  "esri/dijit/BasemapGallery", 
-	  "esri/InfoTemplate",
-	  "esri/arcgis/utils",
-	  "dojo/parser",
-			"esri/InfoTemplate",
-		"esri/layers/FeatureLayer",
-		"dojo/dom-construct",
-	  "dijit/layout/BorderContainer", 
-	  "dijit/layout/ContentPane", 
-	  "dijit/TitlePane",
-	  "dojo/domReady!"
-	], function(
-	  Map, BasemapGallery, arcgisUtils,  parser
+      "esri/map", 
+      "esri/dijit/BasemapGallery", 
+      "esri/arcgis/utils",
+      "dojo/parser",
+      "esri/layers/FeatureLayer",
+      "dijit/layout/BorderContainer", 
+      "dijit/layout/ContentPane", 
+      "dijit/TitlePane",
+      "dojo/dom-construct",
+      "dojo/domReady!"
+      
+    ], function(
+		Map, 
+		BasemapGallery, 
+		arcgisUtils,
+		parser,
+		FeatureLayer,
+		domConstruct
+
+    ) {
+      parser.parse();
+
+
+
+
+
+
+
+	// require([
+	//   "esri/map", 
+	//   "esri/dijit/BasemapGallery", 
+	//   "esri/arcgis/utils",
+	//   "dojo/parser",
+	// 	// 	"esri/InfoTemplate",
+	// 	// "esri/layers/FeatureLayer",
+	// 	"dojo/dom-construct",
+	//   "dijit/layout/BorderContainer", 
+	//   "dijit/layout/ContentPane", 
+	//   "dijit/TitlePane",
+	//   "dojo/domReady!"
+	// ], function(
+	//   Map, BasemapGallery, arcgisUtils,  parser
 	  
-	) {
-	  parser.parse();
+	// ) {
+	//   parser.parse();
 
 	  map = new Map("map", {
 		center: [-70.35, 41.68],
@@ -56,10 +86,15 @@
 		console.log("basemap gallery error:  ", msg);
 	  });
 
+
+	  // var template = new InfoTemplate();
+			// template.setTitle("<b>${EMBAY_DISP}</b>");
+			// template.setContent("<a href='{{url('map')}}/${EMBAY_ID}'>Create a scenario for ${EMBAY_DISP}</a>");  
+
 	  var embayLayer = new FeatureLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/4", {
-				mode: FeatureLayer.MODE_ONDEMAND,
-				infoTemplate:template,
-				outFields: ["EMBAY_DISP", "EMBAY_ID"]
+				mode: FeatureLayer.MODE_ONDEMAND
+				// infoTemplate:template,
+				// outFields: ["EMBAY_DISP", "EMBAY_ID"]
 			});
 			embayLayer.show();
 			map.addLayer(embayLayer);

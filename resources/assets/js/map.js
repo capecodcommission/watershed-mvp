@@ -3,48 +3,49 @@ var map;
 var watershed;
 require([
 	"esri/map",
+	"esri/dijit/BasemapGallery",
+	"esri/arcgis/utils",
+	"dojo/parser",
 	"esri/layers/ArcGISDynamicMapServiceLayer",
 	"esri/layers/ImageParameters",
 	"esri/layers/FeatureLayer",
-	// "esri/tasks/identify",
 	"esri/tasks/query", 
 	"esri/tasks/QueryTask",
-	"esri/arcgis/utils",
 	"esri/dijit/LayerList",
 	"esri/geometry/Extent",
-	// "esri/geometry/Point",
-	// "esri/geometry/Polygon",
-	// "esri/symbols/SimpleFillSymbol",
-	"esri/dijit/BasemapGallery",
-	"esri/SpatialReference",
-	// "esri/toolbars/draw",
-	// "esri/graphic",
-	"dijit/registry",
-	"dijit/form/Button",
+
+	
+	// "esri/SpatialReference",
 	"dijit/layout/BorderContainer", 
 	"dijit/layout/ContentPane", 
 	"dijit/TitlePane",
-	"dojo/parser",
+ "dojo/dom-construct",
 	"dojo/domReady!"
 ],
 function(
 			Map, 
+			BasemapGallery, 
+			arcgisUtils,
+			parser,
 			ArcGISDynamicMapServiceLayer, 
 			ImageParameters, 
 			FeatureLayer, 
 			Query, 
 			QueryTask, 
 			LayerList, 
-			BasemapGallery, 
-			arcgisUtils,
-			Extent, 
-			BorderContainer,
-			ContentPane,
-			// SpatialReference, 
-			parser
+			Extent,
+			domConstruct
+			
+			// SpatialReference,
+			
+			
+			// BorderContainer,
+			// ContentPane,
+			 
+			
 		) 
 {
-	 // parser.parse();
+	 parser.parse();
 
 	map = new Map("map", {
 		center: [-70.35, 41.68],
@@ -55,15 +56,15 @@ function(
 	});
 	// map.on("load", createToolbar);
 
-	// var basemapGallery = new BasemapGallery({
- //        showArcGISBasemaps: true,
- //        map: map
- //      }, "basemapGallery");
- //      basemapGallery.startup();
+	var basemapGallery = new BasemapGallery({
+        showArcGISBasemaps: true,
+        map: map
+      }, "basemapGallery");
+      basemapGallery.startup();
       
- //      basemapGallery.on("error", function(msg) {
- //        console.log("basemap gallery error:  ", msg);
- //      });
+      basemapGallery.on("error", function(msg) {
+        console.log("basemap gallery error:  ", msg);
+      });
 
 
 	var extent;

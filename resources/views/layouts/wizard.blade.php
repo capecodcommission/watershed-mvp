@@ -15,7 +15,16 @@
 	
 </head>
 <body class="claro">
-	<div id="map" class="map"></div>
+
+<div data-dojo-type="dijit/layout/BorderContainer" 
+	   data-dojo-props="design:'headline', gutters:false" 
+	   style="width:100%;height:100%;margin:0;">
+
+	<div id="map">
+
+	</div>
+  </div>
+	<!-- <div id="map" class="map"></div> -->
 	<div class="wrapper">
 		<div class="content">
 			<nav class="toolbar">
