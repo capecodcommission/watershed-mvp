@@ -89,12 +89,13 @@
 						url: url
 					})
 						.done(function(msg){
-							// console.log(msg['SUBEM_DISP']);
-							
+							msg = $.parseJSON(msg);
+							console.log(msg.SUBEM_DISP);
+							// console.log(msg);
 							$('#'+msg.SUBEM_NAME+'> .stats').show();
 							// $('.notification_count').remove();
 							$('#popdown-opacity').show();
-							// $('.select > span').text('Selected: '+msg.SUBEM_DISP);
+							$('.select > span').text('Selected: '+msg.SUBEM_DISP);
 							$('.select > span').show();
 						})
 

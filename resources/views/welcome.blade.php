@@ -7,6 +7,9 @@
 
 	<link href="{{url('css/app.css')}}" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="https://js.arcgis.com/3.16/esri/css/esri.css">
+	<style>
+		#map	{ z-index: -10; }
+	</style>
 	<script src="https://js.arcgis.com/3.16/"></script>
 	<script>
 		var map;

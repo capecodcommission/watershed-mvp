@@ -9,8 +9,97 @@
 			<h1>Embayment: {{$embayment->EMBAY_DISP}}</h1>
 
 			<div id="app">
+
+			@foreach($subembayments as $subem)
+		
 			<table>
 				<thead>
+				<tr>
+					<th colspan="7">Subembayment Values: {{$subem->subem_disp}}</th>
+				</tr>
+					<tr>
+						<th>Source</th>
+						<th>Unattenuated</th>
+						<th>Attenuated</th>
+						<th>Reduction <br />by Treatment</th>
+						<th>Unattenuated<br />after treatment</th>
+						<th>Attenuated<br />After Treatment</th>
+						<th>Difference</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Fertilizer</td>
+						<td>{{$subem->NLoad_Fert}}kg</td>
+						<td>kg</td>
+						<td><input type="range" id="percent" min="0" value="10" max="100" v-model="fert_percent"> (@{{fert_percent}}%)</td>
+						<td>kg</td>
+						<td>kg <sup>1</sup></td>
+						<td>kg</td>
+					</tr>
+					<tr>
+						<td>Stormwater</td>
+						<td>{{$subem->NLoad_Stormwater}}kg</td>
+						<td>kg</td>
+						<td><input type="range" id="storm-percent" min="0" value="10" max="100" v-model="storm_percent"> (@{{storm_percent}}%)</td>
+						<td>kg</td>
+						<td>kg</td>
+						<td>kg</td>
+					</tr>
+					<tr>
+						<td>Septic</td>
+						<td>{{$subem->NLoad_Septic}}kg</td>
+						<td>kg</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Atmospheric</td>
+						<td>{{$subem->Nload_Atmosphere}}kg</td>
+						<td></td>
+						<td>Can't be treated</td>
+						<td>kg</td>
+						<td>kg</td>
+						<td>0</td>
+					</tr>
+					<tr>
+						<td>Groundwater<sup>2</sup></td>
+						<td>{{$subem->NLoad_Unatt}}kg</td>
+						<td>kg</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Embayment <sup>3</sup></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td><strong>Total</strong></td>
+						<td>kg</td>
+						<td>kg</td>
+						<td></td>
+						<td></td>
+						<td><span class="treated">kg</span></td>
+						<td>kg</td>
+					</tr>
+
+				</tbody>
+			</table>
+@endforeach
+			<table>
+				<thead>
+					<tr>
+						<th colspan="7">Embayment Values</th>
+					</tr>
 					<tr>
 						<th>Source</th>
 						<th>Unattenuated</th>

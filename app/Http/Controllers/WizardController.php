@@ -48,10 +48,10 @@ class WizardController extends Controller
 	public function test($id)
 	{
 		$embayment = Embayment::find($id);
-		$subembayments = DB::table('CapeCodMA.SubEmbayments')
-			->select('SUBEM_NAME', 'SUBEM_DISP', 'Nload_Total', 'Total_Tar_Kg', 'MEP_Total_Tar_Kg')
-			->where('EMBAY_ID', $embayment->EMBAY_ID)->get();
-
+		// $subembayments = DB::table('CapeCodMA.SubEmbayments')
+		// 	->select('SUBEM_NAME', 'SUBEM_DISP', 'Nload_Total', 'Total_Tar_Kg', 'MEP_Total_Tar_Kg')
+		// 	->where('EMBAY_ID', $embayment->EMBAY_ID)->get();
+			$subembayments = DB::select('exec CapeCodMA.GET_SubembaymentNitrogen ' . $id);
 		$nitrogen = DB::select('exec CapeCodMA.GET_EmbaymentNitrogen ' . $id);
 
 		 JavaScript::put([

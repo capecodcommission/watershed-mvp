@@ -17,6 +17,10 @@ Route::get('/map/{embayment}', 'WizardController@start');
 
 Route::get('/test/{embayment}', 'WizardController@test');
 
+Route::get('/testmap', function(){
+	return view('testmap');
+});
+
 Route::get('/tech/{tech}', 'TechnologyController@get');
 
 Route::get('/map/point/{x}/{y}', 'MapController@point');
