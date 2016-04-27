@@ -20,21 +20,21 @@
 
 	require([
 
-    "esri/map",
-    "esri/layers/FeatureLayer",
-     "esri/toolbars/draw",
-        "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
-        "esri/symbols/SimpleFillSymbol", "esri/symbols/CartographicLineSymbol", 
-        "esri/graphic", 
-        "esri/Color", "dojo/dom", "dojo/on", "dojo/domReady!"
-      ], function(
-        Map, 
-        FeatureLayer,
-        Draw,
-        SimpleMarkerSymbol, SimpleLineSymbol,
-        SimpleFillSymbol, CartographicLineSymbol, 
-        Graphic, 
-        Color, dom, on
+	"esri/map",
+	"esri/layers/FeatureLayer",
+	 "esri/toolbars/draw",
+		"esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
+		"esri/symbols/SimpleFillSymbol", "esri/symbols/CartographicLineSymbol", 
+		"esri/graphic", 
+		"esri/Color", "dojo/dom", "dojo/on", "dojo/domReady!"
+	  ], function(
+		Map, 
+		FeatureLayer,
+		Draw,
+		SimpleMarkerSymbol, SimpleLineSymbol,
+		SimpleFillSymbol, CartographicLineSymbol, 
+		Graphic, 
+		Color, dom, on
   //     "esri/map", 
   //     "esri/dijit/BasemapGallery", 
   //     "esri/arcgis/utils",
@@ -54,7 +54,7 @@
 		// "dojo/on",
   //     "dojo/dom-construct",
   //     "dojo/domReady!"
-      
+	  
   //   ], function(
 		// Map, 
 		// BasemapGallery, 
@@ -70,8 +70,8 @@
   //       Color, dom, on,
 		// domConstruct
 
-    ) {
-      // parser.parse();
+	) {
+	  // parser.parse();
 
 	  map = new Map("map", {
 		center: [-70.35, 41.68],
@@ -103,32 +103,48 @@
  var fillSymbol = new SimpleFillSymbol();
 
   function initToolbar() {
-          tb = new Draw(map);
-          tb.on("draw-end", addGraphic);
+		  tb = new Draw(map);
+		  tb.on("draw-end", addGraphic);
 
-          // event delegation so a click handler is not
-          // needed for each individual button
-          on(dom.byId("info"), "click", function(evt) {
-            if ( evt.target.id === "info" ) {
-              return;
-            }
-            var tool = evt.target.id.toLowerCase();
-            map.disableMapNavigation();
-            tb.activate(tool);
-          });
-        }
+		  // event delegation so a click handler is not
+		  // needed for each individual button
+		  on(dom.byId("info"), "click", function(evt) {
+			if ( evt.target.id === "info" ) {
+			  return;
+			}
+			var tool = evt.target.id.toLowerCase();
+			map.disableMapNavigation();
+			tb.activate(tool);
+		  });
+		}
 
-        function addGraphic(evt) {
-          //deactivate the toolbar and clear existing graphics 
-          tb.deactivate(); 
-          map.enableMapNavigation();
+		function addGraphic(evt) {
+		  //deactivate the toolbar and clear existing graphics 
+		  tb.deactivate(); 
+		  map.enableMapNavigation();
 
-          // figure out which symbol to use
-          var symbol;
-            symbol = fillSymbol;
+		  // figure out which symbol to use
+		  var symbol;
+			symbol = fillSymbol;
+			var polystring = '';
+		  map.graphics.add(new Graphic(evt.geometry, symbol));
+		  // console.log(evt.geometry);
+		  // console.log('entering loop');
 
-          map.graphics.add(new Graphic(evt.geometry, symbol));
-        }
+
+		  for (var i = 0; i < evt.geometry.rings[0].length; i++) {
+		  	polystring += evt.geometry.rings[0][i][0] + ' ';
+		  	polystring += evt.geometry.rings[0][i][1] + ', ';
+		  }
+		   var len = polystring.length;
+		  polystring = polystring.substring(0,len-2);
+		  
+		  console.log('exec CapeCodMa.Get_NitrogenFromPolygon \'' + polystring + '\'');
+
+		  // console.log(symbol);
+		  var area = evt.geometry.getExtent();
+		  // console.log(area);
+		}
 
 	  // var template = new InfoTemplate();
 			// template.setTitle("<b>${EMBAY_DISP}</b>");
@@ -141,11 +157,11 @@
 
 <body class="claro"> 
 	<div id="info">
-      <div>Select a shape then draw on map to add graphic</div>
+	  <div>Select a shape then draw on map to add graphic</div>
 
-      <button id="Polygon">Polygon</button>
+	  <button id="Polygon">Polygon</button>
 
-    </div>
+	</div>
   <div data-dojo-type="dijit/layout/BorderContainer" 
 	   data-dojo-props="design:'headline', gutters:false" 
 	   style="width:100%;height:100%;margin:0;">
