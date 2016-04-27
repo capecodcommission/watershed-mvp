@@ -43,7 +43,7 @@
 	<script src="{{url('/js/map.js')}}"></script>
 	  <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.js"></script>
 		<script src="{{url('/js/app.js')}}"></script>
-	<script src="{{url('/js/main.js')}}"></script>
+		<script src="{{url('/js/main.js')}}"></script>
 		<script type="text/javascript" src="{{url('/js/jquery.popdown.js')}}" /></script>
 		<script type="text/javascript">
 		$(document).ready(function(){

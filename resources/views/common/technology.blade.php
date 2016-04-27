@@ -8,10 +8,10 @@
 	<section class="body">
 		<form action="" @submit.prevent="AddNewTreatment" method="POST">
 		
-				<input type="text" name="csrf-token" id="token" value="{{ csrf_token() }}">
+			<!-- 	<input type="text" name="csrf-token" id="token" value="{{ csrf_token() }}">
 				<input type="text" name="TreatmentType_ID" id="TreatmentType_ID" v-model="Treatment.TreatmentType_ID">
 				<input type="text" v-model="Treatment.ScenarioID">
-		
+		 -->
 
 			<div class="technology">
 				<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
@@ -62,10 +62,11 @@
 				Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.<br />
 				<input type="range" id="effective" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="Treatment.Treatment_PerReduce">
 			</p>
-			<p><!-- <a href="#" class="button">Apply</a> -->
+<!-- 			<p><a href="#" class="button">Apply</a>
 				<button type="submit">Apply</button>
-			</p>
+			</p> -->
 			</form>
+
 	</section>
 </div>
 

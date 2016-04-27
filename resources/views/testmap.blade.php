@@ -139,7 +139,22 @@
 		   var len = polystring.length;
 		  polystring = polystring.substring(0,len-2);
 		  
-		  console.log('exec CapeCodMa.Get_NitrogenFromPolygon \'' + polystring + '\'');
+		  // console.log('exec CapeCodMa.Get_NitrogenFromPolygon \'' + polystring + '\'');
+		  
+		  console.log(polystring);
+		  	var url = "{{url('/testmap/Nitrogen/')}}"+'/'+polystring;
+					$.ajax({
+						method: 'GET',
+						url: url
+					})
+						.done(function(msg){
+							// msg = $.parseJSON(msg);
+							console.log(msg[0]);
+							// console.log(msg);
+							var txtmsg = "Total Nitrogen in Polygon: " + msg[0].UnAttenFull;
+							alert(txtmsg);
+							
+						});
 
 		  // console.log(symbol);
 		  var area = evt.geometry.getExtent();
@@ -181,6 +196,7 @@
 
 
   </div>
+  <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 </body> 
 
 </html>

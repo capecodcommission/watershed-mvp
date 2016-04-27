@@ -61,5 +61,18 @@ class WizardController extends Controller
 		return view('layouts/test', ['embayment'=>$embayment, 'subembayments'=>$subembayments]);
 	}
 
+
+	/**
+	 * Get Nitrogen Totals from a polygon string
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function getNitrogen($poly)
+	{
+		$nitrogen_totals = DB::select('exec CapeCodMA.GET_NitrogenFromPolygon \'' . $poly . '\'');
+// dd($nitrogen_totals[0]);
+		return $nitrogen_totals;
+	}
 	
 }

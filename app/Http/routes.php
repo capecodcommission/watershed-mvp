@@ -21,6 +21,8 @@ Route::get('/testmap', function(){
 	return view('testmap');
 });
 
+Route::get('/testmap/Nitrogen/{poly}', 'WizardController@getNitrogen');
+
 Route::get('/tech/{tech}', 'TechnologyController@get');
 
 Route::get('/map/point/{x}/{y}', 'MapController@point');

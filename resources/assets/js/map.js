@@ -9,6 +9,14 @@ require([
 	"esri/layers/ArcGISDynamicMapServiceLayer",
 	"esri/layers/ImageParameters",
 	"esri/layers/FeatureLayer",
+
+ "esri/toolbars/draw",
+		"esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
+		"esri/symbols/SimpleFillSymbol", "esri/symbols/CartographicLineSymbol", 
+		"esri/graphic", 
+		"esri/Color", 
+
+
 	"esri/tasks/query", 
 	"esri/tasks/QueryTask",
 	"esri/dijit/LayerList",
@@ -19,6 +27,8 @@ require([
 	"dijit/layout/BorderContainer", 
 	"dijit/layout/ContentPane", 
 	"dijit/TitlePane",
+
+	"dojo/dom", "dojo/on", 
  "dojo/dom-construct",
 	"dojo/domReady!"
 ],
@@ -30,19 +40,19 @@ function(
 			ArcGISDynamicMapServiceLayer, 
 			ImageParameters, 
 			FeatureLayer, 
+//  adding in polygon drawing tool
+		Draw,
+		SimpleMarkerSymbol, SimpleLineSymbol,
+		SimpleFillSymbol, CartographicLineSymbol, 
+		Graphic, 
+		Color, 
+
 			Query, 
 			QueryTask, 
 			LayerList, 
 			Extent,
+			dom, on,
 			domConstruct
-			
-			// SpatialReference,
-			
-			
-			// BorderContainer,
-			// ContentPane,
-			 
-			
 		) 
 {
 	 parser.parse();
@@ -55,6 +65,61 @@ function(
 		sliderOrientation: "horizontal"
 	});
 	// map.on("load", createToolbar);
+map.on("load", initToolbar);
+
+ var fillSymbol = new SimpleFillSymbol();
+
+
+  function initToolbar() {
+		  tb = new Draw(map);
+		  tb.on("draw-end", addGraphic);
+			console.log('initToolbar called');
+		  // event delegation so a click handler is not
+		  // needed for each individual button
+		  on(dom.byId("info"), "click", function(evt) {
+		  	console.log('clicked button');
+
+			if ( evt.target.id === "info" ) {
+			  return;
+			}
+
+
+			var tool = evt.target.id.toLowerCase();
+			map.disableMapNavigation();
+			tb.activate(tool);
+		  });
+		}
+
+
+function addGraphic(evt) {
+		  //deactivate the toolbar and clear existing graphics 
+		  tb.deactivate(); 
+		  map.enableMapNavigation();
+
+		  // figure out which symbol to use
+		  var symbol;
+			symbol = fillSymbol;
+			var polystring = '';
+		  map.graphics.add(new Graphic(evt.geometry, symbol));
+		  // console.log(evt.geometry);
+		  // console.log('entering loop');
+
+
+		  for (var i = 0; i < evt.geometry.rings[0].length; i++) {
+		  	polystring += evt.geometry.rings[0][i][0] + ' ';
+		  	polystring += evt.geometry.rings[0][i][1] + ', ';
+		  }
+		   var len = polystring.length;
+		  polystring = polystring.substring(0,len-2);
+		  
+		  console.log('exec CapeCodMa.Get_NitrogenFromPolygon \'' + polystring + '\'');
+
+		  // console.log(symbol);
+		  var area = evt.geometry.getExtent();
+		  // console.log(area);
+		}
+
+
 
 	var basemapGallery = new BasemapGallery({
         showArcGISBasemaps: true,
