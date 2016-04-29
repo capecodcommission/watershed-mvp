@@ -35,40 +35,6 @@
 		SimpleFillSymbol, CartographicLineSymbol, 
 		Graphic, 
 		Color, dom, on
-  //     "esri/map", 
-  //     "esri/dijit/BasemapGallery", 
-  //     "esri/arcgis/utils",
-  //     "dojo/parser",
-  //     "esri/layers/FeatureLayer",
-  //     "dijit/layout/BorderContainer", 
-  //     "dijit/layout/ContentPane", 
-  //     // "dijit/TitlePane",
-  //     "esri/toolbars/draw",
-		// // "esri/symbols/SimpleMarkerSymbol", 
-		// "esri/symbols/SimpleLineSymbol",
-		// "esri/symbols/SimpleFillSymbol", 
-		// // "esri/symbols/CartographicLineSymbol", 
-		// "esri/graphic", 
-		// "esri/Color", 
-		// "dojo/dom", 
-		// "dojo/on",
-  //     "dojo/dom-construct",
-  //     "dojo/domReady!"
-	  
-  //   ], function(
-		// Map, 
-		// BasemapGallery, 
-		// arcgisUtils,
-		// parser,
-		// FeatureLayer,
-		//  Draw,
-  //       // SimpleMarkerSymbol, 
-  //       SimpleLineSymbol,
-  //       SimpleFillSymbol, 
-  //       // CartographicLineSymbol, 
-  //       Graphic, 
-  //       Color, dom, on,
-		// domConstruct
 
 	) {
 	  // parser.parse();
@@ -76,12 +42,12 @@
 	  map = new Map("map", {
 		center: [-70.35, 41.68],
 		zoom: 11,
-		basemap: "gray",
+		basemap: "topo",
 		slider: true,
 		sliderOrientation: "horizontal"
 	});
    map.on("load", initToolbar);
-	  //add the basemap gallery, in this case we'll display maps from ArcGIS.com including bing maps
+	  // add the basemap gallery, in this case we'll display maps from ArcGIS.com including bing maps
 	 //  var basemapGallery = new BasemapGallery({
 		// showArcGISBasemaps: true,
 		// map: map
@@ -151,8 +117,8 @@
 							// msg = $.parseJSON(msg);
 							console.log(msg[0]);
 							// console.log(msg);
-							var txtmsg = "Total Nitrogen in Polygon: " + msg[0].UnAttenFull;
-							alert(txtmsg);
+							// var txtmsg = "Total Nitrogen in Polygon: " + msg[0].UnAttenFull;
+							// alert(txtmsg);
 							
 						});
 
@@ -177,11 +143,14 @@
 	  <button id="Polygon">Polygon</button>
 
 	</div>
+
   <div data-dojo-type="dijit/layout/BorderContainer" 
 	   data-dojo-props="design:'headline', gutters:false" 
 	   style="width:100%;height:100%;margin:0;">
 
-	<div id="map">
+	<div id="map" data-dojo-type="dijit/layout/ContentPane" 
+         data-dojo-props="region:'center'" 
+         style="padding:0;">
 
 	  <div style="position:absolute; right:20px; top:10px; z-Index:999;">
 		<div data-dojo-type="dijit/TitlePane" 
