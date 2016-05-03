@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+<!-- This is the starting page for the WMVP3 Wizard where the user logs in or selects a watershed to run a scenario -->
 <html>
 <head>
 	<title>Testing Laravel for map</title>

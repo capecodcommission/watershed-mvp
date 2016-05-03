@@ -4,14 +4,12 @@
 <section class="row accHorizontal">
 	<aside class="accHorizontal__item">
 	<input type="radio" name="group-1" class="state" id="acc-0" />
-	<label class="backdrop" for="acc-0"><!-- <i class="fa fa-times"></i> --></label>
+	<label class="backdrop" for="acc-0"></label>
 	<article class="acc_cBox">
 		<div class="acc_cImg">
-		<!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/308355/img-1.jpg" alt="" /> -->
-		<header>
-			<h3>Overview</h3>
-			
-		</header>
+			<header>
+				<h3>Overview</h3>
+			</header>
 		</div>
 		<div class="acc_cCont">
 		<span id="closeACC">X</span>
@@ -37,13 +35,11 @@
 
 	<aside class="accHorizontal__item">
 	<input type="radio" name="group-1" class="state" id="acc-1" />
-	<label class="backdrop" for="acc-1"><!-- <i class="fa fa-times"></i> --></label>
+	<label class="backdrop" for="acc-1"></label>
 	<article class="acc_cBox">
 		<div class="acc_cImg">
-		<!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/308355/img-1.jpg" alt="" /> -->
 		<header>
 			<h3>Fertilizer</h3><img src="http://www.cch2o.org/Matrix/icons/reduction.svg" alt="" width="60" style="display: inline;">
-			<!-- <p>Web Designer</p> -->
 		</header>
 		</div>
 		<div class="acc_cCont">
@@ -112,6 +108,12 @@
 							Constructed Wetlands
 						</a>
 					</div>		
+									<div id="info">
+	  <div>Select a shape then draw on map to add graphic</div>
+
+	  <button id="Polygon">Polygon</button>
+
+	</div>
 				</div>
 							 
 			</div>

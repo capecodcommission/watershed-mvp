@@ -20,19 +20,20 @@
 
 	require([
 
-	"esri/map",
-	"esri/layers/FeatureLayer",
-	 "esri/toolbars/draw",
-		"esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
-		"esri/symbols/SimpleFillSymbol", "esri/symbols/CartographicLineSymbol", 
+		"esri/map",
+		"esri/layers/FeatureLayer",
+		"esri/toolbars/draw",
+		"esri/symbols/SimpleFillSymbol", 
 		"esri/graphic", 
-		"esri/Color", "dojo/dom", "dojo/on", "dojo/domReady!"
-	  ], function(
+		"esri/Color", 
+		"dojo/dom", 
+		"dojo/on", 
+		"dojo/domReady!"
+	], function(
 		Map, 
 		FeatureLayer,
 		Draw,
-		SimpleMarkerSymbol, SimpleLineSymbol,
-		SimpleFillSymbol, CartographicLineSymbol, 
+		SimpleFillSymbol, 
 		Graphic, 
 		Color, dom, on
 

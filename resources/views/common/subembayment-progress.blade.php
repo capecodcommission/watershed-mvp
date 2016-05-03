@@ -4,8 +4,8 @@
 	@foreach($subembayments as $subem)
 		<subembayment 
 			title="{{$subem->subem_disp}}" 
-			percent="{{$subem->Total_Tar_Kg/$subem->NLoad_Unatt}}" 
-			NLoad_Orig = {{$subem->NLoad_Unatt}}
+			percent="{{$subem->Total_Tar_Kg/$subem->UnAttenFull}}" 
+			NLoad_Orig = {{$subem->AttenFull}}
 			NLoad_Target= {{$subem->Total_Tar_Kg/1}}
 			id="{{$subem->subem_name}}"
 			:my-effective="effective" >

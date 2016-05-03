@@ -3,12 +3,18 @@ var map;
 var watershed;
 require([
 	"esri/map",
-	"esri/dijit/BasemapGallery",
+	// "esri/dijit/BasemapGallery",
 	"esri/arcgis/utils",
 	"dojo/parser",
 	"esri/layers/ArcGISDynamicMapServiceLayer",
 	"esri/layers/ImageParameters",
 	"esri/layers/FeatureLayer",
+
+	"esri/toolbars/draw",
+	"esri/symbols/SimpleFillSymbol", 
+	"esri/graphic", 
+	"esri/Color", 
+
 	"esri/tasks/query", 
 	"esri/tasks/QueryTask",
 	"esri/dijit/LayerList",
@@ -16,33 +22,40 @@ require([
 
 	
 	// "esri/SpatialReference",
-	"dijit/layout/BorderContainer", 
-	"dijit/layout/ContentPane", 
-	"dijit/TitlePane",
+	// "dijit/layout/BorderContainer", 
+	// "dijit/layout/ContentPane", 
+	// "dijit/TitlePane",
+
+	"dojo/dom", 
+	"dojo/on", 
  "dojo/dom-construct",
 	"dojo/domReady!"
 ],
 function(
 			Map, 
-			BasemapGallery, 
+			// BasemapGallery, 
 			arcgisUtils,
 			parser,
 			ArcGISDynamicMapServiceLayer, 
 			ImageParameters, 
 			FeatureLayer, 
+//  adding in polygon drawing tool
+		// Draw,
+		// SimpleMarkerSymbol, SimpleLineSymbol,
+		// SimpleFillSymbol, CartographicLineSymbol, 
+		// Graphic, 
+		// Color, 
+		Draw,
+		SimpleFillSymbol, 
+		Graphic, 
+		Color,
+
 			Query, 
 			QueryTask, 
 			LayerList, 
 			Extent,
+			dom, on,
 			domConstruct
-			
-			// SpatialReference,
-			
-			
-			// BorderContainer,
-			// ContentPane,
-			 
-			
 		) 
 {
 	 parser.parse();
@@ -55,16 +68,81 @@ function(
 		sliderOrientation: "horizontal"
 	});
 	// map.on("load", createToolbar);
+	map.on("load", initToolbar);
 
-	var basemapGallery = new BasemapGallery({
-        showArcGISBasemaps: true,
-        map: map
-      }, "basemapGallery");
-      basemapGallery.startup();
+var fillSymbol = new SimpleFillSymbol();
+
+  function initToolbar() {
+		  tb = new Draw(map);
+		  tb.on("draw-end", addGraphic);
+
+		  // event delegation so a click handler is not
+		  // needed for each individual button
+		  on(dom.byId("info"), "click", function(evt) {
+			if ( evt.target.id === "info" ) {
+			  return;
+			}
+			console.log(evt);
+			var tool = evt.target.id.toLowerCase();
+			map.disableMapNavigation();
+			tb.activate(tool);
+		  });
+		}
+
+		function addGraphic(evt) {
+		  //deactivate the toolbar and clear existing graphics 
+		  tb.deactivate(); 
+		  map.enableMapNavigation();
+
+		  // figure out which symbol to use
+		  var symbol;
+			symbol = fillSymbol;
+			var polystring = '';
+		  map.graphics.add(new Graphic(evt.geometry, symbol));
+		  // console.log(evt.geometry);
+		  // console.log('entering loop');
+
+
+		  for (var i = 0; i < evt.geometry.rings[0].length; i++) {
+		  	polystring += evt.geometry.rings[0][i][0] + ' ';
+		  	polystring += evt.geometry.rings[0][i][1] + ', ';
+		  }
+		   var len = polystring.length;
+		  polystring = polystring.substring(0,len-2);
+		  
+		  // console.log('exec CapeCodMa.Get_NitrogenFromPolygon \'' + polystring + '\'');
+		  
+		  console.log(polystring);
+		  	var url = "/testmap/Nitrogen"+'/'+polystring;
+					$.ajax({
+						method: 'GET',
+						url: url
+					})
+						.done(function(msg){
+							// msg = $.parseJSON(msg);
+							console.log(msg[0]);
+							// console.log(msg);
+							// var txtmsg = "Total Nitrogen in Polygon: " + msg[0].UnAttenFull;
+							// alert(txtmsg);
+							
+						});
+
+		  // console.log(symbol);
+		  var area = evt.geometry.getExtent();
+		  // console.log(area);
+		}
+
+
+
+	// var basemapGallery = new BasemapGallery({
+ //        showArcGISBasemaps: true,
+ //        map: map
+ //      }, "basemapGallery");
+ //      basemapGallery.startup();
       
-      basemapGallery.on("error", function(msg) {
-        console.log("basemap gallery error:  ", msg);
-      });
+ //      basemapGallery.on("error", function(msg) {
+ //        console.log("basemap gallery error:  ", msg);
+ //      });
 
 
 	var extent;
@@ -76,6 +154,7 @@ function(
 	query.outFields = ["*"];
 	query.where = "EMBAY_ID =" + selectlayer;
 	queryTask.execute(query, showResults);
+	var imageParameters = new ImageParameters();
 
 	function showResults(results) 
 	{
@@ -102,11 +181,11 @@ function(
 			map.setExtent(extent, true);
 		}
 
-		var imageParameters = new ImageParameters();
+		
 		// layerDefs[0] = "Embayment='" + watershed + "'";
 		layerDefs[4] = "EMBAY_ID=" + selectlayer;
 		// layerDefs[11] = "Subembayments";
-		// layerDefs[4] = 'towns';
+		// // layerDefs[4] = 'towns';
 		// layerDefs[1] = 'wastewater';
 		imageParameters.layerDefinitions = layerDefs;
 		imageParameters.layerIds = [4];
@@ -125,7 +204,22 @@ function(
 
 		map.addLayer(dynamicMapServiceLayer);
 	
+		// console.log(map.extent);
 
+		var featureSet = results || {};
+		var features = featureSet.features || [];
+
+		extent = esri.graphicsExtent(features);
+		// console.log(features.length);
+		if (!extent && features.length == 1) 
+		{
+			var point = features[0];
+			map.centerAndZoom(point, 12);
+		}
+		else 
+		{
+			map.setExtent(extent, true);
+		}
 
 	}
 
@@ -133,10 +227,25 @@ var Subwatersheds = new FeatureLayer("http://gis-services.capecodcommission.org/
 		{
 		mode: FeatureLayer.MODE_ONDEMAND,
 		outFields: ["*"],
+		// maxAllowableOffset: map.extent,
 		opacity: 1
 		});
 		Subwatersheds.hide();
+		// Subwatersheds.setExtent(extent);
 		map.addLayer(Subwatersheds);
+
+
+// var Subwatersheds = new ArcGISDynamicMapServiceLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/Projects/208_Plan/MapServer/22", {"imageParameters": imageParameters
+// 		// {
+// 		// mode: FeatureLayer.MODE_ONDEMAND,
+// 		// outFields: ["*"],
+// 		// maxAllowableOffset: map.extent,
+// 		// opacity: 1
+// 		});
+// 		// Subwatersheds.hide();
+// 		// Subwatersheds.setExtent(extent);
+// 		map.addLayer(Subwatersheds);
+
 
 var Subembayments = new FeatureLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/11",
 		{
@@ -272,7 +381,7 @@ var FlowThrough = new FeatureLayer('http://gis-services.capecodcommission.org/ar
 	
 $('#nitrogen').on('click', function(e){
 	e.preventDefault();
-	
+	console.log(NitrogenLayer);
 	if($(this).attr('data-visible')=='off')
 	{
 		NitrogenLayer.show();

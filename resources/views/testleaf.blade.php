@@ -96,6 +96,11 @@
   var basemap = basemaps.value;
   setBasemap(basemap);
   }
+
+L.polygon( <LatLng[]> latlngs, <Polyline options> options? )
+
+
+  
 </script>
 
 </body>

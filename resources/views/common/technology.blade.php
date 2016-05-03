@@ -19,7 +19,13 @@
 				<br />{{$tech->Technology_Strategy}}&nbsp;<i class="fa fa-question-circle"></i>
 				</a>			
 			</div>
-			<div>
+<!-- 			<div>
+				<div id="info">
+	  <div>Select a shape then draw on map to add graphic</div>
+
+	  <button id="Polygon">Polygon</button>
+
+	</div> -->
 				@if($tech->Unit_Metric =='Acres')
 					<p class="select"><button id="select_area">Select a location</button> <span>@{{subembayment}}</span></p>
 					<p>
@@ -74,8 +80,10 @@
 <script src="{{url('/js/main.js')}}"></script>
 <script src="{{url('/js/app.js')}}"></script>
 
+
 <script>
 	$(document).ready(function(){
+
 		$('#select_area').on('click', function(f){
 			f.preventDefault();
 			// console.log('button clicked');
