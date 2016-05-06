@@ -110,27 +110,24 @@
 		  
 		  console.log(polystring);
 		  	var url = "{{url('/testmap/Nitrogen/')}}"+'/'+polystring;
-					$.ajax({
-						method: 'GET',
-						url: url
-					})
-						.done(function(msg){
-							// msg = $.parseJSON(msg);
-							console.log(msg[0]);
-							// console.log(msg);
-							// var txtmsg = "Total Nitrogen in Polygon: " + msg[0].UnAttenFull;
-							// alert(txtmsg);
+		  	$('#testparcel').attr('href', url);
+					// $.ajax({
+					// 	method: 'GET',
+					// 	url: url
+					// })
+					// 	.done(function(msg){
+					// 		// msg = $.parseJSON(msg);
+					// 		console.log(msg);
+					// 		// console.log(msg);
+					// 		// var txtmsg = "Total Nitrogen in Polygon: " + msg[0].UnAttenFull;
+					// 		// alert(txtmsg);
 							
-						});
+					// 	});
 
 		  // console.log(symbol);
 		  var area = evt.geometry.getExtent();
 		  // console.log(area);
 		}
-
-	  // var template = new InfoTemplate();
-			// template.setTitle("<b>${EMBAY_DISP}</b>");
-			// template.setContent("<a href='{{url('map')}}/${EMBAY_ID}'>Create a scenario for ${EMBAY_DISP}</a>");  
 
 	 
 	});
@@ -144,6 +141,7 @@
 	  <button id="Polygon">Polygon</button>
 
 	</div>
+	<p><a href="" id="testparcel">Get Parcel Data for Polygon</a></p>
 
   <div data-dojo-type="dijit/layout/BorderContainer" 
 	   data-dojo-props="design:'headline', gutters:false" 

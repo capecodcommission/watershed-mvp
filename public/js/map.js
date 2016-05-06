@@ -82,7 +82,7 @@ var fillSymbol = new SimpleFillSymbol();
 			if ( evt.target.id === "info" ) {
 			  return;
 			}
-			console.log(evt);
+			
 			var tool = evt.target.id.toLowerCase();
 			map.disableMapNavigation();
 			tb.activate(tool);
@@ -120,7 +120,7 @@ var fillSymbol = new SimpleFillSymbol();
 					})
 						.done(function(msg){
 							// msg = $.parseJSON(msg);
-							console.log(msg[0]);
+							console.log(msg);
 							// console.log(msg);
 							// var txtmsg = "Total Nitrogen in Polygon: " + msg[0].UnAttenFull;
 							// alert(txtmsg);
@@ -132,7 +132,47 @@ var fillSymbol = new SimpleFillSymbol();
 		  // console.log(area);
 		}
 
+// This is the Esri Leaflet code
+// Commenting this out for now
 
+ // var layer = L.esri.basemapLayer('Topographic').addTo(map);
+ //  var layerLabels;
+
+ //  function setBasemap(basemap) {
+ //    if (layer) {
+ //      map.removeLayer(layer);
+ //    }
+
+ //    layer = L.esri.basemapLayer(basemap);
+
+ //    map.addLayer(layer);
+
+ //    if (layerLabels) {
+ //      map.removeLayer(layerLabels);
+ //    }
+
+ //    if (basemap === 'ShadedRelief'
+ //     || basemap === 'Oceans'
+ //     || basemap === 'Gray'
+ //     || basemap === 'DarkGray'
+ //     || basemap === 'Imagery'
+ //     || basemap === 'Terrain'
+ //   ) {
+ //      layerLabels = L.esri.basemapLayer(basemap + 'Labels');
+ //      map.addLayer(layerLabels);
+ //    }
+ //  }
+
+  // function changeBasemap(basemaps){
+  // var basemap = basemaps.value;
+  // setBasemap(basemap);
+  // }
+
+/*******************************
+*
+*	This is the ArcGIS Basemap Gallery which breaks everything
+*
+*********************************/
 
 	// var basemapGallery = new BasemapGallery({
  //        showArcGISBasemaps: true,

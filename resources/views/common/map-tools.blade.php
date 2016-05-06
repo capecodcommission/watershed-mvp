@@ -8,6 +8,19 @@
                 <div id="basemapGallery"></div>
             </div>
         </div> -->
+
+        <div id="basemaps-wrapper" class="leaflet-bar">
+  <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">
+    <option value="Topographic">Topographic<options>
+    <option value="Streets">Streets</option>
+    <option value="NationalGeographic">National Geographic<options>
+    <option value="Oceans">Oceans<options>
+    <option value="Gray">Gray<options>
+    <option value="DarkGray">Dark Gray<options>
+    <option value="Imagery">Imagery<options>
+    <option value="ShadedRelief">Shaded Relief<options>
+  </select>
+</div>
     </div>
 		<div class="js-menu sliding-panel-content is-visible">
 <!-- 		<div id="info">

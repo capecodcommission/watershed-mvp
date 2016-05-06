@@ -26,6 +26,17 @@
 	  <button id="Polygon">Polygon</button>
 
 	</div> -->
+
+
+			<!-- 
+					This needs to be a case/switch based on the show_in_wmvp field
+					0 => (this shouldn't ever appear because this technology shouldn't have been listed)
+					1 => user will enter a unit metric to use for calculations (acres, linear feet, etc)
+					2 => user will need to select a polygon for the treatment area
+					3 => user will select a polygon and enter the unit metric for the treatment area calculation
+					4 => user does not enter a treatment area (Fertilizer Mgmt or Stormwater BMPs)
+			 -->
+
 				@if($tech->Unit_Metric =='Acres')
 					<p class="select"><button id="select_area">Select a location</button> <span>@{{subembayment}}</span></p>
 					<p>

@@ -79,7 +79,14 @@ class WizardController extends Controller
 		// 		'nitrogen_totals' => $nitrogen_totals[0]
 		// 	]);
 
-		return $parcels;
+		$total_septic_nitrogen = 0;
+		foreach ($parcels as $parcel) 
+		{
+			$total_septic_nitrogen += $parcel->wtp_nload_septic;
+		}
+
+		// return $parcels;
+		return view ('layouts/test_septic', ['parcels'=>$parcels, 'total_septic_nitrogen'=>$total_septic_nitrogen]);
 	}
 	
 }
