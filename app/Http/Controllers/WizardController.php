@@ -75,9 +75,9 @@ class WizardController extends Controller
 
 		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon \'' . $poly . '\'');
 		// dd($parcels);
-		// JavaScript::put([
-		// 		'nitrogen_totals' => $nitrogen_totals[0]
-		// 	]);
+		JavaScript::put([
+				'nitrogen' => $nitrogen_totals[0]
+			]);
 
 		$total_septic_nitrogen = 0;
 		foreach ($parcels as $parcel) 

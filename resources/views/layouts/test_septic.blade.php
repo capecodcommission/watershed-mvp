@@ -7,7 +7,6 @@
 	<body>
 		<div class="wrapper">
 			<h1>Treatment for Polygon</h1>
-
 			<div id="app">
 
 			
@@ -24,7 +23,18 @@
 				</thead>
 				<tbody>
 				@foreach($parcels as $parcel)
+					<parcel 
+						wtp-nload-septic = {{$parcel->wtp_nload_septic}}
+						wtp-parcel-id="{{$parcel->wtp_parcel_id}}"
+						treatment-wiz-id = {{$parcel->treatment_wiz_id}}
+						wtp-land-use-existing = '{{$parcel->wtp_land_use_existing}}'
+						wtp-town-id = {{ $parcel->wtp_town_id }}
+						wtp-subwater-id = {{$parcel->wtp_subwater_id}}
+					>
+					</parcel>
+				@endforeach
 				
+					{{-- 
 					<tr>
 						
 						<td>{{$parcel->wtp_parcel_id}}</td>
@@ -33,11 +43,20 @@
 						<td>{{$parcel->wtp_land_use_existing}}</td>
 						<td>{{$parcel->wtp_town_id}}</td>
 					</tr>
-				@endforeach	
+				@endforeach	 --}}
 
 				</tbody>
 			</table>
-
+<template id="parcel-template">
+		<div class="parcel" id="@{{WtpParcelId}}">
+				<p>
+					Subwatershed: @{{WtpSubwaterId}}<br />
+					Septic Nitrogen: @{{WtpNloadSeptic}}kg <br />
+					Land Use: @{{WtpLandUseExisting}}<br />
+					Town: @{{WtpTownId}}
+				</p>
+		</div>
+	</template>
 			<p>Total Septic N load for this polygon: {{$total_septic_nitrogen}}kg</p>
 
 

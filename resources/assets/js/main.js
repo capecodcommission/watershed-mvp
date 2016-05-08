@@ -31,6 +31,25 @@ Vue.component('Treatment', {
 			]
 });
 
+Vue.component('parcel', {
+	template: '#parcel-template',
+	props: [
+				'TreatmentWizId',
+				'WtpParcelId',
+				'WtpSubwaterId',
+				'WtpNloadSeptic',
+				'WtpLandUseExisting',
+				'WtpTownId'
+			],
+	computed: {
+			NLoad_Treated: function()
+				{
+					return this.WtpNloadSeptic * ((100 - this.myEffective)/100)
+				}
+	}
+
+});
+
 
 new Vue({
 				http: {
@@ -81,7 +100,6 @@ new Vue({
 					treated: function()
 					{
 						return this.att * ((100 - this.effective)/100);
-						
 					},
 					fert_unatt_treated: function()
 					{
@@ -90,7 +108,6 @@ new Vue({
 					fert_treated: function()
 					{
 						return (this.fert_att * ((100 - this.fert_percent)/100));
-						
 					},
 					fert_difference: function()
 					{
@@ -103,7 +120,6 @@ new Vue({
 					storm_treated: function()
 					{
 						return (this.storm_att * ((100 - this.storm_percent)/100));
-						
 					},
 					storm_difference: function()
 					{
