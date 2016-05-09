@@ -22,14 +22,14 @@ Vue.component('subembayment', {
 		}
 	});
 
-Vue.component('Treatment', {
-	props: [
-				'TreatmentID',
-				'TreatmentType_ID',
-				'Treatment_PerReduce',
-				'ScenarioID'
-			]
-});
+// Vue.component('Treatment', {
+// 	props: [
+// 				'TreatmentID',
+// 				'TreatmentType_ID',
+// 				'Treatment_PerReduce',
+// 				'ScenarioID'
+// 			]
+// });
 
 Vue.component('parcel', {
 	template: '#parcel-template',
@@ -39,12 +39,14 @@ Vue.component('parcel', {
 				'WtpSubwaterId',
 				'WtpNloadSeptic',
 				'WtpLandUseExisting',
-				'WtpTownId'
+				'WtpTownId',
+				'WtpWwfExisting',
+				'my-treatment'
 			],
 	computed: {
 			NLoad_Treated: function()
 				{
-					return this.WtpNloadSeptic * ((100 - this.myEffective)/100)
+					return (this.WtpWwfExisting * this.my-treatment * 365 * 3.785)/1000000;
 				}
 	}
 
@@ -64,6 +66,7 @@ new Vue({
 				{
 					unatt: parseFloat(nitrogen.Total_UnAtt),
 					att: parseFloat(nitrogen.Total_Att),
+					treatment: 13,
 					effective: 0,
 					total_unatt: parseFloat(nitrogen.Total_UnAtt),
 					total_att: parseFloat(nitrogen.Total_Att),
@@ -78,22 +81,22 @@ new Vue({
 				},
 				// components: {subembayment, Treatment},
 				
-				methods: {
-					AddNewTreatment: function() {
-						// console.log(id.TreatmentType_ID);
-						console.log(this.Treatment);
-						this.$http.post('/api/treatments/', this.Treatment, function(data){
-							console.log(data);
-						});
-					},
+				// methods: {
+				// 	AddNewTreatment: function() {
+				// 		// console.log(id.TreatmentType_ID);
+				// 		console.log(this.Treatment);
+				// 		this.$http.post('/api/treatments/', this.Treatment, function(data){
+				// 			console.log(data);
+				// 		});
+				// 	},
 
-					EditTreatment: function(id) {
-						var treatment = this.Treatment;
-						this.$http.patch('/api/treatments/' + id, treatment, function (data) {
-							console.log(data)
-						})
-					}
-				},
+				// 	EditTreatment: function(id) {
+				// 		var treatment = this.Treatment;
+				// 		this.$http.patch('/api/treatments/' + id, treatment, function (data) {
+				// 			console.log(data)
+				// 		})
+				// 	}
+				// },
 
 				computed:
 				{

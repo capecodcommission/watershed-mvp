@@ -109,8 +109,6 @@
 						</a>
 					</div>		
 									<div id="info">
-	  <div>Select a shape then draw on map to add graphic</div>
-
 	  <button id="Polygon">Polygon</button>
 
 	</div>

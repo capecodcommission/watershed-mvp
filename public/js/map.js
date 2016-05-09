@@ -39,12 +39,7 @@ function(
 			ArcGISDynamicMapServiceLayer, 
 			ImageParameters, 
 			FeatureLayer, 
-//  adding in polygon drawing tool
-		// Draw,
-		// SimpleMarkerSymbol, SimpleLineSymbol,
-		// SimpleFillSymbol, CartographicLineSymbol, 
-		// Graphic, 
-		// Color, 
+
 		Draw,
 		SimpleFillSymbol, 
 		Graphic, 
