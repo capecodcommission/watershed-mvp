@@ -1,6 +1,7 @@
 var map;
 
 var watershed;
+var embay_shape;
 require([
 	"esri/map",
 	// "esri/dijit/BasemapGallery",
@@ -115,7 +116,7 @@ var fillSymbol = new SimpleFillSymbol();
 					})
 						.done(function(msg){
 							// msg = $.parseJSON(msg);
-							console.log(msg);
+							// console.log(msg);
 							// console.log(msg);
 							// var txtmsg = "Total Nitrogen in Polygon: " + msg[0].UnAttenFull;
 							// alert(txtmsg);
@@ -189,18 +190,27 @@ var fillSymbol = new SimpleFillSymbol();
 	query.outFields = ["*"];
 	query.where = "EMBAY_ID =" + selectlayer;
 	queryTask.execute(query, showResults);
+	// console.log(queryTask);
 	var imageParameters = new ImageParameters();
 
 	function showResults(results) 
 	{
+		// console.log(results);
 		var resultItems = [];
 		var resultCount = results.features.length;
 		for (var i = 0; i < resultCount; i++) 
 		{
 			var featureAttributes = results.features[i].attributes;
 			watershed = featureAttributes['EMBAY_DISP'];
-		}
+			embay_shape = results.features[i].geometry;
+			// console.log(embay_shape);
+			// console.log(results.features[i].geometry);
 
+		}
+		console.log(embay_shape);
+
+			query.geometry = embay_shape;
+	
 		var featureSet = results || {};
 		var features = featureSet.features || [];
 
@@ -219,9 +229,11 @@ var fillSymbol = new SimpleFillSymbol();
 		
 		// layerDefs[0] = "Embayment='" + watershed + "'";
 		layerDefs[4] = "EMBAY_ID=" + selectlayer;
-		// layerDefs[11] = "Subembayments";
-		// // layerDefs[4] = 'towns';
-		// layerDefs[1] = 'wastewater';
+		layerDefs[11] = "EMBAY_ID="+selectlayer;
+		layerDefs[5] = 'towns';
+		layerDefs[1] = 'wastewater';
+		layerDefs[6] = "EMBAY_ID="+selectlayer;
+
 		imageParameters.layerDefinitions = layerDefs;
 		imageParameters.layerIds = [4];
 		imageParameters.layerOption = ImageParameters.LAYER_OPTION_SHOW;
@@ -231,6 +243,7 @@ var fillSymbol = new SimpleFillSymbol();
 		var graphicsAreaLayer = new esri.layers.GraphicsLayer();
 		graphicsAreaLayer.disableMouseEvents();
 		map.addLayer(graphicsAreaLayer);
+		// console.log(graphicsAreaLayer);
 
 		//construct ArcGISDynamicMapServiceLayer with imageParameters from above
 		// var dynamicMapServiceLayer = new ArcGISDynamicMapServiceLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/Projects/208_Plan/MapServer", { "imageParameters": imageParameters});
@@ -239,7 +252,7 @@ var fillSymbol = new SimpleFillSymbol();
 
 		map.addLayer(dynamicMapServiceLayer);
 	
-		// console.log(map.extent);
+		// console.log(dynamicMapServiceLayer);
 
 		var featureSet = results || {};
 		var features = featureSet.features || [];
@@ -258,14 +271,21 @@ var fillSymbol = new SimpleFillSymbol();
 
 	}
 
-var Subwatersheds = new FeatureLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/Projects/208_Plan/MapServer/22",
+	
+console.log(embay_shape);
+
+var Subwatersheds = new FeatureLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/6",
 		{
-		mode: FeatureLayer.MODE_ONDEMAND,
-		outFields: ["*"],
-		// maxAllowableOffset: map.extent,
-		opacity: 1
+			mode: FeatureLayer.MODE_ONDEMAND,
+			outFields: ["*"],
+			// maxAllowableOffset: map.extent,
+			opacity: 1
 		});
-		Subwatersheds.hide();
+
+
+	query.spatialRelationship = Query.SPATIAL_REL_INTERSECTS;
+	Subwatersheds.selectFeatures(query);
+		// Subwatersheds.hide();
 		// Subwatersheds.setExtent(extent);
 		map.addLayer(Subwatersheds);
 
@@ -289,7 +309,11 @@ var Subembayments = new FeatureLayer("http://gis-services.capecodcommission.org/
 		opacity: 1
 		});
 		Subembayments.hide();
+
 		map.addLayer(Subembayments);
+		query.spatialRelationship = Query.SPATIAL_REL_INTERSECTS;
+		// console.log(Query.SPATIAL_REL_INTERSECTS);
+	Subembayments.selectFeatures(query, 1);
 
 var NitrogenLayer = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/0',
 		{
