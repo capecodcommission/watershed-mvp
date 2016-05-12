@@ -36,14 +36,16 @@ class Treatment extends Model
 		'Cost20yr_OM',
 		'Cost20yr_Cap'
 	];
-	// protected $dates = array('CreateDate', 'UpdateDate');
-	const CREATED_AT = 'CreateDate';
+	
+	
 
     /**
-     * The name of the "updated at" column.
+     * The name of the "created at" and "updated at" columns.
+     * These are different from the default created_at and updated_at because we are using an existing table that already had these fields
      *
      * @var string
      */
+    const CREATED_AT = 'CreateDate';
     const UPDATED_AT = 'UpdateDate';
 
 }

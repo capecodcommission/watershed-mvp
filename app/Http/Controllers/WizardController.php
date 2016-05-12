@@ -68,12 +68,12 @@ class WizardController extends Controller
 	 * @return void
 	 * @author 
 	 **/
-	public function getNitrogen($treatment, $poly)
+	public function getNitrogen($treatment_id, $poly)
 	{
 		// $nitrogen_totals = DB::select('exec CapeCodMA.GET_NitrogenFromPolygon \'' . $poly . '\'');
 		// dd($nitrogen_totals[0]);
 
-		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $treatment . ', \'' . $poly . '\'');
+		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $treatment_id . ', \'' . $poly . '\'');
 		// dd($parcels);
 		// JavaScript::put([
 		// 		'nitrogen' => $nitrogen_totals[0]
@@ -90,7 +90,11 @@ class WizardController extends Controller
 		*
 		**********************************************/
 
-
+		$treatment = Treatment::find($treatment_id);
+		$treatment->POLY_STRING = $poly;
+		$treatment->Custom_POLY = 1;
+		$treatment->save();
+		dd($treatment);
 		$total_septic_nitrogen = 0;
 		foreach ($parcels as $parcel) 
 		{
