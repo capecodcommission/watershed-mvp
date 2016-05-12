@@ -68,16 +68,28 @@ class WizardController extends Controller
 	 * @return void
 	 * @author 
 	 **/
-	public function getNitrogen($poly)
+	public function getNitrogen($treatment, $poly)
 	{
-		$nitrogen_totals = DB::select('exec CapeCodMA.GET_NitrogenFromPolygon \'' . $poly . '\'');
-// dd($nitrogen_totals[0]);
+		// $nitrogen_totals = DB::select('exec CapeCodMA.GET_NitrogenFromPolygon \'' . $poly . '\'');
+		// dd($nitrogen_totals[0]);
 
-		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon \'' . $poly . '\'');
+		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $treatment . ', \'' . $poly . '\'');
 		// dd($parcels);
-		JavaScript::put([
-				'nitrogen' => $nitrogen_totals[0]
-			]);
+		// JavaScript::put([
+		// 		'nitrogen' => $nitrogen_totals[0]
+		// 	]);
+
+
+		/**********************************************
+		*	We need to get the total Nitrogen for the custom polygon that this technology will treat 
+		*	(fertilizer, stormwater, septic, groundwater, etc.)
+		*	and report that back to the technology pop-up. After the user adjusts the treatment settings
+		*	we need to save that as "treated_nitrogen" and be able to attenuate it 
+		*	If this is a collection & treat (sewer) then we will need to create a new treatment record with a parent_treatment_id so we 
+		*	can store the N load and the destination point where it will be treated.
+		*
+		**********************************************/
+
 
 		$total_septic_nitrogen = 0;
 		foreach ($parcels as $parcel) 

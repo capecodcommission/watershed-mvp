@@ -23,7 +23,7 @@ Route::get('/testmap', function(){
 Route::get('/testleaf', function(){
 	return view('testleaf');
 });
-Route::get('/testmap/Nitrogen/{poly}', 'WizardController@getNitrogen');
+Route::get('/testmap/Nitrogen/{treatment}/{poly}', 'WizardController@getNitrogen');
 
 Route::get('/tech/{tech}', 'TechnologyController@get');
 

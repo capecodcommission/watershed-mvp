@@ -6,7 +6,7 @@
 <div class="popdown-content" id="app">
 	<header><h2>{{$tech->Technology_Strategy}}</h2></header>
 	<section class="body">
-		<form action="" @submit.prevent="AddNewTreatment" method="POST">
+	<p>Treatment: {{$treatment['TreatmentId']}}</p>
 		
 			<!-- 	<input type="text" name="csrf-token" id="token" value="{{ csrf_token() }}">
 				<input type="text" name="TreatmentType_ID" id="TreatmentType_ID" v-model="Treatment.TreatmentType_ID">
@@ -37,11 +37,23 @@
 					4 => user does not enter a treatment area (Fertilizer Mgmt or Stormwater BMPs)
 			 -->
 
-				@if($tech->Unit_Metric =='Acres')
+				@if($tech->Show_In_wMVP == 1)
+					<!-- <p class="select"><button id="select_area">Select a location</button> <span>@{{subembayment}}</span></p> -->
 					<p class="select"><button id="select_area">Select a location</button> <span>@{{subembayment}}</span></p>
 					<p>
-						<label for="acres">Enter number of acres to be treated: 
-						<input type="text" id="acres" name="acres" size="3" style="width: auto;"></label>
+						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated: 
+						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;"></label>
+					</p>
+				@elseif($tech->Show_In_wMVP == 2)
+					<!-- <div id="info">Select a polygon for the treatment area:  -->
+						<button id="select_polygon">Draw Polygon</button>
+					<!-- </div> -->
+					<!-- <p class="select"><button id="select_area">Select a polygon</button> <span>@{{subembayment}}</span></p> -->
+				@elseif($tech->Show_In_wMVP == 3)
+					<p class="select"><button id="select_area">Select a polygon</button> <span>@{{subembayment}}</span></p>
+					<p>
+						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated: 
+						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;"></label>
 					</p>
 				@endif
 			</div>
@@ -66,11 +78,11 @@
 						need to change this so it shows & updates the relevant N load (storm, fert, septic, etc.) that each technology is acting on. 
 						also, the "fert_percent" slider below needs to change based on which N load is being treated for this particular technology
 				 -->
-					<td>@{{ fert_unatt | round }}kg</td>
-					<td>@{{fert_att | round }}kg</td>
+{{-- 					<td>@{{ storm_unatt | round }}kg</td>
+					<td>@{{storm_att | round }}kg</td>
 					<td>@{{fert_unatt_treated |round}}kg</td>
 					<td>@{{fert_treated | round}}kg</td>
-					<td>@{{fert_difference | round}}kg</td> 
+					<td>@{{fert_difference | round}}kg</td>  --}}
 				</tr>
 				
 			</tbody>
@@ -82,7 +94,7 @@
 <!-- 			<p><a href="#" class="button">Apply</a>
 				<button type="submit">Apply</button>
 			</p> -->
-			</form>
+
 
 	</section>
 </div>
@@ -94,7 +106,7 @@
 
 <script>
 	$(document).ready(function(){
-
+	 treatment = {{$treatment['TreatmentId']}};
 		$('#select_area').on('click', function(f){
 			f.preventDefault();
 			// console.log('button clicked');
@@ -121,5 +133,21 @@
 
 			});
 		});
+
+		$('#select_polygon').on('click', function(f){
+			f.preventDefault();
+			$('#popdown-opacity').hide();
+			// $( "#info" ).trigger( "click" );
+			// dom.byId("info")
+
+			map.disableMapNavigation();
+			tb.activate('polygon');
+			// console.log('polygon clicked');
+			// $('#popdown-opacity').show();
+
+		});
+
+
+
 	});
 </script>

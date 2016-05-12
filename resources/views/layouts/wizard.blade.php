@@ -80,7 +80,7 @@
 			});
 			$('.sliding-panel-button').on('click', function(e){
 				$('.sliding-panel-content').toggleClass('is-visible');
-				console.log('button clicked');
+				// console.log('button clicked');
 			});
 
 		});

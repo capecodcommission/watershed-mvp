@@ -2,6 +2,7 @@ var map;
 
 var watershed;
 var embay_shape;
+var treatment;
 require([
 	"esri/map",
 	// "esri/dijit/BasemapGallery",
@@ -109,7 +110,7 @@ var fillSymbol = new SimpleFillSymbol();
 		  // console.log('exec CapeCodMa.Get_NitrogenFromPolygon \'' + polystring + '\'');
 		  
 		  console.log(polystring);
-		  	var url = "/testmap/Nitrogen"+'/'+polystring;
+		  	var url = "/testmap/Nitrogen"+'/'+treatment+'/'+polystring;
 					$.ajax({
 						method: 'GET',
 						url: url
@@ -120,7 +121,8 @@ var fillSymbol = new SimpleFillSymbol();
 							// console.log(msg);
 							// var txtmsg = "Total Nitrogen in Polygon: " + msg[0].UnAttenFull;
 							// alert(txtmsg);
-							
+							console.log('success');
+							$('#popdown-opacity').show();
 						});
 
 		  // console.log(symbol);
@@ -207,7 +209,7 @@ var fillSymbol = new SimpleFillSymbol();
 			// console.log(results.features[i].geometry);
 
 		}
-		console.log(embay_shape);
+		// console.log(embay_shape);
 
 			query.geometry = embay_shape;
 	
@@ -272,7 +274,7 @@ var fillSymbol = new SimpleFillSymbol();
 	}
 
 	
-console.log(embay_shape);
+// console.log(embay_shape);
 
 var Subwatersheds = new FeatureLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/6",
 		{
@@ -285,7 +287,7 @@ var Subwatersheds = new FeatureLayer("http://gis-services.capecodcommission.org/
 
 	query.spatialRelationship = Query.SPATIAL_REL_INTERSECTS;
 	Subwatersheds.selectFeatures(query);
-		// Subwatersheds.hide();
+		Subwatersheds.hide();
 		// Subwatersheds.setExtent(extent);
 		map.addLayer(Subwatersheds);
 

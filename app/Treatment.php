@@ -23,8 +23,6 @@ class Treatment extends Model
 		'Cost_OM_Input',
 		'Treatment_Acreage',
 		'Treatment_Parcels',
-		'CreateDate',
-		'UpdateDate',
 		'POLY_STRING',
 		'Custom_POLY',
 		'Cost_Capital',
@@ -36,6 +34,16 @@ class Treatment extends Model
 		'Cost_Total',
 		'Nload_Reduction',
 		'Cost20yr_OM',
-		'COst20yr_Cap'
+		'Cost20yr_Cap'
 	];
+	// protected $dates = array('CreateDate', 'UpdateDate');
+	const CREATED_AT = 'CreateDate';
+
+    /**
+     * The name of the "updated at" column.
+     *
+     * @var string
+     */
+    const UPDATED_AT = 'UpdateDate';
+
 }
