@@ -135,9 +135,13 @@
 
 
 			<div class="technology">
-				<a href="{{url('/tech/40')}}" class="popdown">Cluster</a>
+				<a href="{{url('/tech/40')}}" class="popdown">
+					<img src="http://www.cch2o.org/Matrix/icons/cluster_3.svg" alt="" ><br />
+					Single-stage Cluster</a>
 			</div>
-
+			<div class="technology">
+				<a href="{{url('/tech-collect/44')}}" class="popdown">Collect &amp; Move</a>
+			</div>
 
 
 

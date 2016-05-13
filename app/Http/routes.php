@@ -23,9 +23,14 @@ Route::get('/testmap', function(){
 Route::get('/testleaf', function(){
 	return view('testleaf');
 });
+
+// this route should be changed or recreated to be more accurate for what it does
+// which is take a polygon string and retrieve the parcels contained within, along with N load, etc.
 Route::get('/testmap/Nitrogen/{treatment}/{poly}', 'WizardController@getNitrogen');
 
 Route::get('/tech/{tech}', 'TechnologyController@get');
+
+Route::get('/tech-collect/{tech}', 'TechnologyController@getCollection');
 
 Route::get('/map/point/{x}/{y}', 'MapController@point');
 
