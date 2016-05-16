@@ -42,10 +42,10 @@ function(
 			ImageParameters, 
 			FeatureLayer, 
 
-		Draw,
-		SimpleFillSymbol, 
-		Graphic, 
-		Color,
+			Draw,
+			SimpleFillSymbol, 
+			Graphic, 
+			Color,
 
 			Query, 
 			QueryTask, 
@@ -121,7 +121,9 @@ var fillSymbol = new SimpleFillSymbol();
 							// console.log(msg);
 							// var txtmsg = "Total Nitrogen in Polygon: " + msg[0].UnAttenFull;
 							// alert(txtmsg);
-							console.log('success');
+							// console.log('success');
+							// var poly_nitrogen = msg.poly_nitrogen->Septic;
+							$('#total_nitrogen_polygon').text(msg + 'kg');
 							$('#popdown-opacity').show();
 						});
 

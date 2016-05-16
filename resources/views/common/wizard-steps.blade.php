@@ -132,18 +132,39 @@
 		<div class="acc_cCont">
 		<p>Unattenuated Nitrogen from Septic: -- kg</p>
 			<p>Attenuated Nitrogen from Septic: -- kg</p>
-
+			<p><a href="" id="show_modal">Show Treatment Window</a></p>
 
 			<div class="technology">
-				<a href="{{url('/tech/40')}}" class="popdown">
+				<a href="{{url('/tech-collect/40')}}" class="popdown">
 					<img src="http://www.cch2o.org/Matrix/icons/cluster_3.svg" alt="" ><br />
-					Single-stage Cluster</a>
+					Single-Stage Cluster</a>
 			</div>
 			<div class="technology">
-				<a href="{{url('/tech-collect/44')}}" class="popdown">Collect &amp; Move</a>
+				<a href="{{url('/tech-collect/41')}}" class="popdown">
+					<img src="http://www.cch2o.org/Matrix/icons/cluster_3.svg" alt="" ><br />
+					Two-Stage Cluster</a>
 			</div>
+			<div class="technology">
+				<a href="{{url('/tech-collect/42')}}" class="popdown">
+					<img src="http://www.cch2o.org/Matrix/icons/conventional_treatment.svg" alt="" ><br />
+					Conventional Treatment</a>
+			</div>			
+			<div class="technology">
+				<a href="{{url('/tech-collect/43')}}" class="popdown">
+					<img src="http://www.cch2o.org/Matrix/icons/advanced_treatment.svg" alt="" ><br />
+					Advanced Treatment</a>
+			</div>			
 
-
+			<div class="technology">
+				<a href="{{url('/tech-collect/44')}}" class="popdown">
+					<img src="http://www.cch2o.org/Matrix/icons/cluster_3.svg" alt="" ><br />
+					Satellite Treatment</a>
+			</div>	
+			<div class="technology">
+				<a href="{{url('/tech-collect/45')}}" class="popdown">
+					<img src="http://www.cch2o.org/Matrix/icons/cluster_3.svg" alt="" ><br />
+					Satellite Treatment - Enahnced</a>
+			</div>	
 
 
 		</div>

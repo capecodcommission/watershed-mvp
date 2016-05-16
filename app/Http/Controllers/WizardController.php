@@ -68,16 +68,17 @@ class WizardController extends Controller
 	 * @return void
 	 * @author 
 	 **/
-	public function getNitrogen($treatment_id, $poly)
+	public function getPolygon($treatment_id, $poly)
 	{
 		// $nitrogen_totals = DB::select('exec CapeCodMA.GET_NitrogenFromPolygon \'' . $poly . '\'');
 		// dd($nitrogen_totals[0]);
 
 		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $treatment_id . ', \'' . $poly . '\'');
 		// dd($parcels);
-		// JavaScript::put([
-		// 		'nitrogen' => $nitrogen_totals[0]
-		// 	]);
+		$poly_nitrogen = $parcels[0]->Septic;
+		JavaScript::put([
+				'poly_nitrogen' => $parcels
+			]);
 
 
 		/**********************************************
@@ -85,24 +86,25 @@ class WizardController extends Controller
 		*	(fertilizer, stormwater, septic, groundwater, etc.)
 		*	and report that back to the technology pop-up. After the user adjusts the treatment settings
 		*	we need to save that as "treated_nitrogen" and be able to attenuate it 
-		*	If this is a collection & treat (sewer) then we will need to create a new treatment record with a parent_treatment_id so we 
+		*	If this is a collection & treat (sewer) then we will need to 
+		*	create a new treatment record with a parent_treatment_id so we 
 		*	can store the N load and the destination point where it will be treated.
 		*
 		**********************************************/
 
-		$treatment = Treatment::find($treatment_id);
-		$treatment->POLY_STRING = $poly;
-		$treatment->Custom_POLY = 1;
-		$treatment->save();
-		dd($treatment);
-		$total_septic_nitrogen = 0;
-		foreach ($parcels as $parcel) 
-		{
-			$total_septic_nitrogen += $parcel->wtp_nload_septic;
-		}
+		// $treatment = Treatment::find($treatment_id);
+		// $treatment->POLY_STRING = $poly;
+		// $treatment->Custom_POLY = 1;
+		// $treatment->save();
+		// dd($treatment);
+		// $total_septic_nitrogen = $parcels;
+		// foreach ($parcels as $parcel) 
+		// {
+		// 	$total_septic_nitrogen += $parcel->wtp_nload_septic;
+		// }
 
-		// return $parcels;
-		return view ('layouts/test_septic', ['parcels'=>$parcels, 'total_septic_nitrogen'=>$total_septic_nitrogen]);
+		return $poly_nitrogen;
+		// return view ('layouts/test_septic', ['parcels'=>$parcels, 'poly_nitrogen'=>$poly_nitrogen]);
 	}
 	
 }

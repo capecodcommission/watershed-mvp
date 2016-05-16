@@ -34,6 +34,7 @@
 					1 => user will enter a unit metric to use for calculations (acres, linear feet, etc)
 					2 => user will need to select a polygon for the treatment area
 					3 => user will select a polygon and enter the unit metric for the treatment area calculation
+						unit metric is used to calculate cost
 					4 => user does not enter a treatment area (Fertilizer Mgmt or Stormwater BMPs)
 			 -->
 

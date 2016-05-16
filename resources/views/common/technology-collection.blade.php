@@ -6,9 +6,7 @@
 <div class="popdown-content" id="app">
 	<header><h2>{{$tech->Technology_Strategy}}</h2></header>
 	<section class="body">
-	<p>Treatment: {{$treatment['TreatmentId']}}</p>
-		
-	<p>Nitrogen is being collected from a source polygon and moved to a destination point.</p>
+	<!-- <p>Treatment: {{$treatment['TreatmentId']}}</p> -->
 
 			<div class="technology">
 				<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
@@ -47,11 +45,11 @@
 						need to change this so it shows & updates the relevant N load (storm, fert, septic, etc.) that each technology is acting on. 
 						also, the "fert_percent" slider below needs to change based on which N load is being treated for this particular technology
 				 -->
-{{-- 					<td>@{{ storm_unatt | round }}kg</td>
-					<td>@{{storm_att | round }}kg</td>
-					<td>@{{fert_unatt_treated |round}}kg</td>
-					<td>@{{fert_treated | round}}kg</td>
-					<td>@{{fert_difference | round}}kg</td>  --}}
+ 					<td id="total_nitrogen_polygon"></td>
+					<td>-- kg</td>
+					<td>-- kg</td>
+					<td>-- kg</td>
+					<td>-- kg</td>  
 				</tr>
 				
 			</tbody>
@@ -110,6 +108,8 @@
 			tb.activate('polygon');
 			// console.log('polygon clicked');
 			// $('#popdown-opacity').show();
+			// console.log(poly_nitrogen);
+			// $('#total_nitrogen_polygon').text(poly_nitrogen + 'kg');
 			$('#select_destination').show();
 
 		});

@@ -64,6 +64,7 @@ new Vue({
 				el: 'body',
 				data:
 				{
+					// poly_nitrogen: poly_nitrogen.Septic,
 					unatt: parseFloat(nitrogen.Total_UnAtt),
 					att: parseFloat(nitrogen.Total_Att),
 					treatment: 13,

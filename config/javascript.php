@@ -13,7 +13,7 @@ return [
     | Example: 'footer' or ['footer', 'bottom']
     |
     */
-    'bind_js_vars_to_this_view' => ['layouts/test','layouts/wizard', 'common/subembayment-progress', 'common/technology', 'layouts/test_septic'],
+    'bind_js_vars_to_this_view' => ['layouts/test','layouts/wizard', 'common/subembayment-progress', 'common/technology', 'layouts/test_septic', 'common/technology-collection'],
 
     /*
     |--------------------------------------------------------------------------
