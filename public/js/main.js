@@ -11698,14 +11698,26 @@ Vue.component('subembayment', {
 	}
 });
 
-// Vue.component('Treatment', {
-// 	props: [
-// 				'TreatmentID',
-// 				'TreatmentType_ID',
-// 				'Treatment_PerReduce',
-// 				'ScenarioID'
-// 			]
-// });
+Vue.component('Treatment', {
+	template: '#treatment-template',
+	props: ['TreatmentID',
+	// 'TreatmentType_ID',
+	'Treatment_Rate', // this is the ppm or percent set by the user
+	// 'ScenarioID',
+	'Polygon', 'Total_Orig_Nitrogen' // this is the total Nitrogen this treatment is dealing with
+
+	],
+	computed: {
+		Nitrogen_Removed: function Nitrogen_Removed() // this is the *attenuated* Nitrogen removed by this treatment
+		{
+			return this.Total_Orig_Nitrogen * (this.Treatment_Rate / 100);
+		}
+
+	},
+	methods: {
+		drawPolygon: function drawPolygon() {}
+	}
+});
 
 Vue.component('parcel', {
 	template: '#parcel-template',

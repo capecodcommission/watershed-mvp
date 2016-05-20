@@ -6,7 +6,13 @@
 <div class="popdown-content" id="app">
 	<header><h2>{{$tech->Technology_Strategy}}</h2></header>
 	<section class="body">
-	<!-- <p>Treatment: {{$treatment['TreatmentId']}}</p> -->
+	<treatment
+			Total_Orig_Nitrogen = 0
+			TreatmentID="{{$treatment['TreatmentId']}}"
+			Polygon = ''
+			>
+	</treatment>
+
 
 			<div class="technology">
 				<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
@@ -14,54 +20,35 @@
 				<br />{{$tech->Technology_Strategy}}&nbsp;<i class="fa fa-question-circle"></i>
 				</a>			
 			</div>
-					<p class="select"><button id="select_polygon">Select a polygon</button> <span>@{{subembayment}}</span></p>
+					<p class="select"><button id="select_polygon" v-on:click="drawPolygon">Select a polygon</button> <span>@{{subembayment}}</span></p>
 
 					<p class="select_point">
 						<button id="select_destination" style="display:none;">
-							Select a destination point
+							Select a destination
 						</button> 
 						<span>@{{subembayment}}</span>
 					</p>
 					
 			</div>
-		<table>
-			<thead>
-				<tr>
-					<th colspan="2">Starting Values</th>
-					<th colspan="2">After Treatment</th>
-					<th></th>
-				</tr>
-				<tr>
-					<th>Unattenuated</th>
-					<th>Attenuated</th>
-					<th>Unattenuated</th>
-					<th>Attenuated</th>
-					<th>N Removed</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-				<!-- 
-						need to change this so it shows & updates the relevant N load (storm, fert, septic, etc.) that each technology is acting on. 
-						also, the "fert_percent" slider below needs to change based on which N load is being treated for this particular technology
-				 -->
- 					<td id="total_nitrogen_polygon"></td>
-					<td>-- kg</td>
-					<td>-- kg</td>
-					<td>-- kg</td>
-					<td>-- kg</td>  
-				</tr>
-				
-			</tbody>
-		</table>
+
 			<p>
-				Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.<br />
-				<input type="range" id="effective" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="Treatment.Treatment_PerReduce">
+				Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low_ppm}} and {{$tech->Nutri_Reduc_N_High_ppm}} ppm.<br />
+				<input type="range" id="effective" min="{{$tech->Nutri_Reduc_N_Low_ppm}}" max="{{$tech->Nutri_Reduc_N_High_ppm}}" v-model="Treatment.Treatment_Rate">
 			</p>
 
 
 	</section>
 </div>
+
+
+	<template id="treatment-template">
+		<div class="treatment" id="@{{TreatmentID}}">
+			<p>Total Unattenuated Nitrogen: <span id="total_nitrogen">@{{Total_Orig_Nitrogen}}</span></p>
+			<p>Nitrogen Removed by Treatment: <span id="Nitrogen_Removed">@{{Nitrogen_Removed}}</span></p>
+		</div>
+	</template>
+
+
 
 
 <script src="{{url('/js/main.js')}}"></script>

@@ -13,6 +13,7 @@ require([
 	"esri/layers/FeatureLayer",
 
 	"esri/toolbars/draw",
+	"esri/toolbars/edit",
 	"esri/symbols/SimpleFillSymbol", 
 	"esri/graphic", 
 	"esri/Color", 
@@ -43,6 +44,7 @@ function(
 			FeatureLayer, 
 
 			Draw,
+			Edit,
 			SimpleFillSymbol, 
 			Graphic, 
 			Color,
@@ -57,8 +59,10 @@ function(
 {
 	 parser.parse();
 
+var initialExtent = new Extent({ "xmin": -7980970.14, "ymin": 5033003.02, "xmax": -7705796.84, "ymax": 5216451.89, "spatialReference": { "wkid": 102100 } });
 	map = new Map("map", {
 		center: [-70.35, 41.68],
+		// extent: initialExtent,
 		zoom: 11,
 		basemap: "gray",
 		slider: true,
@@ -86,6 +90,13 @@ var fillSymbol = new SimpleFillSymbol();
 		  });
 		}
 
+
+
+/***********************************
+	Need to have an array of custom polygons so we can access them later
+	See 208 viewer for example with technology icon & color coding
+
+************************************/
 		function addGraphic(evt) {
 		  //deactivate the toolbar and clear existing graphics 
 		  tb.deactivate(); 
@@ -187,15 +198,19 @@ var fillSymbol = new SimpleFillSymbol();
 
 	var extent;
 	var layerDefs = [];
-	var queryTask = new QueryTask("http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/4");
+	// var queryTask = new QueryTask("http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/4");
 
-	var query = new Query();
-	query.returnGeometry = true;
-	query.outFields = ["*"];
-	query.where = "EMBAY_ID =" + selectlayer;
-	queryTask.execute(query, showResults);
-	// console.log(queryTask);
-	var imageParameters = new ImageParameters();
+	// var query = new Query();
+	// query.returnGeometry = true;
+	// query.outFields = ["*"];
+	// query.where = "EMBAY_ID =" + selectlayer;
+	// queryTask.execute(query, showResults);
+	// // console.log(queryTask);
+	// var imageParameters = new ImageParameters();
+
+
+/******************************************************/
+/* don't need this with the FeatureLayer defined below
 
 	function showResults(results) 
 	{
@@ -206,14 +221,14 @@ var fillSymbol = new SimpleFillSymbol();
 		{
 			var featureAttributes = results.features[i].attributes;
 			watershed = featureAttributes['EMBAY_DISP'];
-			embay_shape = results.features[i].geometry;
+			// embay_shape = results.features[i].geometry;
 			// console.log(embay_shape);
 			// console.log(results.features[i].geometry);
 
 		}
 		// console.log(embay_shape);
 
-			query.geometry = embay_shape;
+			// query.geometry = embay_shape;
 	
 		var featureSet = results || {};
 		var features = featureSet.features || [];
@@ -274,9 +289,26 @@ var fillSymbol = new SimpleFillSymbol();
 		}
 
 	}
-
+*/
 	
 // console.log(embay_shape);
+
+var embayments = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/4',
+			{
+			mode: FeatureLayer.MODE_ONDEMAND,
+			outFields: ["*"],
+			// maxAllowableOffset: map.extent,
+			opacity: 1
+		});
+embayments.setDefinitionExpression('EMBAY_ID = '+selectlayer);
+// extent = embayments.graphics[0]['extent'];
+// console.log(embayments.graphics);
+map.addLayer(embayments);
+var point = (embayments.X_Centroid, embayments.Y_Centroid);
+map.centerAndZoom(point, 11);
+map.setExtent(embayments.fullExtent);
+// console.log(embayments);
+// console.log(embayments[graphics[0]]);
 
 var Subwatersheds = new FeatureLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/6",
 		{
@@ -285,10 +317,11 @@ var Subwatersheds = new FeatureLayer("http://gis-services.capecodcommission.org/
 			// maxAllowableOffset: map.extent,
 			opacity: 1
 		});
+Subwatersheds.setDefinitionExpression('EMBAY_ID = '+selectlayer);
 
 
-	query.spatialRelationship = Query.SPATIAL_REL_INTERSECTS;
-	Subwatersheds.selectFeatures(query);
+	// query.spatialRelationship = Query.SPATIAL_REL_INTERSECTS;
+	// Subwatersheds.selectFeatures(query);
 		Subwatersheds.hide();
 		// Subwatersheds.setExtent(extent);
 		map.addLayer(Subwatersheds);
@@ -312,12 +345,14 @@ var Subembayments = new FeatureLayer("http://gis-services.capecodcommission.org/
 		outFields: ["*"],
 		opacity: 1
 		});
+Subembayments.setDefinitionExpression('EMBAY_ID = '+selectlayer);
+
 		Subembayments.hide();
 
 		map.addLayer(Subembayments);
-		query.spatialRelationship = Query.SPATIAL_REL_INTERSECTS;
+		// query.spatialRelationship = Query.SPATIAL_REL_INTERSECTS;
 		// console.log(Query.SPATIAL_REL_INTERSECTS);
-	Subembayments.selectFeatures(query, 1);
+	// Subembayments.selectFeatures(query, 1);
 
 var NitrogenLayer = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/0',
 		{
@@ -327,6 +362,7 @@ var NitrogenLayer = new FeatureLayer('http://gis-services.capecodcommission.org/
 		}
 		
 	);
+NitrogenLayer.setDefinitionExpression('Embay_id = '+selectlayer);
 	NitrogenLayer.hide();
 	map.addLayer(NitrogenLayer);
 
@@ -339,6 +375,8 @@ var WasteWater = new FeatureLayer('http://gis-services.capecodcommission.org/arc
 		}
 		
 	);
+WasteWater.setDefinitionExpression('EMBAY_ID = '+selectlayer);
+
 	WasteWater.hide();
 	map.addLayer(WasteWater);
 
@@ -366,6 +404,8 @@ var TreatmentType = new FeatureLayer('http://gis-services.capecodcommission.org/
 		}
 		
 	);
+TreatmentType.setDefinitionExpression('EMBAY_ID = '+selectlayer);
+
 	TreatmentType.hide();
 	map.addLayer(TreatmentType);
 
@@ -382,16 +422,16 @@ var TreatmentFacilities = new FeatureLayer('http://gis-services.capecodcommissio
 	map.addLayer(TreatmentFacilities);
 
 
-var Embayments = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/4',
-		{
-		mode: FeatureLayer.MODE_ONDEMAND,
-		outFields: ["*"],
-		opacity: 1
-		}
+// var Embayments = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/4',
+// 		{
+// 		mode: FeatureLayer.MODE_ONDEMAND,
+// 		outFields: ["*"],
+// 		opacity: 1
+// 		}
 		
-	);
-	TreatmentFacilities.hide();
-	map.addLayer(TreatmentFacilities);
+// 	);
+// 	TreatmentFacilities.hide();
+// 	map.addLayer(TreatmentFacilities);
 
 
 var EcologicalIndicators = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/Projects/208_Plan/MapServer/10',
@@ -425,6 +465,8 @@ var LandUse = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis
 		}
 		
 	);
+LandUse.setDefinitionExpression('EMBAY_ID = '+selectlayer);
+
 	LandUse.hide();
 	map.addLayer(LandUse);
 
