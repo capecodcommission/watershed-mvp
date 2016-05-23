@@ -6163,6 +6163,14 @@ nav.toolbar {
     #progress .subembayment:hover .stats {
       display: block; }
 
+#embayment_progress {
+  width: 250px;
+  height: 200px;
+  position: absolute;
+  bottom: 0;
+  background: #2caae4;
+  color: #fff; }
+
 .accordion {
   max-width: 2000px;
   box-sizing: content-box;

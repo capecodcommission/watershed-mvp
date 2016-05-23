@@ -17,10 +17,14 @@ class WizardController extends Controller
 	public function start($id)
 	{
 		$embayment = Embayment::find($id);
-		// $subembayments = DB::table('CapeCodMA.SubEmbayments')
-		// 	->select('SUBEM_NAME', 'SUBEM_DISP', 'Nload_Total', 'Total_Tar_Kg', 'MEP_Total_Tar_Kg')
-		// 	->where('EMBAY_ID', $embayment->EMBAY_ID)->get();
+		// Need to create a new scenario or find existing one that the user is editing
+		// Is user logged in?	
+			
 		$subembayments = DB::select('exec CapeCodMA.GET_SubembaymentNitrogen ' . $id);
+		$total_goal = 0;
+		foreach ($subembayments as $key) {
+			$total_goal += $key->Total_Tar_Kg;
+		}
 
 		$nitrogen = DB::select('exec CapeCodMA.GET_EmbaymentNitrogen ' . $id);
 
@@ -28,12 +32,11 @@ class WizardController extends Controller
 				'nitrogen' => $nitrogen[0]
 			]);
 		
-		// Need to create a new scenario or find existing one that the user is editing
-		// Is user logged in?
+
 
 		// Need to get list of Technologies (Tech_Matrix)
 
-		return view('layouts/wizard', ['embayment'=>$embayment, 'subembayments'=>$subembayments]);
+		return view('layouts/wizard', ['embayment'=>$embayment, 'subembayments'=>$subembayments, 'embayment_nitrogen'=>$nitrogen[0], 'goal'=>$total_goal]);
 
 	}
 

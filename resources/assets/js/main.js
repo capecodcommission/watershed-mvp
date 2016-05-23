@@ -42,7 +42,21 @@ Vue.component('Treatment', {
 			},
 	methods: {
 		drawPolygon: function() {
-			
+			$('#popdown-opacity').hide();
+			// $( "#info" ).trigger( "click" );
+			// dom.byId("info")
+
+			map.disableMapNavigation();
+			tb.activate('polygon');
+			// console.log('polygon clicked');
+			// $('#popdown-opacity').show();
+			// console.log(poly_nitrogen);
+			// $('#total_nitrogen_polygon').text(poly_nitrogen + 'kg');
+			// this.$http.post('/getpolygon/'+'/'+polystring, {
+			// 	//treatment: 
+			// }
+			// this.Total_Orig_Nitrogen = "/testmap/Nitrogen"+'/'+treatment+'/'+polystring;
+			$('#select_destination').show();
 		}
 	}
 });

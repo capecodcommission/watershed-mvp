@@ -59,7 +59,7 @@
 			</nav>
 			
 			@include('common/subembayment-progress')
-
+			@include('common/embayment-progress')
 			@include('common/wizard-steps')
 		</div>
 	</div>
