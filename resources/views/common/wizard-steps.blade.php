@@ -130,9 +130,8 @@
 		</header>
 		</div>
 		<div class="acc_cCont">
-		<p>Unattenuated Nitrogen from Septic: -- kg</p>
-			<p>Attenuated Nitrogen from Septic: -- kg</p>
-			<p><a href="" id="show_modal">Show Treatment Window</a></p>
+		<p>Unattenuated Nitrogen from Septic: -- kg; Attenuated Nitrogen from Septic: -- kg</p>
+			<!-- <p><a href="" id="show_modal">Show Treatment Window</a></p> -->
 
 			<div class="technology">
 				<a href="{{url('/tech-collect/40')}}" class="popdown">
@@ -165,8 +164,27 @@
 					<img src="http://www.cch2o.org/Matrix/icons/cluster_3.svg" alt="" ><br />
 					Satellite Treatment - Enahnced</a>
 			</div>	
+			<div class="technology">
+				<a href="{{url('/tech/21')}}" class="popdown">
+					<img src="http://www.cch2o.org/Matrix/icons/toilet.svg" alt="" ><br />
+					Composting Toilets</a>
+			</div>	
+			<div class="technology">
+				<a href="{{url('/tech/22')}}" class="popdown">
+					<img src="http://www.cch2o.org/Matrix/icons/toilet.svg" alt="" ><br />
+					Incinerating Toilets</a>
+			</div>	
 
-
+			<div class="technology">
+				<a href="{{url('/tech/23')}}" class="popdown">
+					<img src="http://www.cch2o.org/Matrix/icons/toilet.svg" alt="" ><br />
+					Packaging Toilets</a>
+			</div>		
+			<div class="technology">
+				<a href="{{url('/tech/24')}}" class="popdown">
+					<img src="http://www.cch2o.org/Matrix/icons/toilet.svg" alt="" ><br />
+					Urine Diverting Toilets</a>
+			</div>					
 		</div>
 	</article>
 	</aside>

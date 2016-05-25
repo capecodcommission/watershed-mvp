@@ -43,8 +43,7 @@
 
 	<template id="treatment-template">
 		<div class="treatment" id="@{{TreatmentID}}">
-			<p>Total Unattenuated Nitrogen: <span id="total_nitrogen">@{{Total_Orig_Nitrogen}}</span></p>
-			<p>Nitrogen Removed by Treatment: <span id="Nitrogen_Removed">@{{Nitrogen_Removed}}</span></p>
+			<p>Total Unattenuated Nitrogen: <span id="total_nitrogen_polygon">@{{Total_Orig_Nitrogen}}</span>; Nitrogen Removed by Treatment: <span id="Nitrogen_Removed">@{{Nitrogen_Removed}}</span></p>
 		</div>
 	</template>
 
@@ -64,7 +63,7 @@
 				$('#popdown-opacity').hide();
 				map.on('click', function(e){
 
-					console.log(e.mapPoint.x, e.mapPoint.y);
+					// console.log(e.mapPoint.x, e.mapPoint.y);
 				
 					var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y;
 					$.ajax({
@@ -80,6 +79,7 @@
 							$('#popdown-opacity').show();
 							$('.select > span').text('Selected: '+msg.SUBEM_DISP);
 							$('.select > span').show();
+							$('#select_destination').hide();
 						})
 
 			});
@@ -97,6 +97,7 @@
 			// $('#popdown-opacity').show();
 			// console.log(poly_nitrogen);
 			// $('#total_nitrogen_polygon').text(poly_nitrogen + 'kg');
+			$('#select_polygon').hide();
 			$('#select_destination').show();
 
 		});

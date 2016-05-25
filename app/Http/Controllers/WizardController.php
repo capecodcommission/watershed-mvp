@@ -10,6 +10,7 @@ use App\Embayment;
 use DB;
 use JavaScript;
 use App\Treatment;
+use Session;
 
 class WizardController extends Controller
 {
@@ -19,6 +20,15 @@ class WizardController extends Controller
 		$embayment = Embayment::find($id);
 		// Need to create a new scenario or find existing one that the user is editing
 		// Is user logged in?	
+		$scenarioid = DB::select('exec CapeCodMA.CreateScenario ' . $id);
+		// dd($scenarioid[0]->scenarioid);
+		Session::put('scenarioid', $scenarioid[0]->scenarioid);
+		Session::put('embay_id', $id);
+
+		    // $value = session('key');
+
+    // Store a piece of data in the session...
+    	// session(['scenarioid' => $scenarioid]);
 			
 		$subembayments = DB::select('exec CapeCodMA.GET_SubembaymentNitrogen ' . $id);
 		$total_goal = 0;
@@ -75,10 +85,13 @@ class WizardController extends Controller
 	{
 		// $nitrogen_totals = DB::select('exec CapeCodMA.GET_NitrogenFromPolygon \'' . $poly . '\'');
 		// dd($nitrogen_totals[0]);
-
-		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $treatment_id . ', \'' . $poly . '\'');
+		$scenarioid = session('scenarioid');
+		$embay_id = session('embay_id');
+		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
 		// dd($parcels);
 		$poly_nitrogen = $parcels[0]->Septic;
+
+		// dd($parcels);
 		JavaScript::put([
 				'poly_nitrogen' => $parcels
 			]);

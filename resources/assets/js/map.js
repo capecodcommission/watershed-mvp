@@ -119,14 +119,15 @@ require([
 
 			// console.log('exec CapeCodMa.Get_NitrogenFromPolygon \'' + polystring + '\'');
 
-			console.log(polystring);
+			// console.log(polystring);
 			var url = "/testmap/Nitrogen" + '/' + treatment + '/' + polystring;
+			// console.log(url);
 			$.ajax({
 					method: 'GET',
 					url: url
 				})
 				.done(function(msg) {
-					// msg = $.parseJSON(msg);
+					msg = $.parseJSON(msg);
 					// console.log(msg);
 					// console.log(msg);
 					// var txtmsg = "Total Nitrogen in Polygon: " + msg[0].UnAttenFull;
@@ -135,6 +136,7 @@ require([
 					// var poly_nitrogen = msg.poly_nitrogen->Septic;
 					$('#total_nitrogen_polygon').text(msg + 'kg');
 					$('#popdown-opacity').show();
+					
 				});
 
 			// console.log(symbol);
