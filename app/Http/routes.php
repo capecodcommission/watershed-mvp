@@ -28,7 +28,11 @@ Route::get('/testleaf', function(){
 // which is take a polygon string and retrieve the parcels contained within, along with N load, etc.
 Route::get('/testmap/Nitrogen/{treatment}/{poly}', 'WizardController@getPolygon');
 
-Route::get('/tech/{tech}', 'TechnologyController@get');
+Route::get('/tech/{type}/{tech}', 'TechnologyController@get');
+
+Route::get('/apply_percent/{treatment}/{rate}', 'TechnologyController@ApplyTreatment_Percent');
+
+Route::get('/apply_septic/{treatment}/{rate}', 'TechnologyController@ApplyTreatment_Septic');
 
 Route::get('/tech-collect/{tech}', 'TechnologyController@getCollection');
 
@@ -38,3 +42,9 @@ Route::resource('/api/treatments', 'ApiTreatmentController');
 // Route::auth();
 
 // Route::get('/home', 'HomeController@index');
+
+
+Event::listen('illuminate.query', function($query)
+{
+    var_dump($query);
+});

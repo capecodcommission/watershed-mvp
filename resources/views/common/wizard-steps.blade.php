@@ -49,7 +49,7 @@
 			
 			
 				 <div class="technology">
-					<a href="/tech/25" class="popdown"><img src="http://www.cch2o.org/Matrix/icons/npk_mgt.svg"></a><br />Fertilizer Management			
+					<a href="/tech/fert/25" class="popdown"><img src="http://www.cch2o.org/Matrix/icons/npk_mgt.svg"></a><br />Fertilizer Management			
 				</div>
 			
 		
@@ -72,7 +72,7 @@
 				<p>Choose a technology to treat Nitrogen from Stormwater in your watershed.</p>
 				<div class="technology_list">
 					<div class="technology">
-						<a href="{{url('/tech/26')}}" class="popdown">
+						<a href="{{url('/tech/storm/26')}}" class="popdown">
 							<img src="http://www.cch2o.org/Matrix/icons/stormwater_bmps.svg"><br />
 							 Stormwater Management
 						</a>

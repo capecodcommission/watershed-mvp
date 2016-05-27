@@ -47,7 +47,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th colspan="2">Starting Values</th>
+					<th colspan="2">Fertilizer Nitrogen</th>
 					<th colspan="2">After Treatment</th>
 					<th></th>
 				</tr>
@@ -61,28 +61,12 @@
 			</thead>
 			<tbody>
 				<tr>
-				<!-- 
-						need to change this so it shows & updates the relevant N load (storm, fert, septic, etc.) that each technology is acting on. 
-						also, the "fert_percent" slider below needs to change based on which N load is being treated for this particular technology
-				 -->
-				 @if($type == 'fert')
+				
 				 		<td>@{{fert_unatt | round}}kg</td>
 						<td>@{{fert_att | round }}kg</td>
 						<td>@{{fert_unatt_treated | round }}kg</td>
 						<td>@{{fert_treated | round }}kg <sup>1</sup></td>
 						<td>@{{fert_difference | round }}kg</td>
-				 	{{-- <td>@{{fert_unatt|round}}kg</td>
-				 	<td>@{{fert_att|round}}kg</td>
-				 	<td>@{{fert_unatt_treated |round}}kg</td>
-					<td>@{{fert_treated | round}}kg</td>
-					<td>@{{fert_difference | round}}kg</td>   --}}
-				@else
- 					<td>@{{ storm_unatt | round }}kg</td>
-					<td>@{{storm_att | round }}kg</td>
- 					<td>@{{storm_unatt_treated | round }}kg</td>
-					<td>@{{storm_att_treated | round }}kg</td>
-					<td>@{{storm_difference|round}}</td>
-				@endif
 				</tr>
 				
 			</tbody>
@@ -90,7 +74,7 @@
 			<p>
 				Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.<br />
 				
-				<input type="range" id="{{$type}}-percent" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="{{$type}}_percent"> 
+				<input type="range" id="{{$type}}-percent" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="fert_percent"> @{{fert_percent}}%
 			</p>
 			<p>
 				<button id="applytreatment">Apply</button>

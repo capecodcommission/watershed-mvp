@@ -11807,11 +11807,11 @@ new Vue({
 		storm_unatt_treated: function storm_unatt_treated() {
 			return this.storm_unatt * ((100 - this.storm_percent) / 100);
 		},
-		storm_treated: function storm_treated() {
+		storm_att_treated: function storm_att_treated() {
 			return this.storm_att * ((100 - this.storm_percent) / 100);
 		},
 		storm_difference: function storm_difference() {
-			return this.storm_att - this.storm_treated;
+			return this.storm_att - this.storm_att_treated;
 		},
 
 		total_treated: function total_treated() {

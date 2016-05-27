@@ -24,11 +24,6 @@ class WizardController extends Controller
 		// dd($scenarioid[0]->scenarioid);
 		Session::put('scenarioid', $scenarioid[0]->scenarioid);
 		Session::put('embay_id', $id);
-
-		    // $value = session('key');
-
-    // Store a piece of data in the session...
-    	// session(['scenarioid' => $scenarioid]);
 			
 		$subembayments = DB::select('exec CapeCodMA.GET_SubembaymentNitrogen ' . $id);
 		$total_goal = 0;

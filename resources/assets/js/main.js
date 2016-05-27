@@ -151,13 +151,13 @@ new Vue({
 					{
 						return (this.storm_unatt * ((100 - this.storm_percent)/100));
 					},
-					storm_treated: function()
+					storm_att_treated: function()
 					{
 						return (this.storm_att * ((100 - this.storm_percent)/100));
 					},
 					storm_difference: function()
 					{
-						return ( this.storm_att - this.storm_treated);
+						return ( this.storm_att - this.storm_att_treated);
 					},	
 
 					total_treated: function()

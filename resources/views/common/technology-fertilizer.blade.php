@@ -1,6 +1,5 @@
 		<title>{{$tech->Technology_Strategy}}</title>
 		<link rel="stylesheet" href="{{url('/css/jquery.popdown.css')}}">
-<meta name="csrf-token" id="token" content="{{ csrf_token() }}">
 		
 
 <div class="popdown-content" id="app">
@@ -10,7 +9,7 @@
 			<div class="technology">
 				<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
 					<img src="http://www.cch2o.org/Matrix/icons/{{$tech->Icon}}" width="75">
-				 {{$tech->Technology_Strategy}}&nbsp;<i class="fa fa-question-circle"></i>
+				 <i class="fa fa-question-circle"></i>
 				</a>			
 			</div>
 
@@ -47,7 +46,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th colspan="2">Starting Values</th>
+					<th colspan="2">Fertilizer Nitrogen</th>
 					<th colspan="2">After Treatment</th>
 					<th></th>
 				</tr>
@@ -61,28 +60,12 @@
 			</thead>
 			<tbody>
 				<tr>
-				<!-- 
-						need to change this so it shows & updates the relevant N load (storm, fert, septic, etc.) that each technology is acting on. 
-						also, the "fert_percent" slider below needs to change based on which N load is being treated for this particular technology
-				 -->
-				 @if($type == 'fert')
+				
 				 		<td>@{{fert_unatt | round}}kg</td>
 						<td>@{{fert_att | round }}kg</td>
 						<td>@{{fert_unatt_treated | round }}kg</td>
 						<td>@{{fert_treated | round }}kg <sup>1</sup></td>
 						<td>@{{fert_difference | round }}kg</td>
-				 	{{-- <td>@{{fert_unatt|round}}kg</td>
-				 	<td>@{{fert_att|round}}kg</td>
-				 	<td>@{{fert_unatt_treated |round}}kg</td>
-					<td>@{{fert_treated | round}}kg</td>
-					<td>@{{fert_difference | round}}kg</td>   --}}
-				@else
- 					<td>@{{ storm_unatt | round }}kg</td>
-					<td>@{{storm_att | round }}kg</td>
- 					<td>@{{storm_unatt_treated | round }}kg</td>
-					<td>@{{storm_att_treated | round }}kg</td>
-					<td>@{{storm_difference|round}}</td>
-				@endif
 				</tr>
 				
 			</tbody>
@@ -90,7 +73,7 @@
 			<p>
 				Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.<br />
 				
-				<input type="range" id="{{$type}}-percent" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="{{$type}}_percent"> 
+				<input type="range" id="{{$type}}-percent" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="fert_percent"> @{{fert_percent}}%
 			</p>
 			<p>
 				<button id="applytreatment">Apply</button>
@@ -114,7 +97,7 @@
 				$('#popdown-opacity').hide();
 				map.on('click', function(e){
 
-					console.log(e.mapPoint.x, e.mapPoint.y);
+					// console.log(e.mapPoint.x, e.mapPoint.y);
 				
 					var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y;
 					$.ajax({
@@ -135,21 +118,30 @@
 			});
 		});
 
-		$('#select_polygon').on('click', function(f){
+		$('#select_polygon').on('click', function(e){
 			f.preventDefault();
 			$('#popdown-opacity').hide();
-			// $( "#info" ).trigger( "click" );
-			// dom.byId("info")
 
 			map.disableMapNavigation();
 			tb.activate('polygon');
-			// console.log('polygon clicked');
-			// $('#popdown-opacity').show();
 
 		});
 		$('#applytreatment').on('click', function(e){
 			// need to save the treated N values and update the subembayment progress
 			// 
+			e.preventDefault();
+			console.log('clicked');
+			var percent = $('#fert-percent').val();
+			var url = "{{url('/apply_percent')}}" + '/' +  {{$treatment['TreatmentId']}} + '/' + percent;
+			console.log(url);
+			$.ajax({
+				method: 'GET',
+				url: url
+			})
+				.done(function(msg){
+					console.log(msg);
+				});
+
 		});
 
 

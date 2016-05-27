@@ -24,8 +24,8 @@
 			<div class="stats">
 				<p>
 					<!-- Percent of Reduction from treatment: @{{myEffective}}%<br /> -->
-					Original Unattenuated: @{{parseFloat(NLoad_Orig)|round}}kg<br />
-					Scenario Unattenuated : @{{NLoad_Current| round }}kg <br />
+					Original Attenuated: @{{parseFloat(NLoad_Orig)|round}}kg<br />
+					Scenario Attenuated : @{{NLoad_Current| round }}kg <br />
 					Target: @{{NLoad_Target}}kg
 				</p>
 			</div>
