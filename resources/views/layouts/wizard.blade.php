@@ -82,6 +82,19 @@
 				$('.sliding-panel-content').toggleClass('is-visible');
 				// console.log('button clicked');
 			});
+			$('#getNitrogen').on('click', function(e){
+				e.preventDefault();
+				var url = "{{url('/getScenarioNitrogen')}}";
+				$.ajax({
+						method: 'GET',
+						url: url
+					})
+						.done(function(msg){
+							console.log(msg);
+							var nitrogen = (msg.N_Original - msg.N_Removed);
+							$('#getNitrogen').text(nitrogen + 'kg');
+						})
+			});
 
 		});
 	</script>

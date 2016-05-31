@@ -30,7 +30,7 @@ Route::get('/testmap/Nitrogen/{treatment}/{poly}', 'WizardController@getPolygon'
 
 Route::get('/tech/{type}/{tech}', 'TechnologyController@get');
 
-Route::get('/apply_percent/{treatment}/{rate}', 'TechnologyController@ApplyTreatment_Percent');
+Route::get('/apply_percent/{treatment}/{rate}/{type}', 'TechnologyController@ApplyTreatment');
 
 Route::get('/apply_septic/{treatment}/{rate}', 'TechnologyController@ApplyTreatment_Septic');
 
@@ -38,13 +38,17 @@ Route::get('/tech-collect/{tech}', 'TechnologyController@getCollection');
 
 Route::get('/map/point/{x}/{y}', 'MapController@point');
 
+Route::get('/getScenarioNitrogen', 'WizardController@getScenarioNitrogen');
+
+
+
 Route::resource('/api/treatments', 'ApiTreatmentController');
 // Route::auth();
 
 // Route::get('/home', 'HomeController@index');
 
 
-Event::listen('illuminate.query', function($query)
-{
-    var_dump($query);
-});
+// Event::listen('illuminate.query', function($query)
+// {
+//     var_dump($query);
+// });

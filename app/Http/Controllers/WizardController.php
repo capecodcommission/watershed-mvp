@@ -82,6 +82,7 @@ class WizardController extends Controller
 		// dd($nitrogen_totals[0]);
 		$scenarioid = session('scenarioid');
 		$embay_id = session('embay_id');
+		// dd($embay_id, $scenarioid);
 		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
 		// dd($parcels);
 		$poly_nitrogen = $parcels[0]->Septic;
@@ -116,6 +117,37 @@ class WizardController extends Controller
 
 		return $poly_nitrogen;
 		// return view ('layouts/test_septic', ['parcels'=>$parcels, 'poly_nitrogen'=>$poly_nitrogen]);
+	}
+
+
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function ScenarioResults()
+	{	
+		$scenarioid = session('scenarioid');
+		$embay_id = session('embay_id');
+
+		// Need to calculate all the treatments applied and Nitrogen removed from this scenario
+
+		return view('layouts/results');
+
+	}
+
+	/**
+	 * GetScenarioNitrogen
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	function GetScenarioNitrogen()
+	{
+		$scenarioid = session('scenarioid');
+		$Nitrogen = DB::select('exec capecodma.calc_scenarioNitrogen ' . $scenarioid);
+		return $Nitrogen;
 	}
 	
 }

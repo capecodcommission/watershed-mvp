@@ -23,25 +23,6 @@
 					4 => user does not enter a treatment area (Fertilizer Mgmt or Stormwater BMPs)
 			 -->
 
-				@if($tech->Show_In_wMVP == 1)
-					<!-- <p class="select"><button id="select_area">Select a location</button> <span>@{{subembayment}}</span></p> -->
-					<p class="select"><button id="select_area">Select a location</button> <span>@{{subembayment}}</span></p>
-					<p>
-						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated: 
-						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;"></label>
-					</p>
-				@elseif($tech->Show_In_wMVP == 2)
-					<!-- <div id="info">Select a polygon for the treatment area:  -->
-						<button id="select_polygon">Draw Polygon</button>
-					<!-- </div> -->
-					<!-- <p class="select"><button id="select_area">Select a polygon</button> <span>@{{subembayment}}</span></p> -->
-				@elseif($tech->Show_In_wMVP == 3)
-					<p class="select"><button id="select_area">Select a polygon</button> <span>@{{subembayment}}</span></p>
-					<p>
-						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated: 
-						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;"></label>
-					</p>
-				@endif
 			</div>
 		<table>
 			<thead>
@@ -132,7 +113,7 @@
 			e.preventDefault();
 			console.log('clicked');
 			var percent = $('#fert-percent').val();
-			var url = "{{url('/apply_percent')}}" + '/' +  {{$treatment['TreatmentId']}} + '/' + percent;
+			var url = "{{url('/apply_percent')}}" + '/' +  {{$treatment['TreatmentId']}} + '/' + percent + '/fert';
 			console.log(url);
 			$.ajax({
 				method: 'GET',

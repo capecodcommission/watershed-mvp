@@ -22,7 +22,7 @@ class TechnologyController extends Controller
 	 **/
 	public function get($type, $id)
 	{
-		DB::enableQueryLog();
+		// DB::enableQueryLog();
 		$tech = DB::table('dbo.Technology_Matrix')->select('*')->where('TM_ID', $id)->first();
 		$scenarioid = session('scenarioid');
 		// $tech = $tech[0];
@@ -83,14 +83,21 @@ class TechnologyController extends Controller
 	 * @return void
 	 * @author 
 	 **/
-	public function ApplyTreatment_Percent($treat_id, $rate)
+	public function ApplyTreatment($treat_id, $rate, $type)
 	{
 		//$treatment = Treatment::find($treat_id);
 		$scenarioid = session('scenarioid');
 		// need to update the wiz_treatment_parcel table with the N removed
-		$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Percent] ' . $treat_id . ', ' . $rate);
+		if ($type == 'fert') {
+			$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Fert] ' . $treat_id . ', ' . $rate );
+		}
+		
 		return $updated;
 
 	}
+
+
+
+	
 
 }

@@ -127,8 +127,8 @@ require([
 					url: url
 				})
 				.done(function(msg) {
-					msg = $.parseJSON(msg);
-					// console.log(msg);
+					// msg = $.parseJSON(msg);
+					console.log(msg);
 					// console.log(msg);
 					// var txtmsg = "Total Nitrogen in Polygon: " + msg[0].UnAttenFull;
 					// alert(txtmsg);
@@ -365,6 +365,7 @@ require([
 
 			if ($(this).attr('data-visible') == 'off') {
 				Subembayments.show();
+				console.log(Subembayments);
 				$(this).attr('data-visible', 'on');
 			} else {
 				Subembayments.hide();

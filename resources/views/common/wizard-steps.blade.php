@@ -1,5 +1,5 @@
 	<div class="accordion">
-		
+		<span id="closeACC">X</span>
 
 <section class="row accHorizontal">
 	<aside class="accHorizontal__item">
@@ -12,7 +12,7 @@
 			</header>
 		</div>
 		<div class="acc_cCont">
-		<span id="closeACC">X</span>
+		
 		<p>Total Unattenuated Load for this watershed: @{{unatt|round}}kg</p>
 			<p>Total Attenuated Load for this watershed: @{{att|round}}kg</p>
 			<p><a href="{{url('test', $embayment->EMBAY_ID)}}">See query and test the values</a></p>
@@ -67,9 +67,8 @@
 				</header>
 			</div>
 			<div class="acc_cCont">
-				<p>Unattenuated Nitrogen from Stormwater: @{{storm_unatt|round}}kg</p>
-				<p>Attenuated Nitrogen from Stormwater: @{{storm_att|round}}kg</p>
-				<p>Choose a technology to treat Nitrogen from Stormwater in your watershed.</p>
+				<p>Unattenuated Nitrogen from Stormwater: @{{storm_unatt|round}}kg; Attenuated Nitrogen from Stormwater: @{{storm_att|round}}kg</p>
+				<!-- <p>Choose a technology to treat Nitrogen from Stormwater in your watershed.</p> -->
 				<div class="technology_list">
 					<div class="technology">
 						<a href="{{url('/tech/storm/26')}}" class="popdown">
@@ -109,7 +108,7 @@
 						</a>
 					</div>		
 									<div id="info">
-	  <button id="Polygon">Polygon</button>
+	  <!-- <button id="Polygon">Polygon</button> -->
 
 	</div>
 				</div>
@@ -202,7 +201,7 @@
 		</header>
 		</div>
 		<div class="acc_cCont">
-			<p>Existing Nitrogen from Groundwater: <?php // echo round($NLoad_Stormwater); ?></p>
+			<p>Existing Nitrogen from Groundwater: (<span id="getNitrogen">Calculate Groundwater</button>)</p>
 			<p>Choose a technology to treat Groundwater Nitrogen in your watershed.</p>
 			<div class="technology_list">
 				<div class="technology">
@@ -251,7 +250,7 @@
 		</header>
 		</div>
 		<div class="acc_cCont">
-		<!-- <p>Existing Nitrogen Load: <?php // echo round($NLoad_Full);?>kg</p> -->
+		<!-- <p>Existing Nitrogen Load: kg</p> -->
 		<p>Overall Nitrogen Reduction: 9862kg</p>
 			<p>Overall Cost: $374,985</p>
 			<p>Download Results: <a href="#">.xls</a> or <a href="">.xml</a></p>

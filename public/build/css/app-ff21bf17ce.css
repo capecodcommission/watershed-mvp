@@ -6124,8 +6124,7 @@ nav.toolbar {
         border-bottom: 1px solid #333;
         color: #2caae4;
         display: block;
-        font-weight: bold;
-        padding: 1em 0.25em;
+        padding: .5em 0.25em;
         text-decoration: none; }
         .sliding-panel-content ul li a[data-visible="off"] i.fa-eye-slash {
           display: inline-block; }
@@ -6304,6 +6303,9 @@ nav.toolbar {
     border-radius: 50%;
     padding: 1em;
     width: 3em; }
+
+.acc_cCont .technology {
+  width: 100px; }
 
 /*# sourceMappingURL=main.css.map */
 
