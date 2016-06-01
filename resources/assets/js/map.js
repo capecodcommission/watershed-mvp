@@ -365,7 +365,7 @@ require([
 
 			if ($(this).attr('data-visible') == 'off') {
 				Subembayments.show();
-				console.log(Subembayments);
+				// console.log(Subembayments);
 				$(this).attr('data-visible', 'on');
 			} else {
 				Subembayments.hide();

@@ -95,20 +95,20 @@ new Vue({
 				data:
 				{
 					// poly_nitrogen: poly_nitrogen.Septic,
-					unatt: parseFloat(nitrogen.Total_UnAtt),
-					att: parseFloat(nitrogen.Total_Att),
+					unatt: parseFloat(nitrogen_unatt.Total_UnAtt),
+					att: parseFloat(nitrogen_att.Total_Att),
 					treatment: 13,
 					effective: 0,
-					total_unatt: parseFloat(nitrogen.Total_UnAtt),
-					total_att: parseFloat(nitrogen.Total_Att),
-					fert_unatt: parseFloat(nitrogen.Total_UnAtt_Fert),
-					fert_att: parseFloat(nitrogen.Total_Att_Fert),
+					total_unatt: parseFloat(nitrogen_unatt.Total_UnAtt),
+					total_att: parseFloat(nitrogen_att.Total_Att),
+					fert_unatt: parseFloat(nitrogen_unatt.Total_UnAtt_Fert),
+					fert_att: parseFloat(nitrogen_att.Total_Att_Fert),
 					fert_percent: 0,
-					storm_unatt: parseFloat(nitrogen.Total_UnAtt_Storm),
-					storm_att: parseFloat(nitrogen.Total_Att_Storm),
+					storm_unatt: parseFloat(nitrogen_unatt.Total_UnAtt_Storm),
+					storm_att: parseFloat(nitrogen_att.Total_Att_Storm),
 					storm_percent: 0,
-					atmosphere_unatt: parseFloat(nitrogen.Total_UnAtt_Atmosphere),
-					atmosphere_att: parseFloat(nitrogen.Total_Att_Atmosphere)
+					atmosphere_unatt: parseFloat(nitrogen_unatt.Total_UnAtt_Atmosphere),
+					atmosphere_att: parseFloat(nitrogen_att.Total_Att_Atmosphere)
 				},
 				// components: {subembayment, Treatment},
 				

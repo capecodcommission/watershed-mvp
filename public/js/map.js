@@ -63,7 +63,7 @@ require([
 			center: [-70.35, 41.68],
 			// extent: initialExtent,
 			zoom: 11,
-			basemap: "satellite",
+			basemap: "gray",
 			slider: true,
 			sliderOrientation: "horizontal"
 		});
@@ -365,7 +365,7 @@ require([
 
 			if ($(this).attr('data-visible') == 'off') {
 				Subembayments.show();
-				console.log(Subembayments);
+				// console.log(Subembayments);
 				$(this).attr('data-visible', 'on');
 			} else {
 				Subembayments.hide();

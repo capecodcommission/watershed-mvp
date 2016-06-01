@@ -90,8 +90,8 @@
 						url: url
 					})
 						.done(function(msg){
-							console.log(msg);
-							var nitrogen = (msg.N_Original - msg.N_Removed);
+							console.log(msg[0]);
+							var nitrogen = Math.round(msg[0].N_Original - msg[0].N_Removed);
 							$('#getNitrogen').text(nitrogen + 'kg');
 						})
 			});

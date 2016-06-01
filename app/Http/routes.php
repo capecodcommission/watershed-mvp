@@ -13,7 +13,7 @@
 
 Route::get('/', 'StartController@index');
 
-Route::get('/map/{embayment}', 'WizardController@start');
+Route::get('/map/{embayment}/{scenario?}', 'WizardController@start');
 
 Route::get('/test/{embayment}', 'WizardController@test');
 
@@ -32,7 +32,7 @@ Route::get('/tech/{type}/{tech}', 'TechnologyController@get');
 
 Route::get('/apply_percent/{treatment}/{rate}/{type}', 'TechnologyController@ApplyTreatment');
 
-Route::get('/apply_septic/{treatment}/{rate}', 'TechnologyController@ApplyTreatment_Septic');
+Route::get('/apply_septic/{treatment}/{rate}/{type}', 'TechnologyController@ApplyTreatment_Septic');
 
 Route::get('/tech-collect/{tech}', 'TechnologyController@getCollection');
 
@@ -40,7 +40,7 @@ Route::get('/map/point/{x}/{y}', 'MapController@point');
 
 Route::get('/getScenarioNitrogen', 'WizardController@getScenarioNitrogen');
 
-
+Route::get('/results', 'WizardController@getScenarioResults');
 
 Route::resource('/api/treatments', 'ApiTreatmentController');
 // Route::auth();

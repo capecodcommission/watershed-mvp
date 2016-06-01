@@ -15,15 +15,20 @@ use Session;
 class WizardController extends Controller
 {
 	//
-	public function start($id)
+	public function start($id, $scenarioid = null)
 	{
 		$embayment = Embayment::find($id);
 		// Need to create a new scenario or find existing one that the user is editing
 		// Is user logged in?	
-		$scenarioid = DB::select('exec CapeCodMA.CreateScenario ' . $id);
+		if(!$scenarioid)
+		{
+			$scenarioid = DB::select('exec CapeCodMA.CreateScenario ' . $id);
 		// dd($scenarioid[0]->scenarioid);
-		Session::put('scenarioid', $scenarioid[0]->scenarioid);
-		Session::put('embay_id', $id);
+			Session::put('scenarioid', $scenarioid[0]->scenarioid);
+			Session::put('embay_id', $id);
+			Session::put('n_removed', 0);
+		}
+		
 			
 		$subembayments = DB::select('exec CapeCodMA.GET_SubembaymentNitrogen ' . $id);
 		$total_goal = 0;
@@ -31,17 +36,19 @@ class WizardController extends Controller
 			$total_goal += $key->Total_Tar_Kg;
 		}
 
-		$nitrogen = DB::select('exec CapeCodMA.GET_EmbaymentNitrogen ' . $id);
-
+		$nitrogen = DB::select('exec CapeCodMA.GET_AreaNitrogen_Unattenuated ' . $id);
+		$nitrogen_att = DB::select('exec CapeCodMA.GET_AreaNitrogen_attenuated ' . $id);
+		// dd($nitrogen);
 		JavaScript::put([
-				'nitrogen' => $nitrogen[0]
+				'nitrogen_unatt' => $nitrogen[0],
+				'nitrogen_att' => $nitrogen_att[0]
 			]);
 		
 
 
 		// Need to get list of Technologies (Tech_Matrix)
 
-		return view('layouts/wizard', ['embayment'=>$embayment, 'subembayments'=>$subembayments, 'embayment_nitrogen'=>$nitrogen[0], 'goal'=>$total_goal]);
+		return view('layouts/wizard', ['embayment'=>$embayment, 'subembayments'=>$subembayments, 'nitrogen_att'=>$nitrogen_att[0], 'nitrogen_unatt'=>$nitrogen[0], 'goal'=>$total_goal]);
 
 	}
 
@@ -126,14 +133,16 @@ class WizardController extends Controller
 	 * @return void
 	 * @author 
 	 **/
-	public function ScenarioResults()
+	public function getScenarioResults()
 	{	
 		$scenarioid = session('scenarioid');
 		$embay_id = session('embay_id');
-
+		$results = DB::select('exec CapeCodMA.Get_ScenarioResults '. $scenarioid);
+		$towns = DB::select('select wtt.*, t.town from dbo.wiz_treatment_towns wtt inner join capecodma.matowns t on t.town_id = wtt.wtt_town_id
+  where wtt.wtt_scenario_id = ' . $scenarioid);
 		// Need to calculate all the treatments applied and Nitrogen removed from this scenario
 
-		return view('layouts/results');
+		return view('layouts/results', ['results'=>$results, 'scenarioid'=>$scenarioid, 'embay_id'=>$embay_id, 'towns'=>$towns]);
 
 	}
 

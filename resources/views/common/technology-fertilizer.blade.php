@@ -111,16 +111,19 @@
 			// need to save the treated N values and update the subembayment progress
 			// 
 			e.preventDefault();
-			console.log('clicked');
+			// console.log('clicked');
 			var percent = $('#fert-percent').val();
 			var url = "{{url('/apply_percent')}}" + '/' +  {{$treatment['TreatmentId']}} + '/' + percent + '/fert';
-			console.log(url);
+			// console.log(url);
 			$.ajax({
 				method: 'GET',
 				url: url
 			})
 				.done(function(msg){
-					console.log(msg);
+					// console.log(msg);
+					msg = Math.round(msg);
+					$('#n_removed').text(msg);
+					$('#popdown-opacity').hide();
 				});
 
 		});

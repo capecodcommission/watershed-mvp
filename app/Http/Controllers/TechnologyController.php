@@ -27,25 +27,12 @@ class TechnologyController extends Controller
 		$scenarioid = session('scenarioid');
 		// $tech = $tech[0];
 		$treatment = Treatment::create(['ScenarioID' => $scenarioid, 'TreatmentType_ID'=>$tech->TM_ID]);
-		// dd($treatment->TreatmentId);
-		// dd($tech->Show_In_wMVP);
+
 		if ($tech->Show_In_wMVP == 4) 
 		{
 			// this is embayment-wide, need to get the embayment_area and use that as the custom polygon for the Get_PointsfromPolygon
 			$embay_id = session('embay_id');
-			$embayment = Embayment::find($embay_id);
-			$poly = $embayment->getArea();
-			// dd($poly[0]->polygon);
 			$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment->TreatmentId . ', \'embayment\'');
-			// dd($parcels);
-			// print_r(DB::getQueryLog());
-			// $poly_nitrogen = $parcels[0]->Septic;
-
-		// dd($parcels);
-			// JavaScript::put([
-			// 		'poly_nitrogen' => $parcels
-			// 	]);
-
 		}
 		// create a new record in the treatment_wiz table for this scenario & technology
 		// get the treatmentID back and use that for the treatment_parcels table
@@ -56,6 +43,19 @@ class TechnologyController extends Controller
 				break;
 			case 'storm':
 				return view('common/technology-stormwater', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				break;
+			case 'collect':
+				return view('common/technology-collection', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				break;		
+				case 'septic':
+				return view('common/technology-septic', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				break;
+			case 'groundwater':
+				return view('common/technology-groundwater', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				break;
+			case 'embayment':
+				return view('common/technology-embayment', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				break;
 			default:
 				return view('common/technology', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 				break;
@@ -91,12 +91,40 @@ class TechnologyController extends Controller
 		if ($type == 'fert') {
 			$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Fert] ' . $treat_id . ', ' . $rate );
 		}
+		else if ($type == 'storm') {
+			$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Storm] ' . $treat_id . ', ' . $rate );
+		}
+		$n_removed = session('n_removed');
+		$n_removed += $updated[0]->removed;
+		Session::put('n_removed', $n_removed);
 		
-		return $updated;
+		return $n_removed;
 
 	}
 
 
+
+	/**
+	 * Apply Septic Treatment
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function ApplyTreatment_Septic($treat_id, $rate, $type)
+	{
+		//$treatment = Treatment::find($treat_id);
+		$scenarioid = session('scenarioid');
+		// need to update the wiz_treatment_parcel table with the N removed
+		if ($type == 'septic') {
+			$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Septic] ' . $treat_id . ', ' . $rate );
+		}
+		$n_removed = session('n_removed');
+		$n_removed += $updated[0]->removed;
+		Session::put('n_removed', $n_removed);
+		
+		return $n_removed;
+
+	}
 
 	
 

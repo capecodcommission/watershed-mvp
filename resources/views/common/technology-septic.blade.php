@@ -22,12 +22,7 @@
 			</div>
 					<p class="select"><button id="select_polygon" v-on:click="drawPolygon">Select a polygon</button> <span>@{{subembayment}}</span></p>
 
-					<p class="select_point">
-						<button id="select_destination" style="display:none;">
-							Select a destination
-						</button> 
-						<span>@{{subembayment}}</span>
-					</p>
+					
 					
 			</div>
 
@@ -93,36 +88,10 @@
 			map.disableMapNavigation();
 			tb.activate('polygon');
 			$('#select_polygon').hide();
-			$('#select_destination').show();
+			// $('#select_destination').show();
 
 		});
-		$('#select_destination').on('click', function(f){
-			f.preventDefault();
-			// console.log('button clicked');
-				$('#popdown-opacity').hide();
-				map.on('click', function(e){
-
-					// console.log(e.mapPoint.x, e.mapPoint.y);
-				
-					var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y;
-					$.ajax({
-						method: 'GET',
-						url: url
-					})
-						.done(function(msg){
-							msg = $.parseJSON(msg);
-							console.log(msg.SUBEM_DISP);
-							// console.log(msg);
-							$('#'+msg.SUBEM_NAME+'> .stats').show();
-							// $('.notification_count').remove();
-							$('#popdown-opacity').show();
-							$('.select > span').text('Selected: '+msg.SUBEM_DISP);
-							$('.select > span').show();
-							$('#select_destination').hide();
-						})
-
-			});
-		});
+		
 	$('#applytreatment').on('click', function(e){
 			e.preventDefault();
 			var rate = $('#septic-rate').val();
