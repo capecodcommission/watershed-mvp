@@ -36,6 +36,8 @@ Route::get('/apply_septic/{treatment}/{rate}/{type}', 'TechnologyController@Appl
 
 Route::get('/tech-collect/{tech}', 'TechnologyController@getCollection');
 
+Route::get('/polygon/{type}/{treatment}/{polygon}', 'TechnologyController@getPolygon');
+
 Route::get('/map/point/{x}/{y}', 'MapController@point');
 
 Route::get('/getScenarioNitrogen', 'WizardController@getScenarioNitrogen');

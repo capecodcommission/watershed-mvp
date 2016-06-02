@@ -85,6 +85,7 @@
 		$('#select_polygon').on('click', function(f){
 			f.preventDefault();
 			$('#popdown-opacity').hide();
+			func = 'septic';
 			map.disableMapNavigation();
 			tb.activate('polygon');
 			$('#select_polygon').hide();

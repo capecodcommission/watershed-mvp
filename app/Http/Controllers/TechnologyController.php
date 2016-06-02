@@ -47,7 +47,7 @@ class TechnologyController extends Controller
 			case 'collect':
 				return view('common/technology-collection', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 				break;		
-				case 'septic':
+			case 'septic':
 				return view('common/technology-septic', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 				break;
 			case 'groundwater':
@@ -126,6 +126,65 @@ class TechnologyController extends Controller
 
 	}
 
-	
+	/**
+	 * Based on the type of treatment, use the polygon to determine the Nitrogen being treated
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function getPolygon($type, $treatment_id, $poly)
+	{
+		$scenarioid = session('scenarioid');
+		$embay_id = session('embay_id');
+		if ($type == 'septic') 
+		{
+			// we need to know how many toilets/parcels will be implemented
+			$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon_Septic ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
+
+			return $parcels[0];
+		}
+		else if ($type == 'collect') 
+		{
+			// we need to know how many toilets/parcels will be implemented
+			$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
+			dd($parcels);
+			return $parcels[0];
+		}
+
+		// dd($embay_id, $scenarioid);
+		// dd($parcels);
+		$poly_nitrogen = $parcels[0]->Septic;
+
+		// dd($parcels);
+		JavaScript::put([
+				'poly_nitrogen' => $parcels
+			]);
+
+
+		/**********************************************
+		*	We need to get the total Nitrogen for the custom polygon that this technology will treat 
+		*	(fertilizer, stormwater, septic, groundwater, etc.)
+		*	and report that back to the technology pop-up. After the user adjusts the treatment settings
+		*	we need to save that as "treated_nitrogen" and be able to attenuate it 
+		*	If this is a collection & treat (sewer) then we will need to 
+		*	create a new treatment record with a parent_treatment_id so we 
+		*	can store the N load and the destination point where it will be treated.
+		*
+		**********************************************/
+
+		// $treatment = Treatment::find($treatment_id);
+		// $treatment->POLY_STRING = $poly;
+		// $treatment->Custom_POLY = 1;
+		// $treatment->save();
+		// dd($treatment);
+		// $total_septic_nitrogen = $parcels;
+		// foreach ($parcels as $parcel) 
+		// {
+		// 	$total_septic_nitrogen += $parcel->wtp_nload_septic;
+		// }
+
+		return $poly_nitrogen;
+		// return view ('layouts/test_septic', ['parcels'=>$parcels, 'poly_nitrogen'=>$poly_nitrogen]);		
+	}
 
 }

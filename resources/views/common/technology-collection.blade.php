@@ -85,7 +85,7 @@
 <script>
 	$(document).ready(function(){
 	 treatment = {{$treatment['TreatmentId']}};
-
+	 func = 'collect';
 
 		$('#select_polygon').on('click', function(f){
 			f.preventDefault();
@@ -94,7 +94,7 @@
 			tb.activate('polygon');
 			$('#select_polygon').hide();
 			$('#select_destination').show();
-
+			// console.log(polystring);
 		});
 		$('#select_destination').on('click', function(f){
 			f.preventDefault();

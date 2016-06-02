@@ -3,6 +3,7 @@ var map;
 var watershed;
 var embay_shape;
 var treatment;
+var func;
 require([
 		"esri/map",
 		// "esri/dijit/BasemapGallery",
@@ -121,6 +122,7 @@ require([
 
 			// console.log(polystring);
 			var url = "/testmap/Nitrogen" + '/' + treatment + '/' + polystring;
+			// var url = '/polygon/' + func + '/' + treatment + '/' + polystring;
 			// console.log(url);
 			$.ajax({
 					method: 'GET',
@@ -142,6 +144,7 @@ require([
 			// console.log(symbol);
 			var area = evt.geometry.getExtent();
 			// console.log(area);
+			// map.centerAndZoom(area, 11);
 		}
 
 		// This is the Esri Leaflet code
