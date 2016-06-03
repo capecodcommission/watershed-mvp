@@ -18,7 +18,7 @@ class StartController extends Controller
 	{
 		// this is the start page
 		// get a list of all the embayments to populate the drop-down list
-		$embayments = Embayment::all();
+		$embayments = Embayment::orderBy('EMBAY_DISP')->get();
 
 		return view('welcome', ['embayments'=>$embayments]);
 	}

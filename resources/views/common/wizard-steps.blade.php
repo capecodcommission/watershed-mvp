@@ -200,13 +200,13 @@
 		</header>
 		</div>
 		<div class="acc_cCont">
-			<p>Existing Nitrogen from Groundwater: (<span id="getNitrogen">Calculate Groundwater</button>)</p>
+			<p>Existing Nitrogen from Groundwater: (<span id="getNitrogen">Calculate Groundwater</span>)</p>
 			<p>Choose a technology to treat Groundwater Nitrogen in your watershed.</p>
 			<div class="technology_list">
 				<div class="technology">
 					<a href="{{url('/tech/groundwater/3')}}"  class="popdown">
 						<img src="http://www.cch2o.org/Matrix/icons/constructed_wetland.svg" alt=""><br />
-						Constructed Wetlands
+						Constructed Wetlands - Surface
 					</a>
 				</div>
 				<div class="technology">
@@ -214,7 +214,32 @@
 						<img src="http://www.cch2o.org/Matrix/icons/constructed_wetland.svg" alt=""><br />
 						Constructed Wetlands - Subsurface Flow
 					</a>
+				</div>
+				<div class="technology">
+					<a href="{{url('/tech/groundwater/3')}}"  class="popdown">
+						<img src="http://www.cch2o.org/Matrix/icons/constructed_wetland.svg" alt=""><br />
+						Constructed Wetlands - Groundwater Flow
+					</a>
 				</div>	
+				<div class="technology">
+					<a href="{{url('/tech/groundwater/14')}}"  class="popdown">
+						<img src="http://www.cch2o.org/Matrix/icons/phytoremediation.svg" alt=""><br />
+						Phytoremediation
+					</a>
+				</div>	
+				<div class="technology">
+					<a href="{{url('/tech/groundwater/16')}}"  class="popdown">
+						<img src="http://www.cch2o.org/Matrix/icons/prb.svg" alt=""><br />
+						PRB - Injection Well
+					</a>
+				</div>		
+
+				<div class="technology">
+					<a href="{{url('/tech/groundwater/19')}}"  class="popdown">
+						<img src="http://www.cch2o.org/Matrix/icons/fertigation_wells.svg" alt=""><br />
+						Fertigation Wells
+					</a>
+				</div>																	
 			</div>		
 		</div>
 	</article>
@@ -232,7 +257,21 @@
 		</header>
 		</div>
 		<div class="acc_cCont">
-		<p>Error curabitur. Amet perferendis omnis cupidatat rerum tempora modi ea tenetur congue, natoque laboriosam. Quia illo condimentum incididunt? Eveniet maiores adipiscing vestibulum exercitationem orci, ipsam, voluptate temporibus. Iure, nostra ducimus possimus eius deserunt dignissimos? Purus suscipit! Interdum gravida dis tenetur tellus possimus, curae varius orci. Eum lobortis asperiores sed numquam.</p>
+
+			<div class="technology">
+				<a href="{{url('/tech/embayment/30')}}"  class="popdown">
+					<img src="http://www.cch2o.org/Matrix/icons/inlet_culvert_widening.svg" alt=""><br />
+					Inlet/Culvert Widening
+				</a>
+			</div>
+			<div class="technology">
+				<a href="{{url('/tech/embayment/31')}}"  class="popdown">
+					<img src="http://www.cch2o.org/Matrix/icons/coastal_habitat_restoration.svg" alt=""><br />
+					Coastal Habitat Restoration
+				</a>
+			</div>
+
+
 		</div>
 	</article>
 	</aside>
