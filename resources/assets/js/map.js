@@ -238,7 +238,7 @@ require([
 		Subembayments.setDefinitionExpression('EMBAY_ID = ' + selectlayer);
 
 		Subembayments.hide();
-
+		console.log(Subembayments);
 		map.addLayer(Subembayments);
 
 		var NitrogenLayer = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/0', {

@@ -85,6 +85,8 @@ class WizardController extends Controller
 	 **/
 	public function getPolygon($treatment_id, $poly)
 	{
+	   DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
+
 		// $nitrogen_totals = DB::select('exec CapeCodMA.GET_NitrogenFromPolygon \'' . $poly . '\'');
 		// dd($nitrogen_totals[0]);
 		$scenarioid = session('scenarioid');
@@ -122,7 +124,7 @@ class WizardController extends Controller
 		// 	$total_septic_nitrogen += $parcel->wtp_nload_septic;
 		// }
 
-		return $poly_nitrogen;
+		return $parcels;
 		// return view ('layouts/test_septic', ['parcels'=>$parcels, 'poly_nitrogen'=>$poly_nitrogen]);
 	}
 
@@ -140,9 +142,10 @@ class WizardController extends Controller
 		$results = DB::select('exec CapeCodMA.Get_ScenarioResults '. $scenarioid);
 		$towns = DB::select('select wtt.*, t.town from dbo.wiz_treatment_towns wtt inner join capecodma.matowns t on t.town_id = wtt.wtt_town_id
   where wtt.wtt_scenario_id = ' . $scenarioid);
+		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
 		// Need to calculate all the treatments applied and Nitrogen removed from this scenario
 
-		return view('layouts/results', ['results'=>$results, 'scenarioid'=>$scenarioid, 'embay_id'=>$embay_id, 'towns'=>$towns]);
+		return view('layouts/results', ['results'=>$results, 'scenarioid'=>$scenarioid, 'embay_id'=>$embay_id, 'towns'=>$towns, 'subembayments'=>$subembayments]);
 
 	}
 

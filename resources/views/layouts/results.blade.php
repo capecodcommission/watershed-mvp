@@ -10,8 +10,6 @@
 
 			<div id="app">
 			<h2>Technology Stack</h2>
-			
-
 		
 			<table>
 				<thead>
@@ -57,7 +55,34 @@
 					@endforeach
 				</tbody>
 			</table>
+			<h2>Subembayments</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Subembayment</th>
+						<th>Original N*</th>
+						<th>N Removed (Attenuated)</th>
+						<th>Scenario N</th>
+						<th>Target N</th>
+						<th>N Remaining to Target</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach($subembayments as $sub)
+					<tr>
+						<td>{{$sub->subem_disp}}</td>
+						<td>{{$sub->Nload_Total}}kg</td>
+						<td>{{$sub->Total_Att_N_Removed}}kg</td>
+						<td>{{$sub->Scenario_Total}}kg</td>
+						<td>{{$sub->Total_Tar_Kg}}kg</td>
+						<td>{{ $sub->Scenario_Total - $sub->Total_Tar_Kg}}</td>
+					</tr>
 
+					@endforeach
+				</tbody>
+
+			</table>
+<p><sup>*</sup> The "Original N" value is taken from the "Nload_Total" field in the CapeCodMA.Subembayments table. </p>
 		
 		
 <p><a href="{{url('map', [$embay_id, $scenarioid])}}">back to map</a></p>

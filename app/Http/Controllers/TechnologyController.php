@@ -23,6 +23,8 @@ class TechnologyController extends Controller
 	public function get($type, $id)
 	{
 		// DB::enableQueryLog();
+
+		   DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
 		$tech = DB::table('dbo.Technology_Matrix')->select('*')->where('TM_ID', $id)->first();
 		$scenarioid = session('scenarioid');
 		// $tech = $tech[0];
@@ -134,6 +136,8 @@ class TechnologyController extends Controller
 	 **/
 	public function getPolygon($type, $treatment_id, $poly)
 	{
+				   DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
+
 		$scenarioid = session('scenarioid');
 		$embay_id = session('embay_id');
 		if ($type == 'septic') 

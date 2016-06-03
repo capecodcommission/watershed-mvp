@@ -5,8 +5,13 @@
 	@foreach($subembayments as $subem)
 		<subembayment 
 			title="{{$subem->subem_disp}}" 
-			percent="{{$subem->Total_Tar_Kg/$subem->UnAttenFull}}" 
-			NLoad_Orig = {{$subem->AttenFull}}
+			percent="{{$subem->Total_Tar_Kg/$subem->AttenFull}}" 
+		{{--	 NLoad_Orig = {{$subem->AttenFull}} 
+			Looks like adding up the attenuated N load for the subembayments doesn't match the value stored in Nload_Total
+			So we're going to use Nload_Total since that is what we are using to compare on the Results page
+
+		--}}
+			NLoad_Orig = {{$subem->Nload_Total}}
 			NLoad_Target= {{$subem->Total_Tar_Kg/1}}
 			id="{{$subem->subem_name}}"
 			:my-effective="effective" >
