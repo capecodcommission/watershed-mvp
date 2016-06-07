@@ -15,7 +15,7 @@
 	Original Unattenuated N: {{$total}}kg <br />
 	Original Attenuated N: {{$att_total}}kg <br />
 	Goal: {{number_format($goal)}}kg<br />
-		<span id="n_removed">0</span>kg Unattenuated N Removed
+		<span id="n_removed">{{session('n_removed')}}</span>kg Unattenuated N Removed
 
 	</span>
 	
