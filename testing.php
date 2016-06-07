@@ -1,0 +1,1 @@
+Testing a file outside of public
