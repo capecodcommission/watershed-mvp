@@ -14,6 +14,7 @@
 	<span>
 	{{-- Original Unattenuated N: {{$total}}kg <br /> --}}
 	Starting (Att) N: {{$att_total}}kg <br />
+	
 	Goal: {{number_format($goal)}}kg<br />
 		<span id="n_removed"><?php echo number_format(round(session('n_removed'))); ?></span>kg Unattenuated N Removed
 
