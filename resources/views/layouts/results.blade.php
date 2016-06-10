@@ -60,8 +60,8 @@
 				<thead>
 					<tr>
 						<th>Subembayment</th>
-						<th>Original N*</th>
-						<th>N Removed (Attenuated)</th>
+						<th>Original N<sup>1</sup></th>
+						<th>N Removed (Attenuated)<sup>2></sup></th>
 						<th>Scenario N</th>
 						<th>Target N</th>
 						<th>N Remaining to Target</th>
@@ -71,7 +71,7 @@
 					@foreach($subembayments as $sub)
 					<tr>
 						<td>{{$sub->subem_disp}}</td>
-						<td>{{$sub->Nload_Total}}kg</td>
+						<td>{{$sub->Nload_Full_calc}}kg</td>
 						<td>{{$sub->Total_Att_N_Removed}}kg</td>
 						<td>{{$sub->Scenario_Total}}kg</td>
 						<td>{{$sub->Total_Tar_Kg}}kg</td>
@@ -82,10 +82,11 @@
 				</tbody>
 
 			</table>
-<p><sup>*</sup> The "Original N" value is taken from the "Nload_Total" field in the CapeCodMA.Subembayments table. </p>
-		
-		
-<p><a href="{{url('map', [$embay_id, $scenarioid])}}">back to map</a></p>
+			<p><sup>1</sup> The "Original N" value is calculated (unattenuated) total Nitrogen for the subembayment. </p>
+			<p><sup>2</sup>A negative number in this column represents Nitrogen added to a subembayment as part of a collection treatment.</p>
+					
+					
+			<p><a href="{{url('map', [$embay_id, $scenarioid])}}">back to map</a></p>
 
 		</div>
 		</div>
