@@ -1,0 +1,104 @@
+
+<div class="container-fluid">
+    <div class="row content">
+        <div class="col-sm-1">
+            <img src="images\SAM_logo.png" width="50px" height="20px" />
+        </div>
+        <div class="col-sm-11">
+            <div class="input-group">
+                <input type="text" class="form-control">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div style="width:300px; height:300px; margin: 15px auto; border:0px solid red;">
+                <div id=donutAsterchartArea display=hidden></div>
+            </div>
+        </div><P>&nbsp;</P>
+        <div class="col-sm-6">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active" ng-class="{ 'active' : activeTab == 1}"><a href="" ng-click="setActiveTab(1)">Weight</a></li>
+                <li ng-class="{ 'active' : activeTab == 2}"><a href="" ng-click="setActiveTab(2)">Rank</a></li>
+                <li ng-class="{ 'active' : activeTab == 3}"><a href="" ng-click="setActiveTab(3)">Help</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" ng-class="{'tab-pane active' : activeTab ===1, 'tab-pane' : activeTab !== 1}" id="weight">
+                    <div class="row" style="width:95%; margin: 5px auto;">
+                        <div id="slider-range1" style="margin: 5px auto;"></div>
+                        <table width="90%;" style="text-align: center">
+                            <tr>
+                                <td width="30%;"><span style="color:#14A6CC;margin-right:5px;font-size:150%;">&#9632;</span>Community</td>
+                                <td width="30%;"><span style="color:#BEDB39;margin-right:5px;font-size:150%;">&#9632;</span>Cost</td>
+                                <td width="30%;"><span style="color:#E85305;margin-right:5px;font-size:150%;">&#9632;</span>Confidence</td>
+                            </tr>
+                        </table>
+                     <p style="margin-bottom: 10px;margin-top: 10px;">Calculate your scenario's SAM score using weighted categories. Move the handles to adjust the weights of the three metric bins.</p>
+                    <p><button type="button" class="btn btn-success" ng-click="submitVote()">Submit Vote</button></p>
+                    </div>
+                </div>
+                <div class="tab-pane" id="rank" ng-class="{'tab-pane active' : activeTab ===2, 'tab-pane' : activeTab !== 2}">
+                    <!-- Use directive ng-sortable -->
+                    <div class="row" style="width:95%; margin: 15px auto;">
+                        <span>Community</span>
+                        <div id="slider-range2"></div>
+                        <table width="90%;" style="text-align: center">
+                            <tr>
+                                <td width="30%;"><img src="images/GC.png" style="margin-top:6px;margin-right:1px;border:3px solid #7AFFFF;border-radius: 25px;"/><br>GC</td>
+                                <td width="30%;"><img src="images/jobs.png" style="margin-top:6px;margin-right:1px;border:3px solid #14A6CC;border-radius: 25px;"/><br>Jobs</td>
+                                <td width="30%;"><img src="images/prop.png" style="margin-top:6px;margin-right:1px;border:3px solid #004066;border-radius: 25px;"/><br>Prop</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="row" style="width:95%; margin: 15px auto;">
+                        <span>Cost</span><br>
+                        <div id="slider-range3"></div>
+                        <table width="90%;" style="text-align: center">
+                            <tr>
+                                <td width="30%;"><img src="images/Cap.png" style="margin-top:6px;margin-right:1px;border:3px solid #E4FF5F;border-radius: 25px;"/><br>Cap</td>
+                                <td width="30%;"><img src="images/OM.png" style="margin-top:6px;margin-right:1px;border:3px solid #BEDB39;border-radius: 25px;"/><br>OM</td>
+                                <td width="30%;"><img src="images/VarCost.png" style="margin-top:6px;margin-right:1px;border:3px solid #98B513;border-radius: 25px;"/><br>VarCost</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="row" style="width:95%; margin: 15px auto;">
+                        <span>Confidence</span><br>
+                        <div id="slider-range4"></div>
+                        <table width="90%;" style="text-align: center">
+                            <tr>
+                                <td width="30%;"><img src="images/Flood.png" style="margin-top:6px;margin-right:1px;border:3px solid #FFB96B;border-radius: 25px;"/><br>Flood</td>
+                                <td width="30%;"><img src="images/Years.png" style="margin-top:6px;margin-right:1px;border:3px solid #E85305;border-radius: 25px;"/><br>Years</td>
+                                <td width="30%;"><img src="images/VarPerf.png" style="margin-top:6px;margin-right:1px;border:3px solid #820000;border-radius: 25px;"/><br>VarP</div></td>
+                            </tr>
+                        </table>
+                        <p style="margin-bottom: 10px;margin-top: 10px;">Rank each category using the sliders.</p>
+                    </div>
+                </div>
+                <div class="tab-pane" id="help" ng-class="{'tab-pane active' : activeTab ===3, 'tab-pane' : activeTab !== 3}">
+                    <div class="row" style="width:95%; margin: 15px auto;">
+                        <h5>Welcome to SAM - Scenario Assessment Model!</h5>
+                        <p>SAM is a tool that measures the performance of Watershed MVP scenarios related to Cost, Community, and Confidence. Overall, SAM aims to assess whether a scenario is financially viable, socially aligned, and future oriented compared to other possible scenarios that could be generated.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<hr />
+<br /><br /><br />

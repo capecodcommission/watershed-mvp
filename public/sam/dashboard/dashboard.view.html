@@ -1,0 +1,172 @@
+<div class="row">
+              <!-- <div class="splash-body"> -->
+                <!--<div class="">-->
+
+                  <div class="row">
+                    
+                    <div class="col-sm-12">
+                    <form ng-submit="search(scenarioId)">
+	                      <div class="input-group">
+	                        <input type="text" class="form-control" id="search" ng-model="scenarioId" >
+			                    <span class="input-group-btn">
+			                        <button class="btn btn-default" type="button">
+			                            <span class="glyphicon glyphicon-search"></span>
+			                        </button>
+			                    </span>
+	                      </div>
+                      </form>
+                    </div>
+                  </div>
+
+                 <!--  <div class="form-inline"> -->
+
+                    <div class="row">
+                      <div class="col-lg-6">
+                      <div class="row">
+						<h3>Current SAM Chart with Score:</h3>
+						</div>
+                      <div class="row">
+                      	<div id=donutAsterchartArea display=hidden></div>
+                      </div>
+                        
+                      </div>
+                      <div class="col-lg-6">
+						<div class="row">
+							<h3>Scenario Details:</h3>
+						</div>
+                      	<div class="row">
+                      		<div class="col-lg-6">
+                      			Scenario ID : 564
+                              <br>
+                      			Original Score : <span class="badge" style="background-color:red;">60</span>
+                              <br>Enable Voting : <input type="checkbox" checked data-toggle="toggle">
+                      		</div>
+                      	</div>
+                        
+                      </div>
+
+                      </div>
+                    <hr>
+                    <div class="row">
+
+                    <div class="col-lg-4"><h3>Voting Results :</h3> </div>
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-6">Average Score <span class="badge" style="background-color:red;">50</span></div>
+
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-4">
+                        <div class="panel panel-primary" >
+                          <div class="panel-heading" style="background-color:#BEDB39;border-color:#BEDB39;">Cost : 79</div>
+                          <div class="panel-body">
+                            <img src="images/Cap.png" style="margin-right:4px;margin-bottom:4px;border:3px solid #BEDB39;border-radius: 25px;"/><label>Capital Cost : 67</label><br>
+                            <img src="images/VarCost.png" style="margin-right:4px;margin-bottom:4px;border:3px solid #BEDB39;border-radius: 25px;"/><label>Life Cycle Cost : 87</label><br>
+                            <img src="images/OM.png" style="margin-right:4px;border:3px solid #BEDB39;border-radius: 25px;"/><label>Oper. & Maint. Cost : 77</label><br>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-4">
+                        <div class="panel panel-primary">
+                          <div class="panel-heading" style="background-color:#14A6CC;border-color:#14A6CC;">Community : 78</div>
+                          <div class="panel-body">
+                            <img src="images/GC.png" style="margin-right:4px;margin-bottom:4px;border:3px solid #14A6CC;border-radius: 25px;"/><label>Growth & Comp. : 67</label><br>
+                            <img src="images/jobs.png" style="margin-right:4px;margin-bottom:4px;border:3px solid #14A6CC;border-radius: 25px;"/><label>Const & OEM Jobs : 87</label><br>
+                            <img src="images/prop.png" style="margin-right:4px;border:3px solid #14A6CC;border-radius: 25px;"/><label>Prop. Value Avoided : 77</label><br>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-4">
+                        <div class="panel panel-primary">
+                          <div class="panel-heading" style="background-color:#E85305;border-color:#E85305;">Confidence : 69</div>
+                          <div class="panel-body">
+                            <img src="images/Years.png" style="margin-right:4px;margin-bottom:4px;border:3px solid #E85305;border-radius: 25px;"/><label>Useful no. of yrs : 67</label><br>
+                            <img src="images/VarPerf.png" style="margin-right:4px;margin-bottom:4px;border:3px solid #E85305;border-radius: 25px;"/><label>Variability in Perf. : 87</label><br>
+                            <img src="images/Flood.png" style="margin-right:4px;border:3px solid #E85305;border-radius: 25px;"/><label>Oper. & Maint. Cost : 77</label><br>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <hr>
+                  <h3>Voting Stats :</h3>
+                    <table class="table">
+                      <thead class="thead-default">
+                      <tr>
+                        <th class="col-lg-1">#</th>
+                        <th class="col-lg-2">Name</th>
+                        <th class="col-lg-2">Final %</th>
+                        <th class="col-sm-7"></th>
+                        <!-- <th style="background-color:#14A6CC;border-color:#14A6CC;color:#fff;"></th>
+                        <th style="background-color:#E85305;border-color:#E85305;color:#fff;"></th> -->
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>70</td>
+                        <td>
+                        	<div class="progress">
+							  <div class="progress-bar progress-bar-success" aria-valuenow="60" style="width:45%;background-color:#BEDB39;">
+							    <span class="sr-only">35% Complete (success)</span>45%
+							  </div>
+							  <div class="progress-bar progress-bar-warning" style="width: 20%;background-color:#14A6CC;">
+							    <span class="sr-only">20% Complete (warning)</span>20%
+							  </div>
+							  <div class="progress-bar progress-bar-danger" style="width: 10%;background-color:#E85305;">
+							    <span class="sr-only">10% Complete (danger)</span>10%
+							  </div>
+							</div>
+                        </td>
+                        <!-- <td>60</td>
+                        <td>50</td> -->
+                      </tr>
+                      <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>65</td>
+                        <td>
+                        	<div class="progress">
+							  <div class="progress-bar progress-bar-success" style="width: 35%;background-color:#BEDB39;">
+							    <span class="sr-only">35% Complete (success)</span>35%
+							  </div>
+							  <div class="progress-bar progress-bar-warning" style="width: 20%;background-color:#14A6CC;">
+							    <span class="sr-only">20% Complete (warning)</span>20%
+							  </div>
+							  <div class="progress-bar progress-bar-danger" style="width: 10%;background-color:#E85305;">
+							    <span class="sr-only">10% Complete (danger)</span>10%
+							  </div>
+							</div>
+                        </td>
+                        <!-- <td>67</td>
+                        <td>78</td> -->
+                      </tr>
+                      <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>87</td>
+                        <td>
+                        	<div class="progress">
+							  <div class="progress-bar progress-bar-success" style="width: 35%;background-color:#BEDB39;">
+							    <span class="sr-only">35% Complete (success)</span>35%
+							  </div>
+							  <div class="progress-bar progress-bar-warning" style="width: 20%;background-color:#14A6CC;">
+							    <span class="sr-only">20% Complete (warning)</span>20%
+							  </div>
+							  <div class="progress-bar progress-bar-danger" style="width: 10%;background-color:#E85305;">
+							    <span class="sr-only">10% Complete (danger)</span>10%
+							  </div>
+							</div>
+                        </td>
+                        <!-- <td>82</td>
+                        <td>56</td> -->
+                      </tr>
+                      </tbody>
+                    </table>
+                   <!--  <b>Note : Click on row to see more details.</b> -->
+
+                  <!-- </div> -->
+                  <br>
+                <!--</div>-->
+              <!-- </div> -->
+            </div>
