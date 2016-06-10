@@ -61,29 +61,30 @@
 					<tr>
 						<th>Subembayment</th>
 						<th>Original N<sup>1</sup></th>
-						<th>N Removed (Attenuated)<sup>2></sup></th>
+						<th>N Removed (Attenuated)<sup>2</sup></th>
 						<th>Scenario N</th>
 						<th>Target N</th>
-						<th>N Remaining to Target</th>
+						<th>N Remaining to Target <sup>3</sup></th>
 					</tr>
 				</thead>
 				<tbody>
 					@foreach($subembayments as $sub)
 					<tr>
 						<td>{{$sub->subem_disp}}</td>
-						<td>{{$sub->Nload_Full_calc}}kg</td>
-						<td>{{$sub->Total_Att_N_Removed}}kg</td>
-						<td>{{$sub->Scenario_Total}}kg</td>
-						<td>{{$sub->Total_Tar_Kg}}kg</td>
-						<td>{{ $sub->Scenario_Total - $sub->Total_Tar_Kg}}</td>
+						<td>{{$sub->n_load_att}}kg</td>
+						<td>{{$sub->n_load_att_removed}}kg</td>
+						<td>{{$sub->n_load_scenario}}kg</td>
+						<td>{{$sub->n_load_target}}kg</td>
+						<td>{{$sub->n_load_scenario - $sub->n_load_target}}</td>
 					</tr>
 
 					@endforeach
 				</tbody>
 
 			</table>
-			<p><sup>1</sup> The "Original N" value is calculated (unattenuated) total Nitrogen for the subembayment. </p>
+			<p><sup>1</sup> The "Original N" value is calculated (attenuated) total Nitrogen for the subembayment. </p>
 			<p><sup>2</sup>A negative number in this column represents Nitrogen added to a subembayment as part of a collection treatment.</p>
+			<p><sup>3</sup>A negative number in this column means the user has exceeded the target for this subembayment.</p>
 					
 					
 			<p><a href="{{url('map', [$embay_id, $scenarioid])}}">back to map</a></p>

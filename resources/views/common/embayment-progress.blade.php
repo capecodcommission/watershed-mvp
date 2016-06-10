@@ -12,10 +12,10 @@
 	background: linear-gradient(to top,  #2caae4 {{$percent}}%, #f9ae1b 100%); 
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2caae4', endColorstr='#f9ae1b',GradientType=1 );">
 	<span>
-	Original Unattenuated N: {{$total}}kg <br />
-	Original Attenuated N: {{$att_total}}kg <br />
+	{{-- Original Unattenuated N: {{$total}}kg <br /> --}}
+	Starting (Att) N: {{$att_total}}kg <br />
 	Goal: {{number_format($goal)}}kg<br />
-		<span id="n_removed">{{session('n_removed')}}</span>kg Unattenuated N Removed
+		<span id="n_removed"><?php echo number_format(round(session('n_removed'))); ?></span>kg Unattenuated N Removed
 
 	</span>
 	
