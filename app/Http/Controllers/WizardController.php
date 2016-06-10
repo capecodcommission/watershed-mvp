@@ -33,7 +33,7 @@ class WizardController extends Controller
 		$subembayments = DB::select('exec CapeCodMA.GET_SubembaymentNitrogen ' . $id);
 		$total_goal = 0;
 		foreach ($subembayments as $key) {
-			$total_goal += $key->Total_Tar_Kg;
+			$total_goal += $key->n_load_target;
 		}
 
 		$nitrogen = DB::select('exec CapeCodMA.GET_AreaNitrogen_Unattenuated ' . $id);
