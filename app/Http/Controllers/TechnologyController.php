@@ -22,12 +22,12 @@ class TechnologyController extends Controller
 	 **/
 	public function get($type, $id)
 	{
-		// DB::enableQueryLog();
 
-		   DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
+		DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
 		$tech = DB::table('dbo.Technology_Matrix')->select('*')->where('TM_ID', $id)->first();
 		$scenarioid = session('scenarioid');
 		// $tech = $tech[0];
+		// dd($scenarioid);
 		$treatment = Treatment::create(['ScenarioID' => $scenarioid, 'TreatmentType_ID'=>$tech->TM_ID]);
 
 		if ($tech->Show_In_wMVP == 4) 
@@ -85,7 +85,7 @@ class TechnologyController extends Controller
 	 * @return void
 	 * @author 
 	 **/
-	public function ApplyTreatment($treat_id, $rate, $type)
+	public function ApplyTreatment_Percent($treat_id, $rate, $type)
 	{
 		//$treatment = Treatment::find($treat_id);
 		$scenarioid = session('scenarioid');
@@ -136,7 +136,7 @@ class TechnologyController extends Controller
 	 **/
 	public function getPolygon($type, $treatment_id, $poly)
 	{
-				   DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
+		DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
 
 		$scenarioid = session('scenarioid');
 		$embay_id = session('embay_id');

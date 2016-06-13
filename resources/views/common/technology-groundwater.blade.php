@@ -62,9 +62,9 @@
 			<tbody>
 				<tr>
 				
-				 		<td>@{{storm_unatt | round}}kg</td>
-						<td>@{{storm_att | round }}kg</td>
-						<td>@{{storm_unatt_treated | round }}kg</td>
+				 		<td>@{{groundwater_unatt | round}}kg</td>
+						<td>@{{groundwater_att | round }}kg</td>
+						<td>@{{groundwater_treated | round }}kg</td>
 						<td>@{{storm_att_treated | round }}kg</td>
 						<td>@{{storm_difference | round }}kg</td>
 				</tr>
@@ -74,7 +74,7 @@
 			<p>
 				Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.<br />
 				
-				<input type="range" id="storm-percent" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="storm_percent"> @{{storm_percent}}%
+				<input type="range" id="ground-percent" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="ground_percent"> @{{ground_percent}}%
 			</p>
 			<p>
 				<button id="applytreatment">Apply</button>
@@ -100,7 +100,7 @@
 
 					// console.log(e.mapPoint.x, e.mapPoint.y);
 				
-					var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y;
+					var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y + '/' + treatment;
 					$.ajax({
 						method: 'GET',
 						url: url
@@ -122,21 +122,18 @@
 		$('#select_polygon').on('click', function(f){
 			f.preventDefault();
 			$('#popdown-opacity').hide();
-			// $( "#info" ).trigger( "click" );
-			// dom.byId("info")
-
 			map.disableMapNavigation();
 			tb.activate('polygon');
-			// console.log('polygon clicked');
-			// $('#popdown-opacity').show();
+
 
 		});
+
 		$('#applytreatment').on('click', function(e){
 			// need to save the treated N values and update the subembayment progress
 			e.preventDefault();
 			// console.log('clicked');
-			var percent = $('#storm-percent').val();
-			var url = "{{url('/apply_percent')}}" + '/' +  {{$treatment['TreatmentId']}} + '/' + percent + '/storm';
+			var percent = $('#ground-percent').val();
+			var url = "{{url('/apply_percent')}}" + '/' +  {{$treatment['TreatmentId']}} + '/' + percent + '/ground';
 			// console.log(url);
 			$.ajax({
 				method: 'GET',

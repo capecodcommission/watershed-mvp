@@ -153,6 +153,10 @@ new Vue({
 					groundwater_att: function()
 					{
 						return (this.fert_treated + this.storm_treated + this.atmosphere_att);
+					},
+					groundwater_treated: function()
+					{
+						return (this.groundwater_att * ((100-this.ground_percent)/100));
 					}
 					
 				}

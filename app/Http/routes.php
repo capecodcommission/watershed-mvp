@@ -30,7 +30,7 @@ Route::get('/testmap/Nitrogen/{treatment}/{poly}', 'WizardController@getPolygon'
 
 Route::get('/tech/{type}/{tech}', 'TechnologyController@get');
 
-Route::get('/apply_percent/{treatment}/{rate}/{type}', 'TechnologyController@ApplyTreatment');
+Route::get('/apply_percent/{treatment}/{rate}/{type}', 'TechnologyController@ApplyTreatment_Percent');
 
 Route::get('/apply_septic/{treatment}/{rate}/{type}', 'TechnologyController@ApplyTreatment_Septic');
 

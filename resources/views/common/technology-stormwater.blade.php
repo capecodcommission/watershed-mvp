@@ -100,7 +100,7 @@
 
 					// console.log(e.mapPoint.x, e.mapPoint.y);
 				
-					var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y;
+					var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y + '/' + treatment;
 					$.ajax({
 						method: 'GET',
 						url: url

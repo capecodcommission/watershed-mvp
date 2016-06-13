@@ -6,6 +6,7 @@
 	</head>
 	<body>
 		<div class="wrapper">
+		<div class="content">
 			<h1>Embayment: </h1>
 
 			<div id="app">
@@ -91,6 +92,6 @@
 
 		</div>
 		</div>
-	
+	</div>
 	</body>
 </html>
