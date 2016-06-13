@@ -23,9 +23,14 @@
 				<li>Groundwater</li>
 				<li>Embayment</li>
 			</ul>
+
 			<p>For each of these stages, you can select technologies to remove Nitrogen from the embayment. For some, you can select the area that will be treated by drawing a polygon on the map. </p>
 			<p>Your progress towards the embayment's Target Nitrogen Removal will be displayed in the graph to the left. In addition to the overall target, each sub-embayment will have its own individual Nitrogen load and target, which you can track using the graphs in the left sidebar.</p>
+
 			<p>At any time, you can <a href="{{url('results', session('scenarioid'))}}" target="_blank">view a summary of your scenario</a>.</p>
+			
+			<p>At any time, you can <a href="{{url('results')}}" target="_blank">view a summary of your scenario</a>.</p>
+
 		
 		</div>
 	</article>

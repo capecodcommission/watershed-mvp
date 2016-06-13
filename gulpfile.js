@@ -32,17 +32,13 @@ elixir(function(mix) {
             'public/css/main.css'
             ], 'public/css/app.css', './')
 
-    .version('public/css/app.css')
-
     .scripts ([
-            // paths.assets + 'jquery/dist/jquery.min.js',
+            paths.assets + 'jquery/dist/jquery.min.js',
+            paths.js + 'jquery.popdown.js',
+            paths.js + 'map.js',
             paths.js + 'app.js'
         ], "public/js/app.js", "./")
 
     .browserify('main.js')
-    .copy(
-        paths.js + 'map.js',
-        'public/js/map.js'
-        )
-
+   
 });

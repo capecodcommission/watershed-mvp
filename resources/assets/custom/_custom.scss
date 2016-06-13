@@ -12,3 +12,19 @@
 		@include span-columns(4);
 	}
 }
+
+ul {
+
+	&.wizard-bullets {
+		list-style-type: square;
+		margin: 10px 0 1em 2em;
+		padding: 10px 0 0 30px;
+
+		li {
+			margin-left: 1em;
+
+		}
+
+	}
+
+}

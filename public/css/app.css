@@ -3958,7 +3958,7 @@ ol {
 dl {
   margin-bottom: 0.75em; }
   dl dt {
-    font-weight: 600;
+    font-weight: bold;
     margin-top: 0.75em; }
   dl dd {
     margin: 0; }
@@ -6109,6 +6109,13 @@ html {
     width: 31.76157%; }
     .wrapper .secondary:last-child {
       margin-right: 0; }
+
+ul.wizard-bullets {
+  list-style-type: square;
+  margin: 10px 0 1em 2em;
+  padding: 10px 0 0 30px; }
+  ul.wizard-bullets li {
+    margin-left: 1em; }
 
 .wrapper {
   max-width: 4000px;

@@ -4,7 +4,6 @@
 <head>
 	<title>WatershedMVP 3.0</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
 	<link href="{{url('css/app.css')}}" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="https://js.arcgis.com/3.16/esri/css/esri.css">
 	<style>
@@ -82,8 +81,8 @@
 			
 		</div>
 		 
-
-		<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.js"></script>
+		<script src="{{url('/js/app.js')}}"></script>
+		<script src="{{url('/js/main.js')}}"></script>
 		<script>
 			$(document).ready(function(){
 				$('#embayment').on('change', function(){
