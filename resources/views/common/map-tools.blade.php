@@ -2,12 +2,12 @@
 <label><i class="fa fa-globe fa-2x js-menu-trigger sliding-panel-button"></i>
 </label>
     <div style="position:absolute; right:80px; top:20px; z-Index:100;">
-       <!--  <div data-dojo-type="dijit/TitlePane"
+        <div data-dojo-type="dijit/TitlePane"
              data-dojo-props="title:'Switch Basemap', closable:false, open:false">
             <div data-dojo-type="dijit/layout/ContentPane" style="width:380px; height:280px; overflow:auto;">
                 <div id="basemapGallery"></div>
             </div>
-        </div> -->
+        </div>
 
         <div id="basemaps-wrapper" class="leaflet-bar">
  <!--  <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">

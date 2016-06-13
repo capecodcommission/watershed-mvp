@@ -289,10 +289,15 @@
 		</div>
 		<div class="acc_cCont">
 		<!-- <p>Existing Nitrogen Load: kg</p> -->
-		<p>Overall Nitrogen Reduction: 9862kg</p>
-			<p>Overall Cost: $374,985</p>
+		<ul>
+		@foreach($treatments as $treatment)
+			<li>{{$treatment->TreatmentType_ID}} -> {{$treatment->Nload_Reduction}}kg</li>
+		@endforeach
+		</ul>
+		<p>Overall Nitrogen Reduction: </p>
+			
 			<p>Download Results: <a href="#">.xls</a> or <a href="">.xml</a></p>
-			<p><a href="/results" class="button">View detailed results</a></p>
+			<p><a href="{{url('results', session('scenarioid'))}}" class="button">View detailed results</a></p>
 		</div>
 	</article>
 	</aside>

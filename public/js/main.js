@@ -11776,10 +11776,6 @@ module.exports = Vue;
 'use strict';
 
 var Vue = require('vue');
-// var VueResource = require('vue-resource');
-
-// var VueFilter = require('vue-filter');
-// Vue.use(VueResource, VueFilter);
 Vue.use(require('vue-filter'));
 Vue.use(require('vue-resource'));
 
@@ -11870,24 +11866,6 @@ new Vue({
 		atmosphere_unatt: parseFloat(nitrogen_unatt.Total_UnAtt_Atmosphere),
 		atmosphere_att: parseFloat(nitrogen_att.Total_Att_Atmosphere)
 	},
-	// components: {subembayment, Treatment},
-
-	// methods: {
-	// 	AddNewTreatment: function() {
-	// 		// console.log(id.TreatmentType_ID);
-	// 		console.log(this.Treatment);
-	// 		this.$http.post('/api/treatments/', this.Treatment, function(data){
-	// 			console.log(data);
-	// 		});
-	// 	},
-
-	// 	EditTreatment: function(id) {
-	// 		var treatment = this.Treatment;
-	// 		this.$http.patch('/api/treatments/' + id, treatment, function (data) {
-	// 			console.log(data)
-	// 		})
-	// 	}
-	// },
 
 	computed: {
 		treated: function treated() {

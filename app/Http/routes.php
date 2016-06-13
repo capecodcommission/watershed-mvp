@@ -42,6 +42,6 @@ Route::get('/map/point/{x}/{y}/{treatment}', 'MapController@point');
 
 Route::get('/getScenarioNitrogen', 'WizardController@getScenarioNitrogen');
 
-Route::get('/results', 'WizardController@getScenarioResults');
+Route::get('/results/{scenarioid}', 'WizardController@getScenarioResults');
 
 Route::resource('/api/treatments', 'ApiTreatmentController');

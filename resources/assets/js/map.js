@@ -6,7 +6,7 @@ var treatment;
 var func;
 require([
 		"esri/map",
-		// "esri/dijit/BasemapGallery",
+		"esri/dijit/BasemapGallery",
 		"esri/arcgis/utils",
 		"dojo/parser",
 		"esri/layers/ArcGISDynamicMapServiceLayer",
@@ -37,7 +37,7 @@ require([
 	],
 	function(
 		Map,
-		// BasemapGallery, 
+		BasemapGallery, 
 		arcgisUtils,
 		parser,
 		ArcGISDynamicMapServiceLayer,
@@ -189,15 +189,15 @@ require([
 		 *
 		 *********************************/
 
-		// var basemapGallery = new BasemapGallery({
-		//        showArcGISBasemaps: true,
-		//        map: map
-		//      }, "basemapGallery");
-		//      basemapGallery.startup();
+		var basemapGallery = new BasemapGallery({
+		       showArcGISBasemaps: true,
+		       map: map
+		     }, "basemapGallery");
+		     basemapGallery.startup();
 
-		//      basemapGallery.on("error", function(msg) {
-		//        console.log("basemap gallery error:  ", msg);
-		//      });
+		     basemapGallery.on("error", function(msg) {
+		       console.log("basemap gallery error:  ", msg);
+		     });
 
 
 		var extent;
@@ -314,15 +314,15 @@ require([
 		EcologicalIndicators.hide();
 		map.addLayer(EcologicalIndicators);
 
-		// var ShallowGroundwater = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/Projects/208_Plan/MapServer/32', {
-		//         mode: FeatureLayer.MODE_ONDEMAND,
-		//         outFields: ["*"],
-		//         opacity: .5
-		//     }
+		var ShallowGroundwater = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/Projects/208_Plan/MapServer/32', {
+		        mode: FeatureLayer.MODE_ONDEMAND,
+		        outFields: ["*"],
+		        opacity: .5
+		    }
 
-		// );
-		// ShallowGroundwater.hide();
-		// map.addLayer(ShallowGroundwater);
+		);
+		ShallowGroundwater.hide();
+		map.addLayer(ShallowGroundwater);
 
 
 		var LandUse = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/3', {

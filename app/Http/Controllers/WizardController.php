@@ -28,7 +28,12 @@ class WizardController extends Controller
 			Session::put('embay_id', $id);
 			Session::put('n_removed', 0);
 		}
+		else
+		{
+			Session::put('scenarioid', $scenarioid);
+		}
 		
+		$treatments = DB::select('select * from CapeCodMA.Treatment_Wiz where scenarioid = '. $scenarioid);
 			
 		$subembayments = DB::select('exec CapeCodMA.GET_SubembaymentNitrogen ' . $id);
 		$total_goal = 0;
@@ -45,10 +50,7 @@ class WizardController extends Controller
 			]);
 		
 
-
-		// Need to get list of Technologies (Tech_Matrix)
-
-		return view('layouts/wizard', ['embayment'=>$embayment, 'subembayments'=>$subembayments, 'nitrogen_att'=>$nitrogen_att[0], 'nitrogen_unatt'=>$nitrogen[0], 'goal'=>$total_goal]);
+		return view('layouts/wizard', ['embayment'=>$embayment, 'subembayments'=>$subembayments, 'nitrogen_att'=>$nitrogen_att[0], 'nitrogen_unatt'=>$nitrogen[0], 'goal'=>$total_goal, 'treatments'=>$treatments]);
 
 	}
 
@@ -135,9 +137,9 @@ class WizardController extends Controller
 	 * @return void
 	 * @author 
 	 **/
-	public function getScenarioResults()
+	public function getScenarioResults($scenarioid)
 	{	
-		$scenarioid = session('scenarioid');
+		// $scenarioid = session('scenarioid');
 		$embay_id = session('embay_id');
 		$results = DB::select('exec CapeCodMA.Get_ScenarioResults '. $scenarioid);
 		$towns = DB::select('select wtt.*, t.town from dbo.wiz_treatment_towns wtt inner join capecodma.matowns t on t.town_id = wtt.wtt_town_id
