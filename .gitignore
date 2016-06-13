@@ -4,3 +4,9 @@
 Homestead.yaml
 Homestead.json
 .env
+
+/public/fim
+/public/sam
+/public/backup
+/www/bootstrap/autoload.php
+/public/.DS_Store
