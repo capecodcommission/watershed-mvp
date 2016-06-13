@@ -4,6 +4,7 @@ var watershed;
 var embay_shape;
 var treatment;
 var func;
+var treatment_polygons = new Array();
 require([
 		"esri/map",
 		"esri/dijit/BasemapGallery",
@@ -117,7 +118,7 @@ require([
 			}
 			var len = polystring.length;
 			polystring = polystring.substring(0, len - 2);
-
+			treatment_polygons[treatment] = polystring;
 			// console.log('exec CapeCodMa.Get_NitrogenFromPolygon \'' + polystring + '\'');
 
 			// console.log(polystring);
@@ -130,13 +131,13 @@ require([
 				})
 				.done(function(msg) {
 					// msg = $.parseJSON(msg);
-					console.log(msg);
+					// console.log(msg);
 					// console.log(msg);
 					// var txtmsg = "Total Nitrogen in Polygon: " + msg[0].UnAttenFull;
 					// alert(txtmsg);
 					// console.log('success');
 					// var poly_nitrogen = msg.poly_nitrogen->Septic;
-					$('#total_nitrogen_polygon').text(msg + 'kg');
+					$('#total_nitrogen_polygon').text(msg);
 					$('#popdown-opacity').show();
 					
 				});
@@ -145,47 +146,13 @@ require([
 			var area = evt.geometry.getExtent();
 			// console.log(area);
 			// map.centerAndZoom(area, 11);
+			console.log(treatment_polygons);
 		}
 
-		// This is the Esri Leaflet code
-		// Commenting this out for now
-
-		// var layer = L.esri.basemapLayer('Topographic').addTo(map);
-		//  var layerLabels;
-
-		//  function setBasemap(basemap) {
-		//    if (layer) {
-		//      map.removeLayer(layer);
-		//    }
-
-		//    layer = L.esri.basemapLayer(basemap);
-
-		//    map.addLayer(layer);
-
-		//    if (layerLabels) {
-		//      map.removeLayer(layerLabels);
-		//    }
-
-		//    if (basemap === 'ShadedRelief'
-		//     || basemap === 'Oceans'
-		//     || basemap === 'Gray'
-		//     || basemap === 'DarkGray'
-		//     || basemap === 'Imagery'
-		//     || basemap === 'Terrain'
-		//   ) {
-		//      layerLabels = L.esri.basemapLayer(basemap + 'Labels');
-		//      map.addLayer(layerLabels);
-		//    }
-		//  }
-
-		// function changeBasemap(basemaps){
-		// var basemap = basemaps.value;
-		// setBasemap(basemap);
-		// }
-
+	
 		/*******************************
 		 *
-		 *	This is the ArcGIS Basemap Gallery which breaks everything
+		 *	This is the ArcGIS Basemap Gallery which (used to) breaks everything
 		 *
 		 *********************************/
 
