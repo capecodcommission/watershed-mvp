@@ -1,10 +1,9 @@
 // Typography
 $base-font-family: $helvetica;
-//$heading-font-family: $base-font-family;
 $heading-font-family: TrendSansOne, Futura, "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 
 // Font Sizes
-$base-font-size: 1em;
+$base-font-size: 0.90em;
 
 // Line height
 $base-line-height: 1.5;
@@ -21,6 +20,11 @@ $blue: #1565c0;
 $dark-gray: #333;
 $medium-gray: #999;
 $light-gray: #ddd;
+$logo-blue: #1565c0;
+$cta-color: #FAB430;
+$error-color: #D8000C;
+$required-color: #ff0000;
+
 
 // Font Colors
 $base-font-color: $dark-gray;

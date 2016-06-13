@@ -56,41 +56,34 @@
 	<div id="map" class="map"></div>
 		<div class="secondary start">
 		<img src="http://www.watershedmvp.org/Images/mvplogo.png" alt="WatershedMVP 3.0 by Cape Cod Commission">
+		
+		<fieldset>
 
-			<h1>WatershedMVP 3.0</h1>
-			<p>Welcome to the Cape Cod Commission's WatershedMVP tool. The Cape Cod Commission developed the WatershedMVP application for professionals, municipal officials and community members in order to assist in creating the most cost-effective and efficient solutions to Cape Cod’s wastewater problem. The application is an informational resource intended to provide regional estimates for planning purposes. WatershedMVP is an initiative of the Cape Cod Commission’s Strategic Information Office (SIO). To learn more about the WatershedMVP application and the Cape Cod Commission and its SIO, please Contact Us.</p>
-<!-- 					<fieldset>
-						<legend>Get Started</legend>
-						<p>Register or Sign In to see your saved scenarios</p>
-						<p>
-							<label for="email">Email Address</label>
-							<input type="email" placeholder = "Email Address">  
-						</p>
-						<p>
-							<label for="password">Password</label>
-							<input type="password" value="123456789">
-						</p>
-						<p>Name your Scenario (optional): <input type="text"></p>
-						<p>Description or comments (optional) <input type="text"></p>
-					</fieldset> -->
-					<fieldset>
-						<legend>Choose your area</legend>
-						<p>You can select a watershed from the list below, or click on the map to get started.</p>
-					
-						<p>Select your embayment from the list or click on the map to get started. 
-							<select id="embayment" class="Filter" >
-								<option value="">Select an embayment</option>
-								@foreach ($embayments as $embayment)
-									<option value="{{$embayment->EMBAY_ID}}">{{$embayment->EMBAY_DISP}}</option>
-								@endforeach
-							</select>
-						</p>
-					</fieldset>
-					<p>
-						<a href="{{url('/map')}}" id="startwizard" class="button">Get Started</a>
-					</p>
+			<p>The Cape Cod Commission developed the WatershedMVP application for professionals, municipal officials and community members in order to assist in creating the most cost-effective and efficient solutions to Cape Cod’s wastewater problem.</p>
+
+			<p>The application is an informational resource intended to provide regional estimates for planning purposes. WatershedMVP is an initiative of the Cape Cod Commission’s Strategic Information Office (SIO). To learn more about the WatershedMVP application and the Cape Cod Commission and its SIO, please <a href="http://www.capecodcommission.org/index.php?id=205" target="_blank">contact us</a>.</p>
+
+			<p>You can select a watershed from the list below, or click on the map to get started.</p>
+		
+			<p>
+				<select id="embayment" class="Filter" >
+					<option value="">Select an embayment</option>
+					@foreach ($embayments as $embayment)
+						<option value="{{$embayment->EMBAY_ID}}">{{$embayment->EMBAY_DISP}}</option>
+					@endforeach
+				</select>
+			</p>
+
+			<p>
+				<a href="{{url('/map')}}" id="startwizard" class="button">Get Started</a>
+			</p>
+
+		</fieldset>
+			
 		</div>
-		 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.js"></script>
+		 
+
+		<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.js"></script>
 		<script>
 			$(document).ready(function(){
 				$('#embayment').on('change', function(){

@@ -1,31 +1,37 @@
 fieldset {
-  background-color: transparent;
-  border: 0;
-  margin: 0;
-  padding: 0;
-}
-
-legend {
-  font-weight: 600;
-  margin-bottom: $small-spacing / 2;
-  padding: 0;
-}
-
-label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: $small-spacing / 2;
+  background-color: $secondary-background-color;
+  border: $base-border;
+  margin: 0 0 $small-spacing;
+  padding: $base-spacing;
 }
 
 input,
+label,
 select {
   display: block;
   font-family: $base-font-family;
   font-size: $base-font-size;
 }
 
+label {
+  font-weight: 600;
+  margin-bottom: $small-spacing / 2;
+
+  &.required {
+    color: $required-color;
+  }
+
+  &.required:after {
+    content: " *";
+  }
+
+  abbr {
+    display: none;
+  }
+}
+
 #{$all-text-inputs},
-select[multiple] {
+select[multiple=multiple] {
   background-color: $base-background-color;
   border: $base-border;
   border-radius: $base-border-radius;
@@ -33,7 +39,7 @@ select[multiple] {
   box-sizing: border-box;
   font-family: $base-font-family;
   font-size: $base-font-size;
-  margin-bottom: $small-spacing;
+  margin-bottom: 1em;
   padding: $base-spacing / 3;
   transition: border-color $base-duration $base-timing;
   width: 100%;
@@ -62,23 +68,46 @@ textarea {
   resize: vertical;
 }
 
-[type="search"] {
+input[type="search"] {
   appearance: none;
 }
 
-[type="checkbox"],
-[type="radio"] {
+input[type="checkbox"],
+input[type="radio"] {
   display: inline;
   margin-right: $small-spacing / 2;
+
+  + label {
+    display: inline-block;
+  }
 }
 
-[type="file"] {
+input[type="file"] {
   margin-bottom: $small-spacing;
   width: 100%;
 }
 
+$select-arrow: 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDQ4IDQ4IiB3aWR0aD0iNDgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTE0LjgzIDE2LjQybDkuMTcgOS4xNyA5LjE3LTkuMTcgMi44MyAyLjgzLTEyIDEyLTEyLTEyeiIvPjxwYXRoIGQ9Ik0wLS43NWg0OHY0OGgtNDh6IiBmaWxsPSJub25lIi8+PC9zdmc+';
+$select-padding: .35em;
+
 select {
-  margin-bottom: $base-spacing;
-  max-width: 100%;
-  width: auto;
+  border-radius: 0;
+  -webkit-appearance: none; // autoprefixer won't add this and we still need it
+  appearance: none;
+  cursor: pointer;
+  padding: $select-padding;
+  width: 100%;
+  color: $medium-gray;
+
+  &.short-select {
+    display:inline-block;
+    width:45%;
+    margin-right: .25em;
+  }
+
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    background-image: url(#{$select-arrow});
+    background-position: right 0 top 50%;
+    background-repeat: no-repeat;
+  }
 }

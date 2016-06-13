@@ -1,6 +1,7 @@
-#{$all-buttons} {
+#{$all-buttons},
+.button, button {
   appearance: none;
-  background-color: $action-color;
+  background-color: $logo-blue;
   border: 0;
   border-radius: $base-border-radius;
   color: #fff;
@@ -18,18 +19,75 @@
   vertical-align: middle;
   white-space: nowrap;
 
+  .inactive {
+    background-color: $light-gray;
+  }
+
+  
+
+
   &:hover,
   &:focus {
-    background-color: shade($action-color, 20%);
-    color: #fff;
+  background-color: shade($action-color, 20%);
+  color: #fff;
   }
 
   &:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
+  cursor: not-allowed;
+  opacity: 0.5;
 
-    &:hover {
-      background-color: $action-color;
-    }
+  &:hover {
+    background-color: $action-color;
+  }
   }
 }
+
+
+ .inactive {
+    @extend .button;
+    background-color: $light-gray;
+  }
+
+  .active {
+    @extend .button;
+    background-color: $logo-blue;  
+  }
+
+
+  .complete {
+    @extend .button;   
+    background-color: #fff;
+    border: 1px dotted $light-gray;
+    color: $light-gray;
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: shade($error-color, 20%);
+    }
+  }
+
+
+.button--cta {
+  @extend .button;
+  background-color: $cta-color;
+  color: $white !important;
+
+  &:hover {
+  background-color: shade($cta-color, 20%);
+  }
+
+}
+
+.button--small {
+  @extend .button;
+  background-color: $cta-color;
+  color: $white !important;
+  width: 150px;
+
+  &:hover {
+  background-color: shade($cta-color, 20%);
+  }
+
+}
+
+
