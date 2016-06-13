@@ -24,7 +24,8 @@ class WizardController extends Controller
 		{
 			$scenarioid = DB::select('exec CapeCodMA.CreateScenario ' . $id);
 		// dd($scenarioid[0]->scenarioid);
-			Session::put('scenarioid', $scenarioid[0]->scenarioid);
+			$scenarioid = $scenarioid[0]->scenarioid;
+			Session::put('scenarioid', $scenarioid);
 			Session::put('embay_id', $id);
 			Session::put('n_removed', 0);
 		}
@@ -32,7 +33,7 @@ class WizardController extends Controller
 		{
 			Session::put('scenarioid', $scenarioid);
 		}
-		
+
 		$treatments = DB::select('select * from CapeCodMA.Treatment_Wiz where scenarioid = '. $scenarioid);
 			
 		$subembayments = DB::select('exec CapeCodMA.GET_SubembaymentNitrogen ' . $id);
