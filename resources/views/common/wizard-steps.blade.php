@@ -13,8 +13,10 @@
 		</div>
 		<div class="acc_cCont">
 		
-		<p>Total Unattenuated Nitrogen: @{{unatt|round}}kg; Total Attenuated Nitrogen: @{{att|round}}kg</p>
-			<!-- <p><a href="{{url('test', $embayment->EMBAY_ID)}}">See query and test the values</a></p> -->
+		<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="_blank">View Scenario Summary</a>
+			Total Unattenuated Nitrogen: <span class="wizard-span">@{{unatt|round}}kg</span><br />
+			Total Attenuated Nitrogen: <span  class="wizard-span">@{{att|round}}kg</span></p>
+			<hr>
 			<p>Nitrogen is treated at different entrance points:</p>
 			<ul class="wizard-bullets">
 				<li>Fertilizer (applied to the ground directly)</li>
@@ -24,13 +26,10 @@
 				<li>Embayment</li>
 			</ul>
 
-			<p>For each of these stages, you can select technologies to remove Nitrogen from the embayment. For some, you can select the area that will be treated by drawing a polygon on the map. </p>
-			<p>Your progress towards the embayment's Target Nitrogen Removal will be displayed in the graph to the left. In addition to the overall target, each sub-embayment will have its own individual Nitrogen load and target, which you can track using the graphs in the left sidebar.</p>
+			<p>For each of these stages, you can select technologies to remove Nitrogen from the embayment. For some, you can select the area that will be treated by drawing a polygon on the map. Your progress towards the embayment's Target Nitrogen Removal will be displayed in the graph to the left. In addition to the overall target, each sub-embayment will have its own individual Nitrogen load and target, which you can track using the graphs in the left sidebar.</p>
 
 			<p>At any time, you can <a href="{{url('results', session('scenarioid'))}}" target="_blank">view a summary of your scenario</a>.</p>
-			
-			<p>At any time, you can <a href="{{url('results')}}" target="_blank">view a summary of your scenario</a>.</p>
-
+		
 		
 		</div>
 	</article>
@@ -47,8 +46,9 @@
 		</header>
 		</div>
 		<div class="acc_cCont">
-			<p>Total Unattenuated Load from Fertilizer: @{{fert_unatt|round}}kg</p>
-			<p>Total Attenuated Load from Fertilizer: @{{fert_att | round }}kg</p>
+			<p>Total Unattenuated Load from Fertilizer: <span class="wizard-span">@{{fert_unatt|round}}kg</span> <br>
+			Total Attenuated Load from Fertilizer: <span class="wizard-span">@{{fert_att | round }}kg</span></p>
+			<hr>
 			<p>Choose a technology to treat Nitrogen from Fertilizer in your watershed.</p>
 			
 			
@@ -71,8 +71,9 @@
 				</header>
 			</div>
 			<div class="acc_cCont">
-				<p>Unattenuated Nitrogen from Stormwater: @{{storm_unatt|round}}kg; Attenuated Nitrogen from Stormwater: @{{storm_att|round}}kg</p>
-				<!-- <p>Choose a technology to treat Nitrogen from Stormwater in your watershed.</p> -->
+				<p>Unattenuated Nitrogen from Stormwater: <span class="wizard-span">@{{storm_unatt|round}}kg</span> <br>
+				Attenuated Nitrogen from Stormwater: <span class="wizard-span">@{{storm_att|round}}kg</span></p>
+				<hr>
 				<p>Current scenario: {{ session('scenarioid') }}</p>
 				<div class="technology_list">
 					<div class="technology">

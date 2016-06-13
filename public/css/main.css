@@ -2351,6 +2351,13 @@ ul.wizard-bullets {
   ul.wizard-bullets li {
     margin-left: 1em; }
 
+p span.wizard-span {
+  font-weight: bold;
+  margin-left: 20px; }
+
+.right {
+  float: right; }
+
 .wrapper {
   max-width: 4000px;
   margin-left: auto;

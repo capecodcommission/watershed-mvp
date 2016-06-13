@@ -28,3 +28,17 @@ ul {
 	}
 
 }
+
+p {
+	span {
+		&.wizard-span {
+			font-weight: bold;
+			margin-left: 20px;
+		}
+	}
+}
+
+.right {
+	float: right;
+	
+}
