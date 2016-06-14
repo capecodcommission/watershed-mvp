@@ -23,4 +23,17 @@ class Embayment extends Model
 		return DB::select('select polygon.ToString() as polygon from dbo.embayment_area where embayment_id = ' . $this->EMBAY_ID);
 	}
 
+
+
+	/**
+	 * Return the subembayments for this embayment
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function subembayments()
+	{
+		return $this->hasMany('App\Subembayment', 'EMBAY_ID', 'EMBAY_ID');
+	}
+
 }

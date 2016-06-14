@@ -31,18 +31,25 @@ class WizardController extends Controller
 				if ($scenario->AreaID == $id) 
 				{
 					// user is still working on the same scenario. 
-					
+
 				}
 				else
 				{
-					// user created a new scenario, need to create a new one 
+					// user selected a different embayment, need to create a new scenario 
 					$scenarioid = DB::select('exec CapeCodMA.CreateScenario ' . $id);
-				// dd($scenarioid[0]->scenarioid);
 					$scenarioid = $scenarioid[0]->scenarioid;
 					Session::put('scenarioid', $scenarioid);
 
 				}
 			}
+			else
+				{
+					//  need to create a new scenario 
+					$scenarioid = DB::select('exec CapeCodMA.CreateScenario ' . $id);
+					$scenarioid = $scenarioid[0]->scenarioid;
+					Session::put('scenarioid', $scenarioid);
+
+				}
 			
 			Session::put('embay_id', $id);
 			Session::put('n_removed', 0);
