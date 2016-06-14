@@ -8,7 +8,7 @@ class Treatment extends Model
 {
 	//
 	protected $table = 'CapeCodMa.Treatment_Wiz';
-	protected $primaryKey = 'TreatmentId';
+	protected $primaryKey = 'TreatmentID';
 
 	protected $fillable = [
 		'ScenarioID', 
@@ -47,5 +47,10 @@ class Treatment extends Model
      */
     const CREATED_AT = 'CreateDate';
     const UPDATED_AT = 'UpdateDate';
+
+    public function scenario()
+    {
+    	return $this->belongsTo('App\Scenario', 'ScenarioID', 'ScenarioID');
+    }
 
 }

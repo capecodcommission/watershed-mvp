@@ -56,7 +56,7 @@
 		<div class="secondary start">
 		<img src="http://www.watershedmvp.org/Images/mvplogo.png" alt="WatershedMVP 3.0 by Cape Cod Commission">
 		
-		<fieldset>
+
 
 			<p>The Cape Cod Commission developed the WatershedMVP application for professionals, municipal officials and community members in order to assist in creating the most cost-effective and efficient solutions to Cape Cod’s wastewater problem.</p>
 
@@ -77,12 +77,12 @@
 				<a href="{{url('/map')}}" id="startwizard" class="button">Get Started</a>
 			</p>
 
-		</fieldset>
+
 			
 		</div>
 		 
 		<script src="{{url('/js/app.js')}}"></script>
-		<script src="{{url('/js/main.js')}}"></script>
+		<!-- // <script src="{{url('/js/main.js')}}"></script> -->
 		<script>
 			$(document).ready(function(){
 				$('#embayment').on('change', function(){

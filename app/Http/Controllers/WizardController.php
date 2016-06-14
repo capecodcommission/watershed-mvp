@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 
 use App\Embayment;
+use App\Scenario;
+use App\Treatment;
+
 use DB;
 use JavaScript;
-use App\Treatment;
+
 use Session;
+use Excel;
 
 class WizardController extends Controller
 {
@@ -19,13 +22,28 @@ class WizardController extends Controller
 	{
 		$embayment = Embayment::find($id);
 		// Need to create a new scenario or find existing one that the user is editing
-		// Is user logged in?	
 		if(!$scenarioid)
 		{
-			$scenarioid = DB::select('exec CapeCodMA.CreateScenario ' . $id);
-		// dd($scenarioid[0]->scenarioid);
-			$scenarioid = $scenarioid[0]->scenarioid;
-			Session::put('scenarioid', $scenarioid);
+			if (session('scenarioid')) 
+			{
+				$scenarioid = session('scenarioid');
+				$scenario = Scenario::find($scenarioid);
+				if ($scenario->AreaID == $id) 
+				{
+					// user is still working on the same scenario. 
+					
+				}
+				else
+				{
+					// user created a new scenario, need to create a new one 
+					$scenarioid = DB::select('exec CapeCodMA.CreateScenario ' . $id);
+				// dd($scenarioid[0]->scenarioid);
+					$scenarioid = $scenarioid[0]->scenarioid;
+					Session::put('scenarioid', $scenarioid);
+
+				}
+			}
+			
 			Session::put('embay_id', $id);
 			Session::put('n_removed', 0);
 		}
@@ -33,8 +51,11 @@ class WizardController extends Controller
 		{
 			Session::put('scenarioid', $scenarioid);
 		}
-
-		$treatments = DB::select('select * from CapeCodMA.Treatment_Wiz where scenarioid = '. $scenarioid);
+		$scenario = Scenario::find($scenarioid);
+		// dd($scenario);
+		$treatments = $scenario->treatments;
+		// dd($treatments);
+		// $treatments = DB::select('select * from CapeCodMA.Treatment_Wiz where scenarioid = '. $scenarioid);
 			
 		$subembayments = DB::select('exec CapeCodMA.GET_SubembaymentNitrogen ' . $id);
 		$total_goal = 0;
@@ -163,6 +184,35 @@ class WizardController extends Controller
 		$scenarioid = session('scenarioid');
 		$Nitrogen = DB::select('exec capecodma.calc_scenarioNitrogen ' . $scenarioid);
 		return $Nitrogen;
+	}
+
+	/**
+	 * Download Scenario as .xls
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function downloadScenarioResults($scenarioid)
+	{
+		$scenario = Scenario::find($scenarioid);
+		// $embay_id = $scenario->AreaID;
+		dd($scenario);
+		$results = DB::select('exec CapeCodMA.Get_ScenarioResults '. $scenarioid);
+		$towns = DB::select('select wtt.*, t.town from dbo.wiz_treatment_towns wtt inner join capecodma.matowns t on t.town_id = wtt.wtt_town_id
+  where wtt.wtt_scenario_id = ' . $scenarioid);
+		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
+		$filename = 'scenario_' . $scenarioid;
+		Excel::create($filename, function($excel) use($scenario, $results, $towns, $subembayments) 
+		{
+
+
+			$excel->sheet('Scenario Results', function($sheet) use ($scenario, $results, $towns, $subembayments){
+
+				$sheet->loadView('layouts.download', array('results'=>$results, 'scenario'=>$scenario,  'towns'=>$towns, 'subembayments'=>$subembayments));
+
+			})->export('xls');
+
+		});
 	}
 	
 }

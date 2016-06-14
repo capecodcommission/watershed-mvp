@@ -130,13 +130,7 @@ require([
 					url: url
 				})
 				.done(function(msg) {
-					// msg = $.parseJSON(msg);
-					// console.log(msg);
-					// console.log(msg);
-					// var txtmsg = "Total Nitrogen in Polygon: " + msg[0].UnAttenFull;
-					// alert(txtmsg);
-					// console.log('success');
-					// var poly_nitrogen = msg.poly_nitrogen->Septic;
+
 					$('#total_nitrogen_polygon').text(msg);
 					$('#popdown-opacity').show();
 					
@@ -205,7 +199,7 @@ require([
 		Subembayments.setDefinitionExpression('EMBAY_ID = ' + selectlayer);
 
 		Subembayments.hide();
-		console.log(Subembayments);
+		// console.log(Subembayments);
 		map.addLayer(Subembayments);
 
 		var NitrogenLayer = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/0', {

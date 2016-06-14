@@ -302,7 +302,7 @@
 		</ul>
 		<p>Overall Nitrogen Reduction: </p>
 			
-			<p>Download Results: <a href="#">.xls</a> or <a href="">.xml</a></p>
+			<p><a href="{{url('download', session('scenarioid'))}}">Download Results (.xls)</a></p>
 			<p><a href="{{url('results', session('scenarioid'))}}" class="button">View detailed results</a></p>
 		</div>
 	</article>

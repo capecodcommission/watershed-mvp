@@ -4,12 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Treatment;
+
 class Scenario extends Model
 {
     //
 
     protected $table = 'CapeCodMa.Scenario_Wiz';
-	protected $primaryKey = 'ScenarioId';
+	protected $primaryKey = 'ScenarioID';
 
 	protected $fillable = [
 		'CreatedBy', // this should be the FK to users table
@@ -66,5 +68,11 @@ class Scenario extends Model
      */
     const CREATED_AT = 'CreateDate';
     const UPDATED_AT = 'UpdateDate';
+
+
+    public function treatments()
+    {
+    	return $this->hasMany('App\Treatment', 'ScenarioID', 'ScenarioID');
+    }
 
 }
