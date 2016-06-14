@@ -6117,6 +6117,9 @@ ul.wizard-bullets {
   ul.wizard-bullets li {
     margin-left: 1em; }
 
+ul li {
+  font-size: 0.90em; }
+
 p span.wizard-span {
   font-weight: bold;
   margin-left: 20px; }
@@ -6218,21 +6221,35 @@ nav.toolbar {
   background: #fff; }
   #progress .subembayment {
     width: 100%;
-    /* background: #1565c0; */
     background: #efefef;
     border-bottom: 1px solid #efefef; }
     #progress .subembayment span {
       display: block;
       height: 2em;
       padding-left: .5em;
-      color: #ffffff; }
+      color: #ffffff;
+      font-size: 0.90em; }
     #progress .subembayment .stats {
       display: none;
       background-color: #ddd;
       margin-bottom: 0;
-      padding-left: 1em; }
+      padding-left: 0.25em;
+      font-size: 0.90em; }
     #progress .subembayment:hover .stats {
       display: block; }
+      #progress .subembayment:hover .stats .stat-group {
+        width: 100%;
+        display: block;
+        padding: 5px 0;
+        border-bottom: 1px solid #333; }
+        #progress .subembayment:hover .stats .stat-group .stat-label {
+          display: table-cell;
+          width: 180px; }
+        #progress .subembayment:hover .stats .stat-group .stat-data {
+          text-align: right;
+          width: 50px;
+          display: table-cell;
+          font-weight: bold; }
 
 #embayment_progress {
   width: 250px;

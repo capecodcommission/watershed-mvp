@@ -9,9 +9,9 @@
 	.subembayment
 	{
 		width: 100%;
-		/* background: #1565c0; */
 		background: #efefef;
 		border-bottom: 1px solid #efefef;
+
 
 		span 
 		{
@@ -19,6 +19,7 @@
 			height: 2em;
 			padding-left: .5em;
 			color: $white;	
+			font-size: 0.90em;
 		}
 
 		.stats
@@ -26,7 +27,9 @@
 			display:none;
 			background-color: $light-gray;
 			margin-bottom: 0;
-			padding-left: 1em;
+			padding-left: 0.25em;
+			font-size: 0.90em;
+
 		}
 
 		&:hover
@@ -34,6 +37,29 @@
 			.stats
 			{
 				display: block;
+
+				.stat-group	{
+					width: 100%;
+					display: block;
+					padding: 5px 0;
+					border-bottom: 1px solid $dark-gray;
+
+					.stat-label {
+						display: table-cell;
+						width: 180px;
+						
+					}
+
+					.stat-data {
+						text-align: right;
+						width: 50px;
+						display: table-cell;	
+						font-weight: bold;
+						
+					}
+
+				}
+
 			}
 		}
 	}

@@ -23,12 +23,17 @@
 				@{{title}} (@{{percent | round }}%)
 			</span>
 			<div class="stats">
-				<p>
-					<!-- Percent of Reduction from treatment: @{{myEffective}}%<br /> -->
-					Original Attenuated: @{{parseFloat(NLoad_Orig)|round}}kg<br />
-					Scenario Attenuated : @{{NLoad_Current| round }}kg <br />
-					Target: @{{NLoad_Target| round }}kg
-				</p>
+				<div class="stat-group">
+					<div class="stat-label">Original Attenuated:</div> 	<div class="stat-data">@{{parseFloat(NLoad_Orig)|round}}kg</div>
+				</div>
+
+				<div class="stat-group">
+					<div class="stat-label">Scenario Attenuated:</div> 	<div class="stat-data">@{{NLoad_Current| round }}kg</div>
+				</div>
+
+				<div class="stat-group">
+					<div class="stat-label">Target:</div> 				<div class="stat-data">@{{NLoad_Target| round }}kg</div>
+				</div>
 			</div>
 		</div>
 	</template>
