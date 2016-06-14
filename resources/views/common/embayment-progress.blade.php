@@ -14,9 +14,11 @@
 	<span>
 	{{-- Original Unattenuated N: {{$total}}kg <br /> --}}
 	Starting (Att) N: {{$att_total}}kg <br />
-	
+	Scenario Total: @{{total_treated|round}}kg <br />
 	Goal: {{number_format($goal)}}kg<br />
-		<span id="n_removed"><?php echo number_format(round(session('n_removed'))); ?></span>kg Unattenuated N Removed
+		<span id="n_removed"><?php echo number_format(round(session('n_removed'))); ?></span>kg Unattenuated N Removed<br />
+		(difference: @{{difference}}) total_att: @{{total_att}}<br />
+		embayment_difference: @{{embayment_difference | round }}
 
 	</span>
 	

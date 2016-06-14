@@ -136,7 +136,7 @@
 			e.preventDefault();
 			// console.log('clicked');
 			var percent = $('#storm-percent').val();
-			var url = "{{url('/apply_percent')}}" + '/' +  {{$treatment['TreatmentId']}} + '/' + percent + '/storm';
+			var url = "{{url('/apply_percent')}}" + '/' +  treatment + '/' + percent + '/storm';
 			// console.log(url);
 			$.ajax({
 				method: 'GET',

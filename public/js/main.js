@@ -2,20 +2,12 @@
 // shim for using process in browser
 
 var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it don't break things.
-var cachedSetTimeout = setTimeout;
-var cachedClearTimeout = clearTimeout;
-
 var queue = [];
 var draining = false;
 var currentQueue;
 var queueIndex = -1;
 
 function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
     draining = false;
     if (currentQueue.length) {
         queue = currentQueue.concat(queue);
@@ -31,7 +23,7 @@ function drainQueue() {
     if (draining) {
         return;
     }
-    var timeout = cachedSetTimeout(cleanUpNextTick);
+    var timeout = setTimeout(cleanUpNextTick);
     draining = true;
 
     var len = queue.length;
@@ -48,7 +40,7 @@ function drainQueue() {
     }
     currentQueue = null;
     draining = false;
-    cachedClearTimeout(timeout);
+    clearTimeout(timeout);
 }
 
 process.nextTick = function (fun) {
@@ -60,7 +52,7 @@ process.nextTick = function (fun) {
     }
     queue.push(new Item(fun, args));
     if (queue.length === 1 && !draining) {
-        cachedSetTimeout(drainQueue, 0);
+        setTimeout(drainQueue, 0);
     }
 };
 
@@ -100,168 +92,119 @@ process.chdir = function (dir) {
 process.umask = function() { return 0; };
 
 },{}],2:[function(require,module,exports){
-/**
- * vue-filter.js v0.1.3
- * (c) 2016 wy-ei
- * MIT License.
- */
 (function () {
-    'use strict';
+  var install = function (Vue) {
 
-    var ArrayProto = Array.prototype;
-    var ObjProto = Object.prototype;
-    var slice = ArrayProto.slice;
-    var toString = ObjProto.toString;
-    var util = {};
+    var V = {};
 
-    util.isArray = function(obj) {
-        return Array.isArray(obj);
-    };
+    var
+      ArrayProto = Array.prototype,
+      ObjProto = Object.prototype,
+      FuncProto = Function.prototype;
 
-    var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
-    util.isArrayLike = function(obj) {
-        var length = obj['length'];
-        return typeof length === 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
-    };
+    var
+      push = ArrayProto.push,
+      slice = ArrayProto.slice,
+      toString = ObjProto.toString,
+      hasOwnProperty = ObjProto.hasOwnProperty;
 
-    util.isObject = function(obj) {
-        var type = typeof obj;
-        return type === 'function' || type === 'object' && !!obj;
-    };
+    var
+      nativeIsArray = Array.isArray,
+      nativeKeys = Object.keys,
+      nativeBind = FuncProto.bind,
+      nativeCreate = Object.create;
 
+    V.isArray = function (obj) {
+      return Array.isArray ? Array.isArray(obj) :
+        Object.prototype.toString.call(obj) === '[object Array]';
+    }
 
-    util.each = function(obj, callback) {
-        var i,
-            len;
-        if (util.isArray(obj)) {
-            for (i = 0, len = obj.length; i < len; i++) {
-                if (callback(obj[i], i, obj) === false) {
-                    break;
-                }
-            }
-        } else {
-            for (i in obj) {
-                if (callback(obj[i], i, obj) === false) {
-                    break;
-                }
-            }
+    V.isArrayLike = function (obj) {
+      var length = obj['length'],
+        MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
+      return typeof length === 'number' && length > 0 && length < MAX_ARRAY_INDEX;
+    }
+
+    V.isObject = function (obj) {
+      var type = typeof obj;
+      return type === 'function' || type === 'object' && !!obj;
+    }
+
+    V.isEmpty = function () {
+
+    }
+
+    V.each = function (obj, callback) {
+      var i,
+        len;
+      if (V.isArray(obj)) {
+        for (i = 0, len = obj.length; i < len; i++) {
+          if (callback(obj[i], i, obj) === false) {
+            break;
+          }
         }
-        return obj;
+      } else {
+        for (i in obj) {
+          if (callback(obj[i], i, obj) === false) {
+            break;
+          }
+        }
+      }
+      return obj;
     };
 
-    util.each(['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp', 'Error'], function(name) {
-        util['is' + name] = function(obj) {
-            return toString.call(obj) === '[object ' + name + ']';
-        };
+    V.each(['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp', 'Error'], function (name) {
+      V['is' + name] = function (obj) {
+        return toString.call(obj) === '[object ' + name + ']';
+      };
     });
 
-    util.keys = function(obj) {
-        if (!util.isObject(obj)) {
-            return [];
+    V.keys = function (obj) {
+      if (!V.isObject(obj)) {
+        return [];
+      }
+      if (Object.keys) {
+        return Object.keys(obj);
+      }
+      var keys = [];
+      for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          keys.push(key);
         }
-        if (Object.keys) {
-            return Object.keys(obj);
-        }
-        var keys = [];
-        for (var key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                keys.push(key);
-            }
-        }
-        return keys;
+      }
+      return keys;
     };
 
-    util.values = function(obj) {
-        var keys = util.keys(obj);
-        var length = keys.length;
-        var values = Array(length);
-        for (var i = 0; i < length; i++) {
-            values[i] = obj[keys[i]];
-        }
-        return values;
-    };
-
-    util.toArray = function(obj) {
-        if (!obj) {
-            return [];
-        }
-        if (util.isArrayLike(obj)) {
-            return slice.call(obj);
-        }
-        return util.values(obj);
-    };
-
-    util.map = function(obj, cb) {
-        var keys = !util.isArrayLike(obj) && util.keys(obj),
-            length = (keys || obj).length,
-            results = Array(length);
-        for (var index = 0; index < length; index++) {
-            var currentKey = keys ? keys[index] : index;
-            results[index] = cb(obj[currentKey], currentKey, obj);
-        }
-        return results;
-    };
-
-    util.get = function(obj, accessor) {
-        var ret = undefined;
-        if (!util.isObject(obj)) {
-            return obj;
-        }
-        if (accessor == undefined) {
-            return obj;
-        }
-        if (util.isString(accessor)) {
-            accessor = accessor.split('.');
-            ret = obj;
-            try {
-                for (var i = 0; i < accessor.length; i++) {
-                    ret = ret[accessor[i]];
-                }
-            } catch (e) {
-                ret = undefined;
-            }
-        } else if (util.isFunction(accessor)) {
-            ret = accessor(obj);
-        }
-        return ret;
-    };
-
-    /**
-     * Returns the item at the specified index location in an array or a string.
-     *
-     * {{ ['a','b','c'] | at 1 }} => 'b'
-     * {{ 'hello' | at 1 }} => 'e'
-     */
-
-    function at(arr, index) {
-        if (util.isArrayLike(arr)) {
-            return arr[index];
-        } else {
-            return arr;
-        }
+    V.values = function (obj) {
+      var keys = V.keys(obj);
+      var length = keys.length;
+      var values = Array(length);
+      for (var i = 0; i < length; i++) {
+        values[i] = obj[keys[i]];
+      }
+      return values;
     }
 
-    /**
-     * Concatenates an array into another one.
-     *
-     * {{ [1,2,3] | concat [4,5,6] }} => [1,2,3,4,5,6]
-     */
+    V.toArray = function (obj) {
+      if (!obj) {
+        return [];
+      }
+      if (V.isArray(obj)) {
+        return slice.call(obj);
+      }
+      return V.values(obj);
+    };
 
-    function concat(arr1, arr2) {
-        if (util.isArray(arr1)) {
-            if (util.isArray(arr2)) {
-                return arr1.concat(arr2);
-            } else {
-                return arr1.concat(util.toArray(arr2));
-            }
-        } else {
-            if (util.isArray(arr2)) {
-                return util.toArray(arr1).concat(arr2);
-            } else {
-                return util.toArray(arr1).concat(util.toArray(arr2));
-            }
-        }
-    }
+    V.map = function (obj, cb) {
+      var keys = !V.isArrayLike(obj) && V.keys(obj),
+        length = (keys || obj).length,
+        results = Array(length);
+      for (var index = 0; index < length; index++) {
+        var currentKey = keys ? keys[index] : index;
+        results[index] = cb(obj[currentKey], currentKey, obj);
+      }
+      return results;
+    };
 
     /**
      * Returns the first element of an array,or first charactor of a string.
@@ -270,30 +213,13 @@ process.umask = function() { return 0; };
      * {{ 'hello' | first }} => 'h'
      */
 
-    function first(value) {
-        if (util.isArrayLike(value)) {
-            return value[0];
-        } else {
-            return value;
-        }
-    }
-
-    /**
-     * Joins the elements of an array with the character passed as the parameter.
-     * The result is a single string.
-     *
-     * {{ ['a','b','c'] | join '-' }} => 'a-b-c'
-     */
-
-    function join(arr, c) {
-        if (util.isArray(arr)) {
-            return arr.join(c);
-        } else if (util.isArrayLike(arr)) {
-            return util.toArray(arr).join(c);
-        } else {
-            return arr;
-        }
-    }
+    Vue.filter('first', function (value) {
+      if (V.isArrayLike(value)) {
+        return value[0];
+      } else {
+        return value;
+      }
+    });
 
     /**
      *  Returns the last element of an array,or last charactor of a string.
@@ -302,71 +228,28 @@ process.umask = function() { return 0; };
      * {{ 'hello' | last }} => 'o'
      */
 
-    function last(value) {
-        if (util.isArrayLike(value)) {
-            return value[value.length - 1];
-        } else {
-            return value;
-        }
-    }
-
-    /*
-     * returns a new collection of the results of each expression execution.
-     *
-     * {{ [1,2,3] | map increase }}
-     *
-     * new Vue({
-     *   ...
-     *   methods:{
-     *     increase:function(val){return val+1;}
-     *   }
-     * })
-     */
-
-    function map(arr, cb) {
-        return util.map(arr, cb);
-    }
-
-    /*
-     * get a random value from a collection
-     *
-     * {{ [1,2,3,4] | random }} => 1 or 2 or 3 or 4
-     */
-
-    function random(collection) {
-        if (!collection) {
-            return undefined;
-        }
-        if (util.isObject(collection)) {
-            collection = util.toArray(collection);
-        }
-        if (util.isArrayLike(collection) && collection.length != 0) {
-            var i = Math.floor(collection.length * Math.random());
-            return collection[i];
-        } else {
-            // not arrayLike and object or is a empty array or object
-            return collection;
-        }
-    }
+    Vue.filter('last', function (value) {
+      if (V.isArrayLike(value)) {
+        return value[value.length - 1];
+      } else {
+        return value;
+      }
+    });
 
     /**
-     * reverse an array or a string
+     * Joins the elements of an array with the character passed as the parameter.
+     * The result is a single string.
      *
-     * {{ 'abc' | reverse }} => 'cba'
-     * {{ [1,2,3] | reverse }} => [3,2,1]
+     * {{ ['a','b','c'] | join '-' }} => 'a-b-c'
      */
 
-    function reverse(arr) {
-        if (util.isArray(arr)) {
-            // make a copy
-            arr = arr.concat();
-            return arr.reverse();
-        } else if (util.isString(arr)) {
-            return arr.split('').reverse().join('');
-        } else {
-            return arr;
-        }
-    }
+    Vue.filter('join', function (arr, c) {
+      if (V.isArray(arr)) {
+        return arr.join(c);
+      } else {
+        return arr;
+      }
+    });
 
     /**
      * Returns the size of a string or an array.
@@ -375,75 +258,115 @@ process.umask = function() { return 0; };
      * {{ 'hello' | size }} => 5
      */
 
-    function size(arr) {
-        var length = arr['length'];
-        return length ? length : 0;
-    }
-
-    /**
-     *  Return a new collection from a given length
-     *
-     *  {{ [] | range 4 }} => [0,1,2,3]
-     */
-
-    function range(arr, n) {
-        arr = [];
-        for (var i = 0; i < n; i++) {
-            arr.push(i);
-        }
-        return arr;
-    }
-
-    /**
-     * Checks if given expression or value is present in the collection
-     *
-     * {{ [2,3,4] | contains 3}} => true;
-     *
-     */
-
-    function contains(arr, item) {
-        var ret = false;
-        if (util.isArrayLike(arr)) {
-            if (util.isFunction(item)) {
-                var fun = item;
-                util.each(arr, function(val) {
-                    if (fun(val) === true) {
-                        ret = true;
-                        // stop each
-                        return false;
-                    }
-                });
-            } else {
-                util.each(arr, function(val) {
-                    if (val === item) {
-                        ret = true;
-                        // stop each
-                        return false;
-                    }
-                });
-            }
-        }
-        return ret;
-    }
-
-
-
-    var collectionFilters = Object.freeze({
-        at: at,
-        concat: concat,
-        first: first,
-        join: join,
-        last: last,
-        map: map,
-        random: random,
-        reverse: reverse,
-        size: size,
-        range: range,
-        contains: contains
+    Vue.filter('size', function (arr) {
+      var length = arr['length'];
+      return length ? length : 0;
     });
 
     /**
-     * all method in Math without random
+     * Returns the item at the specified index location in an array or a string.
+     *
+     * {{ ['a','b','c'] | at 1 }} => 'b'
+     * {{ 'hello' | at 1 }} => 'e'
+     */
+
+    Vue.filter('at', function (arr, index) {
+      if (V.isArrayLike(arr)) {
+        return arr[index];
+      } else {
+        return arr;
+      }
+    });
+
+
+    /**
+     * reverse an array or a string
+     *
+     * {{ 'abc' | reverse }} => 'cba'
+     * {{ [1,2,3] | reverse }} => [3,2,1]
+     */
+
+    Vue.filter('reverse', function (arr) {
+      if (V.isArray(arr)) {
+        // make a copy
+        var arr = arr.concat();
+        return arr.reverse();
+      } else if (V.isString(arr)) {
+        return arr.split('').reverse().join('');
+      } else {
+        return arr;
+      }
+    });
+
+
+    /**
+     * Concatenates an array into another one.
+     *  
+     * {{ [1,2,3] | concat [4,5,6] }} => [1,2,3,4,5,6]
+     */
+
+    Vue.filter('concat', function (arr1, arr2) {
+      if (V.isArray(arr1)) {
+        if (V.isArray(arr2)) {
+          return arr1.concat(arr2);
+        } else {
+          return arr1.concat(V.toArray(arr2));
+        }
+      } else {
+        if (V.isArray(arr2)) {
+          return V.toArray(arr1).concat(arr2);
+        } else {
+          return V.toArray(arr1).concat(V.toArray(arr2));
+        }
+      }
+    });
+
+    /*
+     * returns a new collection of the results of each expression execution. 
+     * 
+     * {{ [1,2,3] | map increase }}
+     * 
+     * new Vue({
+     *   ... 
+     *   methods:{
+     *     increase:function(val){return val+1;}
+     *   }
+     * })
+     */
+
+    Vue.filter('map', (arr, cb) => {
+      return V.map(arr, cb);
+    });
+
+    /*
+     * get a random value from a collection
+     *
+     * {{ [1,2,3,4] | random }} => 1 or 2 or 3 or 4
+     */
+
+    Vue.filter('random', function (collection) {
+      if (!collection) {
+        return undefined;
+      }
+      if (V.isObject(collection)) {
+        collection = V.toArray(collection)
+      }
+      if (V.isArrayLike(collection) && collection.length != 0) {
+        var i = Math.floor(collection.length * Math.random());
+        return collection[i];
+      } else {
+        // not arrayLike and object or is a empty array or object
+        return collection;
+      }
+    });
+
+
+
+
+    /*************** Math filter ************************/
+
+    /**
+     * all method in Math
      *
      * {{ -1.2 | abs }}  => 1.2
      * {{ 1 | acos }}  => 0
@@ -451,120 +374,74 @@ process.umask = function() { return 0; };
      * {{ 3 | pow 2 }} => 9  i.e: Math.pow(3,2)
      */
 
-    var base = {};
-
     ['abs', 'acos', 'asin', 'atan', 'atan2', 'ceil', 'cos', 'exp', 'floor',
-        'log', 'pow', 'round', 'sin', 'sqrt', 'tan'
+      'log', 'pow', 'round', 'sin', 'sqrt', 'tan'
     ]
-    .forEach(function(method) {
-        base[method] = function(value, n) {
-            if (typeof value === 'number') {
-                return Math[method](value, n);
-            } else {
-                return value;
-            }
-        };
+    .forEach(function (method) {
+      Vue.filter(method, function (value, n) {
+        if (typeof value === 'number') {
+          return Math[method](value, n);
+        } else {
+          return value;
+        }
+      });
+    });
+
+
+    /**
+     * Get sum of all values in an array.
+     *
+     * {{ [1,2,3] | sum }} => 6
+     * you can give an option argument as initial value
+     * {{ [1,2,3] | sum 10 }} = 16
+     */
+    Vue.filter('sum', function (arr, initial) {
+      if (V.isArray(arr)) {
+        return arr.reduce(function (prev, curr) {
+          return prev + curr;
+        }, initial || 0);
+      } else {
+        return arr;
+      }
     });
 
     /**
-     * Divides an output by a number
+     * return mean value of a array
      *
-     * {{ 10 | divide 4 }} => 2.5
+     * {{ [1,2,3,4] | mean }} => 2.5
      */
 
-    function divide(value, n) {
-        if (util.isNumber(value)) {
-            return value / n;
+    Vue.filter('mean', function (arr) {
+      if (V.isArray(arr)) {
+        var sum = arr.reduce(function (prev, curr) {
+          return prev + curr;
+        }, 0);
+
+        var len = arr.length;
+        if (V.isNumber(sum) && len != 0) {
+          return sum / len;
         } else {
-            return value;
+          return 0;
         }
-    }
+      } else {
+        return arr;
+      }
+    });
 
 
-    /**
-     * Subtracts a number from an output.
-     *
-     * {{ 12 | minus 2 }} => 10
-     */
 
-    function minus(value, n) {
-        if (util.isNumber(value)) {
-            return value - n;
-        } else {
-            return value;
-        }
-    }
-
-    /**
-     * Adds a number to an output.
-     *
-     * {{ 10 | plus 2 }} => 12
-     */
-
-    function plus(value, n) {
-        if (util.isNumber(value)) {
-            return value + n;
-        } else {
-            return value;
-        }
-    }
-
-    /**
-     * Multiplies an output by a number.
-     *
-     * {{ 10 | multiply 2 }} => 20
-     */
-
-    function multiply(value, n) {
-        if (util.isNumber(value)) {
-            return value * n;
-        } else {
-            return value;
-        }
-    }
-
-    /**
-     * Divides an output by a number and returns the remainder.
-     *
-     * {{ 10 | mod 2 }} => 20
-     */
-
-    function mod(value, n) {
-        if (util.isNumber(value)) {
-            return value % n;
-        } else {
-            return value;
-        }
-    }
-
-    /**
-     * return maximum value in an array.It will compare two item by a certain key
-     * if key provide.
-     *
-     * {{ [13,22,3,24 ] | max }} => 24
-     * {{ list | max 'age' }} => {name:'james',age:24}
-     * list:[
-     *  {name:'james',age:24},
-     *  {name:'ron',age:12}
-     * ]
-     */
-
-
-    function max(arr, key) {
-        var ret, max, computed;
-        if (util.isArray(arr)) {
-            max = -Infinity;
-            util.each(arr, function(val) {
-                computed = util.get(val, key);
-                if (computed > max) {
-                    max = computed;
-                    ret = val;
-                }
-            });
-            return ret;
-        } else {
-            return arr;
-        }
+    function compare(a, b, key) {
+      if (key) {
+        a = a[key];
+        b = b[key];
+      }
+      if (a < b) {
+        return -1;
+      } else if (a == b) {
+        return 0;
+      } else {
+        return 1;
+      }
     }
 
     /**
@@ -579,108 +456,120 @@ process.umask = function() { return 0; };
      * ]
      */
 
-    function min(arr, key) {
-        var ret, min, computed;
-        if (util.isArray(arr)) {
-            min = Infinity;
-            util.each(arr, function(val) {
-                computed = util.get(val, key);
-                if (computed < min) {
-                    min = computed;
-                    ret = val;
-                }
-            });
-            return ret;
-        } else {
-            return arr;
-        }
-    }
-
-    function sum(arr, initial) {
-        if (util.isArrayLike(arr) && !util.isString(arr)) {
-            var ret = initial || 0;
-            util.each(arr, function(val) {
-                if (!util.isNumber(val)) {
-                    ret = undefined;
-                    // stop each
-                    return false;
-                } else {
-                    ret = ret + val;
-                }
-            });
-            return ret;
-        } else {
-            return arr;
-        }
-    }
+    Vue.filter('min', function (arr, key) {
+      if (V.isArray(arr)) {
+        var min = arr[0];
+        V.each(arr, function (val) {
+          if (compare(min, val, key) !== -1) {
+            min = val;
+          }
+        });
+        return min;
+      } else {
+        return arr;
+      }
+    });
 
     /**
-     * return mean value of a array
+     * return maximum value in an array.It will compare two item by a certain key
+     * if key provide.
      *
-     * {{ [1,2,3,4] | mean }} => 2.5
+     * {{ [13,22,3,24 ] | max }} => 24
+     * {{ list | max 'age' }} => {name:'james',age:24}
+     * list:[
+     *  {name:'james',age:24},
+     *  {name:'ron',age:12}
+     * ]
      */
 
-    function mean(arr) {
-        if (util.isArray(arr)) {
-            var sum = arr.reduce(function(prev, curr) {
-                return prev + curr;
-            }, 0);
-
-            var len = arr.length;
-            if (util.isNumber(sum) && len != 0) {
-                return sum / len;
-            } else {
-                return 0;
-            }
-        } else {
-            return arr;
-        }
-    }
-
-    var abs = base.abs;
-    var acos = base.acos;
-    var asin = base.asin;
-    var atan = base.atan;
-    var atan2 = base.atan2;
-    var ceil = base.ceil;
-    var cos = base.cos;
-    var exp = base.exp;
-    var floor = base.floor;
-    var log = base.log;
-    var pow = base.pow;
-    var round = base.round;
-    var sin = base.sin;
-    var sqrt = base.sqrt;
-    var tan = base.tan;
-
-
-
-    var mathFilters = Object.freeze({
-        abs: abs,
-        acos: acos,
-        asin: asin,
-        atan: atan,
-        atan2: atan2,
-        ceil: ceil,
-        cos: cos,
-        exp: exp,
-        floor: floor,
-        log: log,
-        pow: pow,
-        round: round,
-        sin: sin,
-        sqrt: sqrt,
-        tan: tan,
-        max: max,
-        min: min,
-        mean: mean,
-        sum: sum,
-        plus: plus,
-        minus: minus,
-        multiply: multiply,
-        divide: divide,
-        mod: mod
+    Vue.filter('max', function (arr, key) {
+      if (V.isArray(arr)) {
+        var max = arr[0];
+        V.each(arr, function (val) {
+          if (compare(max, val, key) !== 1) {
+            max = val;
+          }
+        });
+        return max;
+      } else {
+        return arr;
+      }
     });
+
+    /**
+     * Divides an output by a number
+     *
+     * {{ 10 | / 4 }} => 2.5
+     */
+
+    Vue.filter('/', function (value, n) {
+      if (V.isNumber(value)) {
+        return value / n;
+      } else {
+        return value;
+      }
+    });
+
+
+    /**
+     * Subtracts a number from an output.
+     *
+     * {{ 12 | - 2 }} => 10
+     */
+
+    Vue.filter('-', function (value, n) {
+      if (V.isNumber(value)) {
+        return value - n;
+      } else {
+        return value;
+      }
+    });
+
+    /**
+     * Adds a number to an output.
+     *
+     * {{ 10 | + 2 }} => 12
+     */
+
+    Vue.filter('+', function (value, n) {
+      if (V.isNumber(value)) {
+        return value + n;
+      } else {
+        return value;
+      }
+    });
+
+    /**
+     * Multiplies an output by a number.
+     *
+     * {{ 10 | * 2 }} => 20
+     */
+
+    Vue.filter('*', function (value, n) {
+      if (V.isNumber(value)) {
+        return value * n;
+      } else {
+        return value;
+      }
+    });
+
+    /**
+     * Divides an output by a number and returns the remainder.
+     *
+     * {{ 10 | % 2 }} => 20
+     */
+
+    Vue.filter('%', function (value, n) {
+      if (V.isNumber(value)) {
+        return value % n;
+      } else {
+        return value;
+      }
+    });
+
+
+
+    /***************** string filter ********************/
 
     /**
      * Appends characters to a string.
@@ -688,14 +577,42 @@ process.umask = function() { return 0; };
      * {{ 'sky' | append '.jpg' }} => 'sky.jpg'
      */
 
-    function append(str, postfix) {
-        if (!str && str !== 0) {
-            str = '';
-        } else {
-            str = str.toString();
-        }
-        return str + postfix;
-    }
+    Vue.filter('append', function (str, postfix) {
+      if (!str && str !== 0) {
+        str = ''
+      } else {
+        str = str.toString();
+      }
+      return str + postfix;
+    });
+
+    /**
+     * Prepends characters to a string.
+     *
+     * {{ 'world' | prepend 'hello ' }} => 'hello world'
+     */
+
+    Vue.filter('prepend', function (str, prefix) {
+      if (!str && str !== 0) {
+        str = ''
+      } else {
+        str = str.toString();
+      }
+      return prefix + str;
+    });
+
+    /**
+     * Removes all occurrences of a substring from a string.
+     *
+     * {{ 'Hello JavaScript' | remove 'Hello' }} => ' JavaScript'
+     */
+
+    Vue.filter('remove', function (str, substr) {
+      if (V.isString(str)) {
+        str = str.replace(str, '');
+      }
+      return str;
+    });
 
     /**
      * Converts a string into CamelCase.
@@ -704,40 +621,25 @@ process.umask = function() { return 0; };
      * {{ some-else | camelcase }} => SomeElse
      */
 
-    function camelcase(str) {
-        var re = /(?:^|[-_\/])(\w)/g;
-        return str.toString().replace(re, function(_, c) {
-            return c.toUpperCase();
-        });
-    }
+    Vue.filter('camelcase', function (str) {
+      var re = /(?:^|[-_\/])(\w)/g;
+      return str.toString().replace(re, function (_, c) {
+        return c.toUpperCase();
+      });
+    });
+
 
     /**
-     * Prepends characters to a string.
+     * truncate text to a specified length.
      *
-     * {{ 'world' | prepend 'hello ' }} => 'hello world'
+     * {{ 'this is a big city!' | truncate 10 '...' }} => this is...
      */
 
-    function prepend(str, prefix) {
-        if (!str && str !== 0) {
-            str = '';
-        } else {
-            str = str.toString();
-        }
-        return prefix + str;
-    }
-
-    /**
-     * Removes all occurrences of a substring from a string.
-     *
-     * {{ 'Hello JavaScript' | remove 'Hello' }} => ' JavaScript'
-     */
-
-    function remove(str, substr) {
-        if (util.isString(str)) {
-            str = str.split(substr).join('');
-        }
-        return str;
-    }
+    Vue.filter('truncate', function (str, length, truncation) {
+      length = length || 30;
+      truncation = typeof truncation === "string" ? truncation : "...";
+      return (str.length + truncation.length > length ? str.slice(0, length - truncation.length) : str) + truncation;
+    });
 
     /**
      * The split filter takes on a substring as a parameter.
@@ -746,25 +648,14 @@ process.umask = function() { return 0; };
      * {{ 'a-b-c-d' | split '-' }} => [a,b,c,d]
      */
 
-    function split(str, separator) {
-        separator = separator || '';
-        if (util.isString(str)) {
-            return str.split(separator);
-        } else {
-            return str;
-        }
-    }
-
-    /**
-     * Test if a string match a pattern
-     *
-     * {{ "http://vuejs.org" | test /^http/ }} => true
-     */
-
-    function test(str, re, flag) {
-        re = new RegExp(re, flag);
-        return re.test(str);
-    }
+    Vue.filter('split', function (str, separator) {
+      separator = separator || '';
+      if (V.isString(str)) {
+        return str.split(separator);
+      } else {
+        return str;
+      }
+    });
 
     /**
      * Strips tabs, spaces, and newlines (all whitespace)
@@ -778,294 +669,211 @@ process.umask = function() { return 0; };
      * {{ '   some spaces   ' | trim 'l' }} => 'some spaces   '
      */
 
-    function trim(str, rightOrleft) {
-        if (util.isString(str)) {
-            var re;
-            if (rightOrleft == 'r') {
-                re = /\s+$/;
-            } else if (rightOrleft == 'l') {
-                re = /^\s+/;
-            } else {
-                re = /^\s+|\s+$/g;
-            }
-            return str.replace(re, '');
+    Vue.filter('trim', function (str, rightOrleft) {
+      if (V.isString(str)) {
+        var re;
+        if (rightOrleft == 'r') {
+          re = /\s+$/;
+        } else if (rightOrleft == 'l') {
+          re = /^\s+/;
         } else {
-            return str;
+          re = /^\s+|\s+$/g;
         }
-    }
-
-    /**
-     * truncate text to a specified length.
-     *
-     * {{ 'this is a big city!' | truncate 10 '...' }} => this is...
-     */
-
-    function truncate(str, length, truncation) {
-        length = length || 30;
-        truncation = typeof truncation === 'string' ? truncation : '...';
-        return (str.length + truncation.length > length ? str.slice(0, length - truncation.length) : str) + truncation;
-    }
-
-    /**
-     * return a string by repeat a char n times
-     */
-
-    function padding(size,ch){
-        var str = '';
-        if(!ch && ch !== 0){
-            ch = ' ';
-        }
-        while(size !== 0){
-            if(size & 1 === 1){
-                str += ch;
-            }
-            ch += ch;
-            size >>>= 1;
-        }
+        return str.replace(re, '');
+      } else {
         return str;
-    }
-
-
-    /**
-     * leftPad
-     *
-     * {{ 'abc' | leftPad 5 '*' }} => '**abc'
-     */
-    function leftPad(str,size,ch){
-        size = +size || 0;
-        var padLength = size - str.length;
-        if(padLength <= 0){
-            return str;
-        }
-        return padding(padLength,ch).concat(str);
-    }
-
-
-    /**
-     * rightPad
-     *
-     * {{ 'abc' | leftPad 5 '*' }} => 'abc**'
-     */
-    function rightPad(str,size,ch){
-        size = +size || 0;
-        var padLength = size - str.length;
-        if(padLength <= 0){
-            return str;
-        }
-        return str.concat(padding(padLength,ch));
-    }
-
-
-
-    var stringFilters = Object.freeze({
-        append: append,
-        camelcase: camelcase,
-        prepend: prepend,
-        remove: remove,
-        split: split,
-        test: test,
-        trim: trim,
-        truncate: truncate,
-        leftPad: leftPad,
-        rightPad: rightPad
+      }
     });
+
+
+    /**
+     * Test if a string match a pattern
+     *
+     * {{ "http://vuejs.org" | test /^http/ }} => true
+     */
+
+    Vue.filter('test', function (str, re, flag) {
+      var re = new RegExp(re, flag);
+      return re.test(str);
+    });
+
+    /***************** other filters ************************/
 
     /**
      * Converts a timestamp into another date format.
      *
      */
     var weekdays = ['Sunday', 'Monday', 'Tuesday',
-        'Wednesday', 'Thursday', 'Friday', 'Saturday'
+      'Wednesday', 'Thursday', 'Friday', 'Saturday'
     ];
     var months = ['January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December'
+      'July', 'August', 'September', 'October', 'November', 'December'
     ];
 
-    function date(date, formatString) {
-        var d = new Date(date);
+    Vue.filter('date', function (date, formatString) {
+      var d = new Date(date);
 
-        var zeroize = function(value, length) {
+      var zeroize = function (value, length) {
 
-            if (!length) length = 2;
+        if (!length) length = 2;
 
-            value = '' + value;
+        value = '' + value;
 
-            for (var i = 0, zeros = ''; i < (length - value.length); i++) {
-                zeros += '0';
-            }
-
-            return zeros + value;
-        };
-
-        function getDays() {
-            var days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
-                year = d.getFullYear(),
-                month = d.getMonth(),
-                day = d.getDate();
-
-            if (year % 100 == 0 && year % 400 == 0 || year % 4 == 0) {
-                days[1] = 29;
-            }
-            var n = 0;
-            for (var i = 0; i < month; i++) {
-                n += days[i];
-            }
-            return n + day;
+        for (var i = 0, zeros = ''; i < (length - value.length); i++) {
+          zeros += '0';
         }
 
-        function cb(c) {
-            var ret = '';
-            switch (c) {
-            case '%a':
-                ret = weekdays[d.getDay()].slice(0, 3);
-                break;
-            case '%A':
-                ret = weekdays[d.getDay()];
-                break;
-            case '%b':
-                ret = months[d.getMonth()].slice(0, 3);
-                break;
-            case '%B':
-                ret = months[d.getMonth()];
-                break;
-            case '%c':
-                ret = d.toLocaleDateString() + ' ' + d.toLocaleTimeString();
-                break;
-            case '%d':
-                var day = d.getDate();
-                ret = zeroize(day);
-                break;
-            case '%-d':
-                ret = d.getDate();
-                break;
-            case '%D':
-                ret = '%m/%d/%Y';
-                break;
-            case '%e':
-                ret = d.getDate();
-                break;
-            case '%F':
-                ret = '%Y-%m-%d';
-                break;
-            case '%H':
-                var hours = d.getHours();
-                ret = zeroize(hours);
-                break;
-            case '%I':
-                ret = d.getHours() % 12;
-                break;
-            case '%j':
-                ret = zeroize(getDays(), 3);
-                break;
-            case 'k':
-                ret = d.getHours();
-                break;
-            case '%m':
-                var month = d.getMonth() + 1;
-                ret = zeroize(month, 2);
-                break;
-            case '%M':
-                ret = zeroize(d.getMinutes(), 2);
-                break;
-            case '%s':
-                ret = zeroize(d.getSeconds(), 2);
-                break;
-            case '%p':
-                ret = d.getHours() < 12 ? 'AM' : 'PM';
-                break;
-            case '%r':
-                ret = '%I:%M:%s %p';
-                break;
-            case '%R':
-                ret = '%H:%M';
-                break;
-            case '%T':
-                ret = '%H:%M:%s';
-                break;
-            case '%U':
-                ret = Math.ceil(getDays() / 7);
-                break;
-            case '%w':
-                ret = d.getDay();
-                break;
-            case '%x':
-                ret = '%m/%d/%y';
-                break;
-            case '%X':
-                ret = '%h:%M:%s';
-                break;
-            case '%y':
-                ret = d.getFullYear() % 100;
-                break;
-            case '%Y':
-                ret = d.getFullYear();
-                break;
-            default:
-                ret = c;
-            }
-            return ret;
+        return zeros + value;
+      };
+
+      function getDays() {
+        var days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+          year = d.getFullYear(),
+          month = d.getMonth(),
+          day = d.getDate();
+
+        if (year % 100 == 0 && year % 400 == 0 || year % 4 == 0) {
+          days[1] = 29;
         }
-        var re = /%-?[\w]/g;
-        if (!formatString) {
-            formatString = '%c';
+        var n = 0;
+        for (var i = 0; i < month; i++) {
+          n += days[i];
         }
-        formatString = formatString.replace(re, cb);
-        formatString = formatString.replace(re, cb);
-        return formatString;
-    }
+        return n + day;
+      }
+
+      function cb(c) {
+        var ret = "";
+        switch (c) {
+        case '%a':
+          ret = weekdays[d.getDay()].slice(0, 3);
+          break;
+        case '%A':
+          ret = weekdays[d.getDay()];
+          break;
+        case '%b':
+          ret = months[d.getMonth()].slice(0, 3);
+          break;
+        case '%B':
+          ret = months[d.getMonth()];
+          break;
+        case '%c':
+          ret = d.toLocaleDateString() + ' ' + d.toLocaleTimeString();
+          break;
+        case '%d':
+          var day = d.getDate();
+          ret = zeroize(day);
+          break;
+        case '%-d':
+          ret = d.getDate();;
+          break;
+        case '%D':
+          ret = '%m/%d/%Y';
+          break;
+        case '%e':
+          ret = d.getDate();
+          break;
+        case '%F':
+          ret = '%Y-%m-%d';
+          break;
+        case '%H':
+          var hours = d.getHours();
+          ret = zeroize(hours);
+          break;
+        case '%I':
+          ret = d.getHours() % 12;
+          break;
+        case '%j':
+          ret = zeroize(getDays(), 3);
+          break;
+        case 'k':
+          ret = d.getHours();
+          break;
+        case '%m':
+          var month = d.getMonth() + 1;
+          ret = zeroize(month, 2);
+          break;
+        case '%M':
+          ret = zeroize(d.getMinutes(), 2);
+          break;
+        case '%s':
+          ret = zeroize(d.getSeconds(), 2);
+          break;
+        case '%p':
+          ret = d.getHours() < 12 ? 'AM' : 'PM';
+          break;
+        case '%r':
+          ret = '%I:%M:%s %p';
+          break;
+        case '%R':
+          ret = '%H:%M';
+          break;
+        case '%T':
+          ret = '%H:%M:%s';
+          break;
+        case '%U':
+          ret = Math.ceil(getDays() / 7);
+          break;
+        case '%w':
+          ret = d.getDay();
+          break;
+        case '%x':
+          ret = '%m/%d/%y';
+          break;
+        case '%X':
+          ret = '%h:%M:%s'
+          break;
+        case '%y':
+          ret = d.getFullYear() % 100;
+          break;
+        case '%Y':
+          ret = d.getFullYear();
+          break;
+        default:
+          ret = c;
+        }
+        return ret;
+      }
+      var re = /%-?[\w]/g;
+      if (!formatString) {
+        formatString = '%c';
+      }
+      formatString = formatString.replace(re, cb);
+      formatString = formatString.replace(re, cb);
+      return formatString;
+    });
 
     /**
      * Sets a default value for any variable with no assigned value
-     *
-     * The default value is returned if the variable resolves to null ,undefined or an empty string "".
+     * 
+     * The default value is returned if the variable resolves to null ,undefined or an empty string "". 
      * A string containing whitespace characters and a number has value 0 will not resolve to the default value.
      *
      */
-    function defaults(value, dft) {
-        // undefined and null and empty string
-        if (value == null || value === '') {
-            return dft;
-        } else {
-            return value;
-        }
-    }
 
-
-
-    var otherFilters = Object.freeze({
-        date: date,
-        defaults: defaults
+    Vue.filter('default', function (value, dft) {
+      // undefined and null and empty string
+      if (value == null || value === '') {
+        return dft;
+      } else {
+        return value;
+      }
     });
+  }
 
-    function install(Vue) {
-        util.each(collectionFilters, function(value, key) {
-            Vue.filter(key, value);
-        });
+  // export
 
-        util.each(mathFilters, function(value, key) {
-            Vue.filter(key, value);
-        });
+  if (typeof exports == "object") {
+    module.exports = install
+  } else if (typeof define == "function" && define.amd) {
+    define([], function () {
+      return install
+    });
+  } else if (window.Vue) {
+    Vue.use(install)
+  }
+})();
 
-        util.each(stringFilters, function(value, key) {
-            Vue.filter(key, value);
-        });
-
-        util.each(otherFilters, function(value, key) {
-            Vue.filter(key, value);
-        });
-    }
-
-    if (typeof exports == 'object') {
-        module.exports = install;
-    } else if (typeof define == 'function' && define.amd) {
-        define([], function() {
-            return install;
-        });
-    } else if (window.Vue) {
-        Vue.use(install);
-    }
-
-}());
 },{}],3:[function(require,module,exports){
 /**
  * Service for sending network requests.
@@ -1943,7 +1751,7 @@ module.exports = function (_) {
 },{}],11:[function(require,module,exports){
 (function (process,global){
 /*!
- * Vue.js v1.0.24
+ * Vue.js v1.0.21
  * (c) 2016 Evan You
  * Released under the MIT License.
  */
@@ -1990,10 +1798,6 @@ function del(obj, key) {
   delete obj[key];
   var ob = obj.__ob__;
   if (!ob) {
-    if (obj._isVue) {
-      delete obj._data[key];
-      obj._digest();
-    }
     return;
   }
   ob.dep.notify();
@@ -2344,8 +2148,6 @@ var devtools = inBrowser && window.__VUE_DEVTOOLS_GLOBAL_HOOK__;
 var UA = inBrowser && window.navigator.userAgent.toLowerCase();
 var isIE9 = UA && UA.indexOf('msie 9.0') > 0;
 var isAndroid = UA && UA.indexOf('android') > 0;
-var isIos = UA && /(iphone|ipad|ipod|ios)/i.test(UA);
-var isWechat = UA && UA.indexOf('micromessenger') > 0;
 
 var transitionProp = undefined;
 var transitionEndEvent = undefined;
@@ -2386,7 +2188,7 @@ var nextTick = (function () {
   }
 
   /* istanbul ignore if */
-  if (typeof MutationObserver !== 'undefined' && !(isWechat && isIos)) {
+  if (typeof MutationObserver !== 'undefined') {
     var counter = 1;
     var observer = new MutationObserver(nextTickHandler);
     var textNode = document.createTextNode(counter);
@@ -2414,27 +2216,6 @@ var nextTick = (function () {
     timerFunc(nextTickHandler, 0);
   };
 })();
-
-var _Set = undefined;
-/* istanbul ignore if */
-if (typeof Set !== 'undefined' && Set.toString().match(/native code/)) {
-  // use native Set when available.
-  _Set = Set;
-} else {
-  // a non-standard Set polyfill that only works with primitive keys.
-  _Set = function () {
-    this.set = Object.create(null);
-  };
-  _Set.prototype.has = function (key) {
-    return this.set[key] !== undefined;
-  };
-  _Set.prototype.add = function (key) {
-    this.set[key] = 1;
-  };
-  _Set.prototype.clear = function () {
-    this.set = Object.create(null);
-  };
-}
 
 function Cache(limit) {
   this.size = 0;
@@ -3080,9 +2861,8 @@ function query(el) {
  */
 
 function inDoc(node) {
-  if (!node) return false;
-  var doc = node.ownerDocument.documentElement;
-  var parent = node.parentNode;
+  var doc = document.documentElement;
+  var parent = node && node.parentNode;
   return doc === node || doc === parent || !!(parent && parent.nodeType === 1 && doc.contains(parent));
 }
 
@@ -3517,7 +3297,7 @@ function checkComponentAttr(el, options) {
     if (resolveAsset(options, 'components', tag)) {
       return { id: tag };
     } else {
-      var is = hasAttrs && getIsBinding(el, options);
+      var is = hasAttrs && getIsBinding(el);
       if (is) {
         return is;
       } else if (process.env.NODE_ENV !== 'production') {
@@ -3530,7 +3310,7 @@ function checkComponentAttr(el, options) {
       }
     }
   } else if (hasAttrs) {
-    return getIsBinding(el, options);
+    return getIsBinding(el);
   }
 }
 
@@ -3538,18 +3318,14 @@ function checkComponentAttr(el, options) {
  * Get "is" binding from an element.
  *
  * @param {Element} el
- * @param {Object} options
  * @return {Object|undefined}
  */
 
-function getIsBinding(el, options) {
+function getIsBinding(el) {
   // dynamic syntax
-  var exp = el.getAttribute('is');
+  var exp = getAttr(el, 'is');
   if (exp != null) {
-    if (resolveAsset(options, 'components', exp)) {
-      el.removeAttribute('is');
-      return { id: exp };
-    }
+    return { id: exp };
   } else {
     exp = getBindAttr(el, 'is');
     if (exp != null) {
@@ -3660,7 +3436,7 @@ strats.init = strats.created = strats.ready = strats.attached = strats.detached 
  */
 
 function mergeAssets(parentVal, childVal) {
-  var res = Object.create(parentVal || null);
+  var res = Object.create(parentVal);
   return childVal ? extend(res, guardArrayAssets(childVal)) : res;
 }
 
@@ -3819,16 +3595,8 @@ function guardArrayAssets(assets) {
 function mergeOptions(parent, child, vm) {
   guardComponents(child);
   guardProps(child);
-  if (process.env.NODE_ENV !== 'production') {
-    if (child.propsData && !vm) {
-      warn('propsData can only be used as an instantiation option.');
-    }
-  }
   var options = {};
   var key;
-  if (child['extends']) {
-    parent = typeof child['extends'] === 'function' ? mergeOptions(parent, child['extends'].options, vm) : mergeOptions(parent, child['extends'], vm);
-  }
   if (child.mixins) {
     for (var i = 0, l = child.mixins.length; i < l; i++) {
       parent = mergeOptions(parent, child.mixins[i], vm);
@@ -4261,14 +4029,11 @@ var util = Object.freeze({
 	devtools: devtools,
 	isIE9: isIE9,
 	isAndroid: isAndroid,
-	isIos: isIos,
-	isWechat: isWechat,
 	get transitionProp () { return transitionProp; },
 	get transitionEndEvent () { return transitionEndEvent; },
 	get animationProp () { return animationProp; },
 	get animationEndEvent () { return animationEndEvent; },
 	nextTick: nextTick,
-	get _Set () { return _Set; },
 	query: query,
 	inDoc: inDoc,
 	getAttr: getAttr,
@@ -4381,8 +4146,13 @@ function initMixin (Vue) {
     this._updateRef();
 
     // initialize data as empty object.
-    // it will be filled up in _initData().
+    // it will be filled up in _initScope().
     this._data = {};
+
+    // save raw constructor data before merge
+    // so that we know which properties are provided at
+    // instantiation.
+    this._runtimeData = options.data;
 
     // call init hook
     this._callHook('init');
@@ -4933,22 +4703,24 @@ var expression = Object.freeze({
 // triggered, the DOM would have already been in updated
 // state.
 
+var queueIndex;
 var queue = [];
 var userQueue = [];
 var has = {};
 var circular = {};
 var waiting = false;
+var internalQueueDepleted = false;
 
 /**
  * Reset the batcher's state.
  */
 
 function resetBatcherState() {
-  queue.length = 0;
-  userQueue.length = 0;
+  queue = [];
+  userQueue = [];
   has = {};
   circular = {};
-  waiting = false;
+  waiting = internalQueueDepleted = false;
 }
 
 /**
@@ -4956,26 +4728,15 @@ function resetBatcherState() {
  */
 
 function flushBatcherQueue() {
-  var _again = true;
-
-  _function: while (_again) {
-    _again = false;
-
-    runBatcherQueue(queue);
-    runBatcherQueue(userQueue);
-    // user watchers triggered more watchers,
-    // keep flushing until it depletes
-    if (queue.length) {
-      _again = true;
-      continue _function;
-    }
-    // dev tool hook
-    /* istanbul ignore if */
-    if (devtools && config.devtools) {
-      devtools.emit('flush');
-    }
-    resetBatcherState();
+  runBatcherQueue(queue);
+  internalQueueDepleted = true;
+  runBatcherQueue(userQueue);
+  // dev tool hook
+  /* istanbul ignore if */
+  if (devtools && config.devtools) {
+    devtools.emit('flush');
   }
+  resetBatcherState();
 }
 
 /**
@@ -4987,8 +4748,8 @@ function flushBatcherQueue() {
 function runBatcherQueue(queue) {
   // do not cache length because more watchers might be pushed
   // as we run existing watchers
-  for (var i = 0; i < queue.length; i++) {
-    var watcher = queue[i];
+  for (queueIndex = 0; queueIndex < queue.length; queueIndex++) {
+    var watcher = queue[queueIndex];
     var id = watcher.id;
     has[id] = null;
     watcher.run();
@@ -5001,7 +4762,6 @@ function runBatcherQueue(queue) {
       }
     }
   }
-  queue.length = 0;
 }
 
 /**
@@ -5018,14 +4778,20 @@ function runBatcherQueue(queue) {
 function pushWatcher(watcher) {
   var id = watcher.id;
   if (has[id] == null) {
-    // push watcher into appropriate queue
-    var q = watcher.user ? userQueue : queue;
-    has[id] = q.length;
-    q.push(watcher);
-    // queue the flush
-    if (!waiting) {
-      waiting = true;
-      nextTick(flushBatcherQueue);
+    if (internalQueueDepleted && !watcher.user) {
+      // an internal watcher triggered by a user watcher...
+      // let's run it immediately after current user watcher is done.
+      userQueue.splice(queueIndex + 1, 0, watcher);
+    } else {
+      // push watcher into appropriate queue
+      var q = watcher.user ? userQueue : queue;
+      has[id] = q.length;
+      q.push(watcher);
+      // queue the flush
+      if (!waiting) {
+        waiting = true;
+        nextTick(flushBatcherQueue);
+      }
     }
   }
 }
@@ -5066,8 +4832,8 @@ function Watcher(vm, expOrFn, cb, options) {
   this.dirty = this.lazy; // for lazy watchers
   this.deps = [];
   this.newDeps = [];
-  this.depIds = new _Set();
-  this.newDepIds = new _Set();
+  this.depIds = Object.create(null);
+  this.newDepIds = null;
   this.prevError = null; // for async error stacks
   // parse expression for getter/setter
   if (isFn) {
@@ -5159,6 +4925,8 @@ Watcher.prototype.set = function (value) {
 
 Watcher.prototype.beforeGet = function () {
   Dep.target = this;
+  this.newDepIds = Object.create(null);
+  this.newDeps.length = 0;
 };
 
 /**
@@ -5169,10 +4937,10 @@ Watcher.prototype.beforeGet = function () {
 
 Watcher.prototype.addDep = function (dep) {
   var id = dep.id;
-  if (!this.newDepIds.has(id)) {
-    this.newDepIds.add(id);
+  if (!this.newDepIds[id]) {
+    this.newDepIds[id] = true;
     this.newDeps.push(dep);
-    if (!this.depIds.has(id)) {
+    if (!this.depIds[id]) {
       dep.addSub(this);
     }
   }
@@ -5187,18 +4955,14 @@ Watcher.prototype.afterGet = function () {
   var i = this.deps.length;
   while (i--) {
     var dep = this.deps[i];
-    if (!this.newDepIds.has(dep.id)) {
+    if (!this.newDepIds[dep.id]) {
       dep.removeSub(this);
     }
   }
-  var tmp = this.depIds;
   this.depIds = this.newDepIds;
-  this.newDepIds = tmp;
-  this.newDepIds.clear();
-  tmp = this.deps;
+  var tmp = this.deps;
   this.deps = this.newDeps;
   this.newDeps = tmp;
-  this.newDeps.length = 0;
 };
 
 /**
@@ -5322,33 +5086,15 @@ Watcher.prototype.teardown = function () {
  * @param {*} val
  */
 
-var seenObjects = new _Set();
-function traverse(val, seen) {
-  var i = undefined,
-      keys = undefined;
-  if (!seen) {
-    seen = seenObjects;
-    seen.clear();
-  }
-  var isA = isArray(val);
-  var isO = isObject(val);
-  if (isA || isO) {
-    if (val.__ob__) {
-      var depId = val.__ob__.dep.id;
-      if (seen.has(depId)) {
-        return;
-      } else {
-        seen.add(depId);
-      }
-    }
-    if (isA) {
-      i = val.length;
-      while (i--) traverse(val[i], seen);
-    } else if (isO) {
-      keys = Object.keys(val);
-      i = keys.length;
-      while (i--) traverse(val[keys[i]], seen);
-    }
+function traverse(val) {
+  var i, keys;
+  if (isArray(val)) {
+    i = val.length;
+    while (i--) traverse(val[i]);
+  } else if (isObject(val)) {
+    keys = Object.keys(val);
+    i = keys.length;
+    while (i--) traverse(val[keys[i]]);
   }
 }
 
@@ -5457,13 +5203,10 @@ function stringToFragment(templateString, raw) {
 
 function nodeToFragment(node) {
   // if its a template tag and the browser supports it,
-  // its content is already a document fragment. However, iOS Safari has
-  // bug when using directly cloned template content with touch
-  // events and can cause crashes when the nodes are removed from DOM, so we
-  // have to treat template elements as string templates. (#2805)
-  /* istanbul ignore if */
+  // its content is already a document fragment.
   if (isRealTemplate(node)) {
-    return stringToFragment(node.innerHTML);
+    trimNode(node.content);
+    return node.content;
   }
   // script template
   if (node.tagName === 'SCRIPT') {
@@ -5859,7 +5602,7 @@ function FragmentFactory(vm, el) {
   this.vm = vm;
   var template;
   var isString = typeof el === 'string';
-  if (isString || isTemplate(el) && !el.hasAttribute('v-if')) {
+  if (isString || isTemplate(el)) {
     template = parseTemplate(el, true);
   } else {
     template = document.createDocumentFragment();
@@ -6201,15 +5944,7 @@ var vFor = {
       });
       setTimeout(op, staggerAmount);
     } else {
-      var target = prevEl.nextSibling;
-      /* istanbul ignore if */
-      if (!target) {
-        // reset end anchor position in case the position was messed up
-        // by an external drag-n-drop library.
-        after(this.end, prevEl);
-        target = this.end;
-      }
-      frag.before(target);
+      frag.before(prevEl.nextSibling);
     }
   },
 
@@ -6280,7 +6015,7 @@ var vFor = {
     var primitive = !isObject(value);
     var id;
     if (key || trackByKey || primitive) {
-      id = getTrackByKey(index, key, value, trackByKey);
+      id = trackByKey ? trackByKey === '$index' ? index : getPath(value, trackByKey) : key || value;
       if (!cache[id]) {
         cache[id] = frag;
       } else if (trackByKey !== '$index') {
@@ -6294,10 +6029,8 @@ var vFor = {
         } else {
           process.env.NODE_ENV !== 'production' && this.warnDuplicate(value);
         }
-      } else if (Object.isExtensible(value)) {
+      } else {
         def(value, id, frag);
-      } else if (process.env.NODE_ENV !== 'production') {
-        warn('Frozen v-for objects cannot be automatically tracked, make sure to ' + 'provide a track-by key.');
       }
     }
     frag.raw = value;
@@ -6317,7 +6050,7 @@ var vFor = {
     var primitive = !isObject(value);
     var frag;
     if (key || trackByKey || primitive) {
-      var id = getTrackByKey(index, key, value, trackByKey);
+      var id = trackByKey ? trackByKey === '$index' ? index : getPath(value, trackByKey) : key || value;
       frag = this.cache[id];
     } else {
       frag = value[this.id];
@@ -6344,7 +6077,7 @@ var vFor = {
     var key = hasOwn(scope, '$key') && scope.$key;
     var primitive = !isObject(value);
     if (trackByKey || key || primitive) {
-      var id = getTrackByKey(index, key, value, trackByKey);
+      var id = trackByKey ? trackByKey === '$index' ? index : getPath(value, trackByKey) : key || value;
       this.cache[id] = null;
     } else {
       value[this.id] = null;
@@ -6492,19 +6225,6 @@ function range(n) {
     ret[i] = i;
   }
   return ret;
-}
-
-/**
- * Get the track by key for an item.
- *
- * @param {Number} index
- * @param {String} key
- * @param {*} value
- * @param {String} [trackByKey]
- */
-
-function getTrackByKey(index, key, value, trackByKey) {
-  return trackByKey ? trackByKey === '$index' ? index : trackByKey.charAt(0).match(/\w/) ? getPath(value, trackByKey) : value[trackByKey] : key || value;
 }
 
 if (process.env.NODE_ENV !== 'production') {
@@ -7108,7 +6828,7 @@ var on$1 = {
     }
     // key filter
     var keys = Object.keys(this.modifiers).filter(function (key) {
-      return key !== 'stop' && key !== 'prevent' && key !== 'self' && key !== 'capture';
+      return key !== 'stop' && key !== 'prevent' && key !== 'self';
     });
     if (keys.length) {
       handler = keyFilter(handler, keys);
@@ -7237,12 +6957,6 @@ function prefix(prop) {
   }
   var i = prefixes.length;
   var prefixed;
-  if (camel !== 'filter' && camel in testEl.style) {
-    return {
-      kebab: prop,
-      camel: camel
-    };
-  }
   while (i--) {
     prefixed = camelPrefixes[i] + upper;
     if (prefixed in testEl.style) {
@@ -7251,6 +6965,12 @@ function prefix(prop) {
         camel: prefixed
       };
     }
+  }
+  if (camel in testEl.style) {
+    return {
+      kebab: prop,
+      camel: camel
+    };
   }
 }
 
@@ -7340,12 +7060,8 @@ var bind$1 = {
       attr = camelize(attr);
     }
     if (!interp && attrWithPropsRE.test(attr) && attr in el) {
-      var attrValue = attr === 'value' ? value == null // IE9 will set input.value to "null" for null...
+      el[attr] = attr === 'value' ? value == null // IE9 will set input.value to "null" for null...
       ? '' : value : value;
-
-      if (el[attr] !== attrValue) {
-        el[attr] = attrValue;
-      }
     }
     // set model props
     var modelProp = modelProps[attr];
@@ -7445,66 +7161,66 @@ var vClass = {
   deep: true,
 
   update: function update(value) {
-    if (!value) {
-      this.cleanup();
-    } else if (typeof value === 'string') {
-      this.setClass(value.trim().split(/\s+/));
+    if (value && typeof value === 'string') {
+      this.handleObject(stringToObject(value));
+    } else if (isPlainObject(value)) {
+      this.handleObject(value);
+    } else if (isArray(value)) {
+      this.handleArray(value);
     } else {
-      this.setClass(normalize$1(value));
+      this.cleanup();
     }
   },
 
-  setClass: function setClass(value) {
+  handleObject: function handleObject(value) {
+    this.cleanup(value);
+    this.prevKeys = Object.keys(value);
+    setObjectClasses(this.el, value);
+  },
+
+  handleArray: function handleArray(value) {
     this.cleanup(value);
     for (var i = 0, l = value.length; i < l; i++) {
       var val = value[i];
-      if (val) {
-        apply(this.el, val, addClass);
+      if (val && isPlainObject(val)) {
+        setObjectClasses(this.el, val);
+      } else if (val && typeof val === 'string') {
+        addClass(this.el, val);
       }
     }
-    this.prevKeys = value;
+    this.prevKeys = value.slice();
   },
 
   cleanup: function cleanup(value) {
-    var prevKeys = this.prevKeys;
-    if (!prevKeys) return;
-    var i = prevKeys.length;
+    if (!this.prevKeys) return;
+
+    var i = this.prevKeys.length;
     while (i--) {
-      var key = prevKeys[i];
-      if (!value || value.indexOf(key) < 0) {
-        apply(this.el, key, removeClass);
+      var key = this.prevKeys[i];
+      if (!key) continue;
+
+      var keys = isPlainObject(key) ? Object.keys(key) : [key];
+      for (var j = 0, l = keys.length; j < l; j++) {
+        toggleClasses(this.el, keys[j], removeClass);
       }
     }
   }
 };
 
-/**
- * Normalize objects and arrays (potentially containing objects)
- * into array of strings.
- *
- * @param {Object|Array<String|Object>} value
- * @return {Array<String>}
- */
+function setObjectClasses(el, obj) {
+  var keys = Object.keys(obj);
+  for (var i = 0, l = keys.length; i < l; i++) {
+    var key = keys[i];
+    if (!obj[key]) continue;
+    toggleClasses(el, key, addClass);
+  }
+}
 
-function normalize$1(value) {
-  var res = [];
-  if (isArray(value)) {
-    for (var i = 0, l = value.length; i < l; i++) {
-      var _key = value[i];
-      if (_key) {
-        if (typeof _key === 'string') {
-          res.push(_key);
-        } else {
-          for (var k in _key) {
-            if (_key[k]) res.push(k);
-          }
-        }
-      }
-    }
-  } else if (isObject(value)) {
-    for (var key in value) {
-      if (value[key]) res.push(key);
-    }
+function stringToObject(value) {
+  var res = {};
+  var keys = value.trim().split(/\s+/);
+  for (var i = 0, l = keys.length; i < l; i++) {
+    res[keys[i]] = true;
   }
   return res;
 }
@@ -7520,12 +7236,14 @@ function normalize$1(value) {
  * @param {Function} fn
  */
 
-function apply(el, key, fn) {
+function toggleClasses(el, key, fn) {
   key = key.trim();
+
   if (key.indexOf(' ') === -1) {
     fn(el, key);
     return;
   }
+
   // The key contains one or more space characters.
   // Since a class name doesn't accept such characters, we
   // treat it as multiple classes.
@@ -7576,7 +7294,6 @@ var component = {
       // cached, when the component is used elsewhere this attribute
       // will remain at link time.
       this.el.removeAttribute('is');
-      this.el.removeAttribute(':is');
       // remove ref, same as above
       if (this.descriptor.ref) {
         this.el.removeAttribute('v-ref:' + hyphenate(this.descriptor.ref));
@@ -8011,7 +7728,6 @@ function makePropsLinkFn(props) {
   return function propsLinkFn(vm, scope) {
     // store resolved props info
     vm._props = {};
-    var inlineProps = vm.$options.propsData;
     var i = props.length;
     var prop, path, options, value, raw;
     while (i--) {
@@ -8020,9 +7736,7 @@ function makePropsLinkFn(props) {
       path = prop.path;
       options = prop.options;
       vm._props[path] = prop;
-      if (inlineProps && hasOwn(inlineProps, path)) {
-        initProp(vm, prop, inlineProps[path]);
-      }if (raw === null) {
+      if (raw === null) {
         // initialize absent prop
         initProp(vm, prop, undefined);
       } else if (prop.dynamic) {
@@ -8783,7 +8497,7 @@ function compile(el, options, partial) {
   // link function for the node itself.
   var nodeLinkFn = partial || !options._asComponent ? compileNode(el, options) : null;
   // link function for the childNodes
-  var childLinkFn = !(nodeLinkFn && nodeLinkFn.terminal) && !isScript(el) && el.hasChildNodes() ? compileNodeList(el.childNodes, options) : null;
+  var childLinkFn = !(nodeLinkFn && nodeLinkFn.terminal) && el.tagName !== 'SCRIPT' && el.hasChildNodes() ? compileNodeList(el.childNodes, options) : null;
 
   /**
    * A composite linker function to be called on a already
@@ -8966,7 +8680,7 @@ function compileRoot(el, options, contextOptions) {
     });
     if (names.length) {
       var plural = names.length > 1;
-      warn('Attribute' + (plural ? 's ' : ' ') + names.join(', ') + (plural ? ' are' : ' is') + ' ignored on component ' + '<' + options.el.tagName.toLowerCase() + '> because ' + 'the component is a fragment instance: ' + 'http://vuejs.org/guide/components.html#Fragment-Instance');
+      warn('Attribute' + (plural ? 's ' : ' ') + names.join(', ') + (plural ? ' are' : ' is') + ' ignored on component ' + '<' + options.el.tagName.toLowerCase() + '> because ' + 'the component is a fragment instance: ' + 'http://vuejs.org/guide/components.html#Fragment_Instance');
     }
   }
 
@@ -9003,7 +8717,7 @@ function compileRoot(el, options, contextOptions) {
 
 function compileNode(node, options) {
   var type = node.nodeType;
-  if (type === 1 && !isScript(node)) {
+  if (type === 1 && node.tagName !== 'SCRIPT') {
     return compileElement(node, options);
   } else if (type === 3 && node.data.trim()) {
     return compileTextNode(node, options);
@@ -9298,6 +9012,7 @@ function checkTerminalDirectives(el, attrs, options) {
   var attr, name, value, modifiers, matched, dirName, rawName, arg, def, termDef;
   for (var i = 0, j = attrs.length; i < j; i++) {
     attr = attrs[i];
+    modifiers = parseModifiers(attr.name);
     name = attr.name.replace(modifierRE, '');
     if (matched = name.match(dirAttrRE)) {
       def = resolveAsset(options, 'directives', matched[1]);
@@ -9305,7 +9020,6 @@ function checkTerminalDirectives(el, attrs, options) {
         if (!termDef || (def.priority || DEFAULT_TERMINAL_PRIORITY) > termDef.priority) {
           termDef = def;
           rawName = attr.name;
-          modifiers = parseModifiers(attr.name);
           value = attr.value;
           dirName = matched[1];
           arg = matched[2];
@@ -9526,10 +9240,6 @@ function hasOneTime(tokens) {
   }
 }
 
-function isScript(el) {
-  return el.tagName === 'SCRIPT' && (!el.hasAttribute('type') || el.getAttribute('type') === 'text/javascript');
-}
-
 var specialCharRE = /[^\w\-:\.]/;
 
 /**
@@ -9659,8 +9369,8 @@ function mergeAttrs(from, to) {
     value = attrs[i].value;
     if (!to.hasAttribute(name) && !specialCharRE.test(name)) {
       to.setAttribute(name, value);
-    } else if (name === 'class' && !parseText(value) && (value = value.trim())) {
-      value.split(/\s+/).forEach(function (cls) {
+    } else if (name === 'class' && !parseText(value)) {
+      value.trim().split(/\s+/).forEach(function (cls) {
         addClass(to, cls);
       });
     }
@@ -9699,10 +9409,6 @@ function resolveSlots(vm, content) {
     contents[name] = extractFragment(contents[name], content);
   }
   if (content.hasChildNodes()) {
-    var nodes = content.childNodes;
-    if (nodes.length === 1 && nodes[0].nodeType === 3 && !nodes[0].data.trim()) {
-      return;
-    }
     contents['default'] = extractFragment(content.childNodes, content);
   }
 }
@@ -9721,7 +9427,7 @@ function extractFragment(nodes, parent) {
     var node = nodes[i];
     if (isTemplate(node) && !node.hasAttribute('v-if') && !node.hasAttribute('v-for')) {
       parent.removeChild(node);
-      node = parseTemplate(node, true);
+      node = parseTemplate(node);
     }
     frag.appendChild(node);
   }
@@ -9802,6 +9508,7 @@ function stateMixin (Vue) {
       process.env.NODE_ENV !== 'production' && warn('data functions should return an object.', this);
     }
     var props = this._props;
+    var runtimeData = this._runtimeData ? typeof this._runtimeData === 'function' ? this._runtimeData() : this._runtimeData : null;
     // proxy data on instance
     var keys = Object.keys(data);
     var i, key;
@@ -9812,10 +9519,10 @@ function stateMixin (Vue) {
       // 1. it's not already defined as a prop
       // 2. it's provided via a instantiation option AND there are no
       //    template prop present
-      if (!props || !hasOwn(props, key)) {
+      if (!props || !hasOwn(props, key) || runtimeData && hasOwn(runtimeData, key) && props[key].raw === null) {
         this._proxy(key);
       } else if (process.env.NODE_ENV !== 'production') {
-        warn('Data field "' + key + '" is already defined ' + 'as a prop. To provide default value for a prop, use the "default" ' + 'prop option; if you want to pass prop values to an instantiation ' + 'call, use the "propsData" option.', this);
+        warn('Data field "' + key + '" is already defined ' + 'as a prop. Use prop default value instead.', this);
       }
     }
     // observe data
@@ -10005,21 +9712,18 @@ function eventsMixin (Vue) {
 
   function registerComponentEvents(vm, el) {
     var attrs = el.attributes;
-    var name, value, handler;
+    var name, handler;
     for (var i = 0, l = attrs.length; i < l; i++) {
       name = attrs[i].name;
       if (eventRE.test(name)) {
         name = name.replace(eventRE, '');
-        // force the expression into a statement so that
-        // it always dynamically resolves the method to call (#2670)
-        // kinda ugly hack, but does the job.
-        value = attrs[i].value;
-        if (isSimplePath(value)) {
-          value += '.apply(this, $arguments)';
+        handler = (vm._scope || vm._context).$eval(attrs[i].value, true);
+        if (typeof handler === 'function') {
+          handler._fromParent = true;
+          vm.$on(name.replace(eventRE), handler);
+        } else if (process.env.NODE_ENV !== 'production') {
+          warn('v-on:' + name + '="' + attrs[i].value + '" ' + 'expects a function value, got ' + handler, vm);
         }
-        handler = (vm._scope || vm._context).$eval(value, true);
-        handler._fromParent = true;
-        vm.$on(name.replace(eventRE), handler);
       }
     }
   }
@@ -10670,7 +10374,7 @@ function lifecycleMixin (Vue) {
     }
     // remove reference from data ob
     // frozen object may not have observer.
-    if (this._data && this._data.__ob__) {
+    if (this._data.__ob__) {
       this._data.__ob__.removeVm(this);
     }
     // Clean up references to private properties and other
@@ -10743,7 +10447,6 @@ function miscMixin (Vue) {
     } else {
       factory = resolveAsset(this.$options, 'components', value, true);
     }
-    /* istanbul ignore if */
     if (!factory) {
       return;
     }
@@ -10793,7 +10496,7 @@ function dataAPI (Vue) {
   Vue.prototype.$get = function (exp, asStatement) {
     var res = parseExpression(exp);
     if (res) {
-      if (asStatement) {
+      if (asStatement && !isSimplePath(exp)) {
         var self = this;
         return function statementHandler() {
           self.$arguments = toArray(arguments);
@@ -11725,19 +11428,17 @@ var filters = {
    * 12345 => $12,345.00
    *
    * @param {String} sign
-   * @param {Number} decimals Decimal places
    */
 
-  currency: function currency(value, _currency, decimals) {
+  currency: function currency(value, _currency) {
     value = parseFloat(value);
     if (!isFinite(value) || !value && value !== 0) return '';
     _currency = _currency != null ? _currency : '$';
-    decimals = decimals != null ? decimals : 2;
-    var stringified = Math.abs(value).toFixed(decimals);
-    var _int = decimals ? stringified.slice(0, -1 - decimals) : stringified;
+    var stringified = Math.abs(value).toFixed(2);
+    var _int = stringified.slice(0, -3);
     var i = _int.length % 3;
     var head = i > 0 ? _int.slice(0, i) + (_int.length > 3 ? ',' : '') : '';
-    var _float = decimals ? stringified.slice(-1 - decimals) : '';
+    var _float = stringified.slice(-3);
     var sign = value < 0 ? '-' : '';
     return sign + _currency + head + _int.slice(i).replace(digitsRE, '$1,') + _float;
   },
@@ -11957,7 +11658,7 @@ function installGlobalAPI (Vue) {
 
 installGlobalAPI(Vue);
 
-Vue.version = '1.0.24';
+Vue.version = '1.0.21';
 
 // devtools global hook
 /* istanbul ignore next */
@@ -11993,24 +11694,30 @@ Vue.component('subembayment', {
 	}
 });
 
+/********************************************
+
+*	This doesn't actually work. Removing for now
+
 Vue.component('Treatment', {
 	template: '#treatment-template',
-	props: ['TreatmentID',
-	// 'TreatmentType_ID',
-	'Treatment_Rate', // this is the ppm or percent set by the user
-	// 'ScenarioID',
-	'Polygon', 'Total_Orig_Nitrogen' // this is the total Nitrogen this treatment is dealing with
-
-	],
+	props: [
+				'TreatmentID',
+				// 'TreatmentType_ID',
+				'Treatment_Rate', // this is the ppm or percent set by the user
+				// 'ScenarioID',
+				'Polygon',
+				'Total_Orig_Nitrogen' // this is the total Nitrogen this treatment is dealing with
+				
+			],
 	computed: {
-		Nitrogen_Removed: function Nitrogen_Removed() // this is the *attenuated* Nitrogen removed by this treatment
-		{
-			return this.Total_Orig_Nitrogen * (this.Treatment_Rate / 100);
-		}
+				Nitrogen_Removed: function() // this is the *attenuated* Nitrogen removed by this treatment
+				{
+					return this.Total_Orig_Nitrogen * (this.Treatment_Rate/100)
+				}
 
-	},
+			},
 	methods: {
-		drawPolygon: function drawPolygon() {
+		drawPolygon: function() {
 			$('#popdown-opacity').hide();
 			// $( "#info" ).trigger( "click" );
 			// dom.byId("info")
@@ -12022,7 +11729,7 @@ Vue.component('Treatment', {
 			// console.log(poly_nitrogen);
 			// $('#total_nitrogen_polygon').text(poly_nitrogen + 'kg');
 			// this.$http.post('/getpolygon/'+'/'+polystring, {
-			// 	//treatment:
+			// 	//treatment: 
 			// }
 			// this.Total_Orig_Nitrogen = "/testmap/Nitrogen"+'/'+treatment+'/'+polystring;
 			$('#select_destination').show();
@@ -12030,16 +11737,32 @@ Vue.component('Treatment', {
 	}
 });
 
+****************************************************
+*
+*	Neither does this:
+
 Vue.component('parcel', {
 	template: '#parcel-template',
-	props: ['TreatmentWizId', 'WtpParcelId', 'WtpSubwaterId', 'WtpNloadSeptic', 'WtpLandUseExisting', 'WtpTownId', 'WtpWwfExisting', 'my-treatment'],
+	props: [
+				'TreatmentWizId',
+				'WtpParcelId',
+				'WtpSubwaterId',
+				'WtpNloadSeptic',
+				'WtpLandUseExisting',
+				'WtpTownId',
+				'WtpWwfExisting',
+				'my-treatment'
+			],
 	computed: {
-		NLoad_Treated: function NLoad_Treated() {
-			return (this.WtpWwfExisting * this.my - treatment * 365 * 3.785) / 1000000;
-		}
+			NLoad_Treated: function()
+				{
+					return (this.WtpWwfExisting * this.my-treatment * 365 * 3.785)/1000000;
+				}
 	}
 
 });
+****************************************************
+*/
 
 new Vue({
 	http: {
@@ -12065,7 +11788,8 @@ new Vue({
 		storm_att: parseFloat(nitrogen_att.Total_Att_Storm),
 		storm_percent: 0,
 		atmosphere_unatt: parseFloat(nitrogen_unatt.Total_UnAtt_Atmosphere),
-		atmosphere_att: parseFloat(nitrogen_att.Total_Att_Atmosphere)
+		atmosphere_att: parseFloat(nitrogen_att.Total_Att_Atmosphere),
+		embayment_percent: 0
 	},
 
 	computed: {
@@ -12105,6 +11829,12 @@ new Vue({
 		},
 		groundwater_treated: function groundwater_treated() {
 			return this.groundwater_att * ((100 - this.ground_percent) / 100);
+		},
+		embayment_treated: function embayment_treated() {
+			return this.total_treated * ((100 - this.embayment_percent) / 100);
+		},
+		embayment_difference: function embayment_difference() {
+			return this.total_treated - this.embayment_treated;
 		}
 
 	}

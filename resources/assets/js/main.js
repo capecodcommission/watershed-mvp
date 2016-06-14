@@ -17,6 +17,11 @@ Vue.component('subembayment', {
 		}
 	});
 
+
+/********************************************
+
+*	This doesn't actually work. Removing for now
+
 Vue.component('Treatment', {
 	template: '#treatment-template',
 	props: [
@@ -56,6 +61,10 @@ Vue.component('Treatment', {
 	}
 });
 
+****************************************************
+*
+*	Neither does this:
+
 Vue.component('parcel', {
 	template: '#parcel-template',
 	props: [
@@ -76,7 +85,8 @@ Vue.component('parcel', {
 	}
 
 });
-
+****************************************************
+*/
 
 new Vue({
 				http: {
@@ -103,7 +113,8 @@ new Vue({
 					storm_att: parseFloat(nitrogen_att.Total_Att_Storm),
 					storm_percent: 0,
 					atmosphere_unatt: parseFloat(nitrogen_unatt.Total_UnAtt_Atmosphere),
-					atmosphere_att: parseFloat(nitrogen_att.Total_Att_Atmosphere)
+					atmosphere_att: parseFloat(nitrogen_att.Total_Att_Atmosphere),
+					embayment_percent: 0
 				},
 
 
@@ -157,6 +168,14 @@ new Vue({
 					groundwater_treated: function()
 					{
 						return (this.groundwater_att * ((100-this.ground_percent)/100));
+					},
+					embayment_treated: function()
+					{
+						return (this.total_treated * ((100-this.embayment_percent)/100));
+					},
+					embayment_difference: function()
+					{
+						return (this.total_treated - this.embayment_treated);
 					}
 					
 				}

@@ -66,9 +66,10 @@
 			$('#popdown-opacity').hide();
 			map.disableMapNavigation();
 			tb.activate('polygon');
+			console.log(tb);
 			$('#select_polygon').hide();
 			$('#select_destination').show();
-			// console.log(polystring);
+			console.log(msg);
 		});
 		$('#select_destination').on('click', function(f){
 			f.preventDefault();

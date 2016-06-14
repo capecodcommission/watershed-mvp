@@ -265,6 +265,24 @@
 			Some sort of intro will go here</p>
 			<hr>
 			<div class="technology">
+				<a href="{{url('/tech/embayment/11')}}"  class="popdown">
+					<img src="http://www.cch2o.org/Matrix/icons/aquaculture_shellfishing.svg" alt=""><br />
+					Acquaculture in Estuary Bed
+				</a>
+			</div>
+			<div class="technology">
+				<a href="{{url('/tech/embayment/12')}}"  class="popdown">
+					<img src="http://www.cch2o.org/Matrix/icons/aquaculture_shellfishing.svg" alt=""><br />
+					Acquaculture Above Estuary Bed
+				</a>
+			</div>
+			<div class="technology">
+				<a href="{{url('/tech/embayment/13')}}"  class="popdown">
+					<img src="http://www.cch2o.org/Matrix/icons/aquaculture_shellfishing.svg" alt=""><br />
+					Acquaculture - Mariculture
+				</a>
+			</div>
+			<div class="technology">
 				<a href="{{url('/tech/embayment/30')}}"  class="popdown">
 					<img src="http://www.cch2o.org/Matrix/icons/inlet_culvert_widening.svg" alt=""><br />
 					Inlet/Culvert Widening
@@ -276,8 +294,30 @@
 					Coastal Habitat Restoration
 				</a>
 			</div>
-
-
+			<div class="technology">
+				<a href="{{url('/tech/embayment/32')}}"  class="popdown">
+					<img src="http://www.cch2o.org/Matrix/icons/constructed_wetlands_floating.svg" alt=""><br />
+					Floating Constructed Wetlands
+				</a>
+			</div>			
+			<div class="technology">
+				<a href="{{url('/tech/embayment/33')}}"  class="popdown">
+					<img src="http://www.cch2o.org/Matrix/icons/pond_estuary_circulators.svg" alt=""><br />
+					Pond &amp; Estuary Circulators
+				</a>
+			</div>
+			<div class="technology">
+				<a href="{{url('/tech/embayment/34')}}"  class="popdown">
+					<img src="http://www.cch2o.org/Matrix/icons/surface_water_remediation_wetlands.svg" alt=""><br />
+					Surface Water Remediation Wetlands
+				</a>
+			</div>
+			<div class="technology">
+				<a href="{{url('/tech/embayment/36')}}"  class="popdown">
+					<img src="http://www.cch2o.org/Matrix/icons/pond_estuary_dredging.svg" alt=""><br />
+					Pond &amp; Estuary Dredging
+				</a>
+			</div>
 		</div>
 	</article>
 	</aside>

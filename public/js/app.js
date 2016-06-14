@@ -17,6 +17,7 @@ require([
 		"esri/toolbars/draw",
 		// "esri/toolbars/edit",
 		"esri/symbols/SimpleFillSymbol",
+		"esri/symbols/SimpleLineSymbol",
 		"esri/graphic",
 		"esri/Color",
 
@@ -48,6 +49,7 @@ require([
 		Draw,
 		// Edit,
 		SimpleFillSymbol,
+		SimpleLineSymbol,
 		Graphic,
 		Color,
 
@@ -78,8 +80,9 @@ require([
 			tb = new Draw(map);
 			tb.on("draw-end", addGraphic);
 
-			// event delegation so a click handler is not
-			// needed for each individual button
+
+// map.graphics.add(new Graphic(treat, polygon));
+			
 			on(dom.byId("info"), "click", function(evt) {
 				if (evt.target.id === "info") {
 					return;
@@ -90,7 +93,6 @@ require([
 				tb.activate(tool);
 			});
 		}
-
 
 
 		/***********************************
@@ -130,13 +132,7 @@ require([
 					url: url
 				})
 				.done(function(msg) {
-					// msg = $.parseJSON(msg);
-					// console.log(msg);
-					// console.log(msg);
-					// var txtmsg = "Total Nitrogen in Polygon: " + msg[0].UnAttenFull;
-					// alert(txtmsg);
-					// console.log('success');
-					// var poly_nitrogen = msg.poly_nitrogen->Septic;
+
 					$('#total_nitrogen_polygon').text(msg);
 					$('#popdown-opacity').show();
 					
@@ -168,6 +164,31 @@ require([
 
 
 		var extent;
+
+		/*******************************
+		 *
+		 *	We will need to add any existing treatment polygons to the map
+		 *  We need to break the custom polygon string into an array of x, y points
+		 *  see http://www.cch2o.org/TBL/208viewer_wiz.php?id=234 code below:
+		 * 
+
+		 $poly = explode(',', $poly);
+
+			foreach($poly as $test){
+				$x = strstr($test, " ", true);
+				$y = strstr($test, " ");
+				$node = [$x,$y];
+				$geometry[] = $node;
+		 *
+
+		 *	Then see 208 viewer (index-1.html example file)
+		 *	function buildScenarioPolygons(thisScenario, i)  starting on line 729
+		 *
+		 *	Line 1130 starts the custom polygon for the treatment
+		 *
+
+		 *********************************/
+
 
 
 		var embayments = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/4', {
@@ -205,7 +226,7 @@ require([
 		Subembayments.setDefinitionExpression('EMBAY_ID = ' + selectlayer);
 
 		Subembayments.hide();
-		console.log(Subembayments);
+		// console.log(Subembayments);
 		map.addLayer(Subembayments);
 
 		var NitrogenLayer = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/0', {
