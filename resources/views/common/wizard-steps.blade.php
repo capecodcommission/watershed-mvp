@@ -46,17 +46,14 @@
 		</header>
 		</div>
 		<div class="acc_cCont">
-			<p>Total Unattenuated Load from Fertilizer: <span class="wizard-span">@{{fert_unatt|round}}kg</span> <br>
+			<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="_blank">View Scenario Summary</a>
+			Total Unattenuated Load from Fertilizer: <span class="wizard-span">@{{fert_unatt|round}}kg</span> <br>
 			Total Attenuated Load from Fertilizer: <span class="wizard-span">@{{fert_att | round }}kg</span></p>
 			<hr>
-			<p>Choose a technology to treat Nitrogen from Fertilizer in your watershed.</p>
-			
-			
-				 <div class="technology">
-					<a href="/tech/fert/25" class="popdown"><img src="http://www.cch2o.org/Matrix/icons/npk_mgt.svg"></a><br />Fertilizer Management			
-				</div>
-			
-		
+			<div class="technology">
+				<a href="/tech/fert/25" class="popdown"><img src="http://www.cch2o.org/Matrix/icons/npk_mgt.svg"></a><br />Fertilizer Management		
+			</div>
+
 		</div>
 	</article>
 	</aside>
@@ -71,7 +68,9 @@
 				</header>
 			</div>
 			<div class="acc_cCont">
-				<p>Unattenuated Nitrogen from Stormwater: <span class="wizard-span">@{{storm_unatt|round}}kg</span> <br>
+				<p>
+				<a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="_blank">View Scenario Summary</a>
+				Unattenuated Nitrogen from Stormwater: <span class="wizard-span">@{{storm_unatt|round}}kg</span> <br>
 				Attenuated Nitrogen from Stormwater: <span class="wizard-span">@{{storm_att|round}}kg</span></p>
 				<hr>
 				<p>Current scenario: {{ session('scenarioid') }}</p>
@@ -128,16 +127,16 @@
 	<label class="backdrop" for="acc-3"><!-- <i class="fa fa-times"></i> --></label>
 	<article class="acc_cBox">
 		<div class="acc_cImg">
-		<!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/308355/img-3.jpg" alt="" /> -->
+		
 		<header>
 			<h3>Septic</h3><img src="http://www.cch2o.org/Matrix/icons/reduction.svg" alt="" width="60" style="display: inline;">
-			<!-- <p>Web Designer</p> -->
 		</header>
 		</div>
 		<div class="acc_cCont">
-		<p>Unattenuated Nitrogen from Septic: -- kg; Attenuated Nitrogen from Septic: -- kg</p>
-			<!-- <p><a href="" id="show_modal">Show Treatment Window</a></p> -->
-
+		<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="_blank">View Scenario Summary</a>
+			Unattenuated Nitrogen from Septic: <span class="wizard-span">-- kg</span><br>
+			Attenuated Nitrogen from Septic: <span class="wizard-span">-- kg</span></p>
+			<hr>
 			<div class="technology">
 				<a href="{{url('/tech/collect/40')}}" class="popdown">
 					<img src="http://www.cch2o.org/Matrix/icons/cluster_3.svg" alt="" ><br />
@@ -199,16 +198,16 @@
 	<label class="backdrop" for="acc-4"><!-- <i class="fa fa-times"></i> --></label>
 	<article class="acc_cBox">
 		<div class="acc_cImg">
-		<!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/308355/img-4.jpg" alt="" /> -->
 		<header>
 			<h3>Groundwater</h3>
 			<img src="http://www.cch2o.org/Matrix/icons/remediation.svg" alt="">
-			<!-- <p>Web Designer</p> -->
 		</header>
 		</div>
 		<div class="acc_cCont">
-			<p>Existing Nitrogen from Groundwater: (<span id="getNitrogen">Calculate Groundwater</span>)</p>
-			<p>Choose a technology to treat Groundwater Nitrogen in your watershed.</p>
+			<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="_blank">View Scenario Summary</a>
+			Existing Nitrogen from Groundwater: (<span id="getNitrogen">Calculate Groundwater</span>)</p>
+			<hr>
+
 			<div class="technology_list">
 				<div class="technology">
 					<a href="{{url('/tech/groundwater/3')}}"  class="popdown">
@@ -256,15 +255,15 @@
 	<label class="backdrop" for="acc-5"><!-- <i class="fa fa-times"></i> --></label>
 	<article class="acc_cBox">
 		<div class="acc_cImg">
-		<!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/308355/img-4.jpg" alt="" /> -->
 		<header>
 			<h3>Embayment</h3>
 			<img src="http://www.cch2o.org/Matrix/icons/restoration.svg" alt="">
-			<!-- <p>Web Designer</p> -->
 		</header>
 		</div>
 		<div class="acc_cCont">
-
+			<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="_blank">View Scenario Summary</a>
+			Some sort of intro will go here</p>
+			<hr>
 			<div class="technology">
 				<a href="{{url('/tech/embayment/30')}}"  class="popdown">
 					<img src="http://www.cch2o.org/Matrix/icons/inlet_culvert_widening.svg" alt=""><br />
