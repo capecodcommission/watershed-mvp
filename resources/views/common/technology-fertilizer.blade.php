@@ -13,17 +13,7 @@
 				</a>			
 			</div>
 
-			<!-- 
-					This needs to be a case/switch based on the show_in_wmvp field
-					0 => (this shouldn't ever appear because this technology shouldn't have been listed)
-					1 => user will enter a unit metric to use for calculations (acres, linear feet, etc)
-					2 => user will need to select a polygon for the treatment area
-					3 => user will select a polygon and enter the unit metric for the treatment area calculation
-						unit metric is used to calculate cost
-					4 => user does not enter a treatment area (Fertilizer Mgmt or Stormwater BMPs)
-			 -->
-
-			</div>
+	
 		<table>
 			<thead>
 				<tr>
@@ -71,49 +61,14 @@
 
 <script>
 	$(document).ready(function(){
-	 treatment = {{$treatment['TreatmentId']}};
-		$('#select_area').on('click', function(f){
-			f.preventDefault();
-			// console.log('button clicked');
-				$('#popdown-opacity').hide();
-				map.on('click', function(e){
 
-					// console.log(e.mapPoint.x, e.mapPoint.y);
-				
-					var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y;
-					$.ajax({
-						method: 'GET',
-						url: url
-					})
-						.done(function(msg){
-							msg = $.parseJSON(msg);
-							console.log(msg.SUBEM_DISP);
-							// console.log(msg);
-							$('#'+msg.SUBEM_NAME+'> .stats').show();
-							// $('.notification_count').remove();
-							$('#popdown-opacity').show();
-							$('.select > span').text('Selected: '+msg.SUBEM_DISP);
-							$('.select > span').show();
-						})
-
-			});
-		});
-
-		$('#select_polygon').on('click', function(e){
-			f.preventDefault();
-			$('#popdown-opacity').hide();
-
-			map.disableMapNavigation();
-			tb.activate('polygon');
-
-		});
 		$('#applytreatment').on('click', function(e){
 			// need to save the treated N values and update the subembayment progress
 			// 
 			e.preventDefault();
 			// console.log('clicked');
 			var percent = $('#fert-percent').val();
-			var url = "{{url('/apply_percent')}}" + '/' +  {{$treatment['TreatmentId']}} + '/' + percent + '/fert';
+			var url = "{{url('/apply_percent')}}" + '/' +  {{$treatment->TreatmentID}} + '/' + percent + '/fert';
 			// console.log(url);
 			$.ajax({
 				method: 'GET',

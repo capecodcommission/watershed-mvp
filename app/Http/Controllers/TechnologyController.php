@@ -34,7 +34,7 @@ class TechnologyController extends Controller
 		{
 			// this is embayment-wide, need to get the embayment_area and use that as the custom polygon for the Get_PointsfromPolygon
 			$embay_id = session('embay_id');
-			$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment->TreatmentId . ', \'embayment\'');
+			$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment->TreatmentID . ', \'embayment\'');
 		}
 		// create a new record in the treatment_wiz table for this scenario & technology
 		// get the treatmentID back and use that for the treatment_parcels table

@@ -43,7 +43,7 @@
 						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;"></label>
 					</p>
 				@endif
-			</div>
+			
 		<table>
 			<thead>
 				<tr>
@@ -91,7 +91,7 @@
 
 <script>
 	$(document).ready(function(){
-	 treatment = {{$treatment['TreatmentId']}};
+	 treatment = {{$treatment['TreatmentID']}};
 		$('#select_area').on('click', function(f){
 			f.preventDefault();
 			// console.log('button clicked');
@@ -133,7 +133,7 @@
 			e.preventDefault();
 			// console.log('clicked');
 			var percent = $('#ground-percent').val();
-			var url = "{{url('/apply_percent')}}" + '/' +  {{$treatment['TreatmentId']}} + '/' + percent + '/ground';
+			var url = "{{url('/apply_percent')}}" + '/' +  treatment + '/' + percent + '/ground';
 			// console.log(url);
 			$.ajax({
 				method: 'GET',

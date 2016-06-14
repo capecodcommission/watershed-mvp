@@ -91,7 +91,7 @@
 
 <script>
 	$(document).ready(function(){
-	 treatment = {{$treatment['TreatmentId']}};
+	 treatment = {{$treatment['TreatmentID']}};
 		$('#select_area').on('click', function(f){
 			f.preventDefault();
 			// console.log('button clicked');

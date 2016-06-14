@@ -8,7 +8,7 @@
 	<section class="body">
 	<treatment
 			Total_Orig_Nitrogen = 0
-			TreatmentID="{{$treatment['TreatmentId']}}"
+			TreatmentID="{{$treatment->TreatmentID}}"
 			Polygon = ''
 			>
 	</treatment>
@@ -52,13 +52,13 @@
 
 
 
-<script src="{{url('/js/main.js')}}"></script>
-<script src="{{url('/js/app.js')}}"></script>
+ <script src="{{url('/js/main.js')}}"></script> 
+
 
 
 <script>
 	$(document).ready(function(){
-	 treatment = {{$treatment['TreatmentId']}};
+	 treatment = {{$treatment->TreatmentID}};
 	 func = 'collect';
 
 		$('#select_polygon').on('click', function(f){
@@ -99,7 +99,7 @@
 	$('#applytreatment').on('click', function(e){
 			e.preventDefault();
 			var rate = $('#septic-rate').val();
-			var url = "{{url('/apply_septic')}}" + '/' +  {{$treatment['TreatmentId']}} + '/' + rate + '/septic';
+			var url = "{{url('/apply_septic')}}" + '/' +  treatment + '/' + rate + '/septic';
 			// console.log(url);
 			$.ajax({
 				method: 'GET',
