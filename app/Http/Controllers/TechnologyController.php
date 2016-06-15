@@ -80,22 +80,34 @@ class TechnologyController extends Controller
 
 
 	/**
-	 * Apply Treatment
+	 * Apply Treatment Percent
 	 *
 	 * @return void
 	 * @author 
 	 **/
-	public function ApplyTreatment_Percent($treat_id, $rate, $type)
+	public function ApplyTreatment_Percent($treat_id, $rate, $type, $units = null)
 	{
-		//$treatment = Treatment::find($treat_id);
+		
 		$scenarioid = session('scenarioid');
-		// need to update the wiz_treatment_parcel table with the N removed
+		
 		if ($type == 'fert') {
 			$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Fert] ' . $treat_id . ', ' . $rate );
+			Session::put('fert_applied', 1);
 		}
-		else if ($type == 'storm') {
-			$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Storm] ' . $treat_id . ', ' . $rate );
+
+		// Storm treatments with a unit metric (acres) need a different calculation
+		// Also need to store the point where the user indicated the treatment would be located
+		else if ($type == 'storm' && $units > 0) 
+		{
+			$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Storm] ' . $treat_id . ', ' . $rate . ', ' . $units );
 		}
+
+		// this is probably stormwater management policies, flat percent
+		else 	
+		{
+			$updated = DB::select('exec CapeCodMA.CALC_ApplyTreatment_Percent ' . $treat_id . ', ' . $rate);
+		}
+
 		$n_removed = session('n_removed');
 		$n_removed += $updated[0]->removed;
 		Session::put('n_removed', $n_removed);
@@ -103,6 +115,44 @@ class TechnologyController extends Controller
 		return $n_removed;
 
 	}
+
+
+
+	/**
+	 * Apply Treatment Percent
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function ApplyTreatment_Storm($treat_id, $rate, $units = null, $location = null)
+	{
+		
+		$scenarioid = session('scenarioid');
+
+		// Storm treatments with a unit metric (acres) need a different calculation
+		// Also need to store the point where the user indicated the treatment would be located
+	 if ( $units > 0) 
+		{
+			$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Storm] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $location );
+		}
+
+		// this is probably stormwater management policies, flat percent
+		else 	
+		{
+			$updated = DB::select('exec CapeCodMA.CALC_ApplyTreatment_Percent ' . $treat_id . ', ' . $rate);
+		}
+
+		$n_removed = session('n_removed');
+		$n_removed += $updated[0]->removed;
+		Session::put('n_removed', $n_removed);
+		
+		return $n_removed;
+
+	}
+
+
+
+
 
 
 

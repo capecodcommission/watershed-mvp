@@ -21,6 +21,7 @@ class StartController extends Controller
 		// get a list of all the embayments to populate the drop-down list
 		$embayments = Embayment::orderBy('EMBAY_DISP')->get();
 		 Session::forget('scenarioid');
+		 Session::forget('n_removed');
 
 		return view('welcome', ['embayments'=>$embayments]);
 	}

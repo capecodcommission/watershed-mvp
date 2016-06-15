@@ -50,9 +50,16 @@
 			Total Unattenuated Load from Fertilizer: <span class="wizard-span">@{{fert_unatt|round}}kg</span> <br>
 			Total Attenuated Load from Fertilizer: <span class="wizard-span">@{{fert_att | round }}kg</span></p>
 			<hr>
-			<div class="technology">
-				<a href="/tech/fert/25" class="popdown"><img src="http://www.cch2o.org/Matrix/icons/npk_mgt.svg"></a><br />Fertilizer Management		
-			</div>
+			@if(session('fert_applied')==1)
+				<p>Fertilizer Management Policies have already been applied to this scenario</p>
+			@else
+				<div class="technology">
+					<a href="/tech/fert/25" class="popdown"><img src="http://www.cch2o.org/Matrix/icons/npk_mgt.svg"></a><br />
+						Fertilizer Management		
+				</div>
+
+			@endif
+
 
 		</div>
 	</article>
@@ -73,7 +80,7 @@
 				Unattenuated Nitrogen from Stormwater: <span class="wizard-span">@{{storm_unatt|round}}kg</span> <br>
 				Attenuated Nitrogen from Stormwater: <span class="wizard-span">@{{storm_att|round}}kg</span></p>
 				<hr>
-				<p>Current scenario: {{ session('scenarioid') }}</p>
+				<!-- <p>Current scenario: {{ session('scenarioid') }}</p> -->
 				<div class="technology_list">
 					<div class="technology">
 						<a href="{{url('/tech/storm/26')}}" class="popdown">
@@ -112,10 +119,9 @@
 							Constructed Wetlands
 						</a>
 					</div>		
-									<div id="info">
-	  <!-- <button id="Polygon">Polygon</button> -->
+					<div id="info">
 
-	</div>
+					</div>
 				</div>
 							 
 			</div>

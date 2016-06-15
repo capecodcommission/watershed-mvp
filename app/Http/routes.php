@@ -30,7 +30,8 @@ Route::get('/testmap/Nitrogen/{treatment}/{poly}', 'WizardController@getPolygon'
 
 Route::get('/tech/{type}/{tech}', 'TechnologyController@get');
 
-Route::get('/apply_percent/{treatment}/{rate}/{type}', 'TechnologyController@ApplyTreatment_Percent');
+Route::get('/apply_percent/{treatment}/{rate}/{type}/{units?}', 'TechnologyController@ApplyTreatment_Percent');
+Route::get('/apply_storm/{treatment}/{rate}/{units}/{location}', 'TechnologyController@ApplyTreatment_Storm');
 
 Route::get('/apply_septic/{treatment}/{rate}/{type}', 'TechnologyController@ApplyTreatment_Septic');
 
@@ -39,6 +40,7 @@ Route::get('/tech-collect/{tech}', 'TechnologyController@getCollection');
 Route::get('/polygon/{type}/{treatment}/{polygon}', 'TechnologyController@getPolygon');
 
 Route::get('/map/point/{x}/{y}/{treatment}', 'MapController@point');
+Route::get('/map/move/{x}/{y}/{treatment}', 'MapController@moveNitrogen');
 
 Route::get('/getScenarioNitrogen', 'WizardController@getScenarioNitrogen');
 

@@ -50,6 +50,7 @@ class WizardController extends Controller
 					$scenarioid = $scenarioid[0]->scenarioid;
 					Session::put('scenarioid', $scenarioid);
 					Session::put('n_removed', 0);
+					Session::put('fert_applied', 0);
 			}
 			
 			Session::put('embay_id', $id);
@@ -204,7 +205,7 @@ class WizardController extends Controller
 	{
 		$scenario = Scenario::find($scenarioid);
 		// $embay_id = $scenario->AreaID;
-		dd($scenario);
+		// dd($scenario);
 		$results = DB::select('exec CapeCodMA.Get_ScenarioResults '. $scenarioid);
 		$towns = DB::select('select wtt.*, t.town from dbo.wiz_treatment_towns wtt inner join capecodma.matowns t on t.town_id = wtt.wtt_town_id
   where wtt.wtt_scenario_id = ' . $scenarioid);

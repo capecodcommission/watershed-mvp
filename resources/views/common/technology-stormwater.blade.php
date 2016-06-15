@@ -86,19 +86,20 @@
 
 
 <script src="{{url('/js/main.js')}}"></script>
-<script src="{{url('/js/app.js')}}"></script>
+<!-- <script src="{{url('/js/app.js')}}"></script> -->
 
 
 <script>
 	$(document).ready(function(){
 	 treatment = {{$treatment->TreatmentID}};
+	 var location;
 		$('#select_area').on('click', function(f){
 			f.preventDefault();
 			// console.log('button clicked');
 				$('#popdown-opacity').hide();
 				map.on('click', function(e){
-
-					// console.log(e.mapPoint.x, e.mapPoint.y);
+					console.log('map clicked');
+					console.log(e.mapPoint.x, e.mapPoint.y);
 				
 					var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y + '/' + treatment;
 					$.ajax({
@@ -109,6 +110,7 @@
 							msg = $.parseJSON(msg);
 							console.log(msg.SUBEM_DISP);
 							// console.log(msg);
+							location = msg.SUBEM_ID;
 							$('#'+msg.SUBEM_NAME+'> .stats').show();
 							// $('.notification_count').remove();
 							$('#popdown-opacity').show();
@@ -127,8 +129,6 @@
 
 			map.disableMapNavigation();
 			tb.activate('polygon');
-			// console.log('polygon clicked');
-			// $('#popdown-opacity').show();
 
 		});
 		$('#applytreatment').on('click', function(e){
@@ -136,7 +136,8 @@
 			e.preventDefault();
 			// console.log('clicked');
 			var percent = $('#storm-percent').val();
-			var url = "{{url('/apply_percent')}}" + '/' +  treatment + '/' + percent + '/storm';
+			var units = $('#unit_metric').val();
+			var url = "{{url('/apply_storm')}}" + '/' +  treatment + '/' + percent + '/' + units + '/' + location;
 			// console.log(url);
 			$.ajax({
 				method: 'GET',

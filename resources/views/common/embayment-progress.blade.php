@@ -1,4 +1,4 @@
-<!-- This will be a Vue component -->
+<!-- This would be nice as a Vue component -->
 <?php 
 	$percent = $goal/$nitrogen_unatt->Total_UnAtt;
 	// echo 'percent: ' . $percent;
@@ -17,8 +17,7 @@
 	Scenario Total: @{{total_treated|round}}kg <br />
 	Goal: {{number_format($goal)}}kg<br />
 		<span id="n_removed"><?php echo number_format(round(session('n_removed'))); ?></span>kg Unattenuated N Removed<br />
-		(difference: @{{difference}}) total_att: @{{total_att}}<br />
-		embayment_difference: @{{embayment_difference | round }}
+	<p>Testing Fertilizer: @{{fert_treated}}</p>
 
 	</span>
 	

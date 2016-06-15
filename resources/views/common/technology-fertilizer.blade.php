@@ -2,7 +2,7 @@
 		<link rel="stylesheet" href="{{url('/css/jquery.popdown.css')}}">
 		
 
-<div class="popdown-content" id="app">
+<div class="popdown-content" >
 	<header><h2>{{$tech->Technology_Strategy}}</h2></header>
 	<section class="body">
 

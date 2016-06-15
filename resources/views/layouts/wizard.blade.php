@@ -68,9 +68,10 @@
 	</script>
 
 <script src="https://code.jquery.com/jquery-3.0.0.min.js"   integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0="   crossorigin="anonymous"></script>
-<script src="{{url('/js/app.js')}}"></script>
+<script src="{{url('/js/map.js')}}"></script>
+<!-- <script src="{{url('/js/app.js')}}"></script> -->
 <script src="{{url('/js/main.js')}}"></script>
-
+<script src="{{url('/js/jquery.popdown.js')}}"></script>
 
 <script type="text/javascript">
 		$(document).ready(function(){
