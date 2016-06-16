@@ -65,7 +65,7 @@ require([
 			center_x = -70.35;
 			center_y = 41.68;
 		}
-		console.log('x: ' + center_x + ' and y: '+ center_y);
+		// console.log('x: ' + center_x + ' and y: '+ center_y);
 		map = new Map("map", {
 			// center: [-70.35, 41.68],
 			center: [center_x, center_y],

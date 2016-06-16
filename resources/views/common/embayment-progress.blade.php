@@ -7,7 +7,15 @@
 	$total = number_format(round($nitrogen_unatt->Total_UnAtt, 0));
 	$att_total = number_format(round($nitrogen_att->Total_Att,0));
 ?>
-<div id="embayment_progress" style="background: #2caae4; background: -moz-linear-gradient(bottom,  #2caae4 {{$percent}}%, #f9ae1b 100%); 
+
+
+<iframe src="{{url('/progress')}}" frameborder="0" width="200" height="200" id="embayment_progress" style="background:transparent"></iframe>
+
+
+
+
+
+<!-- <div id="embayment_progress" style="background: #2caae4; background: -moz-linear-gradient(bottom,  #2caae4 {{$percent}}%, #f9ae1b 100%); 
 	background: -webkit-linear-gradient(bottom,  #2caae4 {{$percent}}%, #f9ae1b 100%); 
 	background: linear-gradient(to top,  #2caae4 {{$percent}}%, #f9ae1b 100%); 
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2caae4', endColorstr='#f9ae1b',GradientType=1 );">
@@ -21,4 +29,4 @@
 
 	</span>
 	
-</div>
+</div> -->
