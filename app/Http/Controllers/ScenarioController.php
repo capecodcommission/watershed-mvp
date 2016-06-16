@@ -10,6 +10,14 @@ class ScenarioController extends Controller
 {
     
 
-	
+	public function getProgress()
+	{
+		// need to get current N level for this scenario
+
+
+
+
+		return view('common/progress');
+	}
 
 }

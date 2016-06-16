@@ -48,3 +48,5 @@ Route::get('/results/{scenarioid}', 'WizardController@getScenarioResults');
 Route::get('/download/{scenarioid}', 'WizardController@downloadScenarioResults');
 
 Route::resource('/api/treatments', 'ApiTreatmentController');
+
+Route::get('progress', 'ScenarioController@getProgress');

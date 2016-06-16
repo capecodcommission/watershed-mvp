@@ -17,7 +17,6 @@ require([
 		"esri/toolbars/draw",
 		// "esri/toolbars/edit",
 		"esri/symbols/SimpleFillSymbol",
-		"esri/symbols/SimpleLineSymbol",
 		"esri/graphic",
 		"esri/Color",
 
@@ -49,7 +48,6 @@ require([
 		Draw,
 		// Edit,
 		SimpleFillSymbol,
-		SimpleLineSymbol,
 		Graphic,
 		Color,
 
@@ -63,10 +61,16 @@ require([
 		parser.parse();
 
 		var initialExtent = new Extent({ "xmin": -7980970.14, "ymin": 5033003.02, "xmax": -7705796.84, "ymax": 5216451.89, "spatialReference": { "wkid": 102100 } });
+		if (!center_x ) {
+			center_x = -70.35;
+			center_y = 41.68;
+		}
+		// console.log('x: ' + center_x + ' and y: '+ center_y);
 		map = new Map("map", {
-			center: [-70.35, 41.68],
+			// center: [-70.35, 41.68],
+			center: [center_x, center_y],
 			// extent: initialExtent,
-			zoom: 11,
+			zoom: 14,
 			basemap: "gray",
 			slider: true,
 			sliderOrientation: "horizontal"
@@ -80,9 +84,8 @@ require([
 			tb = new Draw(map);
 			tb.on("draw-end", addGraphic);
 
-
-// map.graphics.add(new Graphic(treat, polygon));
-			
+			// event delegation so a click handler is not
+			// needed for each individual button
 			on(dom.byId("info"), "click", function(evt) {
 				if (evt.target.id === "info") {
 					return;
@@ -93,6 +96,7 @@ require([
 				tb.activate(tool);
 			});
 		}
+
 
 
 		/***********************************
@@ -132,7 +136,13 @@ require([
 					url: url
 				})
 				.done(function(msg) {
-
+					// msg = $.parseJSON(msg);
+					// console.log(msg);
+					// console.log(msg);
+					// var txtmsg = "Total Nitrogen in Polygon: " + msg[0].UnAttenFull;
+					// alert(txtmsg);
+					// console.log('success');
+					// var poly_nitrogen = msg.poly_nitrogen->Septic;
 					$('#total_nitrogen_polygon').text(msg);
 					$('#popdown-opacity').show();
 					
@@ -142,13 +152,13 @@ require([
 			var area = evt.geometry.getExtent();
 			// console.log(area);
 			// map.centerAndZoom(area, 11);
-			console.log(treatment_polygons);
+			// console.log(treatment_polygons);
 		}
 
 	
 		/*******************************
 		 *
-		 *	This is the ArcGIS Basemap Gallery which (used to) breaks everything
+		 *	This is the ArcGIS Basemap Gallery which (used to) break everything
 		 *
 		 *********************************/
 
@@ -164,31 +174,6 @@ require([
 
 
 		var extent;
-
-		/*******************************
-		 *
-		 *	We will need to add any existing treatment polygons to the map
-		 *  We need to break the custom polygon string into an array of x, y points
-		 *  see http://www.cch2o.org/TBL/208viewer_wiz.php?id=234 code below:
-		 * 
-
-		 $poly = explode(',', $poly);
-
-			foreach($poly as $test){
-				$x = strstr($test, " ", true);
-				$y = strstr($test, " ");
-				$node = [$x,$y];
-				$geometry[] = $node;
-		 *
-
-		 *	Then see 208 viewer (index-1.html example file)
-		 *	function buildScenarioPolygons(thisScenario, i)  starting on line 729
-		 *
-		 *	Line 1130 starts the custom polygon for the treatment
-		 *
-
-		 *********************************/
-
 
 
 		var embayments = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/4', {
