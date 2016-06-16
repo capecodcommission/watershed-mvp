@@ -8,37 +8,6 @@
 	<link rel="stylesheet" href="https://js.arcgis.com/3.16/esri/css/esri.css">
 	<script src="https://js.arcgis.com/3.16/"></script>
   	<link rel="stylesheet" href="https://js.arcgis.com/3.16/dijit/themes/claro/claro.css">    
-
-<!-- 	*****************************************************
-		These are the Leaflet/Esri scripts Hiding them for now 
-		*****************************************************
--->
-
-  <!-- Load Leaflet from CDN-->
-  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet.css" /> -->
-  <!-- <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-rc.1/leaflet-src.js"></script> -->
-  <!-- Load Esri Leaflet from CDN -->
-  <!-- <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0/esri-leaflet.js"></script> -->
-	
-<!-- 
-
-	<style>
-		#basemaps-wrapper 
-		{
-			position: absolute;
-			top: 10px;
-			right: 10px;
-			z-index: 400;
-			background: white;
-			padding: 10px;
-		}
-		#basemaps 
-		{
-			margin-bottom: 5px;
-		}
-	</style> -->
-
-
 </head>
 <body class="claro">
 
@@ -67,9 +36,8 @@
 		var selectlayer = {{$embayment->EMBAY_ID}};
 	</script>
 
-<script src="https://code.jquery.com/jquery-3.0.0.min.js"   integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0="   crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
 <script src="{{url('/js/map.js')}}"></script>
-<!-- <script src="{{url('/js/app.js')}}"></script> -->
 <script src="{{url('/js/main.js')}}"></script>
 <script src="{{url('/js/jquery.popdown.js')}}"></script>
 
