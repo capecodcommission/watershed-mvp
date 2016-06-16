@@ -77,7 +77,9 @@ class WizardController extends Controller
 		// dd($nitrogen);
 		JavaScript::put([
 				'nitrogen_unatt' => $nitrogen[0],
-				'nitrogen_att' => $nitrogen_att[0]
+				'nitrogen_att' => $nitrogen_att[0],
+				'center_x'	=> $embayment->longitude,
+				'center_y'	=> $embayment->latitude
 			]);
 		
 

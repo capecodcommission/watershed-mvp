@@ -61,10 +61,16 @@ require([
 		parser.parse();
 
 		var initialExtent = new Extent({ "xmin": -7980970.14, "ymin": 5033003.02, "xmax": -7705796.84, "ymax": 5216451.89, "spatialReference": { "wkid": 102100 } });
+		if (!center_x ) {
+			center_x = -70.35;
+			center_y = 41.68;
+		}
+		console.log('x: ' + center_x + ' and y: '+ center_y);
 		map = new Map("map", {
-			center: [-70.35, 41.68],
+			// center: [-70.35, 41.68],
+			center: [center_x, center_y],
 			// extent: initialExtent,
-			zoom: 11,
+			zoom: 14,
 			basemap: "gray",
 			slider: true,
 			sliderOrientation: "horizontal"
@@ -146,13 +152,13 @@ require([
 			var area = evt.geometry.getExtent();
 			// console.log(area);
 			// map.centerAndZoom(area, 11);
-			console.log(treatment_polygons);
+			// console.log(treatment_polygons);
 		}
 
 	
 		/*******************************
 		 *
-		 *	This is the ArcGIS Basemap Gallery which (used to) breaks everything
+		 *	This is the ArcGIS Basemap Gallery which (used to) break everything
 		 *
 		 *********************************/
 
@@ -205,7 +211,7 @@ require([
 		Subembayments.setDefinitionExpression('EMBAY_ID = ' + selectlayer);
 
 		Subembayments.hide();
-		console.log(Subembayments);
+		// console.log(Subembayments);
 		map.addLayer(Subembayments);
 
 		var NitrogenLayer = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/0', {
