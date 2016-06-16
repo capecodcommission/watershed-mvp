@@ -75,6 +75,8 @@ class WizardController extends Controller
 		{
 			Session::put('scenarioid', $scenarioid);
 		}
+
+
 		$scenario = Scenario::find($scenarioid);
 		// dd($scenario);
 		$treatments = $scenario->treatments;

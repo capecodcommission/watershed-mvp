@@ -24,6 +24,7 @@
 		<div class="content">
 			<nav class="toolbar">
 				@include('common/map-tools')
+				@include('common/selected-treatments')
 			</nav>
 			
 			@include('common/subembayment-progress')
