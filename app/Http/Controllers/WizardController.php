@@ -35,9 +35,18 @@ class WizardController extends Controller
 				}
 				else
 				{
+					
 					// user selected a different embayment, need to create a new scenario 
-					$scenarioid = DB::select('exec CapeCodMA.CreateScenario ' . $id);
-					$scenarioid = $scenarioid[0]->scenarioid;
+					$scenario = new Scenario;
+					$scenario->areaid = $id;
+					$scenario->save();
+
+					$scenarioid = $scenario->ScenarioID;	
+
+
+					//$scenarioid = DB::select('exec CapeCodMA.CreateScenario ' . $id);
+					//$scenarioid = $scenarioid[0]->scenarioid;
+					
 					Session::put('scenarioid', $scenarioid);
 					Session::put('n_removed', 0);
 
@@ -46,8 +55,14 @@ class WizardController extends Controller
 			else
 			{
 					//  need to create a new scenario 
-					$scenarioid = DB::select('exec CapeCodMA.CreateScenario ' . $id);
-					$scenarioid = $scenarioid[0]->scenarioid;
+					// $scenarioid = DB::select('exec CapeCodMA.CreateScenario ' . $id);
+					// $scenarioid = $scenarioid[0]->scenarioid;
+					$scenario = new Scenario;
+					$scenario->areaid = $id;
+					$scenario->save();
+
+					$scenarioid = $scenario->ScenarioID;
+
 					Session::put('scenarioid', $scenarioid);
 					Session::put('n_removed', 0);
 					Session::put('fert_applied', 0);
