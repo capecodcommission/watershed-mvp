@@ -43,6 +43,7 @@ Route::get('/map/point/{x}/{y}/{treatment}', 'MapController@point');
 Route::get('/map/move/{x}/{y}/{treatment}', 'MapController@moveNitrogen');
 
 Route::get('/getScenarioNitrogen', 'WizardController@getScenarioNitrogen');
+Route::get('/getScenarioProgress', 'ScenarioController@getCurrentProgress');
 
 Route::get('/results/{scenarioid}', 'WizardController@getScenarioResults');
 Route::get('/download/{scenarioid}', 'WizardController@downloadScenarioResults');

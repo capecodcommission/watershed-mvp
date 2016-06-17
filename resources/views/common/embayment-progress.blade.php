@@ -9,7 +9,7 @@
 ?>
 
 
-<iframe src="{{url('/progress')}}" frameborder="0" width="200" height="200" id="embayment_progress" style="background:transparent"></iframe>
+<iframe src="{{url('/progress')}}" frameborder="0" width="200" height="220" id="embayment_progress" style="background:transparent"></iframe>
 
 
 
