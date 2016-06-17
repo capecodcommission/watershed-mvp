@@ -21,6 +21,7 @@ class WizardController extends Controller
 	public function start($id, $scenarioid = null)
 	{
 		$embayment = Embayment::find($id);
+		
 		// Need to create a new scenario or find existing one that the user is editing
 		if(!$scenarioid)
 		{
@@ -78,9 +79,8 @@ class WizardController extends Controller
 
 
 		$scenario = Scenario::find($scenarioid);
-		// dd($scenario);
 		$treatments = $scenario->treatments;
-		// dd($treatments);
+
 
 			
 		$subembayments = DB::select('exec CapeCodMA.GET_SubembaymentNitrogen ' . $id);

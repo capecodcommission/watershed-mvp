@@ -12,7 +12,7 @@ return array(
      |
      */
 
-    'enabled' => false,
+    'enabled' => env('LARAVEL_DEBUGBAR', false),
 
     /*
      |--------------------------------------------------------------------------

@@ -53,4 +53,6 @@ class Treatment extends Model
     	return $this->belongsTo('App\Scenario', 'ScenarioID', 'ScenarioID');
     }
 
+
+ 
 }
