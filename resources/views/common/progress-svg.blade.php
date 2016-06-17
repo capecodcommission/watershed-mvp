@@ -10,25 +10,10 @@
 			div.target 	{	background-color: #f9ae1b; height: 100%;}
 			div.progress 	{ background-color: #2caae4; }
 			div.progress h3 	{	vertical-align: middle; text-align: center; color: #fff;}
-			h4#update i 	{ color: #666; z-index: 20; }
+			h4#update i 	{ color: #666; z-index: 20; font-size: 2em; top: 3em; position: absolute; left: 2em; }
 		 </style>
 
-		<!-- <div class="containerx"> -->
-<!-- 			<div class="labels">
-				<h3 class="progress">Overall Progress: 75%</h3>
-				<h3 class="nitrogen">Nitrogen Remaining: 25%</h3>
-			</div> -->
-<!-- 			<svg>
-				<defs>
-				    <linearGradient id="Gradient-1" x1="0" y1="0" x2="0" y2="75%" >
-				        <stop offset="0%" stop-color="#f9ae1b" />
-				        <stop offset="70%" stop-color="#2caae4" />
-				    </linearGradient>
-				</defs>
-	    		<rect width="100" height="200" fill= "url(#Gradient-1)"  stroke="#333333" stroke-width="0px" />
-			</svg> -->
 
-		<!-- </div> -->
 		<div id="overall_progress">
 			
 		

@@ -29,6 +29,7 @@ class ScenarioController extends Controller
 		$removed = $removed[0]->N_Removed;
 		$current = $scenario->Nload_Existing - $removed;
 		$progress = round($scenario->Nload_Total_Target/$current * 100);
+		
 		// need to return a (rounded) int that represents the user's current progress toward the embayment's target.
 		// first get the embayment's starting and target N levels
 		// then get the current N_Removed
