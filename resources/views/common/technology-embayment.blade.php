@@ -25,7 +25,7 @@
 			 -->
 
 				@if($tech->Show_In_wMVP == 1)
-					<p class="select"><button id="select_area">Select a location</button> <span>@{{subembayment}}</span></p>
+					<!-- <p class="select"><button id="select_area">Select a location</button> <span>@{{subembayment}}</span></p> -->
 					<p>
 						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated: 
 						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;"></label>
@@ -52,7 +52,6 @@
 				<tr>
 				
 					<th>Attenuated</th>
-				
 					<th>Attenuated</th>
 					<th>N Removed</th>
 				</tr>

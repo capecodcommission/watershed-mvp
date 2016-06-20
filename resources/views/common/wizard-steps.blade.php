@@ -1,5 +1,9 @@
+	<style>
+		#closeACC { padding: .5em; background-color:  }
+	</style>
+
 	<div class="accordion">
-		<span id="closeACC">X</span>
+		<span id="closeACC" class="button--cta">X</span>
 
 <section class="row accHorizontal">
 	<aside class="accHorizontal__item">

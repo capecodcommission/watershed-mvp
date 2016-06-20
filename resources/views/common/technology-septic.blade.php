@@ -30,33 +30,7 @@
 				Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low_ppm}} and {{$tech->Nutri_Reduc_N_High_ppm}} ppm.<br />
 				<input type="range" id="septic-rate" min="{{$tech->Nutri_Reduc_N_Low_ppm}}" max="{{$tech->Nutri_Reduc_N_High_ppm}}" v-model="septic_rate">@{{septic_rate}}
 			</p>
-		<!-- <table>
-			<thead>
-				<tr>
-					<th colspan="2">Septic Nitrogen</th>
-					<th colspan="2">After Treatment</th>
-					<th></th>
-				</tr>
-				<tr>
-					<th>Unattenuated</th>
-					<th>Attenuated</th>
-					<th>Unattenuated</th>
-					<th>Attenuated</th>
-					<th>N Removed</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-				
-				 		<td>@{{septic_unatt | round}}kg</td>
-						<td>@{{septic_att | round }}kg</td>
-						<td>@{{septic_unatt_treated | round }}kg</td>
-						<td>@{{septic_att_treated | round }}kg</td>
-						<td>@{{septic_difference | round }}kg</td>
-				</tr>
-				
-			</tbody>
-		</table> -->
+
 			<p>
 				<button id="applytreatment">Apply</button>
 			</p>
