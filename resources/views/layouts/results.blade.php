@@ -40,8 +40,8 @@
 					<tr>
 						<th>Town</th>
 						<th>Treatment</th>
-						<th>Nitrogen Removed (unattenuated)</th>
 						<th>Parcels Affected</th>
+						<th>Nitrogen Removed (unattenuated)</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -49,8 +49,8 @@
 						<tr>
 							<td>{{$town->town}}</td>
 							<td>{{$town->wtt_treatment_id}}</td>
-							<td>{{$town->wtt_unatt_n_removed}}kg</td>
 							<td>{{$town->wtt_tot_parcels}}</td>
+							<td>{{$town->wtt_unatt_n_removed}}kg</td>
 						</tr>
 	
 					@endforeach

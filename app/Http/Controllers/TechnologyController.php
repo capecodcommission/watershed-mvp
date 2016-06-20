@@ -89,6 +89,9 @@ class TechnologyController extends Controller
 	{
 		
 		$scenarioid = session('scenarioid');
+		$rate = round($rate, 2);
+		// $rate = number_format($rate, 2, "." , "" );
+		// dd($rate);
 		
 		if ($type == 'fert') {
 			$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Fert] ' . $treat_id . ', ' . $rate );
@@ -105,7 +108,7 @@ class TechnologyController extends Controller
 		// this is probably stormwater management policies, flat percent
 		else 	
 		{
-			$updated = DB::select('exec CapeCodMA.CALC_ApplyTreatment_Percent ' . $treat_id . ', ' . $rate);
+			$updated = DB::select('exec CapeCodMA.CALC_ApplyTreatment_Percent ' . $treat_id . ', ' . $rate . ', storm' );
 		}
 
 		$n_removed = session('n_removed');

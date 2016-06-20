@@ -92,66 +92,90 @@
 <script>
 	$(document).ready(function(){
 	 treatment = {{$treatment->TreatmentID}};
-	 var location;
-		$('#select_area').on('click', function(f){
-			f.preventDefault();
-			// console.log('button clicked');
-				$('#popdown-opacity').hide();
-				map.on('click', function(e){
-					console.log('map clicked');
-					console.log(e.mapPoint.x, e.mapPoint.y);
-				
-					var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y + '/' + treatment;
-					$.ajax({
-						method: 'GET',
-						url: url
-					})
-						.done(function(msg){
-							msg = $.parseJSON(msg);
-							console.log(msg.SUBEM_DISP);
-							// console.log(msg);
-							location = msg.SUBEM_ID;
-							$('#'+msg.SUBEM_NAME+'> .stats').show();
-							// $('.notification_count').remove();
-							$('#popdown-opacity').show();
-							$('.select > span').text('Selected: '+msg.SUBEM_DISP);
-							$('.select > span').show();
+	 @if($tech->Show_In_wMVP < 4)
+		 var location;
+			$('#select_area').on('click', function(f){
+				f.preventDefault();
+				// console.log('button clicked');
+					$('#popdown-opacity').hide();
+					map.on('click', function(e){
+						console.log('map clicked');
+						console.log(e.mapPoint.x, e.mapPoint.y);
+					
+						var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y + '/' + treatment;
+						$.ajax({
+							method: 'GET',
+							url: url
 						})
+							.done(function(msg){
+								msg = $.parseJSON(msg);
+								console.log(msg.SUBEM_DISP);
+								// console.log(msg);
+								location = msg.SUBEM_ID;
+								$('#'+msg.SUBEM_NAME+'> .stats').show();
+								// $('.notification_count').remove();
+								$('#popdown-opacity').show();
+								$('.select > span').text('Selected: '+msg.SUBEM_DISP);
+								$('.select > span').show();
+							})
+
+				});
+			});
+
+			$('#select_polygon').on('click', function(f){
+				f.preventDefault();
+				$('#popdown-opacity').hide();
+				// $( "#info" ).trigger( "click" );
+				// dom.byId("info")
+
+				map.disableMapNavigation();
+				tb.activate('polygon');
 
 			});
+			$('#applytreatment').on('click', function(e){
+				// need to save the treated N values and update the subembayment progress
+				e.preventDefault();
+				// console.log('clicked');
+				var percent = $('#storm-percent').val();
+				var units = $('#unit_metric').val();
+				var url = "{{url('/apply_storm')}}" + '/' +  treatment + '/' + percent + '/' + units + '/' + location;
+				// console.log(url);
+				$.ajax({
+					method: 'GET',
+					url: url
+				})
+					.done(function(msg){
+						// console.log(msg);
+						msg = Math.round(msg);
+						$('#n_removed').text(msg);
+						$('#popdown-opacity').hide();
+						$( "#update" ).trigger( "click" );
+					});
+			});
+			@else
+				$('#applytreatment').on('click', function(e){
+				// need to save the treated N values and update the subembayment progress
+				e.preventDefault();
+				// console.log('clicked');
+				var percent = $('#storm-percent').val();
+				// var units = $('#unit_metric').val();
+				var url = "{{url('/apply_percent')}}" + '/' +  treatment + '/' + percent + '/storm';
+				// console.log(url);
+				$.ajax({
+					method: 'GET',
+					url: url
+				})
+					.done(function(msg){
+						// console.log(msg);
+						msg = Math.round(msg);
+						$('#n_removed').text(msg);
+						$('#popdown-opacity').hide();
+						$( "#update" ).trigger( "click" );
+					});
+			});
+
+			@endif
+
+
 		});
-
-		$('#select_polygon').on('click', function(f){
-			f.preventDefault();
-			$('#popdown-opacity').hide();
-			// $( "#info" ).trigger( "click" );
-			// dom.byId("info")
-
-			map.disableMapNavigation();
-			tb.activate('polygon');
-
-		});
-		$('#applytreatment').on('click', function(e){
-			// need to save the treated N values and update the subembayment progress
-			e.preventDefault();
-			// console.log('clicked');
-			var percent = $('#storm-percent').val();
-			var units = $('#unit_metric').val();
-			var url = "{{url('/apply_storm')}}" + '/' +  treatment + '/' + percent + '/' + units + '/' + location;
-			// console.log(url);
-			$.ajax({
-				method: 'GET',
-				url: url
-			})
-				.done(function(msg){
-					// console.log(msg);
-					msg = Math.round(msg);
-					$('#n_removed').text(msg);
-					$('#popdown-opacity').hide();
-					$( "#update" ).trigger( "click" );
-				});
-		});
-
-
-	});
 </script>

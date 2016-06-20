@@ -21,8 +21,8 @@ class ScenarioController extends Controller
 
 	public function getCurrentProgress()
 	{
-		
-		$scenarioid = session('scenarioid');
+		// dd(session('scenarioid'));
+		// $scenarioid = session('scenarioid');
 		$scenario = Scenario::find($scenarioid);
 		$removed = DB::select('exec CapeCodMA.CALC_ScenarioNitrogen ' . $scenarioid);
 		
