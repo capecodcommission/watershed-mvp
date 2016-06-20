@@ -29,7 +29,7 @@
 		</div>
 		<script>
 			var progress;
-			progress = 25;
+			progress = {{$progress}};
 
 			$('div.progress').css('height', progress+'%');
 			$('div.progress h3').text(progress + '%');
@@ -43,7 +43,8 @@
 						.done(function(msg){
 							progress = msg;
 							$('div.progress h3').text(progress + '%');
-							$('div.progress').css('height', progress+'%');
+
+							$('div.progress').animate({'height': progress+'%'}, 500);
 							
 						})
 			});

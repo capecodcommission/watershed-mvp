@@ -6,12 +6,12 @@
 <div class="popdown-content" id="app">
 	<header><h2>{{$tech->Technology_Strategy}}</h2></header>
 	<section class="body">
-	<treatment
+{{--	<treatment
 			Total_Orig_Nitrogen = 0
 			TreatmentID="{{$treatment->TreatmentID}}"
 			Polygon = ''
 			>
-	</treatment>
+	</treatment>	--}}
 
 
 			<div class="technology">
@@ -111,6 +111,7 @@
 					msg = Math.round(msg);
 					$('#n_removed').text(msg);
 					$('#popdown-opacity').hide();
+					$( "#update" ).trigger( "click" );
 				});
 
 		});

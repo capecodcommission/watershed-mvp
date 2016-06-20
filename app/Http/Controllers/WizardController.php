@@ -81,6 +81,12 @@ class WizardController extends Controller
 		$scenario = Scenario::find($scenarioid);
 		$treatments = $scenario->treatments;
 
+		// Get the scenario's current progress
+		$removed = DB::select('exec CapeCodMA.CALC_ScenarioNitrogen ' . $scenarioid);
+		$removed = $removed[0]->N_Removed;
+		$current = $scenario->Nload_Existing - $removed;
+		$progress = round($scenario->Nload_Total_Target/$current * 100);
+
 
 			
 		$subembayments = DB::select('exec CapeCodMA.GET_SubembaymentNitrogen ' . $id);
@@ -101,7 +107,7 @@ class WizardController extends Controller
 			]);
 		
 
-		return view('layouts/wizard', ['embayment'=>$embayment, 'subembayments'=>$subembayments, 'nitrogen_att'=>$nitrogen_att[0], 'nitrogen_unatt'=>$nitrogen[0], 'goal'=>$total_goal, 'treatments'=>$treatments]);
+		return view('layouts/wizard', ['embayment'=>$embayment, 'subembayments'=>$subembayments, 'nitrogen_att'=>$nitrogen_att[0], 'nitrogen_unatt'=>$nitrogen[0], 'goal'=>$total_goal, 'treatments'=>$treatments, 'progress'=>$progress]);
 
 	}
 

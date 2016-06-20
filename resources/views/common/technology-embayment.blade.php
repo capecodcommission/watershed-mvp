@@ -142,6 +142,7 @@
 					msg = Math.round(msg);
 					$('#n_removed').text(msg);
 					$('#popdown-opacity').hide();
+					$( "#update" ).trigger( "click" );
 				});
 		});
 
