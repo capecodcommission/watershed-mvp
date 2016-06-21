@@ -29,12 +29,24 @@
 		  domConstruct
 		 ) {
 
-			  map = new Map("map", {
-					center: [-70.35, 41.68], //#TODO find a new center for the start page, to shift the map to the left
-					// extent: initialExtent,
-					zoom: 11,
-					basemap: "gray"
-			  });
+ var spatialReference = new esri.SpatialReference({ wkid: 102100 });
+			    var extent = new esri.geometry.Extent(-7893678, 5069311, -7769404, 5192999, spatialReference);
+    var map = new esri.Map("map", 
+    	{ 
+    		wrapAround180: true, 
+    		// infoWindow: popup, 
+    		extent: extent,
+    		basemap: "gray" 
+    		// sliderStyle: "large" 
+    	});
+
+
+			  // map = new Map("map", {
+					// center: [-70.35, 41.68], //#TODO find a new center for the start page, to shift the map to the left
+					// // extent: initialExtent,
+					// zoom: 11,
+					// basemap: "gray"
+			  // });
 
 
 			var template = new InfoTemplate();
@@ -81,7 +93,7 @@
 			
 		</div>
 		 
-		<script src="{{url('/js/app.js')}}"></script>
+	<!-- 	<script src="{{url('/js/app.js')}}"></script> -->
 		<script src="https://code.jquery.com/jquery-3.0.0.min.js"   integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0="   crossorigin="anonymous"></script>
 		<script>
 			$(document).ready(function(){
