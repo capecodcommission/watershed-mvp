@@ -13,14 +13,58 @@
 		border-bottom: 1px solid #efefef;
 
 
-		span 
-		{
-			display: block;
-			height: 2em;
-			padding-left: .5em;
-			color: $white;	
-			font-size: 0.90em;
+
+		.sub-progress-container		
+		{	
+			position: relative; 
+			height: 2em; 
+			margin: 0; 
+			overflow: hidden;
+
+			div	
+			{	
+				position: absolute; 
+				width: 8em; 
+				display: inline-block; 
+				bottom: 0; 
+				margin: 0;
+			}
+			
+			h3 	
+			{	
+				vertical-align: middle; 
+				text-align: center; 
+				color: #fff; 
+				z-index: 20; 
+				position: absolute; 
+				top: 0;
+
+				span 
+				{ 
+					display: inline; 
+					height: 2em;
+					padding-left: .5em;
+					color: $white;	
+					font-size: 0.90em;
+				}
+			}
+
+			div.sub-target 	
+			{	
+				background-color: $murky-green; 
+				height: 2em; 
+				width: 100%;
+			}
+			
+			div.sub-progress 	
+			{ 
+				background-color: $reduction-blue; 
+				height: 2em;
+			}
+
+
 		}
+
 
 		.stats
 		{
@@ -38,39 +82,78 @@
 			{
 				display: block;
 
-				.stat-group	{
+				.stat-group	
+				{
 					width: 100%;
 					display: block;
 					padding: 5px 0;
 					border-bottom: 1px solid $dark-gray;
 
-					.stat-label {
+					.stat-label 
+					{
 						display: table-cell;
-						width: 180px;
-						
+						width: 180px;	
 					}
 
-					.stat-data {
+					.stat-data 
+					{
 						text-align: right;
 						width: 50px;
 						display: table-cell;	
 						font-weight: bold;
-						
 					}
-
 				}
-
 			}
 		}
 	}
 }
 
-#embayment_progress
+
+#overall_progress
 {
-	width: 250px;
-	height: 200px;
-	position: absolute;
+	width: 250px; 
+	height: 220px; 
+	position: absolute; 
 	bottom: 0;
-	background: #2caae4;
-	color: #fff;
+	overflow-y: hidden; 
+
+
+
+	.progress-container		
+	{	
+		position: relative; 
+		// font-family: TrendSansOne, Futura, "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif; 
+		height: 180px; 
+		margin: 0;
+
+		div	
+		{	
+			position: absolute; 
+			width: 8em; 
+			display: inline-block; 
+			bottom: 0; 
+			margin: 0;
+		}
+
+		div.target 	
+		{	
+			// background-color: #f9ae1b; 
+			background-color: $murky-green;
+			height: 100%;
+		}
+		
+		div.progress 	
+		{
+			background-color: $reduction-blue; 
+
+			h3
+			{
+				vertical-align: middle; 
+				text-align: center; 
+				color: $white;
+			}
+		}
+
+	}
 }
+

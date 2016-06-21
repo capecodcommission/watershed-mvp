@@ -6177,11 +6177,12 @@ p span.wizard-span {
   width: 100%; }
 
 .secondary.start {
-  width: 30%;
+  width: 25%;
   float: left;
   background: #efefef;
   border-radius: 25px;
-  padding: 1.5em; }
+  padding: 1.5em;
+  border: 2px solid #2caae4; }
 
 .selected-treatments {
   width: 80%;
@@ -6252,12 +6253,37 @@ nav.toolbar {
     width: 100%;
     background: #efefef;
     border-bottom: 1px solid #efefef; }
-    #progress .subembayment span {
-      display: block;
+    #progress .subembayment .sub-progress-container {
+      position: relative;
       height: 2em;
-      padding-left: .5em;
-      color: #ffffff;
-      font-size: 0.90em; }
+      margin: 0;
+      overflow: hidden; }
+      #progress .subembayment .sub-progress-container div {
+        position: absolute;
+        width: 8em;
+        display: inline-block;
+        bottom: 0;
+        margin: 0; }
+      #progress .subembayment .sub-progress-container h3 {
+        vertical-align: middle;
+        text-align: center;
+        color: #fff;
+        z-index: 20;
+        position: absolute;
+        top: 0; }
+        #progress .subembayment .sub-progress-container h3 span {
+          display: inline;
+          height: 2em;
+          padding-left: .5em;
+          color: #ffffff;
+          font-size: 0.90em; }
+      #progress .subembayment .sub-progress-container div.sub-target {
+        background-color: #525319;
+        height: 2em;
+        width: 100%; }
+      #progress .subembayment .sub-progress-container div.sub-progress {
+        background-color: #2caae4;
+        height: 2em; }
     #progress .subembayment .stats {
       display: none;
       background-color: #ddd;
@@ -6280,13 +6306,31 @@ nav.toolbar {
           display: table-cell;
           font-weight: bold; }
 
-#embayment_progress {
+#overall_progress {
   width: 250px;
-  height: 200px;
+  height: 220px;
   position: absolute;
   bottom: 0;
-  background: #2caae4;
-  color: #fff; }
+  overflow-y: hidden; }
+  #overall_progress .progress-container {
+    position: relative;
+    height: 180px;
+    margin: 0; }
+    #overall_progress .progress-container div {
+      position: absolute;
+      width: 8em;
+      display: inline-block;
+      bottom: 0;
+      margin: 0; }
+    #overall_progress .progress-container div.target {
+      background-color: #525319;
+      height: 100%; }
+    #overall_progress .progress-container div.progress {
+      background-color: #2caae4; }
+      #overall_progress .progress-container div.progress h3 {
+        vertical-align: middle;
+        text-align: center;
+        color: #ffffff; }
 
 .accordion {
   max-width: 2000px;
