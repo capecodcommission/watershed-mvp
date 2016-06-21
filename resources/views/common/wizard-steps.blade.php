@@ -84,7 +84,7 @@
 				Unattenuated Nitrogen from Stormwater: <span class="wizard-span">@{{storm_unatt|round}}kg</span> <br>
 				Attenuated Nitrogen from Stormwater: <span class="wizard-span">@{{storm_att|round}}kg</span></p>
 				<hr>
-				<!-- <p>Current scenario: {{ session('scenarioid') }}</p> -->
+				
 				<div class="technology_list">
 					<div class="technology">
 						<a href="{{url('/tech/storm/26')}}" class="popdown">
@@ -144,8 +144,8 @@
 		</div>
 		<div class="acc_cCont">
 		<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="_blank">View Scenario Summary</a>
-			Unattenuated Nitrogen from Septic: <span class="wizard-span">-- kg</span><br>
-			Attenuated Nitrogen from Septic: <span class="wizard-span">-- kg</span></p>
+			Unattenuated Nitrogen from Septic: <span class="wizard-span">@{{septic_unatt|round}}kg</span><br>
+			Attenuated Nitrogen from Septic: <span class="wizard-span">@{{septic_att|round}}kg</span></p>
 			<hr>
 			<div class="technology">
 				<a href="{{url('/tech/collect/40')}}" class="popdown">
@@ -167,7 +167,6 @@
 					<img src="http://www.cch2o.org/Matrix/icons/advanced_treatment.svg" alt="" ><br />
 					Advanced Treatment</a>
 			</div>			
-
 			<div class="technology">
 				<a href="{{url('/tech/collect/44')}}" class="popdown">
 					<img src="http://www.cch2o.org/Matrix/icons/cluster_3.svg" alt="" ><br />

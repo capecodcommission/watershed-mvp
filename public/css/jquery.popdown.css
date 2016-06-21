@@ -74,4 +74,4 @@ div.popdown-content footer button:hover {
 
 div.popdown-content div.technology img { width: 5em; }
 div.popdown-content div.technology a { cursor: help; }
-div#popdown-opacity { height: 450px; }
+div#popdown-opacity { max-height: 450px; }

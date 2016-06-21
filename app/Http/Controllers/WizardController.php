@@ -97,7 +97,7 @@ class WizardController extends Controller
 
 		$nitrogen = DB::select('exec CapeCodMA.GET_AreaNitrogen_Unattenuated ' . $id);
 		$nitrogen_att = DB::select('exec CapeCodMA.GET_AreaNitrogen_attenuated ' . $id);
-		// dd($nitrogen);
+		// dd($nitrogen_att);
 		JavaScript::put([
 				'nitrogen_unatt' => $nitrogen[0],
 				'nitrogen_att' => $nitrogen_att[0],

@@ -22,6 +22,9 @@ require([
 
 		"esri/tasks/query",
 		"esri/tasks/QueryTask",
+		"esri/tasks/identify",
+		"esri/InfoTemplate",
+		// "esri/tasks/infoWindow",
 		"esri/dijit/LayerList",
 		"esri/geometry/Extent",
 
@@ -53,6 +56,10 @@ require([
 
 		Query,
 		QueryTask,
+
+		identify,
+		InfoTemplate,
+		// infoWindow,
 		LayerList,
 		Extent,
 		dom, on,
@@ -70,6 +77,7 @@ require([
 			// center: [-70.35, 41.68],
 			center: [center_x, center_y],
 			// extent: initialExtent,
+			// infoWindow: subem_template,
 			zoom: 14,
 			basemap: "gray",
 			slider: true,
@@ -77,6 +85,10 @@ require([
 		});
 		// map.on("load", createToolbar);
 		map.on("load", initToolbar);
+		map.on("click", function(e){
+			console.log(e);
+		});
+		
 
 		var fillSymbol = new SimpleFillSymbol();
 
@@ -163,14 +175,14 @@ require([
 		 *********************************/
 
 		var basemapGallery = new BasemapGallery({
-		       showArcGISBasemaps: true,
-		       map: map
-		     }, "basemapGallery");
-		     basemapGallery.startup();
+			   showArcGISBasemaps: true,
+			   map: map
+			 }, "basemapGallery");
+			 basemapGallery.startup();
 
-		     basemapGallery.on("error", function(msg) {
-		       console.log("basemap gallery error:  ", msg);
-		     });
+			 basemapGallery.on("error", function(msg) {
+			   console.log("basemap gallery error:  ", msg);
+			 });
 
 
 		var extent;
@@ -203,14 +215,20 @@ require([
 		map.addLayer(Subwatersheds);
 
 
+
+		var subem_template = new InfoTemplate();
+			subem_template.setTitle("<b>${SUBEM_DISP}</b>");
+			subem_template.setContent("${SUBEM_DISP}");  
+
 		var Subembayments = new FeatureLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/11", {
 			mode: FeatureLayer.MODE_ONDEMAND,
-			outFields: ["*"],
+			outFields: ["SUBEM_DISP"],
+			template: subem_template,
 			opacity: 1
 		});
 		Subembayments.setDefinitionExpression('EMBAY_ID = ' + selectlayer);
-
-		Subembayments.hide();
+		Subembayments.show();
+		// Subembayments.hide();
 		// console.log(Subembayments);
 		map.addLayer(Subembayments);
 
@@ -288,10 +306,10 @@ require([
 		map.addLayer(EcologicalIndicators);
 
 		var ShallowGroundwater = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/Projects/208_Plan/MapServer/32', {
-		        mode: FeatureLayer.MODE_ONDEMAND,
-		        outFields: ["*"],
-		        opacity: .5
-		    }
+				mode: FeatureLayer.MODE_ONDEMAND,
+				outFields: ["*"],
+				opacity: .5
+			}
 
 		);
 		ShallowGroundwater.hide();
@@ -469,5 +487,73 @@ require([
 			}
 			// 
 		});
+
+
+
+
+// function map_click(e) {
+//       editToolbar.deactivate();
+
+//           clickQuery(e);
+
+//       }
+
+
+
+
+// 		// Adding info window
+// 		function getIdentifyParams(point) {
+// 			  var p = new esri.tasks.IdentifyParameters();
+// 			  p.dpi = 96;
+// 			  p.geometry = map.toMap(point);
+// 			  p.height = map.height;
+// 			  p.layerIds = [0];
+// 			  p.spatialReference = spatialReference;
+// 			  p.layerOption = esri.tasks.IdentifyParameters.LAYER_OPTION_VISIBLE;
+// 			  p.mapExtent = map.extent;
+// 			  p.tolerance = 8;
+// 			  p.returnGeometry = false;
+// 			  p.width = map.width;
+// 			  return p;
+// 			}
+
+// 	function clickQuery(e) {
+//       var identify = new esri.tasks.IdentifyTask(mapService);
+//       var deferred = identify.execute(getIdentifyParams(clickPoint));
+//       deferred.addCallback(function (response) {
+//         // We're just gonna display the first result
+//         var attributes = response[0].feature.attributes;
+
+//         // Setup a template to be used by dojo.string.substitute (found in Default.aspx)
+//         var template = $("#featureInfoTemplate").html();
+//         var content = dojo.string.substitute(template, attributes, null, {
+//           round: function (value, key) {
+//             return dojo.number.format(value, { places: 2 });
+//           },
+//           integer: function (value, key) {
+//             return dojo.number.format(value, { places: 0 });
+//           }
+//         });
+
+//         // Set our info window content manually
+//         map.infoWindow.setContent(content);
+//         map.infoWindow.setTitle("Property Info");
+
+//         map.infoWindow.show(clickPoint);
+
+//         // Striping to table rows
+//         $(".esriPopup .contentPane tr:odd td").css("background-color", "#eee");
+//       });
+//     }
+
+
+
+
+
+
+
+
+
+
 
 	});

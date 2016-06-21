@@ -14,9 +14,14 @@
 		<script>
 			var progress;
 			progress = {{$progress}};
-
-			$('div.progress').css('height', progress+'%');
 			$('div.progress h3').text(progress + '%');
+			if(progress >= 100)
+			{
+				progress = 100;
+			}
+			
+			$('div.progress').css('height', progress+'%');
+
 			$('#update').on('click', function(e){
 				var url= '/getScenarioProgress';
 
@@ -27,6 +32,10 @@
 						.done(function(msg){
 							progress = msg;
 							$('div.progress h3').text(progress + '%');
+							if(progress >= 100)
+							{
+								progress = 100;
+							}	
 
 							$('div.progress').animate({'height': progress+'%'}, 500);
 							

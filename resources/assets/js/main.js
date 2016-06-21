@@ -112,6 +112,9 @@ new Vue({
 					storm_unatt: parseFloat(nitrogen_unatt.Total_UnAtt_Storm),
 					storm_att: parseFloat(nitrogen_att.Total_Att_Storm),
 					storm_percent: 0,
+					septic_unatt: parseFloat(nitrogen_unatt.Total_UnAtt_Septic),
+					septic_att: parseFloat(nitrogen_att.Total_Att_Septic),
+					septic_rate: 0,
 					atmosphere_unatt: parseFloat(nitrogen_unatt.Total_UnAtt_Atmosphere),
 					atmosphere_att: parseFloat(nitrogen_att.Total_Att_Atmosphere),
 					embayment_percent: 0
