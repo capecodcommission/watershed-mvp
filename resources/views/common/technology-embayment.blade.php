@@ -67,9 +67,9 @@
 			</tbody>
 		</table>
 			<p>
-				Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.<br />
+				Enter a valid reduction rate between {{$tech->Absolu_Reduc_perMetric_Low}} and {{$tech->Absolu_Reduc_perMetric_High}}kg per {{$tech->Unit_Metric}}.<br />
 				
-				<input type="range" id="embayment-percent" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="embayment_percent"> @{{embayment_percent}}%
+				<input type="range" id="embayment-percent" min="{{$tech->Absolu_Reduc_perMetric_Low}}" max="{{$tech->Absolu_Reduc_perMetric_High}}" v-model="embayment_percent" value='{{$tech->Nutri_Reduc_N_Low}}'> @{{embayment_percent}}
 			</p>
 			<p>
 				<button id="applytreatment">Apply</button>
@@ -130,6 +130,7 @@
 			e.preventDefault();
 			// console.log('clicked');
 			var percent = $('#embayment-percent').val();
+			// need a new route to handle embayment (absolute metrics)
 			var url = "{{url('/apply_percent')}}" + '/' +  treatment + '/' + percent + '/embayment';
 			// console.log(url);
 			$.ajax({

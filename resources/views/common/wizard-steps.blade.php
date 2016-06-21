@@ -255,7 +255,13 @@
 						<img src="http://www.cch2o.org/Matrix/icons/fertigation_wells.svg" alt=""><br />
 						Fertigation Wells
 					</a>
-				</div>																	
+				</div>		
+				<div class="technology">
+					<a href="{{url('/tech/embayment/34')}}"  class="popdown">
+						<img src="http://www.cch2o.org/Matrix/icons/surface_water_remediation_wetlands.svg" alt=""><br />
+						Surface Water Remediation Wetlands
+					</a>
+				</div>
 			</div>		
 		</div>
 	</article>
@@ -310,24 +316,24 @@
 					Floating Constructed Wetlands
 				</a>
 			</div>			
-			<div class="technology">
+<!-- 			<div class="technology">
 				<a href="{{url('/tech/embayment/33')}}"  class="popdown">
 					<img src="http://www.cch2o.org/Matrix/icons/pond_estuary_circulators.svg" alt=""><br />
 					Pond &amp; Estuary Circulators
 				</a>
-			</div>
+			</div> -->
 			<div class="technology">
 				<a href="{{url('/tech/embayment/34')}}"  class="popdown">
 					<img src="http://www.cch2o.org/Matrix/icons/surface_water_remediation_wetlands.svg" alt=""><br />
 					Surface Water Remediation Wetlands
 				</a>
 			</div>
-			<div class="technology">
+<!-- 			<div class="technology">
 				<a href="{{url('/tech/embayment/36')}}"  class="popdown">
 					<img src="http://www.cch2o.org/Matrix/icons/pond_estuary_dredging.svg" alt=""><br />
 					Pond &amp; Estuary Dredging
 				</a>
-			</div>
+			</div> -->
 		</div>
 	</article>
 	</aside>

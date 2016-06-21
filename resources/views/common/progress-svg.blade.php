@@ -17,7 +17,7 @@
 		<div id="overall_progress">
 			
 		
-			<h4 id="update">Scenario Progress <i class="fa fa-refresh" aria-hidden="true"></i></h4>
+			<h4 id="update">Scenario Progress <!-- <i class="fa fa-refresh" aria-hidden="true"></i> --></h4>
 
 			<div class="progress-container">
 				<div class="target"></div>

@@ -19,7 +19,7 @@
 				<div class="sub-target">
 					
 				</div>
-				<div class="sub-progress" style="width: {{($subem->n_load_target/$subem->n_load_att)*100}}">
+				<div class="sub-progress" style="width: {{($subem->n_load_target/$subem->n_load_att)*100}}%">
 					
 				</div>
 				<h3>{{$subem->subem_disp}} (<span id="progress_{{$subem->subem_id}}">{{round(($subem->n_load_target/$subem->n_load_att)*100)}}</span>%)</h3>
