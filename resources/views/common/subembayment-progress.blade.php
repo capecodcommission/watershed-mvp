@@ -19,7 +19,7 @@
 				</div>
 
 				<div class="stat-group">
-					<div class="stat-label">Scenario Attenuated:</div> 	<div class="stat-data">kg</div>
+					<div class="stat-label">Scenario Attenuated:</div> 	<div class="stat-data scenario-progress">kg</div>
 				</div>
 
 				<div class="stat-group">
