@@ -50,6 +50,8 @@ class WizardController extends Controller
 					
 					Session::put('scenarioid', $scenarioid);
 					Session::put('n_removed', 0);
+					Session::put('fert_applied', 0);
+					
 
 				}
 			}

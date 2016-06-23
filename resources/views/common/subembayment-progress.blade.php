@@ -23,7 +23,7 @@
 				</div>
 
 				<div class="stat-group">
-					<div class="stat-label">Target:</div> 				<div class="stat-data">{{round($subem->n_load_target/1)}}kg</div>
+					<div class="stat-label">Target:</div> 	<div class="stat-data">{{round($subem->n_load_target/1)}}kg</div>
 				</div>
 			</div>
 		</div>

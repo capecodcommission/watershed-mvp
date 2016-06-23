@@ -351,9 +351,9 @@
 		<div class="acc_cCont">
 		<!-- <p>Existing Nitrogen Load: kg</p> -->
 		<ul>
-		@foreach($treatments as $treatment)
-			<li>{{$treatment->TreatmentType_ID}} -> {{$treatment->Nload_Reduction}}kg</li>
-		@endforeach
+	{{--	@foreach($treatments as $treatment)
+			 <li>{{$treatment->TreatmentType_ID}} -> {{$treatment->Nload_Reduction}}kg</li> 
+		@endforeach--}}
 		</ul>
 		<p>Overall Nitrogen Reduction: </p>
 			
