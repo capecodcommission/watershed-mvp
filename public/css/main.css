@@ -2544,8 +2544,7 @@ nav.toolbar {
   width: 250px;
   height: 220px;
   position: absolute;
-  bottom: 0;
-  overflow-y: hidden; }
+  bottom: 0; }
   #overall_progress .progress-container {
     position: relative;
     height: 180px;
@@ -2699,6 +2698,8 @@ nav.toolbar {
     border-radius: 50%;
     padding: 1em;
     width: 3em; }
+  .technology.disabled img {
+    background-color: #ddd; }
 
 .acc_cCont .technology {
   width: 100px; }

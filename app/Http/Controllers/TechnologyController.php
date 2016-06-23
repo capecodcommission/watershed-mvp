@@ -103,12 +103,14 @@ class TechnologyController extends Controller
 		else if ($type == 'storm' && $units > 0) 
 		{
 			$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Storm] ' . $treat_id . ', ' . $rate . ', ' . $units );
+
 		}
 
 		// this is probably stormwater management policies, flat percent
 		else 	
 		{
 			$updated = DB::select('exec CapeCodMA.CALC_ApplyTreatment_Percent ' . $treat_id . ', ' . $rate . ', storm' );
+			Session::put('storm_applied', 1);
 		}
 
 		$n_removed = session('n_removed');

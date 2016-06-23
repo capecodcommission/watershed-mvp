@@ -53,7 +53,11 @@
 			Total Attenuated Load from Fertilizer: <span class="wizard-span">@{{fert_att | round }}kg</span></p>
 			<hr>
 			@if(session('fert_applied')==1)
-				<p>Fertilizer Management Policies have already been applied to this scenario</p>
+			<div class="technology disabled">
+				<a title="Fertilizer Management Policies have already been applied to this scenario"><img src="http://www.cch2o.org/Matrix/icons/npk_mgt.svg"></a><br />
+						Fertilizer Management
+				<!-- <p>Fertilizer Management Policies have already been applied to this scenario</p> -->
+				</div>
 			@else
 				<div class="technology">
 					<a href="/tech/fert/25" class="popdown"><img src="http://www.cch2o.org/Matrix/icons/npk_mgt.svg"></a><br />
@@ -84,12 +88,20 @@
 				<hr>
 				
 				<div class="technology_list">
+				@if(session('storm_applied')==1)
+					<div class="technology disabled">
+						<a title="Stormwater Management Policies have already been applied to this scenario"><img src="http://www.cch2o.org/Matrix/icons/stormwater_bmps.svg"></a><br />
+								Stormwater Management
+						<!-- <p>Fertilizer Management Policies have already been applied to this scenario</p> -->
+						</div>
+				@else
 					<div class="technology">
 						<a href="{{url('/tech/storm/26')}}" class="popdown">
 							<img src="http://www.cch2o.org/Matrix/icons/stormwater_bmps.svg"><br />
 							 Stormwater Management
 						</a>
 					</div>
+				@endif
 					<div class="technology">
 						<a href="{{url('/tech/storm/8')}}" class="popdown">
 							<img src="http://www.cch2o.org/Matrix/icons/stormwater_bmps.svg"><br />
