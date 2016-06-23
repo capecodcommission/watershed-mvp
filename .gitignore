@@ -10,3 +10,4 @@ Homestead.json
 /public/backup
 /www/bootstrap/autoload.php
 /public/.DS_Store
+/database/queries

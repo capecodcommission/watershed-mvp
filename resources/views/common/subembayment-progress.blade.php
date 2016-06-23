@@ -2,6 +2,7 @@
 <div id="progress"><br />
 <img src="http://www.watershedmvp.org/Images/mvplogo.png" alt="WatershedMVP 3.0 by Cape Cod Commission"><br /><br />
 	<h2>Subembayments for {{$embayment->EMBAY_DISP}}</h2>
+	
 	@foreach($subembayments as $subem)
 		<div class="subembayment" id="subem_{{$subem->subem_id}}">
 			<div class="sub-progress-container">
