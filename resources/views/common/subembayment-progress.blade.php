@@ -4,7 +4,7 @@
 	<h2>Subembayments for {{$embayment->EMBAY_DISP}}</h2>
 	
 	@foreach($subembayments as $subem)
-		<div class="subembayment" id="subem_{{$subem->subem_id}}">
+		<div class="subembayment" id="subem_{{$subem->subem_id}}" data-layer="{{$subem->subem_id}}">
 			<div class="sub-progress-container">
 				<div class="sub-target">
 					
