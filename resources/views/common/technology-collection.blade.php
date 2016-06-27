@@ -6,14 +6,6 @@
 <div class="popdown-content" id="app">
 	<header><h2>{{$tech->Technology_Strategy}}</h2></header>
 	<section class="body">
-{{--	<treatment
-			Total_Orig_Nitrogen = 0
-			TreatmentID="{{$treatment->TreatmentID}}"
-			Polygon = ''
-			>
-	</treatment>	--}}
-
-
 			<div class="technology">
 				<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
 					<img src="http://www.cch2o.org/Matrix/icons/{{$tech->Icon}}" width="75">
@@ -37,7 +29,9 @@
 			</p>
 			<p>
 				<button id="applytreatment">Apply</button>
+
 			</p>
+			<p><a id="canceltreatment" class='button--cta right'>Cancel</a></p>
 	</section>
 </div>
 
@@ -115,6 +109,19 @@
 				});
 
 		});
+
+
+	$('#canceltreatment').on('click', function(e){
+		var url = "{{url('cancel', $treatment->TreatmentID)}}";
+		$.ajax({
+			method: 'GET',
+			url: url
+		})
+			.done(function(msg){
+				$('#popdown-opacity').hide();
+			});
+		});
+
 
 	});
 </script>

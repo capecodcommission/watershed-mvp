@@ -249,6 +249,18 @@ class TechnologyController extends Controller
 
 
 	/**
+	 * User wants to cancel a treatment for this scenario
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function cancel($treat_id)
+	{
+		Treatment::destroy($treat_id);
+	}
+
+
+	/**
 	 * User wants to edit a treatment for this scenario
 	 *
 	 * @return void
@@ -264,7 +276,7 @@ class TechnologyController extends Controller
 	}
 
 	/**
-	 * User wants to edit a treatment for this scenario
+	 * User wants to update a treatment for this scenario
 	 *
 	 * @return void
 	 * @author 
@@ -279,7 +291,7 @@ class TechnologyController extends Controller
 	}
 
 		/**
-	 * User wants to edit a treatment for this scenario
+	 * User wants to delete a treatment for this scenario
 	 *
 	 * @return void
 	 * @author 

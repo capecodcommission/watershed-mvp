@@ -78,6 +78,7 @@
 			</p>
 			<p>
 				<button id="applytreatment">Apply</button>
+				<button id="canceltreatment" class="button--cta right"><i class="fa fa-ban"></i> Cancel</button>
 			</p>
 
 
@@ -175,6 +176,19 @@
 			});
 
 			@endif
+
+
+
+		$('#canceltreatment').on('click', function(e){
+		var url = "{{url('cancel', $treatment->TreatmentID)}}";
+		$.ajax({
+			method: 'GET',
+			url: url
+		})
+			.done(function(msg){
+				$('#popdown-opacity').hide();
+			});
+		});
 
 
 		});

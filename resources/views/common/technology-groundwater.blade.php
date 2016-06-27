@@ -4,7 +4,7 @@
 		
 
 <div class="popdown-content" id="app">
-	<header><h2>{{$tech->Technology_Strategy}}</h2></header>
+	<header><h2>{{$tech->Technology_Strategy}}</h2><a id="canceltreatment" class='button--cta right'><i class="fa fa-ban"></i> Cancel</a></header>
 	<section class="body">
 
 			<div class="technology">
@@ -78,7 +78,7 @@
 			</p>
 			<p>
 				<button id="applytreatment">Apply</button>
-			</p>
+						<a id="canceltreatment" class='button--cta right'><i class="fa fa-ban"></i> Cancel</a></p>
 
 
 	</section>
@@ -148,6 +148,15 @@
 				});
 		});
 
-
+			$('#canceltreatment').on('click', function(e){
+		var url = "{{url('cancel', $treatment->TreatmentID)}}";
+		$.ajax({
+			method: 'GET',
+			url: url
+		})
+			.done(function(msg){
+				$('#popdown-opacity').hide();
+			});
+		});
 	});
 </script>

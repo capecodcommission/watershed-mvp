@@ -2,7 +2,7 @@
 	<head>
 		<title>WatershedMVP Scenario Results</title>
 		<link rel="stylesheet" href="{{url('/css/app.css')}}">
-
+  	<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>  
 	</head>
 	<body>
 		<div class="wrapper">
@@ -24,12 +24,12 @@
 				<tbody>
 
 					@foreach($results as $result)
-					<tr>
+					<tr id="treat_{{$result->TreatmentID}}">
 						<td><div class="technology"><img src="http://www.cch2o.org/Matrix/icons/{{$result->Icon}}" alt=""></div></td>
 						<td>{{$result->Technology_Strategy}} ({{$result->TreatmentID}})</td>
 						<td>{{$result->Treatment_Parcels}}</td>
 						<td>{{round($result->Nload_Reduction)}}kg</td>
-						<td><a href="{{url('delete', $result->TreatmentID)}}">Delete</a></td>
+						<td><a data-treatment="{{$result->TreatmentID}}" class="deletetreatment button--cta"><i class="fa fa-trash-o"></i> Delete</a></td>
 	
 					</tr>
 					@endforeach
@@ -95,5 +95,23 @@
 		</div>
 		</div>
 	</div>
+
+	<script>
+	$(document).ready(function(){
+		$('.deletetreatment').on('click', function(e){
+
+			e.preventDefault();
+			var treat = $(this).data('treatment');
+			var url = "{{url('delete')}}" + '/' + treat;
+			$.ajax({
+				method: 'GET',
+				url: url
+			})
+				.done(function(msg){
+					$('#treat_'+treat).remove();
+				});
+			});
+	});
+	</script>
 	</body>
 </html>
