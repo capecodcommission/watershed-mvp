@@ -18,6 +18,7 @@
 						<th colspan="2">Technology</th>
 						<th>Parcels Affected</th>
 						<th>Nitrogen Removed</th>
+						<th>Delete</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -27,7 +28,8 @@
 						<td><div class="technology"><img src="http://www.cch2o.org/Matrix/icons/{{$result->Icon}}" alt=""></div></td>
 						<td>{{$result->Technology_Strategy}} ({{$result->TreatmentID}})</td>
 						<td>{{$result->Treatment_Parcels}}</td>
-						<td>{{$result->Nload_Reduction}}kg</td>
+						<td>{{round($result->Nload_Reduction)}}kg</td>
+						<td><a href="{{url('delete', $result->TreatmentID)}}">Delete</a></td>
 	
 					</tr>
 					@endforeach
@@ -50,7 +52,7 @@
 							<td>{{$town->town}}</td>
 							<td>{{$town->wtt_treatment_id}}</td>
 							<td>{{$town->wtt_tot_parcels}}</td>
-							<td>{{$town->wtt_unatt_n_removed}}kg</td>
+							<td>{{round($town->wtt_unatt_n_removed)}}kg</td>
 						</tr>
 	
 					@endforeach
@@ -72,11 +74,11 @@
 					@foreach($subembayments as $sub)
 					<tr>
 						<td>{{$sub->subem_disp}}</td>
-						<td>{{$sub->n_load_att}}kg</td>
-						<td>{{$sub->n_load_att_removed}}kg</td>
-						<td>{{$sub->n_load_scenario}}kg</td>
-						<td>{{$sub->n_load_target}}kg</td>
-						<td>{{$sub->n_load_scenario - $sub->n_load_target}}</td>
+						<td>{{round($sub->n_load_att)}}kg</td>
+						<td>{{round($sub->n_load_att_removed)}}kg</td>
+						<td>{{round($sub->n_load_scenario)}}kg</td>
+						<td>{{round($sub->n_load_target)}}kg</td>
+						<td>{{round($sub->n_load_scenario - $sub->n_load_target)}}</td>
 					</tr>
 
 					@endforeach

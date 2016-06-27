@@ -26,9 +26,7 @@ class TechnologyController extends Controller
 		DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
 		$tech = DB::table('dbo.Technology_Matrix')->select('*')->where('TM_ID', $id)->first();
 		$scenarioid = session('scenarioid');
-		// $tech = $tech[0];
-		// dd($scenarioid);
-		$treatment = Treatment::create(['ScenarioID' => $scenarioid, 'TreatmentType_ID'=>$tech->TM_ID]);
+		$treatment = Treatment::create(['ScenarioID' => $scenarioid, 'TreatmentType_ID'=>$tech->TM_ID, 'TreatmentType_Name'=>$tech->Technology_Strategy]);
 
 		if ($tech->Show_In_wMVP == 4) 
 		{
@@ -248,5 +246,52 @@ class TechnologyController extends Controller
 		return $poly_nitrogen;
 		// return view ('layouts/test_septic', ['parcels'=>$parcels, 'poly_nitrogen'=>$poly_nitrogen]);		
 	}
+
+
+	/**
+	 * User wants to edit a treatment for this scenario
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function edit($treat_id)
+	{
+		$treatment = Treatment::find($treat_id);
+
+
+		return view('common/technology-septic-edit', ['treatment'=>$treatment]);
+
+	}
+
+	/**
+	 * User wants to edit a treatment for this scenario
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function update($treat_id)
+	{
+		$treatment = Treatment::find($treat_id);
+
+
+		return view('common/technology-septic-edit', ['treatment'=>$treatment]);
+
+	}
+
+		/**
+	 * User wants to edit a treatment for this scenario
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function delete($treat_id)
+	{
+		// $treatment = Treatment::find($treat_id);
+		Treatment::destroy($treat_id);
+
+		// return view('common/technology-septic-edit', ['treatment'=>$treatment]);
+
+	}
+
 
 }

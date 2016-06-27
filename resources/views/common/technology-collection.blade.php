@@ -20,7 +20,7 @@
 				<br />{{$tech->Technology_Strategy}}&nbsp;<i class="fa fa-question-circle"></i>
 				</a>			
 			</div>
-					<p class="select"><button id="select_polygon" v-on:click="drawPolygon">Select a polygon</button> <span>@{{subembayment}}</span></p>
+					<p class="select"><button id="select_polygon">Select a polygon</button> <span>@{{subembayment}}</span></p>
 
 					<p class="select_point">
 						<button id="select_destination" style="display:none;">
@@ -85,7 +85,7 @@
 					})
 						.done(function(msg){
 							msg = $.parseJSON(msg);
-							console.log(msg.SUBEM_DISP);
+							// console.log(msg.SUBEM_DISP);
 							// console.log(msg);
 							$('#'+msg.SUBEM_NAME+'> .stats').show();
 							// $('.notification_count').remove();
