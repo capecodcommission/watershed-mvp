@@ -90,7 +90,7 @@
 			<p><sup>3</sup>A negative number in this column means the user has exceeded the target for this subembayment.</p>
 					
 					
-			<p><a href="{{url('map', [$embay_id, $scenarioid])}}">back to map</a></p>
+			<p><a href="{{url('map', [$embay_id, $scenarioid])}}" class="button">back to map</a></p>
 
 		</div>
 		</div>

@@ -280,14 +280,14 @@ class TechnologyController extends Controller
 			case 'Fertilization':
 				return view('common/technology-fertilizer-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 				break;
-			case 'storm':
-				return view('common/technology-stormwater', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+			case 'Stormwater':
+				return view('common/technology-stormwater-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 				break;
-			case 'collect':
-				return view('common/technology-collection', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+			case 'Septic/Sewer':
+				return view('common/technology-collection-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 				break;		
 			case 'septic':
-				return view('common/technology-septic', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				return view('common/technology-septic-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 				break;
 			case 'groundwater':
 				return view('common/technology-groundwater', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
@@ -312,7 +312,7 @@ class TechnologyController extends Controller
 	 * @return void
 	 * @author 
 	 **/
-	public function update($type, $treat_id, $rate)
+	public function update($type, $treat_id, $rate, $units=null)
 	{
 		$treatment = Treatment::find($treat_id);
 			switch ($type) 
@@ -322,9 +322,16 @@ class TechnologyController extends Controller
 					return $updated;	
 					break;
 
-				case 'storm':
-					
+				case 'storm-percent':
+					$updated = DB::select('exec CapeCodMA.CALC_ApplyTreatment_Percent ' . $treat_id . ', ' . $rate . ', storm' );
+					return $updated;
 					break;
+
+				case 'storm':
+					$updated = DB::select('exec [CapeCodMA].[CALC_UpdateTreatment_Storm] ' . $treat_id . ', ' . $rate . ', ' . $units );
+					return $updated;
+					break;
+
 				case 'collect':
 					
 					break;		
