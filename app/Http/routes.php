@@ -45,7 +45,7 @@ Route::get('/polygon/{type}/{treatment}/{polygon}', 'TechnologyController@getPol
 Route::get('/map/point/{x}/{y}/{treatment}', 'MapController@point');
 Route::get('/map/move/{x}/{y}/{treatment}', 'MapController@moveNitrogen');
 
-Route::get('/getScenarioNitrogen', 'WizardController@getScenarioNitrogen');
+Route::get('/getScenarioNitrogen', 'WizardController@GetScenarioNitrogen');
 Route::get('/getScenarioProgress', 'ScenarioController@getCurrentProgress');
 
 Route::get('/results/{scenarioid}', 'WizardController@getScenarioResults');

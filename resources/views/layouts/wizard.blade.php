@@ -62,7 +62,7 @@
 						url: url
 					})
 						.done(function(msg){
-							console.log(msg[0]);
+							console.log(msg);
 							var nitrogen = Math.round(msg[0].N_Original - msg[0].N_Removed);
 							$('#getNitrogen').text(nitrogen + 'kg');
 						})

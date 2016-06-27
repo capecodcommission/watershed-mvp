@@ -256,6 +256,7 @@ class TechnologyController extends Controller
 	 **/
 	public function cancel($treat_id)
 	{
+
 		Treatment::destroy($treat_id);
 	}
 
@@ -298,9 +299,11 @@ class TechnologyController extends Controller
 	 **/
 	public function delete($treat_id)
 	{
-		// $treatment = Treatment::find($treat_id);
-		Treatment::destroy($treat_id);
-
+		DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
+		// Need to remove all records in wiz_treatment_parcels and wiz_treatment_towns for this treatment_id
+		$del = DB::select('exec CapeCodMA.DEL_Treatment '. $treat_id);
+		// Treatment::destroy($treat_id);
+		return 1;
 		// return view('common/technology-septic-edit', ['treatment'=>$treatment]);
 
 	}

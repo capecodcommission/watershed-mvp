@@ -42,35 +42,38 @@
 						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated: 
 						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;"></label>
 					</p>
+
+				@elseif($tech->Show_In_wMVP == 4)
+					<table>
+						<thead>
+							<tr>
+								<th colspan="2">Stormwater Nitrogen</th>
+								<th colspan="2">After Treatment</th>
+								<th></th>
+							</tr>
+							<tr>
+								<th>Unattenuated</th>
+								<th>Attenuated</th>
+								<th>Unattenuated</th>
+								<th>Attenuated</th>
+								<th>N Removed</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+							
+							 		<td>@{{storm_unatt | round}}kg</td>
+									<td>@{{storm_att | round }}kg</td>
+									<td>@{{storm_unatt_treated | round }}kg</td>
+									<td>@{{storm_att_treated | round }}kg</td>
+									<td>@{{storm_difference | round }}kg</td>
+							</tr>
+							
+						</tbody>
+					</table>
 				@endif
 		
-		<table>
-			<thead>
-				<tr>
-					<th colspan="2">Stormwater Nitrogen</th>
-					<th colspan="2">After Treatment</th>
-					<th></th>
-				</tr>
-				<tr>
-					<th>Unattenuated</th>
-					<th>Attenuated</th>
-					<th>Unattenuated</th>
-					<th>Attenuated</th>
-					<th>N Removed</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-				
-				 		<td>@{{storm_unatt | round}}kg</td>
-						<td>@{{storm_att | round }}kg</td>
-						<td>@{{storm_unatt_treated | round }}kg</td>
-						<td>@{{storm_att_treated | round }}kg</td>
-						<td>@{{storm_difference | round }}kg</td>
-				</tr>
-				
-			</tbody>
-		</table>
+
 			<p>
 				Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.<br />
 				

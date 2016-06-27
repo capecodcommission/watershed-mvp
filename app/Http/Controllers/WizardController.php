@@ -40,12 +40,7 @@ class WizardController extends Controller
 					$scenario = new Scenario;
 					$scenario->areaid = $id;
 					$scenario->save();
-
-					$scenarioid = $scenario->ScenarioID;	
-
-
-					//$scenarioid = DB::select('exec CapeCodMA.CreateScenario ' . $id);
-					//$scenarioid = $scenarioid[0]->scenarioid;
+					$scenarioid = $scenario->ScenarioID;
 					
 					Session::put('scenarioid', $scenarioid);
 					Session::put('n_removed', 0);
