@@ -1,5 +1,6 @@
 var elixir = require('laravel-elixir');
 require('laravel-elixir-vueify');
+elixir.config.sourcemaps = false;
 
 var paths = {
     "assets": "./resources/assets/bower_components/",

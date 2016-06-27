@@ -27,12 +27,11 @@ class WizardController extends Controller
 		{
 			if (session('scenarioid')) 
 			{
-				$scenarioid = session('scenarioid');
+				$scenarioid = Session::get('scenarioid');
 				$scenario = Scenario::find($scenarioid);
 				if ($scenario->AreaID == $id) 
 				{
 					// user is still working on the same scenario. 
-
 				}
 				else
 				{
@@ -71,14 +70,19 @@ class WizardController extends Controller
 					Session::put('n_removed', 0);
 					Session::put('fert_applied', 0);
 					Session::put('storm_applied', 0);
+					Session::save();
 			}
 			
 			Session::put('embay_id', $id);
+			Session::save();
 			
 		}
 		else
 		{
+			// dd($scenarioid);
 			Session::put('scenarioid', $scenarioid);
+			// dd(session('scenarioid'));
+			Session::save();
 		}
 
 
@@ -129,7 +133,7 @@ class WizardController extends Controller
 		// $subembayments = DB::table('CapeCodMA.SubEmbayments')
 		// 	->select('SUBEM_NAME', 'SUBEM_DISP', 'Nload_Total', 'Total_Tar_Kg', 'MEP_Total_Tar_Kg')
 		// 	->where('EMBAY_ID', $embayment->EMBAY_ID)->get();
-			$subembayments = DB::select('exec CapeCodMA.GET_SubembaymentNitrogen ' . $id);
+		$subembayments = DB::select('exec CapeCodMA.GET_SubembaymentNitrogen ' . $id);
 		$nitrogen = DB::select('exec CapeCodMA.GET_EmbaymentNitrogen ' . $id);
 
 		 JavaScript::put([
@@ -152,8 +156,10 @@ class WizardController extends Controller
 
 		// $nitrogen_totals = DB::select('exec CapeCodMA.GET_NitrogenFromPolygon \'' . $poly . '\'');
 		// dd($nitrogen_totals[0]);
-		$scenarioid = session('scenarioid');
-		$embay_id = session('embay_id');
+		$scenarioid = Session::get('scenarioid');
+		// dd(session('scenarioid'));
+		// dd($scenarioid);
+		$embay_id = Session::get('embay_id');
 		// dd($embay_id, $scenarioid);
 		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
 		// dd($parcels);

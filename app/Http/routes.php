@@ -13,7 +13,7 @@
 
 Route::get('/', 'StartController@index');
 
-Route::get('/map/{embayment}/{scenario?}', 'WizardController@start');
+Route::get('/map/{embayment}/{scenarioid?}', 'WizardController@start');
 
 Route::get('/test/{embayment}', 'WizardController@test');
 

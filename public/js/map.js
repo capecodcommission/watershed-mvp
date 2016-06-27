@@ -358,6 +358,7 @@ require([
 			e.preventDefault();
 
 			if ($(this).attr('data-visible') == 'off') {
+				Subembayments.setDefinitionExpression('EMBAY_ID = ' + selectlayer);
 				Subembayments.show();
 				// console.log(Subembayments);
 				$(this).attr('data-visible', 'on');

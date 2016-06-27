@@ -11844,5 +11844,3 @@ new Vue({
 });
 
 },{"vue":11,"vue-filter":2,"vue-resource":4}]},{},[12]);
-
-//# sourceMappingURL=main.js.map

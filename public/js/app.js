@@ -227,8 +227,8 @@ require([
 			opacity: 1
 		});
 		Subembayments.setDefinitionExpression('EMBAY_ID = ' + selectlayer);
-		Subembayments.show();
-		// Subembayments.hide();
+		// Subembayments.show();
+		Subembayments.hide();
 		// console.log(Subembayments);
 		map.addLayer(Subembayments);
 
@@ -488,7 +488,15 @@ require([
 			// 
 		});
 
+		
+		$('.subembayment').on('click', function(e){
+			// console.log('subembayment clicked');
+			var sub = $(this).data('layer');
+			Subembayments.setDefinitionExpression('SUBEM_ID = ' + sub);
+			Subembayments.show();
 
+
+		});
 
 
 // function map_click(e) {
@@ -716,5 +724,3 @@ require([
 	};
 })(jQuery);
 
-
-//# sourceMappingURL=app.js.map

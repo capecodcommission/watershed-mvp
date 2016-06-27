@@ -191,10 +191,13 @@ class TechnologyController extends Controller
 	 **/
 	public function getPolygon($type, $treatment_id, $poly)
 	{
-		DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
+		
 
 		$scenarioid = session('scenarioid');
+		dd($scenarioid);
+
 		$embay_id = session('embay_id');
+		DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
 		if ($type == 'septic') 
 		{
 			// we need to know how many toilets/parcels will be implemented
