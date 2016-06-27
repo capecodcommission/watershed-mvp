@@ -1,13 +1,29 @@
-.selected-treatments {
+div.selected-treatments {
 	width: 80%;
 	padding: 20px;
 	background: $white;
 	opacity: 0.90;
 	border-radius: 15px;
-
+	height: 7em;
 
 	ul {
 		list-style-type: none;
+
+		li.technology
+		{
+			width: 6em;
+
+			img 
+			{
+				width: 5em;
+				cursor: pointer;
+				
+				&:hover
+				{
+					background-color: shade($reduction-blue, 20%);
+				}
+			}
+		}
 	}
 
 

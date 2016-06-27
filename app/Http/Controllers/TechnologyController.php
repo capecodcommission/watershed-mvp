@@ -257,7 +257,10 @@ class TechnologyController extends Controller
 	public function cancel($treat_id)
 	{
 
-		Treatment::destroy($treat_id);
+		DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
+		$del = DB::select('exec CapeCodMA.DEL_Treatment '. $treat_id);
+
+		return 1;
 	}
 
 
@@ -270,24 +273,75 @@ class TechnologyController extends Controller
 	public function edit($treat_id)
 	{
 		$treatment = Treatment::find($treat_id);
+		$tech = DB::table('dbo.Technology_Matrix')->select('*')->where('TM_ID', $treatment->TreatmentType_ID)->first();
+		$type = $tech->Technology_Sys_Type;
+
+		switch ($type) {
+			case 'Fertilization':
+				return view('common/technology-fertilizer-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				break;
+			case 'storm':
+				return view('common/technology-stormwater', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				break;
+			case 'collect':
+				return view('common/technology-collection', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				break;		
+			case 'septic':
+				return view('common/technology-septic', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				break;
+			case 'groundwater':
+				return view('common/technology-groundwater', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				break;
+			case 'embayment':
+				return view('common/technology-embayment', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				break;
+			default:
+				return view('common/technology', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				break;
+		}
 
 
-		return view('common/technology-septic-edit', ['treatment'=>$treatment]);
+
+		return view('common/technology-septic-edit', ['treatment'=>$treatment, 'tech'=>$tech]);
 
 	}
 
 	/**
-	 * User wants to update a treatment for this scenario
+	 * User updated an existing treatment for this scenario
 	 *
 	 * @return void
 	 * @author 
 	 **/
-	public function update($treat_id)
+	public function update($type, $treat_id, $rate)
 	{
 		$treatment = Treatment::find($treat_id);
+			switch ($type) 
+			{
+				case 'fert':
+					$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Fert] ' . $treat_id . ', ' . $rate );
+					return $updated;	
+					break;
 
+				case 'storm':
+					
+					break;
+				case 'collect':
+					
+					break;		
+				case 'septic':
+					
+					break;
+				case 'groundwater':
+					
+					break;
+				case 'embayment':
+					
+					break;
+				default:
+					
+					break;
+			}
 
-		return view('common/technology-septic-edit', ['treatment'=>$treatment]);
 
 	}
 

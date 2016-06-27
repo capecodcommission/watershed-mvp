@@ -6184,14 +6184,22 @@ p span.wizard-span {
   padding: 1.5em;
   border: 2px solid #2caae4; }
 
-.selected-treatments {
+div.selected-treatments {
   width: 80%;
   padding: 20px;
   background: #ffffff;
   opacity: 0.90;
-  border-radius: 15px; }
-  .selected-treatments ul {
+  border-radius: 15px;
+  height: 7em; }
+  div.selected-treatments ul {
     list-style-type: none; }
+    div.selected-treatments ul li.technology {
+      width: 6em; }
+      div.selected-treatments ul li.technology img {
+        width: 5em;
+        cursor: pointer; }
+        div.selected-treatments ul li.technology img:hover {
+          background-color: #2388b6; }
 
 nav.toolbar {
   width: 90%;

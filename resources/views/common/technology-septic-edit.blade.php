@@ -21,8 +21,11 @@
 
 			<p>
 			Nitrogen removed by this treatment: {{round($treatment->Nload_Reduction)}}kg
-			{{--	Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low_ppm}} and {{$tech->Nutri_Reduc_N_High_ppm}} ppm.<br />
-				<input type="range" id="septic-rate" min="{{$tech->Nutri_Reduc_N_Low_ppm}}" max="{{$tech->Nutri_Reduc_N_High_ppm}}" v-model="septic_rate" value="{{$tech->Nutri_Reduc_N_Low}}">@{{septic_rate}} --}}
+			{{--	--}}
+			</p>
+			<p>
+				Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low_ppm}} and {{$tech->Nutri_Reduc_N_High_ppm}} ppm.<br />
+				<input type="range" id="septic-rate" min="{{$tech->Nutri_Reduc_N_Low_ppm}}" max="{{$tech->Nutri_Reduc_N_High_ppm}}" v-model="septic_rate" value="{{$treatment->Treatment_Value}}">@{{septic_rate}} 
 			</p>
 
 			<p>
@@ -42,7 +45,7 @@
 
 
 <script src="{{url('/js/main.js')}}"></script>
-<script src="{{url('/js/app.js')}}"></script>
+{{-- <script src="{{url('/js/app.js')}}"></script> --}}
 
 
 <script>
