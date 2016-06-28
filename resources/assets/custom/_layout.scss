@@ -11,4 +11,10 @@
 	{
 		@include span-columns(4);
 	}
+
+	.full-width
+	{
+		@include span-columns(10);
+		@include shift(1);
+	}
 }

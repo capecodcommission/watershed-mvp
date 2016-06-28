@@ -2400,6 +2400,14 @@ p span.wizard-span {
     width: 31.76157%; }
     .wrapper .secondary:last-child {
       margin-right: 0; }
+  .wrapper .full-width {
+    float: left;
+    display: block;
+    margin-right: 2.35765%;
+    width: 82.94039%;
+    margin-left: 8.5298%; }
+    .wrapper .full-width:last-child {
+      margin-right: 0; }
 
 #map {
   position: fixed;

@@ -50,7 +50,6 @@
 					<th>Difference</th>
 				</tr>
 				<tr>
-				
 					<th>Attenuated</th>
 					<th>Attenuated</th>
 					<th>N Removed</th>
@@ -61,18 +60,18 @@
 						<td>@{{total_treated | round }}kg</td>
 						<td>@{{embayment_treated | round }}kg</td>
 						<td>@{{embayment_difference | round }}kg</td>
-						<!-- <td>@{{storm_difference | round }}kg</td> -->
 				</tr>
 				
 			</tbody>
 		</table>
 			<p>
-				Enter a valid reduction rate between {{$tech->Absolu_Reduc_perMetric_Low}} and {{$tech->Absolu_Reduc_perMetric_High}}kg per {{$tech->Unit_Metric}}.<br />
+				Enter a valid reduction rate between {{round($tech->Absolu_Reduc_perMetric_Low)}} and {{round($tech->Absolu_Reduc_perMetric_High)}}kg per {{$tech->Unit_Metric}}.<br />
 				
-				<input type="range" id="embayment-percent" min="{{$tech->Absolu_Reduc_perMetric_Low}}" max="{{$tech->Absolu_Reduc_perMetric_High}}" v-model="embayment_percent" value='{{$tech->Nutri_Reduc_N_Low}}'> @{{embayment_percent}}
+				<input type="range" id="embayment-percent" min="{{round($tech->Absolu_Reduc_perMetric_Low)}}" max="{{round($tech->Absolu_Reduc_perMetric_High)}}" v-model="embayment_percent" value='{{$tech->Nutri_Reduc_N_Low}}'> @{{embayment_percent}}
 			</p>
 			<p>
 				<button id="applytreatment">Apply</button>
+				<button id="canceltreatment" class='button--cta right'><i class="fa fa-ban"></i> Cancel</button>
 			</p>
 
 

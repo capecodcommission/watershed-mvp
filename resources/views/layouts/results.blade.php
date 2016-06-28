@@ -6,11 +6,11 @@
 	</head>
 	<body>
 		<div class="wrapper">
-		<div class="content">
+		<div class="content full-width">
 			<h1>Embayment: </h1>
 
 			<div id="app">
-			<h2>Technology Stack</h2>
+			{{-- <h2>Technology Stack</h2> --}}
 		
 			<table>
 				<thead>

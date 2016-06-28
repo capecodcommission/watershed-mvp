@@ -78,7 +78,8 @@
 			</p>
 			<p>
 				<button id="applytreatment">Apply</button>
-						<a id="canceltreatment" class='button--cta right'><i class="fa fa-ban"></i> Cancel</a></p>
+				<button id="canceltreatment" class='button--cta right'><i class="fa fa-ban"></i> Cancel</button>
+			</p>
 
 
 	</section>
@@ -86,7 +87,7 @@
 
 
 <script src="{{url('/js/main.js')}}"></script>
-<script src="{{url('/js/app.js')}}"></script>
+{{-- <script src="{{url('/js/app.js')}}"></script> --}}
 
 
 <script>

@@ -344,8 +344,9 @@ class TechnologyController extends Controller
 					break;
 
 				case 'collect':
-					
-					break;		
+					$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Septic] '. $treat_id . ', '. $rate);
+					return $updated;
+					break;	
 				case 'septic':
 					
 					break;
