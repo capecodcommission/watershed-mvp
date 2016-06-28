@@ -165,14 +165,12 @@ class TechnologyController extends Controller
 	 * @return void
 	 * @author 
 	 **/
-	public function ApplyTreatment_Septic($treat_id, $rate, $type)
-	{
-		//$treatment = Treatment::find($treat_id);
-		$scenarioid = session('scenarioid');
-		// need to update the wiz_treatment_parcel table with the N removed
-		if ($type == 'septic') {
-			$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Septic] ' . $treat_id . ', ' . $rate );
-		}
+	public function ApplyTreatment_Septic($treat_id, $rate)
+	{		
+		//$scenarioid = session('scenarioid');
+		
+		$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Septic] ' . $treat_id . ', ' . $rate );
+		
 		$n_removed = session('n_removed');
 		$n_removed += $updated[0]->removed;
 		Session::put('n_removed', $n_removed);
@@ -275,31 +273,39 @@ class TechnologyController extends Controller
 		$treatment = Treatment::find($treat_id);
 		$tech = DB::table('dbo.Technology_Matrix')->select('*')->where('TM_ID', $treatment->TreatmentType_ID)->first();
 		$type = $tech->Technology_Sys_Type;
-
-		switch ($type) {
-			case 'Fertilization':
-				return view('common/technology-fertilizer-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
-				break;
-			case 'Stormwater':
-				return view('common/technology-stormwater-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
-				break;
-			case 'Septic/Sewer':
-				return view('common/technology-collection-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
-				break;		
-			case 'septic':
-				return view('common/technology-septic-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
-				break;
-			case 'groundwater':
-				return view('common/technology-groundwater', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
-				break;
-			case 'embayment':
-				return view('common/technology-embayment', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
-				break;
-			default:
-				return view('common/technology', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
-				break;
+				$toilets = [21, 22, 23, 24];
+		if (in_array($treatment->TreatmentType_ID, $toilets) ) 
+		{
+			return view('common/technology-septic-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+			break;
 		}
-
+		else 
+		{
+			switch ($type) 
+			{
+				case 'Fertilization':
+					return view('common/technology-fertilizer-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+					break;
+				case 'Stormwater':
+					return view('common/technology-stormwater-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+					break;
+				case 'Septic/Sewer':
+					return view('common/technology-collection-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+					break;		
+				// case 'septic':
+				// 	return view('common/technology-septic-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				// 	break;
+				case 'groundwater':
+					return view('common/technology-groundwater', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+					break;
+				case 'embayment':
+					return view('common/technology-embayment', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+					break;
+				default:
+					return view('common/technology', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+					break;
+			}
+		}
 
 
 		return view('common/technology-septic-edit', ['treatment'=>$treatment, 'tech'=>$tech]);
@@ -329,6 +335,11 @@ class TechnologyController extends Controller
 
 				case 'storm':
 					$updated = DB::select('exec [CapeCodMA].[CALC_UpdateTreatment_Storm] ' . $treat_id . ', ' . $rate . ', ' . $units );
+					return $updated;
+					break;
+
+				case 'toilets':
+					$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Septic] '. $treat_id . ', '. $rate);
 					return $updated;
 					break;
 

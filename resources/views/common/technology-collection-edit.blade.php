@@ -12,26 +12,26 @@
 				<br />{{$tech->Technology_Strategy}}&nbsp;<i class="fa fa-question-circle"></i>
 				</a>			
 			</div>
-					<p class="select"><button id="select_polygon">Select a polygon</button> <span>@{{subembayment}}</span></p>
+{{-- 					<p class="select"><button id="select_polygon">Select a polygon</button> <span>@{{subembayment}}</span></p>
 
 					<p class="select_point">
 						<button id="select_destination" style="display:none;">
 							Select a destination
 						</button> 
 						<span>@{{subembayment}}</span>
-					</p>
-					
-			</div>
+					</p> --}}
+			<p>Parcels affected: {{$treatment->Treatment_Parcels}}</p>					
+			<p>Nitrogen removed by this treatment: {{round($treatment->Nload_Reduction)}}kg</p>
+			<p>Treatment reduction rate: {{$treatment->Treatment_Value}}ppm</p>
 
 			<p>
 				Enter a valid reduction rate between {{round($tech->Nutri_Reduc_N_Low_ppm)}} and {{round($tech->Nutri_Reduc_N_High_ppm)}} ppm.<br />
-				<input type="range" id="septic-rate" min="{{$tech->Nutri_Reduc_N_Low_ppm}}" max="{{$tech->Nutri_Reduc_N_High_ppm}}" v-model="septic_rate" value="{{$tech->Nutri_Reduc_N_Low_ppm}}">@{{septic_rate}}
+				<input type="range" id="septic-rate" min="{{$tech->Nutri_Reduc_N_Low_ppm}}" max="{{$tech->Nutri_Reduc_N_High_ppm}}" v-model="septic_rate" value="{{$treatment->Treatment_Value}}">@{{septic_rate}}
 			</p>
 			<p>
-				<button id="applytreatment">Apply</button>
-
+				<button id="updatetreatment">Update</button>
+				<button id="deletetreatment" class='button--cta right'><i class="fa fa-trash-o"></i> Delete</button>
 			</p>
-			<p><a id="canceltreatment" class='button--cta right'>Cancel</a></p>
 	</section>
 </div>
 
@@ -91,37 +91,34 @@
 
 			});
 		});
-	$('#applytreatment').on('click', function(e){
-			e.preventDefault();
-			var rate = $('#septic-rate').val();
-			var url = "{{url('/apply_septic')}}" + '/' +  treatment + '/' + rate;
-			// console.log(url);
-			$.ajax({
-				method: 'GET',
-				url: url
-			})
-				.done(function(msg){
-					// console.log(msg);
-					msg = Math.round(msg);
-					$('#n_removed').text(msg);
-					$('#popdown-opacity').hide();
-					$( "#update" ).trigger( "click" );
-					var newtreatment = '<li class="technology" data-treatment="{{$treatment->TreatmentID}}"><a href="{{url('/edit', $treatment->TreatmentID)}}" class="popdown"><img src="http://www.cch2o.org/Matrix/icons/{{$tech->Icon}}" alt=""></a></li>';
-					$('ul.selected-treatments').append(newtreatment);
-					$('ul.selected-treatments li[data-treatment="{{$treatment->TreatmentID}}"] a').popdown();	
+
+		$('#updatetreatment').on('click', function(e)
+				{
+					e.preventDefault();
+					var rate = $('#septic-rate').val();
+					var url = "{{url('/update/septic', $treatment->TreatmentID)}}"  + '/' + rate;
+					$.ajax({
+						method: 'GET',
+						url: url
+					})
+						.done(function(msg){
+							$('#popdown-opacity').hide();
+							$( "#update" ).trigger( "click" );
+						});
+
 				});
+	
 
-		});
 
-
-	$('#canceltreatment').on('click', function(e){
-		var url = "{{url('cancel', $treatment->TreatmentID)}}";
+	$('#deletetreatment').on('click', function(e){
+		var url = "{{url('delete', $treatment->TreatmentID)}}";
 		$.ajax({
 			method: 'GET',
 			url: url
 		})
 			.done(function(msg){
 				$('#popdown-opacity').hide();
+				$("li.technology [data-treatment='{{$treatment->TreatmentID}}']").remove();
 			});
 		});
 

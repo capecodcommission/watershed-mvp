@@ -58,6 +58,8 @@
 		})
 			.done(function(msg){
 				$('#popdown-opacity').hide();
+				$("li.technology [data-treatment='{{$treatment->TreatmentID}}']").remove();
+				// console.log('removed');
 			});
 		});
 

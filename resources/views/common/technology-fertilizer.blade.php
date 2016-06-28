@@ -48,8 +48,8 @@
 			</p>
 			<p>
 				<button id="applytreatment">Apply</button>
+				<button id="canceltreatment" class='button--cta right'>Cancel</button>
 			</p>
-	<p><a id="canceltreatment" class='button--cta right'>Cancel</a></p>
 
 	</section>
 </div>
@@ -80,6 +80,9 @@
 					$('#n_removed').text(msg);
 					$('#popdown-opacity').hide();
 					$( "#update" ).trigger( "click" );
+					var newtreatment = '<li class="technology" data-treatment="{{$treatment->TreatmentID}}"><a href="{{url('/edit', $treatment->TreatmentID)}}" class="popdown"><img src="http://www.cch2o.org/Matrix/icons/{{$tech->Icon}}" alt=""></a></li>';
+					$('ul.selected-treatments').append(newtreatment);
+					$('ul.selected-treatments li[data-treatment="{{$treatment->TreatmentID}}"] a').popdown();	
 				});
 
 		});

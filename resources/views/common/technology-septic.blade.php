@@ -25,15 +25,19 @@
 					
 					
 			</div>
-
+			@if($tech->Nutri_Reduc_N_High_ppm > $tech->Nutri_Reduc_N_Low_ppm)
 			<p>
 				Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low_ppm}} and {{$tech->Nutri_Reduc_N_High_ppm}} ppm.<br />
 				<input type="range" id="septic-rate" min="{{$tech->Nutri_Reduc_N_Low_ppm}}" max="{{$tech->Nutri_Reduc_N_High_ppm}}" v-model="septic_rate" value="{{$tech->Nutri_Reduc_N_Low}}">@{{septic_rate}}
 			</p>
+			@else
+				<p>Reduction rate: {{$tech->Nutri_Reduc_N_Low_ppm}} ppm.</p>
+				<input type="hidden" name="septic-rate" id="septic-rate" value="{{$tech->Nutri_Reduc_N_Low_ppm}}">
+			@endif
 
 			<p>
 				<button id="applytreatment">Apply</button>
-				<a id="canceltreatment" class='button--cta right'><i class="fa fa-ban"></i> Cancel</a>
+				<button id="canceltreatment" class='button--cta right'><i class="fa fa-ban"></i> Cancel</button>
 			</p>
 	</section>
 </div>
@@ -49,7 +53,7 @@
 
 
 <script src="{{url('/js/main.js')}}"></script>
-<script src="{{url('/js/app.js')}}"></script>
+{{-- <script src="{{url('/js/app.js')}}"></script> --}}
 
 
 <script>
@@ -71,7 +75,7 @@
 	$('#applytreatment').on('click', function(e){
 			e.preventDefault();
 			var rate = $('#septic-rate').val();
-			var url = "{{url('/apply_septic')}}" + '/' +  treatment + '/' + rate + '/septic';
+			var url = "{{url('/apply_septic')}}" + '/' +  treatment + '/' + rate;
 			// console.log(url);
 			$.ajax({
 				method: 'GET',
@@ -83,6 +87,9 @@
 					$('#n_removed').text(msg);
 					$('#popdown-opacity').hide();
 					$( "#update" ).trigger( "click" );
+					var newtreatment = '<li class="technology" data-treatment="{{$treatment->TreatmentID}}"><a href="{{url('/edit', $treatment->TreatmentID)}}" class="popdown"><img src="http://www.cch2o.org/Matrix/icons/{{$tech->Icon}}" alt=""></a></li>';
+					$('ul.selected-treatments').append(newtreatment);
+					$('ul.selected-treatments li[data-treatment="{{$treatment->TreatmentID}}"] a').popdown();					
 				});
 
 		});

@@ -129,7 +129,7 @@
 					</div>	 
 					<div class="technology">
 						<a href="{{url('/tech/storm/10')}}"  class="popdown">
-							<img src="http://www.cch2o.org/Matrix/icons/stormwater_bmps.svg"><br />
+							<img src="http://www.cch2o.org/Matrix/icons/stormwater_constructed_wetlands.svg"><br />
 							Constructed Wetlands
 						</a>
 					</div>		

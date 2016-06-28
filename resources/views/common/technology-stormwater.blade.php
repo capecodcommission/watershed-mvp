@@ -103,8 +103,8 @@
 				// console.log('button clicked');
 					$('#popdown-opacity').hide();
 					map.on('click', function(e){
-						console.log('map clicked');
-						console.log(e.mapPoint.x, e.mapPoint.y);
+						// console.log('map clicked');
+						// console.log(e.mapPoint.x, e.mapPoint.y);
 					
 						var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y + '/' + treatment;
 						$.ajax({
@@ -113,7 +113,7 @@
 						})
 							.done(function(msg){
 								msg = $.parseJSON(msg);
-								console.log(msg.SUBEM_DISP);
+								// console.log(msg.SUBEM_DISP);
 								// console.log(msg);
 								location = msg.SUBEM_ID;
 								$('#'+msg.SUBEM_NAME+'> .stats').show();
@@ -154,6 +154,9 @@
 						$('#n_removed').text(msg);
 						$('#popdown-opacity').hide();
 						$( "#update" ).trigger( "click" );
+						var newtreatment = '<li class="technology" data-treatment="{{$treatment->TreatmentID}}"><a href="{{url('/edit', $treatment->TreatmentID)}}" class="popdown"><img src="http://www.cch2o.org/Matrix/icons/{{$tech->Icon}}" alt=""></a></li>';
+						$('ul.selected-treatments').append(newtreatment);
+						$('ul.selected-treatments li[data-treatment="{{$treatment->TreatmentID}}"] a').popdown();	
 					});
 			});
 			@else
@@ -175,6 +178,9 @@
 						$('#n_removed').text(msg);
 						$('#popdown-opacity').hide();
 						$( "#update" ).trigger( "click" );
+						var newtreatment = '<li class="technology" data-treatment="{{$treatment->TreatmentID}}"><a href="{{url('/edit', $treatment->TreatmentID)}}" class="popdown"><img src="http://www.cch2o.org/Matrix/icons/{{$tech->Icon}}" alt=""></a></li>';
+						$('ul.selected-treatments').append(newtreatment);
+						$('ul.selected-treatments li[data-treatment="{{$treatment->TreatmentID}}"] a').popdown();	
 					});
 			});
 

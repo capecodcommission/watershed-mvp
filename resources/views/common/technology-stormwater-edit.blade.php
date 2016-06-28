@@ -25,13 +25,16 @@
 			 -->
 					<p>Nitrogen removed by this treatment: {{round($treatment->Nload_Reduction)}}kg</p>
 					<p>Treatment reduction rate: {{$treatment->Treatment_Value}}%</p>
+					@if($treatment->Treatment_UnitMetric == 'Acres' && $treatment->Treatment_MetricValue > 0)
+						<p>{{$treatment->Treatment_UnitMetric}} treated: {{$treatment->Treatment_MetricValue}}</p>
+					@endif
 
 				@if($tech->Show_In_wMVP == 1)
 					<!-- <p class="select"><button id="select_area">Select a location</button> <span>@{{subembayment}}</span></p> -->
 					{{-- <p class="select"><button id="select_area">Select a location</button> <span>@{{subembayment}}</span></p> --}}
 					<p>
 						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated: 
-						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;"></label>
+						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;" value="{{$treatment->Treatment_MetricValue}}"></label>
 					</p>
 				@elseif($tech->Show_In_wMVP == 2)
 					<!-- <div id="info">Select a polygon for the treatment area:  -->
@@ -42,7 +45,7 @@
 					{{-- <p class="select"><button id="select_area">Select a polygon</button> <span>@{{subembayment}}</span></p> --}}
 					<p>
 						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated: 
-						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;"></label>
+						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;" value="{{$treatment->Treatment_MetricValue}}"></label>
 					</p>
 
 				@elseif($tech->Show_In_wMVP == 4)
@@ -138,13 +141,13 @@
 				tb.activate('polygon');
 
 			});
-			$('#applytreatment').on('click', function(e){
+			$('#updatetreatment').on('click', function(e){
 				// need to save the treated N values and update the subembayment progress
 				e.preventDefault();
 				// console.log('clicked');
 				var percent = $('#storm-percent').val();
 				var units = $('#unit_metric').val();
-				var url = "{{url('/apply_storm')}}" + '/' +  treatment + '/' + percent + '/' + units + '/' + location;
+				var url = "{{url('/update/storm', $treatment->TreatmentID)}}" + '/' + percent + '/' + units;
 				// console.log(url);
 				$.ajax({
 					method: 'GET',
@@ -177,39 +180,40 @@
 
 
 
-				$('#applytreatment').on('click', function(e){
-				// need to save the treated N values and update the subembayment progress
-				e.preventDefault();
-				// console.log('clicked');
-				var percent = $('#storm-percent').val();
-				// var units = $('#unit_metric').val();
-				var url = "{{url('/apply_percent')}}" + '/' +  treatment + '/' + percent + '/storm';
-				// console.log(url);
-				$.ajax({
-					method: 'GET',
-					url: url
-				})
-					.done(function(msg){
-						// console.log(msg);
-						msg = Math.round(msg);
-						$('#n_removed').text(msg);
-						$('#popdown-opacity').hide();
-						$( "#update" ).trigger( "click" );
-					});
-			});
+			// 	$('#applytreatment').on('click', function(e){
+			// 	// need to save the treated N values and update the subembayment progress
+			// 	e.preventDefault();
+			// 	// console.log('clicked');
+			// 	var percent = $('#storm-percent').val();
+			// 	// var units = $('#unit_metric').val();
+			// 	var url = "{{url('/apply_percent')}}" + '/' +  treatment + '/' + percent + '/storm';
+			// 	// console.log(url);
+			// 	$.ajax({
+			// 		method: 'GET',
+			// 		url: url
+			// 	})
+			// 		.done(function(msg){
+			// 			// console.log(msg);
+			// 			msg = Math.round(msg);
+			// 			$('#n_removed').text(msg);
+			// 			$('#popdown-opacity').hide();
+			// 			$( "#update" ).trigger( "click" );
+			// 		});
+			// });
 
 			@endif
 
 
 
-		$('#canceltreatment').on('click', function(e){
-		var url = "{{url('cancel', $treatment->TreatmentID)}}";
+		$('#deletetreatment').on('click', function(e){
+		var url = "{{url('delete', $treatment->TreatmentID)}}";
 		$.ajax({
 			method: 'GET',
 			url: url
 		})
 			.done(function(msg){
 				$('#popdown-opacity').hide();
+				$("li.technology [data-treatment='{{$treatment->TreatmentID}}']").remove();
 			});
 		});
 

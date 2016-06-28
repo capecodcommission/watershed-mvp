@@ -31,7 +31,7 @@ Route::get('/cancel/{treatment}', 'TechnologyController@cancel');
 
 Route::get('/apply_percent/{treatment}/{rate}/{type}/{units?}', 'TechnologyController@ApplyTreatment_Percent');
 Route::get('/apply_storm/{treatment}/{rate}/{units}/{location}', 'TechnologyController@ApplyTreatment_Storm');
-Route::get('/apply_septic/{treatment}/{rate}/{type}', 'TechnologyController@ApplyTreatment_Septic');
+Route::get('/apply_septic/{treatment}/{rate}', 'TechnologyController@ApplyTreatment_Septic');
 
 Route::get('/tech-collect/{tech}', 'TechnologyController@getCollection');
 
