@@ -26,7 +26,7 @@ class TechnologyController extends Controller
 		DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
 		$tech = DB::table('dbo.Technology_Matrix')->select('*')->where('TM_ID', $id)->first();
 		$scenarioid = session('scenarioid');
-		$treatment = Treatment::create(['ScenarioID' => $scenarioid, 'TreatmentType_ID'=>$tech->TM_ID, 'TreatmentType_Name'=>$tech->Technology_Strategy]);
+		$treatment = Treatment::create(['ScenarioID' => $scenarioid, 'TreatmentType_ID'=>$tech->TM_ID, 'TreatmentType_Name'=>$tech->Technology_Strategy, 'Treatment_UnitMetric'=>$tech->Unit_Metric]);
 
 		if ($tech->Show_In_wMVP == 4) 
 		{
@@ -153,7 +153,17 @@ class TechnologyController extends Controller
 
 	}
 
-
+	/**
+	 * Apply Embayment Treatment
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function ApplyTreatment_Embayment($treat_id, $rate, $units)
+	{
+		$n_removed = $rate * $units;
+		$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment] ' . $treat_id . ', ' . $rate . ', ' . $units);
+	}
 
 
 
@@ -295,11 +305,11 @@ class TechnologyController extends Controller
 				// case 'septic':
 				// 	return view('common/technology-septic-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 				// 	break;
-				case 'groundwater':
-					return view('common/technology-groundwater', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				case 'Groundwater':
+					return view('common/technology-groundwater-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 					break;
-				case 'embayment':
-					return view('common/technology-embayment', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				case 'In-Embayment':
+					return view('common/technology-embayment-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 					break;
 				default:
 					return view('common/technology', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);

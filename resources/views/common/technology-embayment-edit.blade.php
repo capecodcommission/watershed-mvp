@@ -23,6 +23,8 @@
 						unit metric is used to calculate cost
 					4 => user does not enter a treatment area (Fertilizer Mgmt or Stormwater BMPs)
 			 -->
+				<p>Nitrogen removed by this treatment: {{round($treatment->Nload_Reduction)}}kg</p>
+				<p>Treatment reduction rate: {{$treatment->Treatment_Value}} per {{$treatment->Treatment_UnitMetric}} for {{$treatment->Treatment_MetricValue}} {{$treatment->Treatment_UnitMetric}} </p>
 
 				@if($tech->Show_In_wMVP == 1)
 					<!-- <p class="select"><button id="select_area">Select a location</button> <span>@{{subembayment}}</span></p> -->
@@ -42,36 +44,14 @@
 						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;"></label>
 					</p>
 				@endif
-{{-- 		<table>
-			<thead>
-				<tr>
-					<th>Embayment Nitrogen</th>
-					<th>After Treatment</th>
-					<th>Difference</th>
-				</tr>
-				<tr>
-					<th>Attenuated</th>
-					<th>Attenuated</th>
-					<th>N Removed</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-						<td>@{{total_treated | round }}kg</td>
-						<td>@{{embayment_treated | round }}kg</td>
-						<td>@{{embayment_difference | round }}kg</td>
-				</tr>
-				
-			</tbody>
-		</table> --}}
 			<p>
 				Enter a valid reduction rate between {{round($tech->Absolu_Reduc_perMetric_Low)}} and {{round($tech->Absolu_Reduc_perMetric_High)}}kg per {{$tech->Unit_Metric}}.<br />
 				
 				<input type="range" id="embayment-percent" min="{{round($tech->Absolu_Reduc_perMetric_Low, 2)}}" max="{{round($tech->Absolu_Reduc_perMetric_High, 2)}}" v-model="embayment_percent" value='{{$tech->Nutri_Reduc_N_Low}}'> @{{embayment_percent}}
 			</p>
 			<p>
-				<button id="applytreatment">Apply</button>
-				<button id="canceltreatment" class='button--cta right'><i class="fa fa-ban"></i> Cancel</button>
+				<button id="updatetreatment">Update</button>
+				<button id="deletetreatment" class='button--cta right'><i class="fa fa-trash-o"></i> Delete</button>
 			</p>
 
 
@@ -124,29 +104,35 @@
 			// $('#popdown-opacity').show();
 
 		});
-		$('#applytreatment').on('click', function(e){
-			// need to save the treated N values and update the subembayment progress
-			e.preventDefault();
-			// console.log('clicked');
-			var percent = $('#embayment-percent').val();
-			var units = $('#unit_metric').val();
-			// need a new route to handle embayment (absolute metrics)
-			var url = "{{url('apply_embayment')}}" + '/' +  treatment + '/' + percent + '/' + units;
-			// console.log(url);
-			$.ajax({
-				method: 'GET',
-				url: url
-			})
-				.done(function(msg){
-					// console.log(msg);
-					msg = Math.round(msg);
-					$('#n_removed').text(msg);
-					$('#popdown-opacity').hide();
-					$( "#update" ).trigger( "click" );
-					var newtreatment = '<li class="technology" data-treatment="{{$treatment->TreatmentID}}"><a href="{{url('/edit', $treatment->TreatmentID)}}" class="popdown"><img src="http://www.cch2o.org/Matrix/icons/{{$tech->Icon}}" alt=""></a></li>';
-					$('ul.selected-treatments').append(newtreatment);
-					$('ul.selected-treatments li[data-treatment="{{$treatment->TreatmentID}}"] a').popdown();					
+
+		$('#updatetreatment').on('click', function(e)
+				{
+					e.preventDefault();
+					var rate = $('#septic-rate').val();
+					var url = "{{url('/update/embay', $treatment->TreatmentID)}}"  + '/' + rate + '/' + units;
+					$.ajax({
+						method: 'GET',
+						url: url
+					})
+						.done(function(msg){
+							$('#popdown-opacity').hide();
+							$( "#update" ).trigger( "click" );
+						});
+
 				});
+	
+
+
+	$('#deletetreatment').on('click', function(e){
+		var url = "{{url('delete', $treatment->TreatmentID)}}";
+		$.ajax({
+			method: 'GET',
+			url: url
+		})
+			.done(function(msg){
+				$('#popdown-opacity').hide();
+				$("li.technology [data-treatment='{{$treatment->TreatmentID}}']").remove();
+			});
 		});
 
 
