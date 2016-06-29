@@ -26,7 +26,7 @@ class TechnologyController extends Controller
 		DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
 		$tech = DB::table('dbo.Technology_Matrix')->select('*')->where('TM_ID', $id)->first();
 		$scenarioid = session('scenarioid');
-		$treatment = Treatment::create(['ScenarioID' => $scenarioid, 'TreatmentType_ID'=>$tech->Technology_ID, 'TreatmentType_Name'=>$tech->Technology_Strategy, 'Treatment_UnitMetric'=>$tech->Unit_Metric]);
+		$treatment = Treatment::create(['ScenarioID' => $scenarioid, 'TreatmentType_ID'=>$tech->Technology_ID, 'TreatmentType_Name'=>$tech->Technology_Strategy, 'Treatment_UnitMetric'=>$tech->Unit_Metric, 'Treatment_Class'=>$tech->Technology_Sys_Type]);
 
 		if ($tech->Show_In_wMVP == 4) 
 		{
@@ -308,7 +308,7 @@ class TechnologyController extends Controller
 	public function edit($treat_id)
 	{
 		$treatment = Treatment::find($treat_id);
-		$tech = DB::table('dbo.Technology_Matrix')->select('*')->where('TM_ID', $treatment->TreatmentType_ID)->first();
+		$tech = DB::table('dbo.Technology_Matrix')->select('*')->where('Technology_ID', $treatment->TreatmentType_ID)->first();
 		$type = $tech->Technology_Sys_Type;
 				$toilets = [21, 22, 23, 24];
 		if (in_array($treatment->TreatmentType_ID, $toilets) ) 

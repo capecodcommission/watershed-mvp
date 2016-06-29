@@ -205,6 +205,7 @@ class WizardController extends Controller
 		// $scenarioid = session('scenarioid');
 		$embay_id = session('embay_id');
 		$results = DB::select('exec CapeCodMA.Get_ScenarioResults '. $scenarioid);
+		// dd($results);
 		$towns = DB::select('select wtt.*, t.town from dbo.wiz_treatment_towns wtt inner join capecodma.matowns t on t.town_id = wtt.wtt_town_id
   where wtt.wtt_scenario_id = ' . $scenarioid);
 		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);

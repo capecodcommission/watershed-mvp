@@ -146,7 +146,19 @@
 				e.preventDefault();
 				// console.log('clicked');
 				var percent = $('#storm-percent').val();
-				var units = $('#unit_metric').val();
+				var units = 1;
+				if ('{{$tech->Show_In_wMVP}}' != '2' )
+				{
+					units = $('#unit_metric').val();
+				}
+				else if ('{{$tech->Unit_Metric}}' == 'Each')
+				{
+					units = 1;
+				}
+				else
+				{
+					units = 0.00000000;
+				}
 				var url = "{{url('/update/storm', $treatment->TreatmentID)}}" + '/' + percent + '/' + units;
 				// console.log(url);
 				$.ajax({
@@ -177,29 +189,6 @@
 						});
 
 				});
-
-
-
-			// 	$('#applytreatment').on('click', function(e){
-			// 	// need to save the treated N values and update the subembayment progress
-			// 	e.preventDefault();
-			// 	// console.log('clicked');
-			// 	var percent = $('#storm-percent').val();
-			// 	// var units = $('#unit_metric').val();
-			// 	var url = "{{url('/apply_percent')}}" + '/' +  treatment + '/' + percent + '/storm';
-			// 	// console.log(url);
-			// 	$.ajax({
-			// 		method: 'GET',
-			// 		url: url
-			// 	})
-			// 		.done(function(msg){
-			// 			// console.log(msg);
-			// 			msg = Math.round(msg);
-			// 			$('#n_removed').text(msg);
-			// 			$('#popdown-opacity').hide();
-			// 			$( "#update" ).trigger( "click" );
-			// 		});
-			// });
 
 			@endif
 

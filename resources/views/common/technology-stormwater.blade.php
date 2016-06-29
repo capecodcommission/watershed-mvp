@@ -141,7 +141,20 @@
 				e.preventDefault();
 				// console.log('clicked');
 				var percent = $('#storm-percent').val();
-				var units = $('#unit_metric').val();
+				var units = 1;
+				if ('{{$tech->Show_In_wMVP}}' == '1' || '{{$tech->Show_In_wMVP}}' == '3' )
+				{
+					units = $('#unit_metric').val();
+				}
+				else if ('{{$tech->Unit_Metric}}' == 'Each')
+				{
+					units = 1;
+				}
+				else
+				{
+					units = 0.00000000;
+				}
+
 				var url = "{{url('/apply_storm')}}" + '/' +  treatment + '/' + percent + '/' + units + '/' + location;
 				// console.log(url);
 				$.ajax({

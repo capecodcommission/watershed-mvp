@@ -107,9 +107,13 @@
 			{
 				units = $('#unit_metric').val();
 			}
+			else if ('{{$tech->Unit_Metric}}' == 'Each')
+			{
+				units = 1;
+			}
 			else
 			{
-				units = 0.0000000;
+				units = 0.00000000;
 			}
 			
 				
