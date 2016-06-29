@@ -4,15 +4,26 @@
 	<h2>Subembayments for {{$embayment->EMBAY_DISP}}</h2>
 	
 	@foreach($subembayments as $subem)
+	<?php 
+		if($subem->n_load_att > 0)
+		{
+			$percent = ($subem->n_load_target/$subem->n_load_att)*100;
+		}
+		else
+		{
+			$percent = 100;
+		}
+
+	?>
 		<div class="subembayment" id="subem_{{$subem->subem_id}}" data-layer="{{$subem->subem_id}}">
 			<div class="sub-progress-container">
 				<div class="sub-target">
 					
 				</div>
-				<div class="sub-progress" style="width: {{($subem->n_load_target/$subem->n_load_att)*100}}%">
+				<div class="sub-progress" style="width: {{$percent}}%">
 					
 				</div>
-				<h3>{{$subem->subem_disp}} (<span id="progress_{{$subem->subem_id}}">{{round(($subem->n_load_target/$subem->n_load_att)*100)}}</span>%)</h3>
+				<h3>{{$subem->subem_disp}} (<span id="progress_{{$subem->subem_id}}">{{round($percent)}}</span>%)</h3>
 			</div>
 			<div class="stats">
 				<div class="stat-group">

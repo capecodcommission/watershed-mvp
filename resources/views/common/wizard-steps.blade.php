@@ -235,17 +235,17 @@
 					</a>
 				</div>
 				<div class="technology">
-					<a href="{{url('/tech/groundwater/2')}}"  class="popdown">
-						<img src="http://www.cch2o.org/Matrix/icons/constructed_wetland.svg" alt=""><br />
-						Constructed Wetlands - Subsurface Flow
-					</a>
-				</div>
-				<div class="technology">
 					<a href="{{url('/tech/groundwater/3')}}"  class="popdown">
 						<img src="http://www.cch2o.org/Matrix/icons/constructed_wetland.svg" alt=""><br />
 						Constructed Wetlands - Groundwater Flow
 					</a>
 				</div>	
+				<div class="technology">
+					<a href="{{url('/tech/groundwater/4')}}"  class="popdown">
+						<img src="http://www.cch2o.org/Matrix/icons/hydroponic.svg" alt=""><br />
+						Hydroponic Treatment
+					</a>
+				</div>				
 				<div class="technology">
 					<a href="{{url('/tech/groundwater/14')}}"  class="popdown">
 						<img src="http://www.cch2o.org/Matrix/icons/phytoremediation.svg" alt=""><br />
@@ -289,7 +289,7 @@
 					</a>
 				</div>					
 				<div class="technology">
-					<a href="{{url('/tech/embayment/34')}}"  class="popdown">
+					<a href="{{url('/tech/groundwater/34')}}"  class="popdown">
 						<img src="http://www.cch2o.org/Matrix/icons/surface_water_remediation_wetlands.svg" alt=""><br />
 						Surface Water Remediation Wetlands
 					</a>

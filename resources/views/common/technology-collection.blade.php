@@ -12,7 +12,7 @@
 				<br />{{$tech->Technology_Strategy}}&nbsp;<i class="fa fa-question-circle"></i>
 				</a>			
 			</div>
-					<p class="select"><button id="select_polygon">Select a polygon</button> <span>@{{subembayment}}</span></p>
+					<p class="select"><button id="select_polygon">Draw a polygon</button> <span>@{{subembayment}}</span></p>
 
 					<p class="select_point">
 						<button id="select_destination" style="display:none;">
@@ -29,9 +29,8 @@
 			</p>
 			<p>
 				<button id="applytreatment">Apply</button>
-
+				<button id="canceltreatment" class='button--cta right'>Cancel</button>
 			</p>
-			<p><a id="canceltreatment" class='button--cta right'>Cancel</a></p>
 	</section>
 </div>
 

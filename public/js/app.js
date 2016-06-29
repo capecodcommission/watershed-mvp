@@ -86,7 +86,7 @@ require([
 		// map.on("load", createToolbar);
 		map.on("load", initToolbar);
 		map.on("click", function(e){
-			console.log(e);
+			// console.log(e);
 		});
 		
 

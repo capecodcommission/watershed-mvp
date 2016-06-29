@@ -90,32 +90,48 @@ class TechnologyController extends Controller
 		$rate = round($rate, 2);
 		// $rate = number_format($rate, 2, "." , "" );
 		// dd($rate);
-		
-		if ($type == 'fert') {
-			$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Fert] ' . $treat_id . ', ' . $rate );
-			Session::put('fert_applied', 1);
-		}
 
-		// Storm treatments with a unit metric (acres) need a different calculation
-		// Also need to store the point where the user indicated the treatment would be located
-		else if ($type == 'storm' && $units > 0) 
+		switch ($type) 
 		{
-			$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Storm] ' . $treat_id . ', ' . $rate . ', ' . $units );
+			case 'fert':
+				$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Fert] ' . $treat_id . ', ' . $rate );
+				Session::put('fert_applied', 1);
+				$n_removed = session('n_removed');
+				$n_removed += $updated[0]->removed;
+				Session::put('n_removed', $n_removed);
+				return $n_removed;
+				break;
+			
+			case 'storm':
+				if ($units > 0) 
+				{
+					// Storm treatments with a unit metric (acres) need a different calculation
+					// Also need to store the point where the user indicated the treatment would be located
+					$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Storm] ' . $treat_id . ', ' . $rate . ', ' . $units );
+				}
+				else
+				{
+					$updated = DB::select('exec CapeCodMA.CALC_ApplyTreatment_Percent ' . $treat_id . ', ' . $rate . ', storm' );
+					Session::put('storm_applied', 1);
+				}
 
+				$n_removed = session('n_removed');
+				$n_removed += $updated[0]->removed;
+				Session::put('n_removed', $n_removed);			
+				return $n_removed;
+				break;
+			
+			case 'groundwater':
+
+				break;
+
+
+			default:
+				# code...
+				break;
 		}
-
-		// this is probably stormwater management policies, flat percent
-		else 	
-		{
-			$updated = DB::select('exec CapeCodMA.CALC_ApplyTreatment_Percent ' . $treat_id . ', ' . $rate . ', storm' );
-			Session::put('storm_applied', 1);
-		}
-
-		$n_removed = session('n_removed');
-		$n_removed += $updated[0]->removed;
-		Session::put('n_removed', $n_removed);
 		
-		return $n_removed;
+
 
 	}
 

@@ -30,7 +30,7 @@
 					<!-- <p class="select"><button id="select_area">Select a location</button> <span>@{{subembayment}}</span></p> -->
 					<p>
 						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated: 
-						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;"></label>
+						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;" value="{{$treatment->Treatment_MetricValue}}"></label>
 					</p>
 				@elseif($tech->Show_In_wMVP == 2)
 					<!-- <div id="info">Select a polygon for the treatment area:  -->
@@ -41,7 +41,7 @@
 					<p class="select"><button id="select_area">Select a polygon</button> <span>@{{subembayment}}</span></p>
 					<p>
 						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated: 
-						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;"></label>
+						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;" value="{{$treatment->Treatment_MetricValue}}"></label>
 					</p>
 				@endif
 			<p>
