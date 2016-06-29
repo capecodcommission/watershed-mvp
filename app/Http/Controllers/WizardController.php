@@ -89,7 +89,13 @@ class WizardController extends Controller
 		$removed = DB::select('exec CapeCodMA.CALC_ScenarioNitrogen ' . $scenarioid);
 		$removed = $removed[0]->N_Removed;
 		$current = $scenario->Nload_Existing - $removed;
-		$progress = round($scenario->Nload_Total_Target/$current * 100);
+		if ($current > 0) {
+			$progress = round($scenario->Nload_Total_Target/$current * 100);
+		}
+		else
+		{
+			$progress = 100;
+		}
 
 
 			
