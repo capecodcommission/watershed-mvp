@@ -42,28 +42,7 @@
 						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;"></label>
 					</p>
 				@endif
-{{-- 		<table>
-			<thead>
-				<tr>
-					<th>Embayment Nitrogen</th>
-					<th>After Treatment</th>
-					<th>Difference</th>
-				</tr>
-				<tr>
-					<th>Attenuated</th>
-					<th>Attenuated</th>
-					<th>N Removed</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-						<td>@{{total_treated | round }}kg</td>
-						<td>@{{embayment_treated | round }}kg</td>
-						<td>@{{embayment_difference | round }}kg</td>
-				</tr>
-				
-			</tbody>
-		</table> --}}
+
 			<p>
 				Enter a valid reduction rate between {{round($tech->Absolu_Reduc_perMetric_Low)}} and {{round($tech->Absolu_Reduc_perMetric_High)}}kg per {{$tech->Unit_Metric}}.<br />
 				

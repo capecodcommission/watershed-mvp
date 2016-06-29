@@ -103,10 +103,15 @@
 
 			var percent = $('#ground-percent').val();
 			var units = 1;
-			if ($('#unit_metric').val() > 0)
+			if ('{{$tech->Show_In_wMVP}}' != '2')
 			{
 				units = $('#unit_metric').val();
 			}
+			else
+			{
+				units = 0.0000000;
+			}
+			
 				
 			// console.log(units);
 			var url = "{{url('/apply_groundwater')}}" + '/' +  treatment + '/' + percent + '/' + units;
