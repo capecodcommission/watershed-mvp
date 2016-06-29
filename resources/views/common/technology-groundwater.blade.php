@@ -36,9 +36,9 @@
 						<button id="select_polygon">Draw Polygon</button>
 
 				@elseif($tech->Show_In_wMVP == 3)
-					<p class="select"><button id="select_area">Select a location</button> <span>@{{subembayment}}</span></p>
+					<p class="select"><button id="select_polygon">Draw Polygon</button></p>
 					<p>
-						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated: 
+						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} (for cost calculations): 
 						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;"></label>
 					</p>
 				@endif
@@ -102,8 +102,14 @@
 			e.preventDefault();
 
 			var percent = $('#ground-percent').val();
-			var units = $('unit_metric').val();
-			var url = "{{url('/apply_percent')}}" + '/' +  treatment + '/' + percent + '/ground/' + units;
+			var units = 1;
+			if ($('#unit_metric').val() > 0)
+			{
+				units = $('#unit_metric').val();
+			}
+				
+			// console.log(units);
+			var url = "{{url('/apply_groundwater')}}" + '/' +  treatment + '/' + percent + '/' + units;
 
 			$.ajax({
 				method: 'GET',

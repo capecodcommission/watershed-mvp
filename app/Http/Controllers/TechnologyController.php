@@ -26,7 +26,7 @@ class TechnologyController extends Controller
 		DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
 		$tech = DB::table('dbo.Technology_Matrix')->select('*')->where('TM_ID', $id)->first();
 		$scenarioid = session('scenarioid');
-		$treatment = Treatment::create(['ScenarioID' => $scenarioid, 'TreatmentType_ID'=>$tech->TM_ID, 'TreatmentType_Name'=>$tech->Technology_Strategy, 'Treatment_UnitMetric'=>$tech->Unit_Metric]);
+		$treatment = Treatment::create(['ScenarioID' => $scenarioid, 'TreatmentType_ID'=>$tech->Technology_ID, 'TreatmentType_Name'=>$tech->Technology_Strategy, 'Treatment_UnitMetric'=>$tech->Unit_Metric]);
 
 		if ($tech->Show_In_wMVP == 4) 
 		{
@@ -182,7 +182,18 @@ class TechnologyController extends Controller
 	}
 
 
+	/**
+	 * Apply Groundwater Treatment
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function ApplyTreatment_Groundwater($treat_id, $rate, $units)
+	{
 
+		$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Groundwater] ' . $treat_id . ', ' . $rate . ', ' . $units);
+
+	}
 
 
 	/**
@@ -377,8 +388,10 @@ class TechnologyController extends Controller
 					
 					break;
 				case 'groundwater':
+					$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Groundwater] '. $treat_id . ', '. $rate . ', ' . $units);
+					return $updated;
+					break;	
 					
-					break;
 				case 'embayment':
 					
 					break;
