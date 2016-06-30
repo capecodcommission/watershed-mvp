@@ -2,7 +2,10 @@
 		<link rel="stylesheet" href="{{url('/css/jquery.popdown.css')}}">
 
 		
+<?php 
+	setlocale(LC_MONETARY, 'en_US');
 
+?>
 <div class="popdown-content" id="app">
 	<header><h2>{{$tech->Technology_Strategy}}</h2></header>
 	<section class="body">
@@ -25,6 +28,7 @@
 			 -->
 					<p>Nitrogen removed by this treatment: {{round($treatment->Nload_Reduction)}}kg</p>
 					<p>Treatment reduction rate: {{$treatment->Treatment_Value}}%</p>
+					<p>Total Treatment Cost: {{money_format('%(10n.0', $treatment->Cost_Total)}}</p>
 				
  				@if($tech->Show_In_wMVP == 1)
 					

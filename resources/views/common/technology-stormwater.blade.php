@@ -121,6 +121,7 @@
 								$('#popdown-opacity').show();
 								$('.select > span').text('Selected: '+msg.SUBEM_DISP);
 								$('.select > span').show();
+								$('#select_area').hide();
 							})
 
 				});

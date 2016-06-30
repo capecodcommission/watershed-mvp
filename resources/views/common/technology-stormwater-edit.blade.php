@@ -25,6 +25,7 @@
 			 -->
 					<p>Nitrogen removed by this treatment: {{round($treatment->Nload_Reduction)}}kg</p>
 					<p>Treatment reduction rate: {{$treatment->Treatment_Value}}%</p>
+					<p>Total Treatment Cost: ${{money_format('%10.0n', $treatment->Cost_Total)}}</p>
 					@if($treatment->Treatment_UnitMetric == 'Acres' && $treatment->Treatment_MetricValue > 0)
 						<p>{{$treatment->Treatment_UnitMetric}} treated: {{$treatment->Treatment_MetricValue}}</p>
 					@endif

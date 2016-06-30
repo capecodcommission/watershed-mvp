@@ -10,7 +10,13 @@
 			<h1>Embayment: </h1>
 
 			<div id="app">
-			{{-- <h2>Technology Stack</h2> --}}
+			<?php 
+				$scenario_cost = 0;
+				$n_removed = 0;
+				setlocale(LC_MONETARY, 'en_US');
+
+
+			?>
 		
 			<table>
 				<thead>
@@ -18,6 +24,7 @@
 						<th colspan="2">Technology</th>
 						<th>Parcels Affected</th>
 						<th>Nitrogen Removed</th>
+						<th>Total Cost</th>
 						<th>Delete</th>
 					</tr>
 				</thead>
@@ -28,12 +35,20 @@
 						<td><div class="technology"><img src="http://www.cch2o.org/Matrix/icons/{{$result->Icon}}" alt=""></div></td>
 						<td>{{$result->Technology_Strategy}} ({{$result->TreatmentID}})</td>
 						<td>{{$result->Treatment_Parcels}}</td>
-						<td>{{round($result->Nload_Reduction)}}kg</td>
+						<td>{{round($result->Nload_Reduction)}}kg</td> <?php $n_removed += $result->Nload_Reduction; ?>
+						<td><?php echo money_format('%10.0n', $result->Cost_Total);?></td><?php $scenario_cost += $result->Cost_Total; ?>
 						<td><a data-treatment="{{$result->TreatmentID}}" class="deletetreatment button--cta"><i class="fa fa-trash-o"></i> Delete</a></td>
 	
 					</tr>
 					@endforeach
-
+					<tr id="totals">
+						<td>Scenario Totals:</td>
+						<td></td>
+						<td></td>
+						<td><strong><?php echo round($n_removed);?>kg</strong></td>
+						<td><strong><?php echo money_format('%10.0n', $scenario_cost);?></strong></td>
+						<td></td>
+					</tr>
 				</tbody>
 			</table>
 			<h2>Towns Affected</h2>
@@ -90,7 +105,7 @@
 			<p><sup>3</sup>A negative number in this column means the user has exceeded the target for this subembayment.</p>
 					
 					
-			<p><a href="{{url('map', [$embay_id, $scenarioid])}}" class="button">back to map</a></p>
+			<p><a href="{{url('map', [$embay_id, $scenarioid])}}" class="button">back to map</a> <a href="{{url('download', session('scenarioid'))}}" class="button--cta right" target="_blank"><i class="fa fa-download"></i> Download Results (.xls)</a></p>
 
 		</div>
 		</div>
