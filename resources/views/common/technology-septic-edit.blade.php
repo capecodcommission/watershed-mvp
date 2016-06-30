@@ -16,15 +16,16 @@
 					{{-- <p class="select"><button id="select_polygon" v-on:click="drawPolygon">Select a polygon</button> <span>@{{subembayment}}</span></p> --}}
 
 					
-					
-			</div>
+			<fieldset>
+				<legend><h3>Treatment Stats</h3></legend>
+				<ul>
+					<li>Nitrogen removed by this treatment: {{round($treatment->Nload_Reduction)}}kg</li>
+					<li>Parcels affected: {{$treatment->Treatment_Parcels}}</li>
+					<li>Total Treatment Cost: {{money_format('%10.0n', $treatment->Cost_Total)}}</li>
+				</ul>
+			</fieldset>	
+			
 
-			<p>
-				Nitrogen removed by this treatment: {{round($treatment->Nload_Reduction)}}kg
-			</p>
-			<p>
-				Parcels affected: {{$treatment->Treatment_Parcels}}
-			</p>
 			@if($tech->Nutri_Reduc_N_High_ppm > $tech->Nutri_Reduc_N_Low_ppm)
 			<p>
 				Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low_ppm}} and {{$tech->Nutri_Reduc_N_High_ppm}} ppm.<br />

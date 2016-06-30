@@ -20,9 +20,16 @@
 						</button> 
 						<span>@{{subembayment}}</span>
 					</p> --}}
-			<p>Parcels affected: {{$treatment->Treatment_Parcels}}</p>					
-			<p>Nitrogen removed by this treatment: {{round($treatment->Nload_Reduction)}}kg</p>
-			<p>Treatment reduction rate: {{$treatment->Treatment_Value}}ppm</p>
+
+			<fieldset>
+				<h3>Treatment Stats</h3>
+				<ul>
+					<li>Treatment reduction rate: <strong>{{$treatment->Treatment_Value}}ppm</strong></li>
+					<li>Nitrogen removed by this treatment: <strong>{{round($treatment->Nload_Reduction)}}kg</strong></li>
+					<li>Parcels affected: <strong>{{$treatment->Treatment_Parcels}}</strong></li>
+					<li>Total Treatment Cost: <strong>{{money_format('%10.0n', $treatment->Cost_Total)}}</strong></li>
+				</ul>
+			</fieldset>	
 
 			<p>
 				Enter a valid reduction rate between {{round($tech->Nutri_Reduc_N_Low_ppm)}} and {{round($tech->Nutri_Reduc_N_High_ppm)}} ppm.<br />

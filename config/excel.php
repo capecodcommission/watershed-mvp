@@ -58,15 +58,13 @@ return array(
     ),
 
     'properties' => array(
-        'creator'        => 'Maatwebsite',
+        'creator'        => 'WatershedMVP by Cape Cod Commission',
         'lastModifiedBy' => 'Maatwebsite',
-        'title'          => 'Spreadsheet',
-        'description'    => 'Default spreadsheet export',
+        'title'          => 'wMVP Scenario',
+        'description'    => 'Watershed Multivariat Planner Scenario',
         'subject'        => 'Spreadsheet export',
-        'keywords'       => 'maatwebsite, excel, export',
-        'category'       => 'Excel',
-        'manager'        => 'Maatwebsite',
-        'company'        => 'Maatwebsite',
+        'keywords'       => 'watershed, Cape Cod Commission',
+        'category'       => 'Excel'
     ),
 
     /*
@@ -106,7 +104,7 @@ return array(
     |
     */
 
-    'creator'    => 'Maatwebsite',
+    'creator'    => 'Cape Cod Commission',
 
     'csv'        => array(
         /*

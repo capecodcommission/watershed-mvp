@@ -26,9 +26,16 @@
 						unit metric is used to calculate cost
 					4 => user does not enter a treatment area (Fertilizer Mgmt or Stormwater BMPs)
 			 -->
-					<p>Nitrogen removed by this treatment: {{round($treatment->Nload_Reduction)}}kg</p>
-					<p>Treatment reduction rate: {{$treatment->Treatment_Value}}%</p>
-					<p>Total Treatment Cost: {{money_format('%(10n.0', $treatment->Cost_Total)}}</p>
+			 <fieldset>
+				<h3>Treatment Stats</h3>
+				<ul>
+					<li>Treatment reduction rate: <strong>{{$treatment->Treatment_Value}}ppm</strong></li>
+					<li>Nitrogen removed by this treatment: <strong>{{round($treatment->Nload_Reduction)}}kg</strong></li>
+					<li>Parcels affected: <strong>{{$treatment->Treatment_Parcels}}</strong></li>
+					<li>Total Treatment Cost: <strong>{{money_format('%10.0n', $treatment->Cost_Total)}}</strong></li>
+				</ul>
+			</fieldset>	
+					
 				
  				@if($tech->Show_In_wMVP == 1)
 					
