@@ -37,6 +37,7 @@
 	
 	<script>
 		var selectlayer = {{$embayment->EMBAY_ID}};
+		window.name = 'wmvp_scenario_{{session('scenarioid')}}';
 	</script>
 
 <!-- <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script> -->

@@ -490,7 +490,7 @@ require([
 		});
 
 		
-		$('.subembayment').on('click', function(e){
+		$('.subembayment').on('hover', function(e){
 			// console.log('subembayment clicked');
 			var sub = $(this).data('layer');
 			Subembayments.setDefinitionExpression('SUBEM_ID = ' + sub);

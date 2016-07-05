@@ -17,7 +17,7 @@
 		</div>
 		<div class="acc_cCont">
 		
-		<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="_blank">View Scenario Summary</a>
+		<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="wmvp_results_{{session('scenarioid')}}">View Scenario Summary</a>
 			Total Unattenuated Nitrogen: <span class="wizard-span">@{{unatt|round}}kg</span><br />
 			Total Attenuated Nitrogen: <span  class="wizard-span">@{{att|round}}kg</span></p>
 			<hr>
@@ -48,7 +48,7 @@
 		</header>
 		</div>
 		<div class="acc_cCont">
-			<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="_blank">View Scenario Summary</a>
+			<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="wmvp_results_{{session('scenarioid')}}">View Scenario Summary</a>
 			Total Unattenuated Load from Fertilizer: <span class="wizard-span">@{{fert_unatt|round}}kg</span> <br>
 			Total Attenuated Load from Fertilizer: <span class="wizard-span">@{{fert_att | round }}kg</span></p>
 			<hr>
@@ -82,7 +82,7 @@
 			</div>
 			<div class="acc_cCont">
 				<p>
-				<a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="_blank">View Scenario Summary</a>
+				<a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="wmvp_results_{{session('scenarioid')}}">View Scenario Summary</a>
 				Unattenuated Nitrogen from Stormwater: <span class="wizard-span">@{{storm_unatt|round}}kg</span> <br>
 				Attenuated Nitrogen from Stormwater: <span class="wizard-span">@{{storm_att|round}}kg</span></p>
 				<hr>
@@ -153,7 +153,7 @@
 		</header>
 		</div>
 		<div class="acc_cCont">
-		<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="_blank">View Scenario Summary</a>
+		<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="wmvp_results_{{session('scenarioid')}}">View Scenario Summary</a>
 			Unattenuated Nitrogen from Septic: <span class="wizard-span">@{{septic_unatt|round}}kg</span><br>
 			Attenuated Nitrogen from Septic: <span class="wizard-span">@{{septic_att|round}}kg</span></p>
 			<hr>
@@ -233,7 +233,7 @@
 		</header>
 		</div>
 		<div class="acc_cCont">
-			<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="_blank">View Scenario Summary</a>
+			<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="wmvp_results_{{session('scenarioid')}}">View Scenario Summary</a>
 			Existing Nitrogen from Groundwater: (<span id="getNitrogen">Calculate Groundwater</span>)</p>
 			<hr>
 
@@ -319,7 +319,7 @@
 		</header>
 		</div>
 		<div class="acc_cCont">
-			<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="_blank">View Scenario Summary</a>
+			<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="wmvp_results_{{session('scenarioid')}}">View Scenario Summary</a>
 			Some sort of intro will go here</p>
 			<hr>
 			<div class="technology">
@@ -383,7 +383,7 @@
 		<p>Overall Nitrogen Reduction: </p>
 			
 			<p><a href="{{url('download', session('scenarioid'))}}">Download Results (.xls)</a></p>
-			<p><a href="{{url('results', session('scenarioid'))}}" class="button">View detailed results</a></p>
+			<p><a href="{{url('results', session('scenarioid'))}}" class="button" target="wmvp_results_{{session('scenarioid')}}">View detailed results</a></p>
 		</div>
 	</article>
 	</aside>

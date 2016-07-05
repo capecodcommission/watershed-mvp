@@ -3,6 +3,7 @@
 		<title>WatershedMVP Scenario Results</title>
 		<link rel="stylesheet" href="{{url('/css/app.css')}}">
   	<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>  
+  	<script>window.name = 'wmvp_results_{{$scenarioid}}';</script>
 	</head>
 	<body>
 		<div class="wrapper">
@@ -50,7 +51,7 @@
 						<td></td>
 						<td><strong><?php echo round($n_removed);?>kg</strong></td>
 						<td><strong><?php echo money_format('%10.0n', $scenario_cost);?></strong></td>
-						<td colspan="2"><strong><?php echo money_format('%10.0n', $scenario_cost/$n_removed);?></strong> (Avg cost/kg)</td>
+						<td colspan="2"><strong><?php if ($result->Nload_Reduction > 0) {echo money_format('%10.0n', $scenario_cost/$n_removed);}?></strong> (Avg cost/kg)</td>
 						
 					</tr>
 				</tbody>
@@ -109,7 +110,7 @@
 			<p><sup>3</sup>A negative number in this column means the user has exceeded the target for this subembayment.</p>
 					
 					
-			<p><a href="{{url('map', [$embay_id, $scenarioid])}}" class="button">back to map</a> <a href="{{url('download', $scenarioid)}}" class="button--cta right" target="_blank"><i class="fa fa-download"></i> Download Results (.xls)</a></p>
+			<p><a href="{{url('map', [$embay_id, $scenarioid])}}" class="button" target="wmvp_scenario_{{$scenarioid}}">back to map</a> <a href="{{url('download', $scenarioid)}}" class="button--cta right" target="_blank"><i class="fa fa-download"></i> Download Results (.xls)</a></p>
 
 		</div>
 		</div>
