@@ -69,7 +69,7 @@
 			// console.log('button clicked');
 				$('#popdown-opacity').hide();
 				map.on('click', function(e){
-					console.log(e);
+					// console.log(e);
 				
 					var url = "{{url('/map/move/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y +'/' + treatment;
 					$.ajax({
@@ -86,8 +86,10 @@
 							$('.select > span').text('Selected: '+msg.SUBEM_DISP);
 							$('.select > span').show();
 							$('#select_destination_'+treatment).hide();
+							
+							console.log('unbound');
 						})
-
+						$(this).off(e);
 			});
 		});
 	$('#apply_treatment_'+treatment).on('click', function(e){

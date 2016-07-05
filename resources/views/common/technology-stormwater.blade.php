@@ -26,18 +26,18 @@
 
 				@if($tech->Show_In_wMVP == 1)
 					<!-- <p class="select"><button id="select_area">Select a location</button> <span>@{{subembayment}}</span></p> -->
-					<p class="select"><button id="select_area">Select a location</button> <span>@{{subembayment}}</span></p>
+					<p class="select"><button id="select_area_{{$treatment->TreatmentID}}">Select a location</button> <span>@{{subembayment}}</span></p>
 					<p>
 						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated: 
 						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;"></label>
 					</p>
 				@elseif($tech->Show_In_wMVP == 2)
 					<!-- <div id="info">Select a polygon for the treatment area:  -->
-						<button id="select_polygon">Draw Polygon</button>
+						<button id="select_polygon_{{$treatment->TreatmentID}}">Draw Polygon</button>
 					<!-- </div> -->
 					<!-- <p class="select"><button id="select_area">Select a polygon</button> <span>@{{subembayment}}</span></p> -->
 				@elseif($tech->Show_In_wMVP == 3)
-					<p class="select"><button id="select_area">Select a polygon</button> <span>@{{subembayment}}</span></p>
+					<p class="select"><button id="select_polygon_{{$treatment->TreatmentID}}">Select a polygon</button> <span>@{{subembayment}}</span></p>
 					<p>
 						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated: 
 						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;"></label>
@@ -80,8 +80,8 @@
 				<input type="range" id="storm-percent" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="storm_percent" value="{{$tech->Nutri_Reduc_N_Low}}"> @{{storm_percent}}%
 			</p>
 			<p>
-				<button id="applytreatment">Apply</button>
-				<button id="canceltreatment" class="button--cta right"><i class="fa fa-ban"></i> Cancel</button>
+				<button id="apply_treatment_{{$treatment->TreatmentID}}">Apply</button>
+				<button id="cancel_treatment_{{$treatment->TreatmentID}}" class="button--cta right"><i class="fa fa-ban"></i> Cancel</button>
 			</p>
 
 
@@ -98,7 +98,7 @@
 	 treatment = {{$treatment->TreatmentID}};
 	 @if($tech->Show_In_wMVP < 4)
 		 var location;
-			$('#select_area').on('click', function(f){
+			$('#select_area_'+treatment).on('click', function(f){
 				f.preventDefault();
 				// console.log('button clicked');
 					$('#popdown-opacity').hide();
@@ -121,13 +121,13 @@
 								$('#popdown-opacity').show();
 								$('.select > span').text('Selected: '+msg.SUBEM_DISP);
 								$('.select > span').show();
-								$('#select_area').hide();
+								$('#select_area_'+treatment).hide();
 							})
 
 				});
 			});
 
-			$('#select_polygon').on('click', function(f){
+			$('#select_polygon_'+treatment).on('click', function(f){
 				f.preventDefault();
 				$('#popdown-opacity').hide();
 				// $( "#info" ).trigger( "click" );
@@ -137,7 +137,7 @@
 				tb.activate('polygon');
 
 			});
-			$('#applytreatment').on('click', function(e){
+			$('#apply_treatment_'+treatment).on('click', function(e){
 				// need to save the treated N values and update the subembayment progress
 				e.preventDefault();
 				// console.log('clicked');
@@ -174,7 +174,7 @@
 					});
 			});
 			@else
-				$('#applytreatment').on('click', function(e){
+				$('#apply_treatment_'+treatment).on('click', function(e){
 				// need to save the treated N values and update the subembayment progress
 				e.preventDefault();
 				// console.log('clicked');
@@ -202,7 +202,7 @@
 
 
 
-		$('#canceltreatment').on('click', function(e){
+		$('#cancel_treatment_'+treatment).on('click', function(e){
 		var url = "{{url('cancel', $treatment->TreatmentID)}}";
 		$.ajax({
 			method: 'GET',

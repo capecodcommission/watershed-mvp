@@ -25,6 +25,7 @@
 						<th>Parcels Affected</th>
 						<th>Nitrogen Removed</th>
 						<th>Total Cost</th>
+						<th>Cost per kg N removed</th>
 						<th>Delete</th>
 					</tr>
 				</thead>
@@ -37,6 +38,8 @@
 						<td>{{$result->Treatment_Parcels}}</td>
 						<td>{{round($result->Nload_Reduction)}}kg</td> <?php $n_removed += $result->Nload_Reduction; ?>
 						<td><?php echo money_format('%10.0n', $result->Cost_Total);?></td><?php $scenario_cost += $result->Cost_Total; ?>
+						<td><?php if ($result->Nload_Reduction > 0) {
+								echo money_format('%10.0n', $result->Cost_Total/$result->Nload_Reduction);}?></td>
 						<td><a data-treatment="{{$result->TreatmentID}}" class="deletetreatment button--cta"><i class="fa fa-trash-o"></i> Delete</a></td>
 	
 					</tr>
@@ -47,7 +50,8 @@
 						<td></td>
 						<td><strong><?php echo round($n_removed);?>kg</strong></td>
 						<td><strong><?php echo money_format('%10.0n', $scenario_cost);?></strong></td>
-						<td></td>
+						<td colspan="2"><strong><?php echo money_format('%10.0n', $scenario_cost/$n_removed);?></strong> (Avg cost/kg)</td>
+						
 					</tr>
 				</tbody>
 			</table>
@@ -105,7 +109,7 @@
 			<p><sup>3</sup>A negative number in this column means the user has exceeded the target for this subembayment.</p>
 					
 					
-			<p><a href="{{url('map', [$embay_id, $scenarioid])}}" class="button">back to map</a> <a href="{{url('download', session('scenarioid'))}}" class="button--cta right" target="_blank"><i class="fa fa-download"></i> Download Results (.xls)</a></p>
+			<p><a href="{{url('map', [$embay_id, $scenarioid])}}" class="button">back to map</a> <a href="{{url('download', $scenarioid)}}" class="button--cta right" target="_blank"><i class="fa fa-download"></i> Download Results (.xls)</a></p>
 
 		</div>
 		</div>

@@ -15,7 +15,7 @@
 				<br />{{$tech->Technology_Strategy}}&nbsp;<i class="fa fa-question-circle"></i>
 				</a>			
 			</div>
-					<p class="select"><button id="select_polygon">Select a polygon</button> <span>@{{subembayment}}</span></p>
+					<p class="select"><button id="select_polygon_{{$treatment->TreatmentID}}">Select a polygon</button> <span>@{{subembayment}}</span></p>
 
 					
 					
@@ -31,8 +31,8 @@
 			@endif
 
 			<p>
-				<button id="applytreatment">Apply</button>
-				<button id="canceltreatment" class='button--cta right'><i class="fa fa-ban"></i> Cancel</button>
+				<button id="apply_treatment_{{$treatment->TreatmentID}}">Apply</button>
+				<button id="cancel_treatment_{{$treatment->TreatmentID}}" class='button--cta right'><i class="fa fa-ban"></i> Cancel</button>
 			</p>
 	</section>
 </div>
@@ -56,18 +56,18 @@
 	 treatment = {{$treatment->TreatmentID}};
 
 
-		$('#select_polygon').on('click', function(f){
+		$('#select_polygon_'+treatment).on('click', function(f){
 			f.preventDefault();
 			$('#popdown-opacity').hide();
 			func = 'septic';
 			map.disableMapNavigation();
 			tb.activate('polygon');
-			$('#select_polygon').hide();
+			$('#select_polygon_'+treatment).hide();
 			// $('#select_destination').show();
 
 		});
 		
-	$('#applytreatment').on('click', function(e){
+	$('#apply_treatment_'+treatment).on('click', function(e){
 			e.preventDefault();
 			var rate = $('#septic-rate').val();
 			var url = "{{url('/apply_septic')}}" + '/' +  treatment + '/' + rate;
@@ -90,7 +90,7 @@
 		});
 
 
-		$('#canceltreatment').on('click', function(e){
+		$('#canceltreatment_'+treatment).on('click', function(e){
 		var url = "{{url('cancel', $treatment->TreatmentID)}}";
 		$.ajax({
 			method: 'GET',

@@ -249,7 +249,7 @@ class WizardController extends Controller
 
 
 			$excel->sheet('Scenario Results', function($sheet) use ($scenario, $results, $towns, $subembayments){
-				$sheet->setColumnFormat(array('D' => '"$"#,##0.00_-'));
+				$sheet->setColumnFormat(array('D' => '"$"#,##0_-', 'E' => '"$"#,##0.00_-'));
 				$sheet->loadView('layouts.download', array('results'=>$results, 'scenario'=>$scenario,  'towns'=>$towns, 'subembayments'=>$subembayments));
 
 			})->export('xls');

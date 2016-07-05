@@ -207,7 +207,17 @@
 				<a href="{{url('/tech/septic/24')}}" class="popdown">
 					<img src="http://www.cch2o.org/Matrix/icons/toilet.svg" alt="" ><br />
 					Urine Diverting Toilets</a>
-			</div>					
+			</div>		
+			<div class="technology">
+				<a href="{{url('/tech/septic/38')}}" class="popdown">
+					<img src="http://www.cch2o.org/Matrix/icons/ia.svg" alt="" ><br />
+					I/A Systems</a>
+			</div>		
+			<div class="technology">
+				<a href="{{url('/tech/septic/39')}}" class="popdown">
+					<img src="http://www.cch2o.org/Matrix/icons/enhanced_ia.svg" alt="" ><br />
+					Enhanced I/A Systems</a>
+			</div>						
 		</div>
 	</article>
 	</aside>
