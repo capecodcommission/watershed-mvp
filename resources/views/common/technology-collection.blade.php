@@ -12,10 +12,10 @@
 				<br />{{$tech->Technology_Strategy}}&nbsp;<i class="fa fa-question-circle"></i>
 				</a>			
 			</div>
-					<p class="select"><button id="select_polygon">Draw a polygon</button> </p>
+					<p class="select"><button id="select_polygon_{{$treatment->TreatmentID}}">Draw a polygon</button> </p>
 
 					<p class="select_point">
-						<button id="select_destination" style="display:none;">
+						<button id="select_destination_{{$treatment->TreatmentID}}" style="display:none;">
 							Select a destination
 						</button> 
 						<span>@{{subembayment}}</span>
@@ -28,8 +28,8 @@
 				<input type="range" id="septic-rate" min="{{$tech->Nutri_Reduc_N_Low_ppm}}" max="{{$tech->Nutri_Reduc_N_High_ppm}}" v-model="septic_rate" value="{{$tech->Nutri_Reduc_N_Low_ppm}}">@{{septic_rate}}
 			</p>
 			<p>
-				<button id="applytreatment">Apply</button>
-				<button id="canceltreatment" class='button--cta right'>Cancel</button>
+				<button id="apply_treatment_{{$treatment->TreatmentID}}">Apply</button>
+				<button id="cancel_treatment" class='button--cta right'>Cancel</button>
 			</p>
 	</section>
 </div>
@@ -54,17 +54,17 @@
 	 treatment = {{$treatment->TreatmentID}};
 	 func = 'collect';
 
-		$('#select_polygon').on('click', function(f){
+		$('#select_polygon_'+treatment).on('click', function(f){
 			f.preventDefault();
 			$('#popdown-opacity').hide();
 			map.disableMapNavigation();
 			tb.activate('polygon');
 			// console.log(tb);
-			$('#select_polygon').hide();
-			$('#select_destination').show();
+			$('#select_polygon_'+treatment).hide();
+			$('#select_destination_'+treatment).show();
 			// console.log(msg);
 		});
-		$('#select_destination').on('click', function(f){
+		$('#select_destination_'+ treatment).on('click', function(f){
 			f.preventDefault();
 			// console.log('button clicked');
 				$('#popdown-opacity').hide();
@@ -85,12 +85,12 @@
 							$('#popdown-opacity').show();
 							$('.select > span').text('Selected: '+msg.SUBEM_DISP);
 							$('.select > span').show();
-							$('#select_destination').hide();
+							$('#select_destination_'+treatment).hide();
 						})
 
 			});
 		});
-	$('#applytreatment').on('click', function(e){
+	$('#apply_treatment_'+treatment).on('click', function(e){
 			e.preventDefault();
 			var rate = $('#septic-rate').val();
 			var url = "{{url('/apply_septic')}}" + '/' +  treatment + '/' + rate;
@@ -113,7 +113,7 @@
 		});
 
 
-	$('#canceltreatment').on('click', function(e){
+	$('#cancel_treatment_'+treatment).on('click', function(e){
 		var url = "{{url('cancel', $treatment->TreatmentID)}}";
 		$.ajax({
 			method: 'GET',

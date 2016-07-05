@@ -159,6 +159,7 @@ return [
         'Laracasts\Utilities\JavaScript\JavaScriptServiceProvider',
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+         Collective\Bus\BusServiceProvider::class,
 
     ],
 

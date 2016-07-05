@@ -1,9 +1,10 @@
 <html>
 	<head>
 		<title>WatershedMVP Scenario Results</title>
-
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	</head>
 	<body>
+
 		<div class="wrapper">
 		<div class="content">
 			<h1>Scenario: {{$scenario->ScenarioID}} for {{$scenario->AreaName}}</h1>
@@ -16,26 +17,39 @@
 					<tr>
 						<th>Technology</th>
 						<th>Parcels Affected</th>
-						<th>Nitrogen Removed</th>
-						<th>Project Cost</th>
+						<th>Nitrogen Removed (kg)</th>
+						<th>Treatment Cost</th>
 					</tr>
 				</thead>
 				<tbody>
+				<?php $row = 7; ?>
 
 					@foreach($results as $result)
 					<tr>
 						<td>{{$result->Technology_Strategy}} ({{$result->TreatmentID}})</td>
 						<td>{{$result->Treatment_Parcels}}</td>
-						<td>{{$result->Nload_Reduction}}kg</td>
+						<td>{{round($result->Nload_Reduction)}}</td>
 						<td>{{money_format('%10.0n', $result->Cost_Total)}}</td>
-	
+						<?php $row++; ?>
 					</tr>
 					@endforeach
 					<tr>
-						<td>Scenario Totals:</td>
 						<td></td>
-						<td>=SUM(C8:C10)</td>
-						<td>=SUM(D8:D10)</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>Total Nitrogen Removed</td>
+						<td>Total Scenario Cost</td>
+					</tr>
+					<tr>
+						<td><strong>Scenario Totals:</strong></td>
+						<td></td>
+						<td>=SUM(C8:C{{$row}})</td>
+						<td>=SUM(D8:D{{$row}})</td>
 					</tr>
 				</tbody>
 			</table>
