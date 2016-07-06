@@ -194,67 +194,8 @@ class WizardController extends Controller
 	}
 
 
-	/**
-	 * undocumented function
-	 *
-	 * @return void
-	 * @author 
-	 **/
-	public function getScenarioResults($scenarioid)
-	{	
-		// $scenarioid = session('scenarioid');
-		$embay_id = session('embay_id');
-		$results = DB::select('exec CapeCodMA.Get_ScenarioResults '. $scenarioid);
-		// dd($results);
-		$towns = DB::select('select wtt.*, t.town from dbo.wiz_treatment_towns wtt inner join capecodma.matowns t on t.town_id = wtt.wtt_town_id
-  where wtt.wtt_scenario_id = ' . $scenarioid);
-		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
-		// Need to calculate all the treatments applied and Nitrogen removed from this scenario
-
-		return view('layouts/results', ['results'=>$results, 'scenarioid'=>$scenarioid, 'embay_id'=>$embay_id, 'towns'=>$towns, 'subembayments'=>$subembayments]);
-
-	}
-
-	/**
-	 * GetScenarioNitrogen
-	 *
-	 * @return void
-	 * @author 
-	 **/
-	function GetScenarioNitrogen()
-	{
-		$scenarioid = session('scenarioid');
-		$Nitrogen = DB::select('exec capecodma.calc_scenarioNitrogen ' . $scenarioid);
-		return $Nitrogen;
-	}
-
-	/**
-	 * Download Scenario as .xls
-	 *
-	 * @return void
-	 * @author 
-	 **/
-	public function downloadScenarioResults($scenarioid)
-	{
-		$scenario = Scenario::find($scenarioid);
-		// $embay_id = $scenario->AreaID;
-		// dd($scenario);
-		$results = DB::select('exec CapeCodMA.Get_ScenarioResults '. $scenarioid);
-		$towns = DB::select('select wtt.*, t.town from dbo.wiz_treatment_towns wtt inner join capecodma.matowns t on t.town_id = wtt.wtt_town_id
-  where wtt.wtt_scenario_id = ' . $scenarioid);
-		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
-		$filename = 'scenario_' . $scenarioid;
-		Excel::create($filename, function($excel) use($scenario, $results, $towns, $subembayments) 
-		{
 
 
-			$excel->sheet('Scenario Results', function($sheet) use ($scenario, $results, $towns, $subembayments){
-				$sheet->setColumnFormat(array('D' => '"$"#,##0_-', 'E' => '"$"#,##0.00_-'));
-				$sheet->loadView('layouts.download', array('results'=>$results, 'scenario'=>$scenario,  'towns'=>$towns, 'subembayments'=>$subembayments));
-
-			})->export('xls');
-
-		});
-	}
+	
 	
 }

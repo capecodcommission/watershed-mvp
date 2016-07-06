@@ -42,11 +42,11 @@ Route::get('/polygon/{type}/{treatment}/{polygon}', 'TechnologyController@getPol
 Route::get('/map/point/{x}/{y}/{treatment}', 'MapController@point');
 Route::get('/map/move/{x}/{y}/{treatment}', 'MapController@moveNitrogen');
 
-Route::get('/getScenarioNitrogen', 'WizardController@GetScenarioNitrogen');
+Route::get('/getScenarioNitrogen', 'ScenarioController@GetScenarioNitrogen');
 Route::get('/getScenarioProgress', 'ScenarioController@getCurrentProgress');
 
-Route::get('/results/{scenarioid}', 'WizardController@getScenarioResults');
-Route::get('/download/{scenarioid}', 'WizardController@downloadScenarioResults');
+Route::get('/results/{scenarioid}', 'ScenarioController@getScenarioResults');
+Route::get('/download/{scenarioid}', 'ScenarioController@downloadScenarioResults');
 
 Route::get('progress', 'ScenarioController@getProgress');
 

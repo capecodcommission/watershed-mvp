@@ -3,20 +3,18 @@
 		<title>WatershedMVP Scenario Results</title>
 		<link rel="stylesheet" href="{{url('/css/app.css')}}">
   	<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>  
-  	<script>window.name = 'wmvp_results_{{$scenarioid}}';</script>
+  	<script>window.name = 'wmvp_results_{{$scenario->ScenarioID}}';</script>
 	</head>
 	<body>
 		<div class="wrapper">
 		<div class="content full-width">
-			<h1>Embayment: </h1>
+			<h1>Embayment: {{$scenario->AreaName}}</h1>
 
 			<div id="app">
 			<?php 
 				$scenario_cost = 0;
 				$n_removed = 0;
 				setlocale(LC_MONETARY, 'en_US');
-
-
 			?>
 		
 			<table>
@@ -110,7 +108,7 @@
 			<p><sup>3</sup>A negative number in this column means the user has exceeded the target for this subembayment.</p>
 					
 					
-			<p><a href="{{url('map', [$embay_id, $scenarioid])}}" class="button" target="wmvp_scenario_{{$scenarioid}}">back to map</a> <a href="{{url('download', $scenarioid)}}" class="button--cta right" target="_blank"><i class="fa fa-download"></i> Download Results (.xls)</a></p>
+			<p><a href="{{url('map', [$scenario->AreaID, $scenario->ScenarioID])}}" class="button" target="wmvp_scenario_{{$scenario->ScenarioID}}">back to map</a> <a href="{{url('download', $scenario->ScenarioID)}}" class="button--cta right" target="_blank"><i class="fa fa-download"></i> Download Results (.xls)</a></p>
 
 		</div>
 		</div>

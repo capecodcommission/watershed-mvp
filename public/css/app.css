@@ -6485,3 +6485,14 @@ nav.toolbar {
 
 .acc_cCont .technology {
   width: 100px; }
+
+.results_download thead tr th {
+  font-weight: bold;
+  color: #000066; }
+
+.results_download tr.summary {
+  font-weight: bold;
+  border: 1px solid #ff0000;
+  border-width: 1px 0; }
+  .results_download tr.summary .avg_cost_per_kg {
+    background-color: #ffff00; }
