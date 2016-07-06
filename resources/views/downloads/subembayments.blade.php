@@ -2,14 +2,14 @@
 	<head>
 		<title>WMVP Results by Subembayment</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-{{-- {{ HTML::style('css/download.css') }} --}}
+
 	</head>
 	<body>
 
 		<div class="wrapper results_download">
 		<div class="content">
 			<h1>Scenario: {{$scenario->ScenarioID}} for {{$scenario->AreaName}}</h1>
-			<p>Link to scenario: {{url('map', $scenario->AreaID, $scenario->ScenarioID)}}</p>
+			<p></p>
 			<div id="app">
 			
 			<h2>Subembayments</h2>

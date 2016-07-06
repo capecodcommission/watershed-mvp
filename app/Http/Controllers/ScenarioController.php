@@ -121,7 +121,7 @@ class ScenarioController extends Controller
 			});
 
 			$excel->sheet('Cost Breakdown', function($sheet) use ($scenario, $results){
-				$sheet->setColumnFormat(array('C:D' => '#,##0_-', 'D:L' => '"$"#,##0_-'));
+				$sheet->setColumnFormat(array('C:D' => '#,##0_-', 'E:L' => '"$"#,##0_-'));
 				$sheet->loadView('downloads.costs', array('results'=>$results, 'scenario'=>$scenario));
 
 			});			

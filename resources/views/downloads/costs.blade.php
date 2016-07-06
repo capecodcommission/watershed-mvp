@@ -8,7 +8,7 @@
 		<div class="wrapper results_download">
 		<div class="content">
 			<h1>Scenario: {{$scenario->ScenarioID}} for {{$scenario->AreaName}}</h1>
-			<p>Link to scenario: {{url('map', $scenario->AreaID, $scenario->ScenarioID)}}</p>
+			<p></p>
 			<h2>Cost Breakdown</h2>
 		
 			<table>

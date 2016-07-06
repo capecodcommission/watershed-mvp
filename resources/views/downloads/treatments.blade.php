@@ -9,7 +9,7 @@
 		<div class="wrapper results_download">
 		<div class="content">
 			<h1>Scenario: {{$scenario->ScenarioID}} for {{$scenario->AreaName}}</h1>
-			<p>Link to scenario: {{url('map', $scenario->AreaID, $scenario->ScenarioID)}}</p>
+			<p>Link to scenario: {{url('map', [$scenario->AreaID, $scenario->ScenarioID])}}</p>
 			<div id="app">
 			<h2>Technology Stack</h2>
 		
@@ -22,6 +22,8 @@
 						<th>Nitrogen Removed (kg)</th>
 						<th>Treatment Total Cost</th>
 						<th>Cost per kg Nitrogen Removed</th>
+						<th>Unit Metric</th>
+						<th>Num Units</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -34,6 +36,8 @@
 						<td>{{round($result->Nload_Reduction)}}</td>
 						<td>{{money_format('%10.0n', $result->Cost_Total)}}</td>
 						<td>@if($result->Nload_Reduction > 0) {{$result->Cost_Total/$result->Nload_Reduction}} @endif <?php $row++; ?></td>
+						<td>{{$result->Treatment_UnitMetric}}</td>
+						<td>{{$result->Treatment_MetricValue}}</td>
 					</tr>
 					@endforeach
 					<tr style="border-top: 2px double #000000;">
@@ -43,6 +47,8 @@
 						<td></td>
 						<td></td>
 						<td></td>
+						<td></td>
+						<td></td>						
 					</tr>
 					<tr>
 						<td></td>
@@ -51,6 +57,8 @@
 						<td><strong>Total Nitrogen Removed</strong></td>
 						<td><strong>Total Scenario Cost</strong></td>
 						<td><strong>Avg Cost per kg N removed</strong></td>
+						<td></td>
+						<td></td>						
 					</tr>
 					<tr class="summary">
 						<td><strong>Scenario Totals:</strong></td>
@@ -83,7 +91,12 @@
 	
 					@endforeach
 				</tbody>
-			</table>			
+			</table>	
+			<p></p>		
+			<p></p>
+			<p>Scenario Created: {{$scenario->CreateDate}}</p>
+			{{-- <p>Scenario Updated: {{$scenario->UpdateDate}}</p> --}}
+			<p>Downloaded on: <?php echo date('Y-m-d H:i:s');?></p>
 
 		</div>
 		</div>
