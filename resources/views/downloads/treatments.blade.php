@@ -94,7 +94,8 @@
 			</table>	
 			<p></p>		
 			<p></p>
-			<p>Scenario Created: {{$scenario->CreateDate}}</p>
+			{{-- <p>Scenario Created: {{$scenario->CreateDate}}</p> --}}
+			<p>Created by: {{$scenario->user->name}} ({{$scenario->user->email}}) on {{date('Y-m-d', strtotime($scenario->CreateDate))}}</p>
 			{{-- <p>Scenario Updated: {{$scenario->UpdateDate}}</p> --}}
 			<p>Downloaded on: <?php echo date('Y-m-d H:i:s');?></p>
 

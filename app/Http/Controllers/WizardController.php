@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Auth;
 
 use App\Embayment;
 use App\Scenario;
@@ -20,6 +21,8 @@ class WizardController extends Controller
 	//
 	public function start($id, $scenarioid = null)
 	{
+		$user = Auth::user();
+
 		$embayment = Embayment::find($id);
 		
 		// Need to create a new scenario or find existing one that the user is editing
@@ -35,11 +38,13 @@ class WizardController extends Controller
 				}
 				else
 				{
-					
+					$scenario = $user->scenarios()->create([
+						'AreaID'=>$id
+					]);
 					// user selected a different embayment, need to create a new scenario 
-					$scenario = new Scenario;
-					$scenario->areaid = $id;
-					$scenario->save();
+					// $scenario = new Scenario;
+					// $scenario->areaid = $id;
+					// $scenario->save();
 					$scenarioid = $scenario->ScenarioID;
 					
 					Session::put('scenarioid', $scenarioid);
@@ -56,9 +61,12 @@ class WizardController extends Controller
 					//  need to create a new scenario 
 					// $scenarioid = DB::select('exec CapeCodMA.CreateScenario ' . $id);
 					// $scenarioid = $scenarioid[0]->scenarioid;
-					$scenario = new Scenario;
-					$scenario->areaid = $id;
-					$scenario->save();
+				$scenario = $user->scenarios()->create([
+						'AreaID'=>$id
+					]);
+					// $scenario = new Scenario;
+					// $scenario->areaid = $id;
+					// $scenario->save();
 
 					$scenarioid = $scenario->ScenarioID;
 

@@ -60,3 +60,6 @@ Route::get('/testmap', function(){
 Route::get('/testleaf', function(){
 	return view('testleaf');
 });
+Route::auth();
+
+Route::get('/home', 'HomeController@index');

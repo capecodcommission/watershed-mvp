@@ -68,11 +68,12 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+            'table' => 'CapeCodMA.Scenario_Users'
         ],
 
         // 'users' => [
         //     'driver' => 'database',
-        //     'table' => 'users',
+        //     'table' => 'CapeCodMA.Scenario_Users',
         // ],
     ],
 

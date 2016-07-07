@@ -54,7 +54,8 @@ class Scenario extends Model
 		'Nload_Reduction_Attenuation',
 		'Nload_Reduction_InEmbay',
 		'ScenarioProgress',
-		'ScenarioComplete'
+		'ScenarioComplete',
+		'user_id'
 
 	];
 	
@@ -73,6 +74,11 @@ class Scenario extends Model
     public function treatments()
     {
     	return $this->hasMany('App\Treatment', 'ScenarioID', 'ScenarioID')->whereNull('Parent_TreatmentId');
+    }
+
+    public function user()
+    {
+    	return $this->belongsTo('App\User');
     }
 
 }
