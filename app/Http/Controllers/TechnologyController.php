@@ -28,12 +28,12 @@ class TechnologyController extends Controller
 		$scenarioid = session('scenarioid');
 		$treatment = Treatment::create(['ScenarioID' => $scenarioid, 'TreatmentType_ID'=>$tech->Technology_ID, 'TreatmentType_Name'=>$tech->Technology_Strategy, 'Treatment_UnitMetric'=>$tech->Unit_Metric, 'Treatment_Class'=>$tech->Technology_Sys_Type]);
 
-		if ($tech->Show_In_wMVP == 4) 
-		{
-			// this is embayment-wide, need to get the embayment_area and use that as the custom polygon for the Get_PointsfromPolygon
-			$embay_id = session('embay_id');
-			$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment->TreatmentID . ', \'embayment\'');
-		}
+		// if ($tech->Show_In_wMVP == 4) 
+		// {
+		// 	// this is embayment-wide, need to get the embayment_area and use that as the custom polygon for the Get_PointsfromPolygon
+		// 	$embay_id = session('embay_id');
+		// 	$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment->TreatmentID . ', \'embayment\'');
+		// }
 		// create a new record in the treatment_wiz table for this scenario & technology
 		// get the treatmentID back and use that for the treatment_parcels table
 
