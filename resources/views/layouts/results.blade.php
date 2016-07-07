@@ -47,10 +47,10 @@
 				</thead>
 				<tbody>
 
-					@foreach($results as $result)
+					@foreach($scenario->treatments as $result)
 					<tr id="treat_{{$result->TreatmentID}}">
-						<td><div class="technology"><img src="http://www.cch2o.org/Matrix/icons/{{$result->Icon}}" alt=""></div></td>
-						<td>{{$result->Technology_Strategy}} ({{$result->TreatmentID}})</td>
+						<td><div class="technology"><img src="http://www.cch2o.org/Matrix/icons/{{$result->technology->Icon}}" alt=""></div></td>
+						<td>{{$result->technology->Technology_Strategy}} ({{$result->TreatmentID}})</td>
 						<td>{{$result->Treatment_Parcels}}</td>
 						<td>{{round($result->Nload_Reduction)}}kg</td> <?php $n_removed += $result->Nload_Reduction; ?>
 						<td><?php echo money_format('%10.0n', $result->Cost_Total);?></td><?php $scenario_cost += $result->Cost_Total; ?>
