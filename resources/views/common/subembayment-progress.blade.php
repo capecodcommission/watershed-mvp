@@ -7,7 +7,7 @@
 	<?php 
 		if($subem->n_load_att > 0)
 		{
-			$percent = ($subem->n_load_target/$subem->n_load_att)*100;
+			$percent = ($subem->n_load_target/($subem->n_load_att-$subem->n_load_att_removed))*100;
 		}
 		else
 		{
@@ -31,7 +31,7 @@
 				</div>
 
 				<div class="stat-group">
-					<div class="stat-label">Scenario Attenuated:</div> 	<div class="stat-data scenario-progress">kg</div>
+					<div class="stat-label">Scenario Attenuated:</div> 	<div class="stat-data scenario-progress">{{round($subem->n_load_att - $subem->n_load_att_removed)}}kg</div>
 				</div>
 
 				<div class="stat-group">

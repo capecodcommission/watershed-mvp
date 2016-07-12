@@ -94,11 +94,31 @@ class WizardController extends Controller
 		$treatments = $scenario->treatments;
 
 		// Get the scenario's current progress
-		$removed = DB::select('exec CapeCodMA.CALC_ScenarioNitrogen ' . $scenarioid);
-		$removed = $removed[0]->N_Removed;
-		$current = $scenario->Nload_Existing - $removed;
+		// $removed = DB::select('exec CapeCodMA.CALC_ScenarioNitrogen ' . $scenarioid);
+		// $removed = $removed[0]->N_Removed;
+		// $current = $scenario->Nload_Existing - $removed;
+		// if ($current > 0) {
+		// 	$progress = round($scenario->Nload_Total_Target/$current * 100);
+		// }
+		// else
+		// {
+		// 	$progress = 100;
+		// }
+
+		$removed = 0;
+		$n_load_orig = 0;
+		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
+		// $subembayments = DB::select('exec CapeCodMA.GET_SubembaymentNitrogen ' . $id);
+		$total_goal = 0;
+		foreach ($subembayments as $key) 
+		{
+			$n_load_orig += $key->n_load_att;
+			$removed += $key->n_load_att_removed;
+			$total_goal += $key->n_load_target;
+		}
+		$current = $n_load_orig - $removed;
 		if ($current > 0) {
-			$progress = round($scenario->Nload_Total_Target/$current * 100);
+			$progress = round($total_goal/$current * 100);
 		}
 		else
 		{
@@ -106,19 +126,12 @@ class WizardController extends Controller
 		}
 
 
-			
-		$subembayments = DB::select('exec CapeCodMA.GET_SubembaymentNitrogen ' . $id);
-		$total_goal = 0;
-		foreach ($subembayments as $key) {
-			$total_goal += $key->n_load_target;
-		}
-
-		$nitrogen = DB::select('exec CapeCodMA.GET_AreaNitrogen_Unattenuated ' . $id);
-		$nitrogen_att = DB::select('exec CapeCodMA.GET_AreaNitrogen_attenuated ' . $id);
+		// $nitrogen = DB::select('exec CapeCodMA.GET_AreaNitrogen_Unattenuated ' . $id);
+		// $nitrogen_att = DB::select('exec CapeCodMA.GET_AreaNitrogen_attenuated ' . $id);
 		// dd($nitrogen_att);
 		JavaScript::put([
-				'nitrogen_unatt' => $nitrogen[0],
-				'nitrogen_att' => $nitrogen_att[0],
+				// 'nitrogen_unatt' => $nitrogen[0],
+				// 'nitrogen_att' => $nitrogen_att[0],
 				'center_x'	=> $embayment->longitude,
 				'center_y'	=> $embayment->latitude,
 				'selectlayer' => $embayment->embay_id,
@@ -126,7 +139,9 @@ class WizardController extends Controller
 			]);
 		
 
-		return view('layouts/wizard', ['embayment'=>$embayment, 'subembayments'=>$subembayments, 'nitrogen_att'=>$nitrogen_att[0], 'nitrogen_unatt'=>$nitrogen[0], 'goal'=>$total_goal, 'treatments'=>$treatments, 'progress'=>$progress]);
+		return view('layouts/wizard', ['embayment'=>$embayment, 'subembayments'=>$subembayments, 
+			// 'nitrogen_att'=>$nitrogen_att[0], 'nitrogen_unatt'=>$nitrogen[0], 
+			'goal'=>$total_goal, 'treatments'=>$treatments, 'progress'=>$progress]);
 
 	}
 
