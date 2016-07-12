@@ -22,6 +22,19 @@
 			background-color: $light-gray;
 		}
 	}
+
+	&.treatment
+	{
+		&.info
+		{
+			width: 250px;
+			text-align: left;
+
+			img { float: right;}
+		}
+	}
+
+
 }
 
 .acc_cCont

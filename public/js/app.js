@@ -15,8 +15,9 @@ require([
 		"esri/layers/FeatureLayer",
 
 		"esri/toolbars/draw",
-		// "esri/toolbars/edit",
+		"esri/toolbars/edit",
 		"esri/symbols/SimpleFillSymbol",
+		"esri/symbols/SimpleLineSymbol",
 		"esri/graphic",
 		"esri/Color",
 
@@ -24,6 +25,8 @@ require([
 		"esri/tasks/QueryTask",
 		"esri/tasks/identify",
 		"esri/InfoTemplate",
+		      // "esri/dijit/Popup",
+        //    "esri/dijit/PopupTemplate",
 		// "esri/tasks/infoWindow",
 		"esri/dijit/LayerList",
 		"esri/geometry/Extent",
@@ -34,13 +37,15 @@ require([
 		// "dijit/layout/ContentPane", 
 		// "dijit/TitlePane",
 
+		 "dojo/_base/event",
 		"dojo/dom",
-		"dojo/on",
+		"dojo/on", "dijit/registry", 
 		"dojo/dom-construct",
 		"dojo/domReady!"
 	],
 	function(
 		Map,
+		// Popup, PopupTemplate,
 		BasemapGallery, 
 		arcgisUtils,
 		parser,
@@ -49,8 +54,9 @@ require([
 		FeatureLayer,
 
 		Draw,
-		// Edit,
+		Edit,
 		SimpleFillSymbol,
+		SimpleLineSymbol,
 		Graphic,
 		Color,
 
@@ -62,7 +68,9 @@ require([
 		// infoWindow,
 		LayerList,
 		Extent,
+		event,
 		dom, on,
+		registry,
 		domConstruct
 	) {
 		parser.parse();
@@ -88,6 +96,10 @@ require([
 		map.on("click", function(e){
 			// console.log(e);
 		});
+		if (treatments.length > 0) 
+		{
+			addTreatmentPolygons(treatments);
+		}
 		
 
 		var fillSymbol = new SimpleFillSymbol();
@@ -95,7 +107,7 @@ require([
 		function initToolbar() {
 			tb = new Draw(map);
 			tb.on("draw-end", addGraphic);
-
+			
 			// event delegation so a click handler is not
 			// needed for each individual button
 			on(dom.byId("info"), "click", function(evt) {
@@ -107,6 +119,18 @@ require([
 				map.disableMapNavigation();
 				tb.activate(tool);
 			});
+			
+			editToolbar = new Edit(map);
+			on(dom.byId('edit_polygon'), 'click', function(e){
+				map.graphics.on("click", function(evt) {
+				event.stop(evt);
+				activateToolbar(evt.graphic);
+			  });
+				 //deactivate the toolbar when you click outside a graphic
+			  map.on("click", function(evt){
+				editToolbar.deactivate();
+			  });
+		});
 		}
 
 
@@ -166,6 +190,123 @@ require([
 			// map.centerAndZoom(area, 11);
 			// console.log(treatment_polygons);
 		}
+
+
+		function activateToolbar(graphic) {
+		  var tool = 0;
+		  
+		  if (registry.byId("tool_move").checked) {
+			tool = tool | Edit.MOVE; 
+		  }
+		  if (registry.byId("tool_vertices").checked) {
+			tool = tool | Edit.EDIT_VERTICES; 
+		  }
+		  if (registry.byId("tool_scale").checked) {
+			tool = tool | Edit.SCALE; 
+		  }
+		  if (registry.byId("tool_rotate").checked) {
+			tool = tool | Edit.ROTATE; 
+		  }
+		  // enable text editing if a graphic uses a text symbol
+		  if ( graphic.symbol.declaredClass === "esri.symbol.TextSymbol" ) {
+			tool = tool | Edit.EDIT_TEXT;
+		  }
+		  //specify toolbar options        
+		  var options = {
+			allowAddVertices: true,//registry.byId("vtx_ca").checked,
+			allowDeleteVertices: true, //registry.byId("vtx_cd").checked,
+			uniformScaling: true //registry.byId("uniform_scaling").checked
+		  };
+		  editToolbar.activate(tool, graphic, options);
+		}
+
+
+
+		function addTreatmentPolygons(treatments)
+		{	
+			var polyGLs = [];
+			var polyGL = new esri.layers.GraphicsLayer();
+			var areaGL = new esri.layers.GraphicsLayer();
+			polyGLs.push(polyGL);
+			// console.log(polyGLs);
+			// areaGLs.push(areaGL);
+			var sr = { wkid: 102100, latestWkid: 3857 };
+			for (var i = treatments.length - 1; i >= 0; i--) 
+			{
+				var Treatment = treatments[i];
+				var xList = [];
+				var yList = [];
+				var scenarioID = Treatment.ScenarioID;
+				console.log(Treatment);
+				var treatmentArea = Math.round(Treatment.Treatment_Acreage);
+				var treatmentClass = Treatment.Treatment_Class;
+				var parcels = Treatment.Treatment_Parcels;
+				var treatmentType = Treatment.TreatmentType_Name;
+				var n_removed = Math.round(Treatment.Nload_Reduction);
+				var popupVal = treatmentType;
+				if (treatmentType) 
+				{ //navy
+					var polySymbol = new esri.symbol.SimpleFillSymbol(
+						SimpleFillSymbol.STYLE_SOLID,
+						   new SimpleLineSymbol(
+							   SimpleLineSymbol.STYLE_SOLID,
+							   new Color([0, 77, 168, 0.9]),
+								   4
+								   ),
+							   new Color([0, 0, 0, 0.0])
+							   );
+					var imageURL = "http://www.cch2o.org/Matrix/icons/"+Treatment.treatment_icon;
+				}
+				// treatments[i]
+				if (Treatment.Custom_POLY == 1) 
+				{
+					var nodes = [];
+					var rings = [];
+					var poly_string = Treatment.POLY_STRING;
+						poly_string = poly_string.replace('POLYGON((', '');
+						poly_string = poly_string.replace('))', '');
+					var geometry = poly_string.split(', ');
+
+					for (var j = 0; j < geometry.length; j++) 
+					{
+						var space = geometry[j].indexOf(' ');
+						var x = geometry[j].substr(0, space);
+						var y = geometry[j].substr(space);
+						// console.log('geometry: ' + geometry[j]);
+						// console.log('x: ' + x + ' y: '+y);
+						
+						xList.push(x);
+						yList.push(y);
+						var point = [parseFloat(x), parseFloat(y)];
+						nodes.push(point);
+					};
+					rings.push(nodes);
+					var geo = { rings: rings, spatialReference: sr };
+
+					var popupVal2 = "Scenario " + scenarioID;
+					var template = new InfoTemplate({
+						title: popupVal,
+						content: '<div align="left" class="treatment info technology"><br/>Treatment Area: ' 
+									+ treatmentArea + " acres<img style='width:60px;height:60px;float:right;margin-right:10px;' src=" 
+									+ imageURL + " /><br/>Treatment Class: " + treatmentClass + "<br/>" + parcels + " parcels treated<br/><br/>" +  + "</div>"
+
+					});
+					var poly = new esri.geometry.Polygon(geo);
+					var polyGraphic = new esri.Graphic(poly, polySymbol, { keeper: true });
+					polyGLs[0].add(polyGraphic.setInfoTemplate(template));
+					// polyGLs[0].add(polyGraphic);
+
+
+				}
+
+			}
+			  map.addLayer(polyGLs[0]);
+			  polyGLs[0].show();
+			  console.log(polyGLs[0]);
+		}
+
+
+
 
 	
 		/*******************************
@@ -499,6 +640,13 @@ require([
 
 		});
 
+
+var getDestinationPoint = map.on("select-destination", getDestination);
+
+function getDestination(evt){
+  return evt;
+  getDestinationPoint.remove();
+}
 
 // function map_click(e) {
 //       editToolbar.deactivate();

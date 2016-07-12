@@ -39,7 +39,7 @@ class WizardController extends Controller
 				else
 				{
 					$scenario = $user->scenarios()->create([
-						'AreaID'=>$id
+						'AreaID'=>$id, 'ScenarioPeriod'=>'Existing'
 					]);
 					// user selected a different embayment, need to create a new scenario 
 					// $scenario = new Scenario;
@@ -62,7 +62,7 @@ class WizardController extends Controller
 					// $scenarioid = DB::select('exec CapeCodMA.CreateScenario ' . $id);
 					// $scenarioid = $scenarioid[0]->scenarioid;
 				$scenario = $user->scenarios()->create([
-						'AreaID'=>$id
+						'AreaID'=>$id, 'ScenarioPeriod'=>'Existing'
 					]);
 					// $scenario = new Scenario;
 					// $scenario->areaid = $id;
@@ -121,7 +121,8 @@ class WizardController extends Controller
 				'nitrogen_att' => $nitrogen_att[0],
 				'center_x'	=> $embayment->longitude,
 				'center_y'	=> $embayment->latitude,
-				'selectlayer' => $embayment->embay_id
+				'selectlayer' => $embayment->embay_id,
+				'treatments' => $treatments
 			]);
 		
 

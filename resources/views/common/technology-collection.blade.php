@@ -68,8 +68,15 @@
 			f.preventDefault();
 			// console.log('button clicked');
 				$('#popdown-opacity').hide();
+
+				// TODO - try calling our custom handler 
+				// console.log(getDestinationPoint);
+				// map.on('select-destination', function(e){
+					// see http://api.jquery.com/on/ -> should be able to create a namespace for this specific map click
 				map.on('click', function(e){
-					// console.log(e);
+
+				
+					console.log(e);
 				
 					var url = "{{url('/map/move/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y +'/' + treatment;
 					$.ajax({
@@ -87,10 +94,14 @@
 							$('.select > span').show();
 							$('#select_destination_'+treatment).hide();
 							
-							console.log('unbound');
+							
 						})
-						$(this).off(e);
+						
 			});
+				// console.log(map);
+				// map.remove('select-destination');
+				// console.log('unbound');
+
 		});
 	$('#apply_treatment_'+treatment).on('click', function(e){
 			e.preventDefault();

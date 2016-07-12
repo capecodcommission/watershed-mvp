@@ -6491,6 +6491,11 @@ nav.toolbar {
     width: 3em; }
   .technology.disabled img {
     background-color: #ddd; }
+  .technology.treatment.info {
+    width: 250px;
+    text-align: left; }
+    .technology.treatment.info img {
+      float: right; }
 
 .acc_cCont .technology {
   width: 100px; }

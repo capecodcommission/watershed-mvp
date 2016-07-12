@@ -27,7 +27,7 @@ class TechnologyController extends Controller
 		$tech = DB::table('dbo.Technology_Matrix')->select('*')->where('TM_ID', $id)->first();
 		$scenarioid = session('scenarioid');
 		$treatment = Treatment::create(['ScenarioID' => $scenarioid, 'TreatmentType_ID'=>$tech->Technology_ID, 'TreatmentType_Name'=>$tech->Technology_Strategy, 'Treatment_UnitMetric'=>$tech->Unit_Metric, 'Treatment_Class'=>$tech->Technology_Sys_Type]);
-
+		// dd($tech, $treatment);
 		if ($tech->Show_In_wMVP == 4) 
 		{
 			// this is embayment-wide, need to get the embayment_area and use that as the custom polygon for the Get_PointsfromPolygon
@@ -308,7 +308,9 @@ class TechnologyController extends Controller
 	public function edit($treat_id)
 	{
 		$treatment = Treatment::find($treat_id);
+		// dd($treatment);
 		$tech = DB::table('dbo.Technology_Matrix')->select('*')->where('Technology_ID', $treatment->TreatmentType_ID)->first();
+		// dd($treatment, $tech);
 		$type = $tech->Technology_Sys_Type;
 				$toilets = [21, 22, 23, 24];
 		if (in_array($treatment->TreatmentType_ID, $toilets) ) 

@@ -24,6 +24,13 @@
 	<div class="wrapper">
 		<div class="content">
 			<nav class="toolbar">
+			<div id="edit_tools">
+				<button id="edit_polygon">Edit Polygon</button>
+				<div id="tool_move" data-dojo-type="dijit/form/ToggleButton" data-dojo-props="checked:'true', iconClass:'dijitCheckBoxIcon'">Move</div>
+      <div id="tool_vertices" data-dojo-type="dijit/form/ToggleButton" data-dojo-props="checked:'true', iconClass:'dijitCheckBoxIcon'">Edit Vertices</div>
+      <div id="tool_scale" data-dojo-type="dijit/form/ToggleButton" data-dojo-props="checked:'true', iconClass:'dijitCheckBoxIcon'">Scale</div>
+      <div id="tool_rotate" data-dojo-type="dijit/form/ToggleButton" data-dojo-props="checked:'true', iconClass:'dijitCheckBoxIcon'">Rotate</div>
+			</div>
 				@include('common/map-tools')
 				@include('common/selected-treatments')
 			</nav>

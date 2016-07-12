@@ -34,12 +34,16 @@
 				setlocale(LC_MONETARY, 'en_US');
 			?>
 		
+
+			@if(count($scenario->treatments) > 0)
+
+
 			<table>
 				<thead>
 					<tr>
 						<th colspan="2">Technology</th>
 						<th>Parcels Affected</th>
-						<th>Nitrogen Removed</th>
+						<th>Nitrogen Removed (Unatt)</th>
 						<th>Total Cost</th>
 						<th>Cost per kg N removed</th>
 						<th>Delete</th>
@@ -123,10 +127,13 @@
 			<p><sup>1</sup> The "Original N" value is calculated (attenuated) total Nitrogen for the subembayment. </p>
 			<p><sup>2</sup>A negative number in this column represents Nitrogen added to a subembayment as part of a collection treatment.</p>
 			<p><sup>3</sup>A negative number in this column means the user has exceeded the target for this subembayment.</p>
-					
-					
-			<p><a href="{{url('map', [$scenario->AreaID, $scenario->ScenarioID])}}" class="button" target="wmvp_scenario_{{$scenario->ScenarioID}}">back to map</a> <a href="{{url('download', $scenario->ScenarioID)}}" class="button--cta right" target="_blank"><i class="fa fa-download"></i> Download Results (.xls)</a></p>
 
+			<p><a href="{{url('map', [$scenario->AreaID, $scenario->ScenarioID])}}" class="button" target="wmvp_scenario_{{$scenario->ScenarioID}}">back to map</a> <a href="{{url('download', $scenario->ScenarioID)}}" class="button--cta right" target="_blank"><i class="fa fa-download"></i> Download Results (.xls)</a></p>
+					
+		@else
+		<p>No treatments have been applied to this scenario yet.</p>
+		<p><a href="{{url('map', [$scenario->AreaID, $scenario->ScenarioID])}}" class="button" target="wmvp_scenario_{{$scenario->ScenarioID}}">Return to map</a> </p>
+		@endif
 		</div>
 		</div>
 	</div>
