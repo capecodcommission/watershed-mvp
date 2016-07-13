@@ -100,12 +100,12 @@ new Vue({
 				data:
 				{
 					// poly_nitrogen: poly_nitrogen.Septic,
-					unatt: parseFloat(nitrogen_unatt.Total_UnAtt),
-					att: parseFloat(nitrogen_att.Total_Att),
+					// unatt: parseFloat(nitrogen_unatt.Total_UnAtt),
+					// att: parseFloat(nitrogen_att.Total_Att),
 					treatment: 13,
 					effective: 0,
-					total_unatt: parseFloat(nitrogen_unatt.Total_UnAtt),
-					total_att: parseFloat(nitrogen_att.Total_Att),
+					// total_unatt: parseFloat(nitrogen_unatt.Total_UnAtt),
+					// total_att: parseFloat(nitrogen_att.Total_Att),
 					fert_unatt: parseFloat(nitrogen_unatt.Total_UnAtt_Fert),
 					fert_att: parseFloat(nitrogen_att.Total_Att_Fert),
 					fert_percent: 0,
@@ -123,10 +123,10 @@ new Vue({
 
 				computed:
 				{
-					treated: function()
-					{
-						return this.att * ((100 - this.effective)/100);
-					},
+					// treated: function()
+					// {
+					// 	return this.att * ((100 - this.effective)/100);
+					// },
 					fert_unatt_treated: function()
 					{
 						return (this.fert_unatt * ((100 - this.fert_percent)/100));
@@ -152,14 +152,14 @@ new Vue({
 						return ( this.storm_att - this.storm_att_treated);
 					},	
 
-					total_treated: function()
-					{
-						return (this.total_att - this.fert_difference - this.storm_difference);
-					},
-					difference: function()
-					{
-						return ((this.total_att - this.total_treated));
-					},
+					// total_treated: function()
+					// {
+					// 	return (this.total_att - this.fert_difference - this.storm_difference);
+					// },
+					// difference: function()
+					// {
+					// 	return ((this.total_att - this.total_treated));
+					// },
 					groundwater_unatt: function()
 					{
 						return (this.fert_unatt_treated + this.storm_unatt_treated + this.atmosphere_unatt);

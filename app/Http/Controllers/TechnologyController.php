@@ -284,6 +284,24 @@ class TechnologyController extends Controller
 
 
 	/**
+	 * User has edited the polygon for a treatment
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function updatePolygon($treat_id, $new_poly)
+	{
+		DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
+		// stored procedure needs to update the parcels in wiz_treatment_parcel to match the new polygon
+		// then update the polygon and parcel data/N total for this treatment in Treatment_Wiz
+		$upd = DB::select('exec CapeCodMA.UPD_TreatmentPolygon ' . $treat_id . ', \'' . $new_poly . '\'');
+		return $upd;
+
+
+	}
+
+
+	/**
 	 * User wants to cancel a treatment for this scenario
 	 *
 	 * @return void

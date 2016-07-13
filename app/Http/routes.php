@@ -26,7 +26,7 @@ Route::get('/edit/{treatment}', 'TechnologyController@edit');
 Route::get('/update/{type}/{treatment}/{rate}/{units?}', 'TechnologyController@update');
 Route::get('/delete/{treatment}', 'TechnologyController@delete');
 Route::get('/cancel/{treatment}', 'TechnologyController@cancel');
-
+Route::get('/update_polygon/{treatment}/{new_poly}', 'TechnologyController@updatePolygon');
 
 
 Route::get('/apply_percent/{treatment}/{rate}/{type}/{units?}', 'TechnologyController@ApplyTreatment_Percent');

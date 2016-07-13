@@ -92,14 +92,15 @@ require([
 			sliderOrientation: "horizontal"
 		});
 		// map.on("load", createToolbar);
-		map.on("load", initToolbar);
-		map.on("click", function(e){
-			// console.log(e);
+		// map.on("load", initToolbar);
+		map.on("load", function(e){
+			initToolbar();
+			if (treatments.length > 0) 
+			{
+				addTreatmentPolygons(treatments);
+			}
 		});
-		if (treatments.length > 0) 
-		{
-			addTreatmentPolygons(treatments);
-		}
+	
 		
 
 		var fillSymbol = new SimpleFillSymbol();
@@ -121,8 +122,14 @@ require([
 			});
 			
 			editToolbar = new Edit(map);
+			// $('.edit_poly').on('click', function(e){
 			on(dom.byId('edit_polygon'), 'click', function(e){
+				// console.log(e);
+				// polyGLs[0].on('click', function(evt){
+
+
 				map.graphics.on("click", function(evt) {
+					console.log(this);
 				event.stop(evt);
 				activateToolbar(evt.graphic);
 			  });
@@ -243,7 +250,7 @@ require([
 				var parcels = Treatment.Treatment_Parcels;
 				var treatmentType = Treatment.TreatmentType_Name;
 				var n_removed = Math.round(Treatment.Nload_Reduction);
-				var popupVal = treatmentType;
+				var popupVal = treatmentType + ' (' + Treatment.TreatmentID + ')';
 				if (treatmentType) 
 				{ //navy
 					var polySymbol = new esri.symbol.SimpleFillSymbol(
@@ -283,26 +290,38 @@ require([
 					rings.push(nodes);
 					var geo = { rings: rings, spatialReference: sr };
 
-					var popupVal2 = "Scenario " + scenarioID;
+					// var popupVal2 = "Scenario " + scenarioID;
 					var template = new InfoTemplate({
 						title: popupVal,
-						content: '<div align="left" class="treatment info technology"><br/>Treatment Area: ' 
-									+ treatmentArea + " acres<img style='width:60px;height:60px;float:right;margin-right:10px;' src=" 
-									+ imageURL + " /><br/>Treatment Class: " + treatmentClass + "<br/>" + parcels + " parcels treated<br/><br/>" +  + "</div>"
+						content: '<div align="left" class="treatment info technology"><img style="width:60px;height:60px;float:right;margin-right:10px;" src=" '
+									+ imageURL + '" /><strong>Treatment Stats</strong>:<br /> ' 
+									+ treatmentArea + " Acres<br/>" 
+									+ parcels + " parcels treated<br/>" + n_removed + "kg (unatt) N removed.<br />"
+									+ "<button class='edit_poly' data-treatment='"+Treatment.TreatmentID+"'>Edit Polygon</button>  "
+									+ "<button class='save_poly' data-treatment='"+Treatment.TreatmentID+"'>Save Polygon</button></div>"
 
 					});
 					var poly = new esri.geometry.Polygon(geo);
-					var polyGraphic = new esri.Graphic(poly, polySymbol, { keeper: true });
-					polyGLs[0].add(polyGraphic.setInfoTemplate(template));
-					// polyGLs[0].add(polyGraphic);
+					var attr = {'treatment_id': Treatment.TreatmentID};
+					var polyGraphic = new esri.Graphic(poly, polySymbol, attr);
+					polyGraphic.setInfoTemplate(template);
+					// map.graphics.add(polyGraphic);
+					// console.log(map);
+					// polyGraphic.setAttributes({'treatment_id': Treatment.TreatmentID});
+					// polyGraphic.attr('treatmentid', Treatment.TreatmentID);
+					// polyGLs[0].add(polyGraphic.setInfoTemplate(template));
+					// console.log(polyGraphic);
+					// console.log(map);
+					map.graphics.add(polyGraphic);
+					// console.log(poly);
 
 
 				}
 
 			}
-			  map.addLayer(polyGLs[0]);
-			  polyGLs[0].show();
-			  console.log(polyGLs[0]);
+			  // map.addLayer(polyGLs[0]);
+			  // polyGLs[0].show();
+			  // console.log(polyGLs[0]);
 		}
 
 
