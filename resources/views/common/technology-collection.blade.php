@@ -76,7 +76,7 @@
 				map.on('click', function(e){
 
 				
-					console.log(e);
+					// console.log(e);
 				
 					var url = "{{url('/map/move/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y +'/' + treatment;
 					$.ajax({

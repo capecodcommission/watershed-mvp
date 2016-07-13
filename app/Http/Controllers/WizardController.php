@@ -180,11 +180,20 @@ class WizardController extends Controller
 	{
 		DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING, NOCOUNT ON');
 		$scenarioid = Session::get('scenarioid');
-		$embay_id = Session::get('embay_id');
+		$scenario = Scenario::find($scenarioid);
+		$embay_id = $scenario->AreaID;
+
 
 		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
 
-		$poly_nitrogen = $parcels[0]->Septic;
+		if ($parcels[0]) {
+			$poly_nitrogen = $parcels[0]->Septic;
+		}
+		else
+		{
+			$poly_nitrogen = 0;
+		}
+		
 
 		JavaScript::put([
 				'poly_nitrogen' => $parcels

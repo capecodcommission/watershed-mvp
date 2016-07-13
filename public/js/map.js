@@ -130,13 +130,21 @@ require([
 
 				map.graphics.on("click", function(evt) {
 					// console.log(this);
+					$('#save_polygon').show();
 				event.stop(evt);
 				activateToolbar(evt.graphic);
 			  });
 				 //deactivate the toolbar when you click outside a graphic
 			  map.on("click", function(evt){
 				editToolbar.deactivate();
+				event.stop(e);
+				// e.remove()
 			  });
+			  $('#save_polygon').on('click', function(evt){
+			  	editToolbar.deactivate();
+			  	$('#save_polygon').hide();
+			  	event.stop(e);
+			  })
 			 editToolbar.on("deactivate", function(evt) {
 				if(evt.info.isModified){
 				// firePerimeterFL.applyEdits(null, [evt.graphic], null);
@@ -158,12 +166,13 @@ require([
 			//deactivate the toolbar and clear existing graphics 
 			tb.deactivate();
 			map.enableMapNavigation();
-
+			// console.log(treatment);
 			// figure out which symbol to use
 			var symbol;
 			symbol = fillSymbol;
 			var polystring = '';
-			map.graphics.add(new Graphic(evt.geometry, symbol));
+			var attr = {'treatment_id': treatment};
+			map.graphics.add(new Graphic(evt.geometry, symbol, attr));
 			// console.log(evt.geometry);
 			// console.log('entering loop');
 

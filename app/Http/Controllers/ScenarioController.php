@@ -36,17 +36,43 @@ class ScenarioController extends Controller
 		// need to return a (rounded) int that represents the user's current progress toward the embayment's target.
 		// first get the embayment's starting and target N levels
 		// then get the current N_Removed
-		$removed = DB::select('exec CapeCodMA.CALC_ScenarioNitrogen ' . $scenarioid);
-		$removed = $removed[0]->N_Removed;
-		$current = $scenario->Nload_Existing - $removed;
-		$progress = round($scenario->Nload_Total_Target/$current * 100);
+
+		$removed = 0;
+		$n_load_orig = 0;
+		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
+		// $subembayments = DB::select('exec CapeCodMA.GET_SubembaymentNitrogen ' . $id);
+		$total_goal = 0;
+		foreach ($subembayments as $key) 
+		{
+			$n_load_orig += $key->n_load_att;
+			$removed += $key->n_load_att_removed;
+			$total_goal += $key->n_load_target;
+		}
+		$current = $n_load_orig - $removed;
+		if ($current > 0) {
+			$progress = round($total_goal/$current * 100);
+		}
+		else
+		{
+			$progress = 100;
+		}
+
+
+		/* This is the old code that calculated the **UNattenuated** N removed, which isn't accurate for the target goal/progress
+
+		// $removed = DB::select('exec CapeCodMA.CALC_ScenarioNitrogen ' . $scenarioid);
+		// $removed = $removed[0]->N_Removed;
+		// $current = $scenario->Nload_Existing - $removed;
+		// $progress = round($scenario->Nload_Total_Target/$current * 100);
 
 		// Need to get the progress for each subembayment.
 		$sub_removed = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
 		// dd($sub_removed);
-		$data['embayment'] = $progress;
-		$data['subembayments'] = $sub_removed;
 
+		*/
+		$data['embayment'] = $progress;
+		$data['subembayments'] = $subembayments;
+		// dd($data);
 
 		return $data;
 	}

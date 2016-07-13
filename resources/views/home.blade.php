@@ -32,6 +32,7 @@
 					   @endforeach
 					</tbody>
 				   </table>
+				   <p><i class="fa fa-exclamation-circle"></i>: Scenarios do not have any treatments applied </p>
 				</div>
 			</div>
 		</div>

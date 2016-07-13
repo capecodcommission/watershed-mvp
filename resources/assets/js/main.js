@@ -99,13 +99,13 @@ new Vue({
 				el: 'body',
 				data:
 				{
-					// poly_nitrogen: poly_nitrogen.Septic,
-					// unatt: parseFloat(nitrogen_unatt.Total_UnAtt),
-					// att: parseFloat(nitrogen_att.Total_Att),
+					poly_nitrogen: poly_nitrogen.Septic,
+					unatt: parseFloat(nitrogen_unatt.Total_UnAtt),
+					att: parseFloat(nitrogen_att.Total_Att),
 					treatment: 13,
 					effective: 0,
-					// total_unatt: parseFloat(nitrogen_unatt.Total_UnAtt),
-					// total_att: parseFloat(nitrogen_att.Total_Att),
+					total_unatt: parseFloat(nitrogen_unatt.Total_UnAtt),
+					total_att: parseFloat(nitrogen_att.Total_Att),
 					fert_unatt: parseFloat(nitrogen_unatt.Total_UnAtt_Fert),
 					fert_att: parseFloat(nitrogen_att.Total_Att_Fert),
 					fert_percent: 0,
