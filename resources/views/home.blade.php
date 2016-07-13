@@ -24,8 +24,9 @@
 							<td>{{$scenario->AreaName}}</td>
 							<td>{{$scenario->ScenarioID}}</td> 
 							<td>{{date('Y-m-d', strtotime($scenario->CreateDate))}}</td>
-							<td><a href="{{url('map', [$scenario->AreaID, $scenario->ScenarioID])}}" ><i class="fa fa-globe"></i> Wizard</a></td> 
-							<td><a href="{{url('results', $scenario->ScenarioID)}}" ><i class="fa fa-list"></i> Details</a></td>
+							<td><a href="{{url('map', [$scenario->AreaID, $scenario->ScenarioID])}}" ><i class="fa fa-globe"></i> Wizard</a>
+							</td> 
+							<td><a href="{{url('results', $scenario->ScenarioID)}}" ><i class="fa fa-list"></i> Details</a>@if(count($scenario->treatments) < 1) <i class="fa fa-exclamation-circle"></i>@endif</td>
 							<td><a href="{{url('download', $scenario->ScenarioID)}}" target="_blank"><i class="fa fa-download"></i> Download</a></td>
 						</tr>
 					   @endforeach
