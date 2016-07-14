@@ -325,8 +325,8 @@ require([
 									+ imageURL + '" /><strong>Treatment Stats</strong>:<br /> ' 
 									+ treatmentArea + " Acres<br/>" 
 									+ parcels + " parcels treated<br/>" + n_removed + "kg (unatt) N removed.<br />"
-									+ "<button class='edit_poly' data-treatment='"+Treatment.TreatmentID+"'>Edit Polygon</button>  "
-									+ "<button class='save_poly' data-treatment='"+Treatment.TreatmentID+"'>Save Polygon</button></div>"
+									// + "<button class='edit_poly' data-treatment='"+Treatment.TreatmentID+"'>Edit Polygon</button>  "
+									// + "<button class='save_poly' data-treatment='"+Treatment.TreatmentID+"'>Save Polygon</button></div>"
 
 					});
 					polyGraphic.setInfoTemplate(template);

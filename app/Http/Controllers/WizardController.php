@@ -186,11 +186,12 @@ class WizardController extends Controller
 
 		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
 
-		if ($parcels[0]) {
+		if ($parcels) {
 			$poly_nitrogen = $parcels[0]->Septic;
 		}
 		else
 		{
+			$parcels = 0;
 			$poly_nitrogen = 0;
 		}
 		
