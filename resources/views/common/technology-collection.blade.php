@@ -64,39 +64,35 @@
 			$('#select_destination_'+treatment).show();
 			// console.log(msg);
 		});
-		$('#select_destination_'+ treatment).on('click', function(f){
+		$('#select_destination_'+ treatment).on('click', function(f)
+		{
 			f.preventDefault();
-			// console.log('button clicked');
-				$('#popdown-opacity').hide();
+			destination_active = 1;
+			$('#popdown-opacity').hide();
 
-				// TODO - try calling our custom handler 
-				// console.log(getDestinationPoint);
-				// map.on('select-destination', function(e){
-					// see http://api.jquery.com/on/ -> should be able to create a namespace for this specific map click
-				map.on('click', function(e){
-
-				
-					// console.log(e);
-				
+			map.on('click', function(e)
+			{		
+				if (destination_active > 0) 
+				{
 					var url = "{{url('/map/move/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y +'/' + treatment;
 					$.ajax({
 						method: 'GET',
 						url: url
 					})
 						.done(function(msg){
-							msg = $.parseJSON(msg);
-							// console.log(msg.SUBEM_DISP);
-							// console.log(msg);
-							$('#'+msg.SUBEM_NAME+'> .stats').show();
-							// $('.notification_count').remove();
-							$('#popdown-opacity').show();
-							$('.select > span').text('Selected: '+msg.SUBEM_DISP);
-							$('.select > span').show();
-							$('#select_destination_'+treatment).hide();
-							
-							
-						})
-						
+								msg = $.parseJSON(msg);
+								// console.log(msg.SUBEM_DISP);
+								// console.log(msg);
+								$('#'+msg.SUBEM_NAME+'> .stats').show();
+								// $('.notification_count').remove();
+								$('#popdown-opacity').show();
+								$('.select > span').text('Selected: '+msg.SUBEM_DISP);
+								$('.select > span').show();
+								$('#select_destination_'+treatment).hide();
+								destination_active = 0;
+								
+							})
+					}
 			});
 				// console.log(map);
 				// map.remove('select-destination');

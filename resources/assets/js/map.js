@@ -4,6 +4,8 @@ var watershed;
 var embay_shape;
 var treatment;
 var func;
+var edit_active;
+var destination_active;
 var treatment_polygons = new Array();
 require([
 		"esri/map",
@@ -125,14 +127,18 @@ require([
 			// $('.edit_poly').on('click', function(e){
 			on(dom.byId('edit_polygon'), 'click', function(e){
 				// console.log(e);
+				edit_active = 1;
 				// polyGLs[0].on('click', function(evt){
 					// console.log(this);
 
 				map.graphics.on("click", function(evt) {
+					console.log(edit_active);
+					if (edit_active > 0) {
 					// console.log(this);
 					$('#save_polygon').show();
-				event.stop(evt);
-				activateToolbar(evt.graphic);
+					event.stop(evt);
+					activateToolbar(evt.graphic);
+				}
 			  });
 				 //deactivate the toolbar when you click outside a graphic
 			  map.on("click", function(evt){
@@ -150,6 +156,7 @@ require([
 				// firePerimeterFL.applyEdits(null, [evt.graphic], null);
 				// console.log(evt.graphic);
 				update_treatment_poly(evt.graphic);
+					edit_active = 0;
 				}
 			});
 		});
