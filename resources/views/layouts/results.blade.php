@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<title>WatershedMVP Scenario Results</title>
-		<link rel="stylesheet" href="{{url('/css/app.css')}}">
+			<link rel="stylesheet" href="{{url('/css/app.css')}}">
   	<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>  
   	<script>window.name = 'wmvp_results_{{$scenario->ScenarioID}}';</script>
 	</head>
@@ -14,7 +14,7 @@
                         <a href="{{ url('/login') }}" class="button"><i class="fa fa-btn fa-sign-in"></i> Login</a>
                         <a href="{{ url('/register') }}"><i class="fa fa-btn fa-user-plus"></i> Register</a>
                     @else
-                    	<a class="button" href="{{ url('/home') }}"><i class="fa fa-home"></i> Home</a>
+                    	<a class="button" href="{{ url('/home') }}"><i class="fa fa-home"></i> Dashboard</a>
                     	<a class="button" href="{{ url('/') }}"><i class="fa fa-plus"></i> Start a new Scenario</a>
                         <a class="button" href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i> Logout</a>
 
@@ -144,7 +144,7 @@
 
 			e.preventDefault();
 			var treat = $(this).data('treatment');
-			var url = "{{url('delete')}}" + '/' + treat;
+			var url = "{{url('delete_treatment')}}" + '/' + treat;
 			$.ajax({
 				method: 'GET',
 				url: url

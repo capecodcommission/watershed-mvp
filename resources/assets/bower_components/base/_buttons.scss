@@ -88,6 +88,20 @@
   background-color: shade($cta-color, 20%);
   }
 
+
+.button--alert {
+   @extend .button;
+  background-color: $error-color;
+  color: $white !important;
+
+  &:hover {
+  background-color: shade($error-color, 20%);
+  }
+
+
+  }
+
+
 }
 
 

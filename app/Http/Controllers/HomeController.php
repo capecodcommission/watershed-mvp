@@ -29,7 +29,8 @@ class HomeController extends Controller
         $user = Auth::user();
         // $scenarios = $user->scenarios()->orderBy('CreateDate', 'desc');
         // $user = Auth::user()->with('scenarios');
-        // dd($user, $scenarios);
+        // dd($user);
         return view('home', ['user'=>$user]);
+
     }
 }

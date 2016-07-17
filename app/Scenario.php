@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Treatment;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Scenario extends Model
 {
@@ -12,6 +13,7 @@ class Scenario extends Model
 
     protected $table = 'CapeCodMa.Scenario_Wiz';
 	protected $primaryKey = 'ScenarioID';
+	use SoftDeletes;
 
 	protected $fillable = [
 		'CreatedBy', // this should be the FK to users table
@@ -59,7 +61,7 @@ class Scenario extends Model
 
 	];
 	
-	
+	protected $dates = ['deleted_at'];
 
     /**
      * The name of the "created at" and "updated at" columns.

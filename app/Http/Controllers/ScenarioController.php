@@ -13,6 +13,8 @@ use JavaScript;
 
 use Session;
 use Excel;
+use Auth;
+use App\User;
 
 class ScenarioController extends Controller
 {
@@ -153,5 +155,27 @@ class ScenarioController extends Controller
 			});			
 
 		})->export('xls');
+	}
+
+	/**
+	 * Delete the scenario for the logged-in user
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function deleteScenario($id)
+	{
+		$user = Auth::user();
+		$scenario = Scenario::find($id);
+		if ($scenario->user_id == $user->user_id) 
+		{
+			$scenario->delete();
+			return 1;
+		}
+		else
+		{
+			// user doesn't have permission to delete this scenario
+			return 0;
+		}
 	}
 }

@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'StartController@index');
+Route::get('/start', 'StartController@index');
 
 Route::get('/map/{embayment}/{scenarioid?}', 'WizardController@start');
 
@@ -24,10 +24,11 @@ Route::get('/testmap/Nitrogen/{treatment}/{poly}', 'WizardController@getPolygon'
 Route::get('/tech/{type}/{tech}', 'TechnologyController@get');
 Route::get('/edit/{treatment}', 'TechnologyController@edit');
 Route::get('/update/{type}/{treatment}/{rate}/{units?}', 'TechnologyController@update');
-Route::get('/delete/{treatment}', 'TechnologyController@delete');
+Route::get('/delete_treatment/{treatment}', 'TechnologyController@delete');
 Route::get('/cancel/{treatment}', 'TechnologyController@cancel');
 Route::get('/update_polygon/{treatment}/{new_poly}', 'TechnologyController@updatePolygon');
 
+Route::get('/delete_scenario/{scenarioid}', 'ScenarioController@deleteScenario');
 
 Route::get('/apply_percent/{treatment}/{rate}/{type}/{units?}', 'TechnologyController@ApplyTreatment_Percent');
 Route::get('/apply_storm/{treatment}/{rate}/{units}/{location}', 'TechnologyController@ApplyTreatment_Storm');
@@ -62,4 +63,4 @@ Route::get('/testleaf', function(){
 });
 Route::auth();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/', 'HomeController@index');

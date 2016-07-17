@@ -4,6 +4,8 @@ var watershed;
 var embay_shape;
 var treatment;
 var func;
+var edit_active;
+var destination_active;
 var treatment_polygons = new Array();
 require([
 		"esri/map",
@@ -101,7 +103,7 @@ require([
 			}
 		});
 	
-		
+
 
 		var fillSymbol = new SimpleFillSymbol();
 
@@ -125,18 +127,38 @@ require([
 			// $('.edit_poly').on('click', function(e){
 			on(dom.byId('edit_polygon'), 'click', function(e){
 				// console.log(e);
+				edit_active = 1;
 				// polyGLs[0].on('click', function(evt){
-
+					// console.log(this);
 
 				map.graphics.on("click", function(evt) {
-					console.log(this);
-				event.stop(evt);
-				activateToolbar(evt.graphic);
+					console.log(edit_active);
+					if (edit_active > 0) {
+					// console.log(this);
+					$('#save_polygon').show();
+					event.stop(evt);
+					activateToolbar(evt.graphic);
+				}
 			  });
 				 //deactivate the toolbar when you click outside a graphic
 			  map.on("click", function(evt){
 				editToolbar.deactivate();
+				event.stop(e);
+				// e.remove()
 			  });
+			  $('#save_polygon').on('click', function(evt){
+			  	editToolbar.deactivate();
+			  	$('#save_polygon').hide();
+			  	event.stop(e);
+			  })
+			 editToolbar.on("deactivate", function(evt) {
+				if(evt.info.isModified){
+				// firePerimeterFL.applyEdits(null, [evt.graphic], null);
+				// console.log(evt.graphic);
+				update_treatment_poly(evt.graphic);
+					edit_active = 0;
+				}
+			});
 		});
 		}
 
@@ -151,12 +173,13 @@ require([
 			//deactivate the toolbar and clear existing graphics 
 			tb.deactivate();
 			map.enableMapNavigation();
-
+			// console.log(treatment);
 			// figure out which symbol to use
 			var symbol;
 			symbol = fillSymbol;
 			var polystring = '';
-			map.graphics.add(new Graphic(evt.geometry, symbol));
+			var attr = {'treatment_id': treatment};
+			map.graphics.add(new Graphic(evt.geometry, symbol, attr));
 			// console.log(evt.geometry);
 			// console.log('entering loop');
 
@@ -199,6 +222,8 @@ require([
 		}
 
 
+
+
 		function activateToolbar(graphic) {
 		  var tool = 0;
 		  
@@ -225,6 +250,12 @@ require([
 			uniformScaling: true //registry.byId("uniform_scaling").checked
 		  };
 		  editToolbar.activate(tool, graphic, options);
+		  // console.log(graphic);
+		  // var edit_treatment_id = graphic.attr('treatment_id');
+		  // console.log(edit_treatment_id);
+		  // graphic.on('attribute-change', function(g){
+		  // 	console.log('after change: ' + graphic);
+		  // });
 		}
 
 
@@ -244,7 +275,7 @@ require([
 				var xList = [];
 				var yList = [];
 				var scenarioID = Treatment.ScenarioID;
-				console.log(Treatment);
+				// console.log(Treatment);
 				var treatmentArea = Math.round(Treatment.Treatment_Acreage);
 				var treatmentClass = Treatment.Treatment_Class;
 				var parcels = Treatment.Treatment_Parcels;
@@ -291,37 +322,73 @@ require([
 					var geo = { rings: rings, spatialReference: sr };
 
 					// var popupVal2 = "Scenario " + scenarioID;
+					
+					var poly = new esri.geometry.Polygon(geo);
+					var attr = {'treatment_id': Treatment.TreatmentID};
+					var polyGraphic = new esri.Graphic(poly, polySymbol, attr);
 					var template = new InfoTemplate({
 						title: popupVal,
 						content: '<div align="left" class="treatment info technology"><img style="width:60px;height:60px;float:right;margin-right:10px;" src=" '
 									+ imageURL + '" /><strong>Treatment Stats</strong>:<br /> ' 
 									+ treatmentArea + " Acres<br/>" 
 									+ parcels + " parcels treated<br/>" + n_removed + "kg (unatt) N removed.<br />"
-									+ "<button class='edit_poly' data-treatment='"+Treatment.TreatmentID+"'>Edit Polygon</button>  "
-									+ "<button class='save_poly' data-treatment='"+Treatment.TreatmentID+"'>Save Polygon</button></div>"
+									// + "<button class='edit_poly' data-treatment='"+Treatment.TreatmentID+"'>Edit Polygon</button>  "
+									// + "<button class='save_poly' data-treatment='"+Treatment.TreatmentID+"'>Save Polygon</button></div>"
 
 					});
-					var poly = new esri.geometry.Polygon(geo);
-					var attr = {'treatment_id': Treatment.TreatmentID};
-					var polyGraphic = new esri.Graphic(poly, polySymbol, attr);
 					polyGraphic.setInfoTemplate(template);
-					// map.graphics.add(polyGraphic);
-					// console.log(map);
-					// polyGraphic.setAttributes({'treatment_id': Treatment.TreatmentID});
-					// polyGraphic.attr('treatmentid', Treatment.TreatmentID);
-					// polyGLs[0].add(polyGraphic.setInfoTemplate(template));
-					// console.log(polyGraphic);
-					// console.log(map);
 					map.graphics.add(polyGraphic);
-					// console.log(poly);
-
-
 				}
-
 			}
-			  // map.addLayer(polyGLs[0]);
-			  // polyGLs[0].show();
-			  // console.log(polyGLs[0]);
+		}
+
+
+
+
+
+		function update_treatment_poly(treatment_poly)
+		{
+			// need to do an ajax call to a stored procedure that accepts the new polygon and treatment id and updates the treatment info
+			// make sure wiz_treatment_parcels info gets deleted and recreated or updated
+			var new_polygon = '';
+			// console.log(treatment_poly.attributes.treatment_id);
+			// console.log(treatment_poly.geometry);
+			for (var i = 0; i < treatment_poly.geometry.rings[0].length; i++) {
+				// console.log('x: ' + treatment_poly.geometry.rings[0][i][0]);
+				// console.log('y: '+ treatment_poly.geometry.rings[0][i][1]);
+				new_polygon += treatment_poly.geometry.rings[0][i][0] + ' ';
+				new_polygon += treatment_poly.geometry.rings[0][i][1] + ', ';
+			}
+			// console.log(new_polygon);
+			var treat_id = treatment_poly.attributes.treatment_id;
+			var len = new_polygon.length;
+			new_polygon = new_polygon.substring(0, len - 2);
+			// treatment_polygons[treatment] = polystring;
+			// console.log('exec CapeCodMa.Get_NitrogenFromPolygon \'' + polystring + '\'');
+			// console.log(new_polygon);
+			// console.log(polystring);
+			var url = "/update_polygon/" + treat_id + '/' + new_polygon;
+			// var url = '/polygon/' + func + '/' + treatment + '/' + polystring;
+			// console.log(url);
+			$.ajax({
+					method: 'GET',
+					url: url
+				})
+				.done(function(msg) {
+					$("li.technology[data-treatment='"+treat_id+"'] a").trigger('click');
+					
+					// msg = $.parseJSON(msg);
+					//console.log(msg);
+					// console.log(msg);
+					// var txtmsg = "Total Nitrogen in Polygon: " + msg[0].UnAttenFull;
+					// alert(txtmsg);
+					// console.log('success');
+					// var poly_nitrogen = msg.poly_nitrogen->Septic;
+					// $('#total_nitrogen_polygon').text(msg);
+					// $('#popdown-opacity').show();
+					
+				});
+
 		}
 
 

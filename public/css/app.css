@@ -3771,7 +3771,8 @@ button, input[type="button"], input[type="reset"], input[type="submit"],
 .active,
 .complete,
 .button--cta,
-.button--small, button {
+.button--small,
+.button--small .button--alert, button {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -3805,12 +3806,14 @@ button, input[type="button"], input[type="reset"], input[type="submit"],
   .complete:hover,
   .button--cta:hover,
   .button--small:hover,
+  .button--small .button--alert:hover,
   .button:focus,
   .inactive:focus,
   .active:focus,
   .complete:focus,
   .button--cta:focus,
-  .button--small:focus, button:hover, button:focus {
+  .button--small:focus,
+  .button--small .button--alert:focus, button:hover, button:focus {
     background-color: #11519a;
     color: #fff; }
   button:disabled, input[type="button"]:disabled, input[type="reset"]:disabled, input[type="submit"]:disabled,
@@ -3819,7 +3822,8 @@ button, input[type="button"], input[type="reset"], input[type="submit"],
   .active:disabled,
   .complete:disabled,
   .button--cta:disabled,
-  .button--small:disabled, button:disabled {
+  .button--small:disabled,
+  .button--small .button--alert:disabled, button:disabled {
     cursor: not-allowed;
     opacity: 0.5; }
     button:disabled:hover, input[type="button"]:disabled:hover, input[type="reset"]:disabled:hover, input[type="submit"]:disabled:hover,
@@ -3828,7 +3832,8 @@ button, input[type="button"], input[type="reset"], input[type="submit"],
     .active:disabled:hover,
     .complete:disabled:hover,
     .button--cta:disabled:hover,
-    .button--small:disabled:hover, button:disabled:hover {
+    .button--small:disabled:hover,
+    .button--small .button--alert:disabled:hover, button:disabled:hover {
       background-color: #1565c0; }
 
 .inactive {
@@ -3857,6 +3862,11 @@ button, input[type="button"], input[type="reset"], input[type="submit"],
   width: 150px; }
   .button--small:hover {
     background-color: #c89026; }
+  .button--small .button--alert {
+    background-color: #D8000C;
+    color: #ffffff !important; }
+    .button--small .button--alert:hover {
+      background-color: #ad000a; }
 
 fieldset {
   background-color: #f7f7f7;
