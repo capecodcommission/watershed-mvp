@@ -9,11 +9,8 @@
 		<div class="wrapper">
 		<div class="content full-width">
 			@include('common.navigation')
-	
-                
-          
-			<h1>Embayment: {{$scenario->AreaName}}</h1>
-			<h2>Created by: {{$scenario->user->name}} on {{date('Y-m-d', strtotime($scenario->CreateDate))}}</h2>
+	      	<h1>Embayment: {{$scenario->AreaName}}</h1>
+			<h2 class="author">Created by: {{$scenario->user->name}} on {{date('Y-m-d', strtotime($scenario->CreateDate))}}</h2>
 			<div id="app">
 			<?php 
 				$scenario_cost = 0;

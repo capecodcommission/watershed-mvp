@@ -52,7 +52,14 @@ p {
 
 
 	h2 {
-		color: $heading-color;
+		margin-top: 2.0em;
+		
+		&.author {
+			color: $medium-gray;
+			font-size: 1.25em;
+			margin-top: -0.50em;
+			font-style: italic;
+		}
 
 		&.section-title {
 			font-size: 1.5em;

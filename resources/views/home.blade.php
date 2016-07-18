@@ -56,8 +56,10 @@
 		$('.deletescenario').on('click', function(e){
 			var scenario = $(this).data('scenario');
 			e.preventDefault();
-			$('#scenario_'+scenario).css('background', '#ff0000');
-			
+			$('#scenario_'+scenario).css('background', '#dddddd');
+			$('#scenario_'+scenario).css('border-top', '2px solid #999999');
+			$('#scenario_'+scenario).css('border-bottom', '2px solid #999999');
+
 			$(this).hide();
 			$('#confirm_'+scenario).show();
 			$('#cancel_'+scenario).show();
@@ -85,6 +87,8 @@
 			$('#cancel_'+scenario).on('click', function(g)
 			{
 				$('#scenario_'+scenario).css('background', 'transparent');
+				$('#scenario_'+scenario).css('border-top', '0px solid #999999');
+				$('#scenario_'+scenario).css('border-bottom', '0px solid #999999');
 				$('#confirm_'+scenario).hide();
 				$('#cancel_'+scenario).hide();
 				$('#delete_'+scenario).show();
