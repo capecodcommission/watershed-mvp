@@ -35,7 +35,7 @@ elixir(function(mix) {
 
     .scripts ([
             // paths.assets + 'jquery/dist/jquery.min.js',
-            paths.js + 'map.js',
+            // paths.js + 'map.js',
             paths.js + 'jquery.popdown.js',
             paths.js + 'app.js'
         ], "public/js/app.js", "./")

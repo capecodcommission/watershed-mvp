@@ -320,7 +320,7 @@
 		</div>
 		<div class="acc_cCont">
 			<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="wmvp_results_{{session('scenarioid')}}">View Scenario Summary</a>
-			Some sort of intro will go here</p>
+			</p>
 			<hr>
 			<div class="technology">
 				<a href="{{url('/tech/embayment/11')}}"  class="popdown">

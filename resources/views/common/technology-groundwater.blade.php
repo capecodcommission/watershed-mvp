@@ -67,9 +67,15 @@
 	$(document).ready(function(){
 	 treatment = {{$treatment['TreatmentID']}};
 		$('#select_area').on('click', function(f){
+
 			f.preventDefault();
-				$('#popdown-opacity').hide();
-				map.on('click', function(e){
+			destination_active = 1;
+			$('#popdown-opacity').hide();
+
+			map.on('click', function(e)
+			{		
+				if (destination_active > 0) 
+				{
 				
 					var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y + '/' + treatment;
 					$.ajax({
@@ -82,8 +88,9 @@
 							$('#popdown-opacity').show();
 							$('.select > span').text('Selected: '+msg.SUBEM_DISP);
 							$('.select > span').show();
+							destination_active = 0;
 						})
-
+				}
 			});
 		});
 
