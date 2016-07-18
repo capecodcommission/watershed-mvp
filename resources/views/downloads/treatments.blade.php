@@ -11,11 +11,11 @@
 			<table>	
 				<tr>
 					<td>Unsewered Parcels</td>
-					<td></td>
+					<td>{{$scenario->parcels_septic + $scenario->parcels_gwdp}}</td>
 				</tr>
 				<tr>
 					<td>Sewered Parcels</td>
-					<td></td>
+					<td>{{$scenario->parcels_sewer}}</td>
 				</tr>
 				<tr>
 					<td><strong>Total Parcels</strong></td>
@@ -29,6 +29,22 @@
 					<td>Total WWFlow</td>
 					<td>{{$scenario->Total_WaterFlow}}</td>
 				</tr>
+				<tr>
+					<td>Existing Total Nitrogen (kg)</td>
+					<td>{{$scenario->Nload_Existing}}</td>
+				</tr>
+				<tr>
+					<td>Existing Nitrogen - Fertilizer</td>
+					<td>{{$scenario->Nload_Fert}}</td>
+				</tr>
+				<tr>
+					<td>Existing Nitrogen - Septic</td>
+					<td>{{$scenario->Nload_Sept}}</td>
+				</tr>	
+				<tr>
+					<td>Existing Nitrogen - Stormwater</td>
+					<td>{{$scenario->Nload_Storm}}</td>
+				</tr>							
 			</table>
 
 			<h2>Technology Stack</h2>
@@ -50,7 +66,7 @@
 				</thead>
 				<tbody>
 				<?php 
-					$start_row = 16;
+					$start_row = 20;
 					$row = $start_row - 1; 
 				?>
 					@foreach($scenario->treatments as $result)

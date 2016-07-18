@@ -125,7 +125,7 @@
 		})
 			.done(function(msg){
 				$('#popdown-opacity').hide();
-				$("li.technology [data-treatment='{{$treatment->TreatmentID}}']").remove();
+				$("li[data-treatment='{{$treatment->TreatmentID}}']").remove();
 			});
 		});
 
