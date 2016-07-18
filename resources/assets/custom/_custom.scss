@@ -47,6 +47,113 @@ p {
 // h1, h2, h3 { color: $restoration-green; }
 .content.full-width {
 	h1 { font-size: 2em; }
-h2 { font-size: 1.8em;}
-h3 { font-size: 1.5em; }
+	h2 { font-size: 1.8em;}
+	h3 { font-size: 1.5em; }
+
+
+	h2 {
+		color: $heading-color;
+
+		&.section-title {
+			font-size: 1.5em;
+		}
+
+		&.section-subtitle {
+			font-size: 1.25em;
+			margin-top: 2em;
+			clear:both;
+			padding-top: .40em;
+			padding-bottom: .40em;
+			border-bottom: 3px solid $light-gray;
+			border-top: 1px solid $light-gray;
+		}
+
+		&.small-heading {
+			font-size: 1.15em;
+			margin-top: 2em;
+			border-bottom: 3px solid $light-gray;
+			margin-bottom: 0.10em;
+		}
+	}
+
+	nav {
+		display:block;
+		min-height: 100px;
+		clear:both;
+		padding: 0.50em 0;
+
+
+		ul {
+			list-style-type: none;
+	
+			li {
+				display: inline-block;
+				margin-left: 0.50em;
+
+				&.left {
+					float:left;
+				}
+
+				&.right {
+					float:right;
+				}
+			}
+
+		}
+
+	}
+}
+
+small.error 
+{ 
+	background: $required-color; 
+	color: #fff;
+	display: block;
+	margin-top: -1em;
+	padding: .125em .25em;
+	font-style: italic;
+}
+
+
+
+/****************************
+include flash mixins
+*****************************/
+
+@mixin flash($color) {
+  background-color: $color;
+  color: darken($color, 60%);
+  display: block;
+  margin-bottom: $base-spacing / 2;
+  padding: 3em;
+  text-align: center;
+  border-radius: 1em;
+
+  a {
+    color: darken($color, 70%);
+    text-decoration: underline;
+
+    &:focus,
+    &:hover {
+      color: darken($color, 90%);
+    }
+  }
+}
+
+.flash-alert {
+  @include flash($alert-color);
+  @include span-columns(8);
+  @include shift(2);
+}
+
+.flash-error {
+  @include flash($error-color);
+}
+
+.flash-notice {
+  @include flash($notice-color);
+}
+
+.flash-success {
+  @include flash($success-color);
 }

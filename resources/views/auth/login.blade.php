@@ -1,66 +1,39 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
-                        {{ csrf_field() }}
+<div class="wrapper">
+    <div class="centered">
+        <div class="login-register">
+            <h2 class="section-title">Please Log In</h2>
+            <p>The Cape Cod Commission developed the WatershedMVP application for professionals, municipal officials and community members in order to assist in creating the most cost-effective and efficient solutions to Cape Cod’s wastewater problem.</p>
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+            <p>The application is an informational resource intended to provide regional estimates for planning purposes. WatershedMVP is an initiative of the Cape Cod Commission’s Strategic Information Office (SIO). To learn more about the WatershedMVP application and the Cape Cod Commission and its SIO, please contact us.</p>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
 
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+            <p>Please enter your email address and password, or <a href="{{ url('/register') }}">Register</a> if you don't have an account.</p>  
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password">
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember"> Remember Me
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-sign-in"></i> Login
-                                </button>
-
-                                <a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+            @include('common.errors')
+            
+            <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
+                {!! csrf_field() !!}
+                <p>
+                    <label>Email</label>
+                    <input type="email" name="email" value="{{ old('email') }}">
+                    @if ($errors->has('email')) <small class="error">{{ $errors->first('email') }}</small> @endif 
+                </p>
+                <p>
+                    <label>Password</label>
+                    <input type="password" name="password" id="password">
+                    @if ($errors->has('password')) <small class="error">{{ $errors->first('password') }}</small> @endif 
+                </p>
+                <p>
+                    <input type="checkbox" name="remember"> Remember Me
+                </p>
+                <p>
+                    <button type="submit" class="button round"><i class="fa fa-check"></i> Login</button> <span>&nbsp;<a href="{{ url('/password/reset') }}">Forgot Password?</a></span>
+                </p>
+            </form>
+        </div>  
     </div>
 </div>
 @endsection

@@ -1,0 +1,10 @@
+.login-register {
+	
+	@include padding(2em);
+	@include border-top-radius(10px);
+	@include border-right-radius(10px);
+	@include border-bottom-radius(10px);
+	@include border-left-radius(10px);
+	border: 1px solid $medium-gray;
+
+}

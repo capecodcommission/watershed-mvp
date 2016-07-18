@@ -7,31 +7,14 @@
     <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>  
     <title>WatershedMVP 3.0</title>
     <link rel="stylesheet" href="{{url('css/app.css')}}">
-
-
-
 </head>
 <body id="app-layout">
 <div class="wrapper">
-        <div class="content full-width">
- <p><img src="http://www.watershedmvp.org/Images/mvplogo.png" alt="WatershedMVP 3.0 by Cape Cod Commission"></p>
-            <nav>
-                    @if (Auth::guest())
-                        <a href="{{ url('/login') }}" class="button"><i class="fa fa-btn fa-sign-in"></i> Login</a>
-                        <a href="{{ url('/register') }}"><i class="fa fa-btn fa-user-plus"></i> Register</a>
-                    @else
-                        <a class="button" href="{{ url('/') }}"><i class="fa fa-home"></i> Dashboard</a>
-                        <a class="button" href="{{ url('/start') }}"><i class="fa fa-plus"></i> Start a new Scenario</a>
-                        <a class="button" href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i> Logout</a>
+    <div class="content full-width">
+        @include('common.navigation')
 
-                    @endif
-
-
-                </ul>
-            </nav>
-
-    @yield('content')
-</div>
+        @yield('content')
+    </div>
 </div>
   
 

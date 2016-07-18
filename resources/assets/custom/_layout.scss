@@ -16,5 +16,13 @@
 	{
 		@include span-columns(10);
 		@include shift(1);
-	}
+	
+		.centered {
+			@include span-columns(8);
+			@include shift(2);
+			
+
+			background-color: $white;
+		}
+	}	
 }
