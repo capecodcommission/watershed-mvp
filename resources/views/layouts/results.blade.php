@@ -89,8 +89,8 @@
 						<th>Original N<sup>1</sup></th>
 						<th>N Removed (Attenuated)<sup>2</sup></th>
 						<th>Scenario N</th>
-						<th>Target N</th>
-						<th>N Remaining to Target <sup>3</sup></th>
+						<th>Threshold N</th>
+						<th>N Remaining to Threshold <sup>3</sup></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -110,7 +110,7 @@
 			</table>
 			<p><sup>1</sup> The "Original N" value is calculated (attenuated) total Nitrogen for the subembayment. </p>
 			<p><sup>2</sup>A negative number in this column represents Nitrogen added to a subembayment as part of a collection treatment.</p>
-			<p><sup>3</sup>A negative number in this column means the user has exceeded the target for this subembayment.</p>
+			<p><sup>3</sup>A negative number in this column means the user has exceeded the threshold for this subembayment.</p>
 
 			<p><a href="{{url('map', [$scenario->AreaID, $scenario->ScenarioID])}}" class="button" target="wmvp_scenario_{{$scenario->ScenarioID}}">back to map</a> <a href="{{url('download', $scenario->ScenarioID)}}" class="button--cta right" target="_blank"><i class="fa fa-download"></i> Download Results (.xls)</a></p>
 					

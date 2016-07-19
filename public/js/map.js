@@ -212,6 +212,9 @@ require([
 					$('#total_nitrogen_polygon').text(msg);
 					$('#popdown-opacity').show();
 					
+				}).fail(function(msg){
+					alert('There was a problem saving the polygon. Please send this error message to sue@bluegear.io: <br />Response: ' + msg.status + ' ' + msg.statusText + '<br />URL: '+url);
+					// console.log(msg.);
 				});
 
 			// console.log(symbol);

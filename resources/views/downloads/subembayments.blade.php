@@ -20,8 +20,8 @@
 						<th>Original N *</th>
 						<th>N Removed (Attenuated) **</th>
 						<th>Scenario N</th>
-						<th>Target N</th>
-						<th>N Remaining to Target ***</th>
+						<th>Threshold N</th>
+						<th>N Remaining to Threshold ***</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -41,7 +41,7 @@
 			</table>
 			<p>* The "Original N" value is calculated (attenuated) total Nitrogen for the subembayment. </p>
 			<p>** A negative number in this column represents Nitrogen <br />added to a subembayment as part of a collection treatment.</p>
-			<p>*** A negative number in this column means the user has exceeded the target for this subembayment.</p>		
+			<p>*** A negative number in this column means the user has exceeded the threshold for this subembayment.</p>		
 
 		</div>
 		</div>
