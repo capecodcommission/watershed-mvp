@@ -100,7 +100,7 @@ return [
         'users' => [
             'provider' => 'users',
             'email' => 'auth.emails.password',
-            'table' => 'password_resets',
+            'table' => 'CapeCodMA.password_resets',
             'expire' => 60,
         ],
     ],
