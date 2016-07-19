@@ -191,37 +191,41 @@ require([
 			var len = polystring.length;
 			polystring = polystring.substring(0, len - 2);
 			treatment_polygons[treatment] = polystring;
-			// console.log('exec CapeCodMa.Get_NitrogenFromPolygon \'' + polystring + '\'');
-
 			// console.log(polystring);
-			var url = "/testmap/Nitrogen" + '/' + treatment + '/' + polystring;
+			// console.log('exec CapeCodMa.Get_NitrogenFromPolygon \'' + polystring + '\'');
+			// if(len > 255)
+			// {
+			// 	// this is too long and will cause a 403 error; need to split it up
+			// 	var part_1 = polystring.substring(0, 255);
+			// 	var part_2 = polystring.substring(255);
+			// 	var url = '/poly/'+treatment+'/'+part_1+'/'+part_2;
+			// }
+			// else
+			{
+				// var url = "/poly/" + treatment + '/' + polystring;
+				var url = '/poly';
+			}
+			
+			var data = {treatment: treatment, polystring: polystring};
+			console.log(data);
 			// var url = '/polygon/' + func + '/' + treatment + '/' + polystring;
 			// console.log(url);
 			$.ajax({
-					method: 'GET',
+					method: 'POST',
+					data: data,
 					url: url
 				})
 				.done(function(msg) {
-					// msg = $.parseJSON(msg);
-					// console.log(msg);
-					// console.log(msg);
-					// var txtmsg = "Total Nitrogen in Polygon: " + msg[0].UnAttenFull;
-					// alert(txtmsg);
-					// console.log('success');
-					// var poly_nitrogen = msg.poly_nitrogen->Septic;
+					console.log(msg);
 					$('#total_nitrogen_polygon').text(msg);
 					$('#popdown-opacity').show();
 					
 				}).fail(function(msg){
+					console.log(msg);
 					alert('There was a problem saving the polygon. Please send this error message to sue@bluegear.io: <br />Response: ' + msg.status + ' ' + msg.statusText + '<br />URL: '+url);
-					// console.log(msg.);
 				});
 
-			// console.log(symbol);
 			var area = evt.geometry.getExtent();
-			// console.log(area);
-			// map.centerAndZoom(area, 11);
-			// console.log(treatment_polygons);
 		}
 
 

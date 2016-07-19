@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Log;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Auth;
@@ -176,8 +176,13 @@ class WizardController extends Controller
 	 * @return void
 	 * @author 
 	 **/
-	public function getPolygon($treatment_id, $poly)
+	public function getPolygon($treatment_id, $poly, $part2 = null)
 	{
+		if ($part2) 
+		{
+			// this means the poly string was too long to be sent as a single url parameter so we are going to concatenate the strings	
+			$poly = $poly + $part2;
+		}
 		DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING, NOCOUNT ON');
 		$scenarioid = Session::get('scenarioid');
 		$scenario = Scenario::find($scenarioid);
@@ -228,7 +233,68 @@ class WizardController extends Controller
 	}
 
 
+	/**
+	 * Get Nitrogen Totals from a polygon string
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function getPolygon2(Request $data)
+	{
+		// dd($data);
+		    // Log::info('Data received '.$data);
+		$data = $data->all();
+		// return $test;
+		$treatment_id = $data['treatment'];
+		$poly = $data['polystring'];
+		DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING, NOCOUNT ON');
+		$scenarioid = Session::get('scenarioid');
+		$scenario = Scenario::find($scenarioid);
+		$embay_id = $scenario->AreaID;
 
+
+		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
+
+		if ($parcels) {
+			$poly_nitrogen = $parcels[0]->Septic;
+		}
+		else
+		{
+			$parcels = 0;
+			$poly_nitrogen = 0;
+		}
+		
+
+		JavaScript::put([
+				'poly_nitrogen' => $parcels
+			]);
+
+
+		/**********************************************
+		*	We need to get the total Nitrogen for the custom polygon that this technology will treat 
+		*	(fertilizer, stormwater, septic, groundwater, etc.)
+		*	and report that back to the technology pop-up. After the user adjusts the treatment settings
+		*	we need to save that as "treated_nitrogen" and be able to attenuate it 
+		*	If this is a collection & treat (sewer) then we will need to 
+		*	create a new treatment record with a parent_treatment_id so we 
+		*	can store the N load and the destination point where it will be treated.
+		*
+		**********************************************/
+
+		// $treatment = Treatment::find($treatment_id);
+		// $treatment->POLY_STRING = $poly;
+		// $treatment->Custom_POLY = 1;
+		// $treatment->save();
+		// dd($treatment);
+		// $total_septic_nitrogen = $parcels;
+		// foreach ($parcels as $parcel) 
+		// {
+		// 	$total_septic_nitrogen += $parcel->wtp_nload_septic;
+		// }
+
+		return $parcels;
+		// return view ('layouts/test_septic', ['parcels'=>$parcels, 'poly_nitrogen'=>$poly_nitrogen]);
+	}
 
 	
 	

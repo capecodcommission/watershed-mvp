@@ -15,10 +15,13 @@ Route::get('/start', 'StartController@index');
 
 Route::get('/map/{embayment}/{scenarioid?}', 'WizardController@start');
 
+Route::post('/poly', 'WizardController@getPolygon2');
+// Route::post('/poly/', 'WizardController@getPolygon2');
+// Route::get('/poly/{params}', 'WizardController@getPolygon2')->where('params', '.*');
 
+// Route::get('/poly/{treatment}/{poly}/{part2?}', 'WizardController@getPolygon');
 
-// this route should be changed or recreated to be more accurate for what it does
-// which is take a polygon string and retrieve the parcels contained within, along with N load, etc.
+// Just leaving this here in case it is referenced somewhere in the code
 Route::get('/testmap/Nitrogen/{treatment}/{poly}', 'WizardController@getPolygon');
 
 Route::get('/tech/{type}/{tech}', 'TechnologyController@get');
