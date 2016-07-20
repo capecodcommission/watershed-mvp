@@ -7,6 +7,7 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use DB;
 
 class AuthController extends Controller
 {
@@ -48,9 +49,27 @@ class AuthController extends Controller
      */
     protected function validator(array $data)
     {
+
+        Validator::extend('unique_email', function($attribute, $value, $parameters)
+        {
+            // check the users table to make sure the email address is unique
+            $email_exists = DB::select('select count(user_id) as user_count from CapeCodMA.Scenario_Users where email = \'' . $value . '\'');
+
+            if ($email_exists[0]->user_count > 0) 
+            {
+                
+                // $messages['unique_email'] =   'There is already a user account registered with that email address.';
+                return false;    
+            }
+            else
+            {
+                return true;   
+            }
+
+        });
         return Validator::make($data, [
             'name' => 'required|max:255',
-            'email' => 'required|email|max:255',
+            'email' => 'required|email|max:255|unique_email',
             'password' => 'required|min:6|confirmed',
         ]);
     }

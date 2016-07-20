@@ -289,12 +289,13 @@ class TechnologyController extends Controller
 	 * @return void
 	 * @author 
 	 **/
-	public function updatePolygon($treat_id, $new_poly)
+	public function updatePolygon(Request $data)
 	{
+		$data = $data->all();
 		DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
 		// stored procedure needs to update the parcels in wiz_treatment_parcel to match the new polygon
 		// then update the polygon and parcel data/N total for this treatment in Treatment_Wiz
-		$upd = DB::select('exec CapeCodMA.UPD_TreatmentPolygon ' . $treat_id . ', \'' . $new_poly . '\'');
+		$upd = DB::select('exec CapeCodMA.UPD_TreatmentPolygon ' . $data['treatment'] . ', \'' . $data['polystring'] . '\'');
 		return $upd;
 
 

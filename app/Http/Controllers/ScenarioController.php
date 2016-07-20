@@ -97,7 +97,7 @@ class ScenarioController extends Controller
   where wtt.wtt_scenario_id = ' . $scenarioid);
 		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
 		// Need to calculate all the treatments applied and Nitrogen removed from this scenario
-
+		// dd($scenario, $subembayments);
 		return view('layouts/results', ['scenario'=>$scenario, 'towns'=>$towns, 'subembayments'=>$subembayments]);
 
 	}
