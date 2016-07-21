@@ -9,6 +9,7 @@
 		<div class="wrapper">
 		<div class="content full-width">
 			@include('common.navigation')
+		
 	      	<h1>Embayment: {{$scenario->AreaName}}</h1>
 			<h2 class="author">Created by: {{$scenario->user->name}} on {{date('Y-m-d', strtotime($scenario->CreateDate))}}</h2>
 			<div id="app">
@@ -118,6 +119,7 @@
 		<p>No treatments have been applied to this scenario yet.</p>
 		<p><a href="{{url('map', [$scenario->AreaID, $scenario->ScenarioID])}}" class="button" target="wmvp_scenario_{{$scenario->ScenarioID}}">Return to map</a> </p>
 		@endif
+
 		</div>
 		</div>
 	</div>

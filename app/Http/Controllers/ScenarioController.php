@@ -88,17 +88,16 @@ class ScenarioController extends Controller
 	 **/
 	public function getScenarioResults($scenarioid)
 	{	
-		// $scenarioid = session('scenarioid');
-		$scenario = Scenario::find($scenarioid);
-		// $embay_id = session('embay_id');
-		// $results = DB::select('exec CapeCodMA.Get_ScenarioResults '. $scenarioid);
-		// dd($results);
+	
+		$scenario = Scenario::findOrFail($scenarioid);
+		// dd($scenario);
 		$towns = DB::select('select wtt.*, t.town from dbo.wiz_treatment_towns wtt inner join capecodma.matowns t on t.town_id = wtt.wtt_town_id
   where wtt.wtt_scenario_id = ' . $scenarioid);
 		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
-		// Need to calculate all the treatments applied and Nitrogen removed from this scenario
-		// dd($scenario, $subembayments);
+
 		return view('layouts/results', ['scenario'=>$scenario, 'towns'=>$towns, 'subembayments'=>$subembayments]);
+		
+		
 
 	}
 

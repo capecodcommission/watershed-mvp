@@ -57,8 +57,6 @@ class AuthController extends Controller
 
             if ($email_exists[0]->user_count > 0) 
             {
-                
-                // $messages['unique_email'] =   'There is already a user account registered with that email address.';
                 return false;    
             }
             else

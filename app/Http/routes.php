@@ -11,6 +11,9 @@
 |
 */
 
+
+Route::group(['middleware' => 'auth'], function () {
+   
 Route::get('/start', 'StartController@index');
 
 Route::get('/map/{embayment}/{scenarioid?}', 'WizardController@start');
@@ -56,16 +59,21 @@ Route::get('/download/{scenarioid}', 'ScenarioController@downloadScenarioResults
 
 Route::get('progress', 'ScenarioController@getProgress');
 
-
-Route::resource('/api/treatments', 'ApiTreatmentController');
-Route::get('/test/{embayment}', 'WizardController@test');
-
-Route::get('/testmap', function(){
-	return view('testmap');
+Route::get('/', 'HomeController@index');
 });
-Route::get('/testleaf', function(){
-	return view('testleaf');
-});
+
+// Route::resource('/api/treatments', 'ApiTreatmentController');
+// Route::get('/test/{embayment}', 'WizardController@test');
+
+// Route::get('/testmap', function(){
+// 	return view('testmap');
+// });
+// Route::get('/testleaf', function(){
+// 	return view('testleaf');
+// });
 Route::auth();
 
-Route::get('/', 'HomeController@index');
+
+Route::get('/help', function(){
+	return view('help');
+});
