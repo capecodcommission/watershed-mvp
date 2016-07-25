@@ -61,16 +61,9 @@ Route::get('progress', 'ScenarioController@getProgress');
 
 Route::get('/', 'HomeController@index');
 });
+Route::get('/home', 'HomeController@index');
+});
 
-// Route::resource('/api/treatments', 'ApiTreatmentController');
-// Route::get('/test/{embayment}', 'WizardController@test');
-
-// Route::get('/testmap', function(){
-// 	return view('testmap');
-// });
-// Route::get('/testleaf', function(){
-// 	return view('testleaf');
-// });
 Route::auth();
 
 
