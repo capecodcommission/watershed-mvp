@@ -60,9 +60,10 @@ Route::get('/download/{scenarioid}', 'ScenarioController@downloadScenarioResults
 Route::get('progress', 'ScenarioController@getProgress');
 
 Route::get('/', 'HomeController@index');
-});
 Route::get('/home', 'HomeController@index');
 });
+
+
 
 Route::auth();
 
