@@ -37,6 +37,8 @@
 	
 	<script>
 		var selectlayer = {{$embayment->EMBAY_ID}};
+		var center_x = {{$embayment->longitude}};
+		var center_y = {{$embayment->latitude}};
 		window.name = 'wmvp_scenario_{{session('scenarioid')}}';
 	</script>
 
