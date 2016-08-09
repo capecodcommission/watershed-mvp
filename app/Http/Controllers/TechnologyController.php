@@ -26,7 +26,7 @@ class TechnologyController extends Controller
 		DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
 		$tech = DB::table('dbo.v_Technology_Matrix')->select('*')->where('TM_ID', $id)->first();
 		$scenarioid = session('scenarioid');
-		$treatment = Treatment::create(['ScenarioID' => $scenarioid, 'TreatmentType_ID'=>$tech->Technology_ID, 'TreatmentType_Name'=>$tech->Technology_Strategy, 'Treatment_UnitMetric'=>$tech->Unit_Metric, 'Treatment_Class'=>$tech->Technology_Sys_Type]);
+		$treatment = Treatment::create(['ScenarioID' => $scenarioid, 'TreatmentType_ID'=>$tech->Technology_ID, 'TreatmentType_Name'=>substr($tech->Technology_Strategy, 0, 50), 'Treatment_UnitMetric'=>$tech->Unit_Metric, 'Treatment_Class'=>$tech->Technology_Sys_Type]);
 		// dd($tech, $treatment);
 		if ($tech->Show_In_wMVP == 4) 
 		{

@@ -37,15 +37,23 @@
 				<tbody>
 
 					@foreach($scenario->treatments as $result)
-					<tr id="treat_{{$result->TreatmentID}}">
-						<td><div class="technology"><img src="http://www.cch2o.org/Matrix/icons/{{$result->technology->Icon}}" alt=""></div></td>
-						<td>{{$result->technology->Technology_Strategy}} ({{$result->TreatmentID}})</td>
-						<td>{{$result->Treatment_Parcels}}</td>
-						<td>{{round($result->Nload_Reduction)}}kg</td> <?php $n_removed += $result->Nload_Reduction; ?>
-						<td><?php echo money_format('%10.0n', $result->Cost_Total);?></td><?php $scenario_cost += $result->Cost_Total; ?>
-						<td><?php if ($result->Nload_Reduction > 0) {
+						<tr id="treat_{{$result->TreatmentID}}">
+							@if(!$result->Parent_TreatmentId)
+								<td>
+									<div class="technology">
+										<img src="http://www.cch2o.org/Matrix/icons/{{$result->technology->Icon}}" alt="">
+									</div>
+								</td>
+								<td>{{$result->technology->Technology_Strategy}} ({{$result->TreatmentID}})</td>
+								<td>{{$result->Treatment_Parcels}}</td>
+								<td>{{round($result->Nload_Reduction)}}kg</td> <?php $n_removed += $result->Nload_Reduction; ?>
+								<td><?php echo money_format('%10.0n', $result->Cost_Total);?></td>
+									<?php $scenario_cost += $result->Cost_Total; ?>
+								<td><?php if ($result->Nload_Reduction > 0) {
 								echo money_format('%10.0n', $result->Cost_Total/$result->Nload_Reduction);}?></td>
-						<td><a data-treatment="{{$result->TreatmentID}}" class="deletetreatment button--cta"><i class="fa fa-trash-o"></i> Delete</a></td>
+								<td><a data-treatment="{{$result->TreatmentID}}" class="deletetreatment button--cta"><i class="fa fa-trash-o"></i> Delete</a></td>
+
+							@endif
 	
 					</tr>
 					@endforeach

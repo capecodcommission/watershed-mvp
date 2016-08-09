@@ -75,7 +75,8 @@ class Scenario extends Model
 
     public function treatments()
     {
-    	return $this->hasMany('App\Treatment', 'ScenarioID', 'ScenarioID')->whereNull('Parent_TreatmentId');
+    	// return $this->hasMany('App\Treatment', 'ScenarioID', 'ScenarioID')->whereNull('Parent_TreatmentId');
+    	return $this->hasMany('App\Treatment', 'ScenarioID', 'ScenarioID');
     }
 
     public function user()
