@@ -71,3 +71,4 @@ Route::auth();
 Route::get('/help', function(){
 	return view('help');
 });
+

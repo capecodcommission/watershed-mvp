@@ -234,7 +234,7 @@
 		</div>
 		<div class="acc_cCont">
 			<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="wmvp_results_{{session('scenarioid')}}">View Scenario Summary</a>
-			Existing Nitrogen from Groundwater: (<span id="getNitrogen">Calculate Groundwater</span>)</p>
+			{{-- Existing Nitrogen from Groundwater: (<span id="getNitrogen">Calculate Groundwater</span>) --}}</p>
 			<hr>
 
 			<div class="technology_list">

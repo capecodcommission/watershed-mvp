@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-default">
-				
+				<? $path = url()->full(); var_dump($path); ?>
 
 				<div class="panel-body">
 				   <h2>Your Saved Scenarios</h2>

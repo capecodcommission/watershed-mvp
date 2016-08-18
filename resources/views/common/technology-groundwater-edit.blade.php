@@ -9,7 +9,7 @@
 <div class="popdown-content" id="app">
 	<header><h2>{{$tech->Technology_Strategy}}</h2></header>
 	<section class="body">
-
+<p>{{$treatment->Treatment_Class}}</p>
 			<div class="technology">
 				<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
 					<img src="http://www.cch2o.org/Matrix/icons/{{$tech->Icon}}" width="75">
