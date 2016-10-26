@@ -8,7 +8,7 @@ if (strpos(url()->full(), 'devdb') > 0 || env('APP_ENV')== 'local')
 	{
 		$which = 'sqlsrv';
 	}
-$which = 'dev_sqlsrv';
+// $which = 'dev_sqlsrv';
 return [
 
 	/*

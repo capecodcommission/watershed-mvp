@@ -15,6 +15,7 @@ use Session;
 use Excel;
 use Auth;
 use App\User;
+use Log;
 
 class ScenarioController extends Controller
 {
@@ -134,7 +135,7 @@ class ScenarioController extends Controller
 		$scenario = Scenario::find($scenarioid);
 		// $embayment = DB::select('select * from capecodma.embayments where embay_id = ' . $scenario->AreaID);
 		// $embay_id = $scenario->AreaID;
-		// dd($scenario);
+		Log::info($scenario->treatments);
 		// $results = DB::select('exec CapeCodMA.Get_ScenarioResults '. $scenarioid);
 		$towns = DB::select('select wtt.*, t.town from dbo.wiz_treatment_towns wtt inner join capecodma.matowns t on t.town_id = wtt.wtt_town_id where wtt.wtt_scenario_id = ' . $scenarioid);
 		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
