@@ -10,6 +10,7 @@ use DB;
 use App\Treatment;
 use App\Embayment;
 use Session;
+use Log;
 
 class TechnologyController extends Controller
 {
@@ -23,7 +24,6 @@ class TechnologyController extends Controller
 	public function get($type, $id)
 	{
 
-		DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
 		$tech = DB::table('dbo.v_Technology_Matrix')->select('*')->where('TM_ID', $id)->first();
 		$scenarioid = session('scenarioid');
 		$treatment = Treatment::create(['ScenarioID' => $scenarioid, 'TreatmentType_ID'=>$tech->Technology_ID, 'TreatmentType_Name'=>substr($tech->Technology_Strategy, 0, 50), 'Treatment_UnitMetric'=>$tech->Unit_Metric, 'Treatment_Class'=>$tech->Technology_Sys_Type]);
@@ -230,7 +230,7 @@ class TechnologyController extends Controller
 		dd($scenarioid);
 
 		$embay_id = session('embay_id');
-		DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
+		
 		if ($type == 'septic') 
 		{
 			// we need to know how many toilets/parcels will be implemented
@@ -292,9 +292,11 @@ class TechnologyController extends Controller
 	public function updatePolygon(Request $data)
 	{
 		$data = $data->all();
-		DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
+		// DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
 		// stored procedure needs to update the parcels in wiz_treatment_parcel to match the new polygon
 		// then update the polygon and parcel data/N total for this treatment in Treatment_Wiz
+		$query = 'exec CapeCodMA.UPD_TreatmentPolygon ' . $data['treatment'] . ', \'' . $data['polystring'] . '\'';
+		Log::info($query);
 		$upd = DB::select('exec CapeCodMA.UPD_TreatmentPolygon ' . $data['treatment'] . ', \'' . $data['polystring'] . '\'');
 		return $upd;
 
@@ -311,7 +313,7 @@ class TechnologyController extends Controller
 	public function cancel($treat_id)
 	{
 
-		DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
+		// DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
 		$del = DB::select('exec CapeCodMA.DEL_Treatment '. $treat_id);
 
 		return 1;
@@ -402,6 +404,8 @@ class TechnologyController extends Controller
 					break;
 
 				case 'collect':
+				$query = 'exec [CapeCodMA].[CALC_ApplyTreatment_Septic] '. $treat_id . ', '. $rate;
+				Log::info($query);
 					$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Septic] '. $treat_id . ', '. $rate);
 					return $updated;
 					break;	
@@ -432,7 +436,7 @@ class TechnologyController extends Controller
 	 **/
 	public function delete($treat_id)
 	{
-		DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
+		// DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
 		// Need to remove all records in wiz_treatment_parcels and wiz_treatment_towns for this treatment_id
 		$del = DB::select('exec CapeCodMA.DEL_Treatment '. $treat_id);
 		// Treatment::destroy($treat_id);

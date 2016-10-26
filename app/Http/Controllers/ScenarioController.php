@@ -51,6 +51,11 @@ class ScenarioController extends Controller
 			$total_goal += $key->n_load_target;
 		}
 		$current = $n_load_orig - $removed;
+		$remaining = $current - $total_goal;
+		if($remaining < 0)
+		{
+			$remaining = 0;
+		}
 		if ($current > 0) {
 			$progress = round($total_goal/$current * 100);
 		}
@@ -72,6 +77,7 @@ class ScenarioController extends Controller
 		// dd($sub_removed);
 
 		*/
+		$data['remaining'] = $remaining;
 		$data['embayment'] = $progress;
 		$data['subembayments'] = $subembayments;
 		// dd($data);

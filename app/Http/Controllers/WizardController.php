@@ -42,9 +42,6 @@ class WizardController extends Controller
 						'AreaID'=>$id, 'ScenarioPeriod'=>'Existing'
 					]);
 					// user selected a different embayment, need to create a new scenario 
-					// $scenario = new Scenario;
-					// $scenario->areaid = $id;
-					// $scenario->save();
 					$scenarioid = $scenario->ScenarioID;
 					
 					Session::put('scenarioid', $scenarioid);
@@ -52,21 +49,15 @@ class WizardController extends Controller
 					Session::put('fert_applied', 0);
 					Session::put('storm_applied', 0);
 					Session::save();
-					
-
 				}
 			}
 			else
 			{
 					//  need to create a new scenario 
 					// $scenarioid = DB::select('exec CapeCodMA.CreateScenario ' . $id);
-					// $scenarioid = $scenarioid[0]->scenarioid;
 				$scenario = $user->scenarios()->create([
 						'AreaID'=>$id, 'ScenarioPeriod'=>'Existing'
 					]);
-					// $scenario = new Scenario;
-					// $scenario->areaid = $id;
-					// $scenario->save();
 
 					$scenarioid = $scenario->ScenarioID;
 
@@ -83,33 +74,18 @@ class WizardController extends Controller
 		}
 		else
 		{
-			// dd($scenarioid);
 			Session::put('scenarioid', $scenarioid);
-			// dd(session('scenarioid'));
 			Session::save();
 		}
-
 
 		$scenario = Scenario::find($scenarioid);
 		$treatments = $scenario->treatments;
 
-		// Get the scenario's current progress
-		// $removed = DB::select('exec CapeCodMA.CALC_ScenarioNitrogen ' . $scenarioid);
-		// $removed = $removed[0]->N_Removed;
-		// $current = $scenario->Nload_Existing - $removed;
-		// if ($current > 0) {
-		// 	$progress = round($scenario->Nload_Total_Target/$current * 100);
-		// }
-		// else
-		// {
-		// 	$progress = 100;
-		// }
-
 		$removed = 0;
 		$n_load_orig = 0;
 		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
-		// $subembayments = DB::select('exec CapeCodMA.GET_SubembaymentNitrogen ' . $id);
 		$total_goal = 0;
+
 		foreach ($subembayments as $key) 
 		{
 			$n_load_orig += $key->n_load_att;
@@ -124,14 +100,21 @@ class WizardController extends Controller
 		{
 			$progress = 100;
 		}
-
-
+		$remaining = $current - $total_goal;
+		if($remaining < 0)
+		{
+			$remaining = 0;
+		}
 		$nitrogen = DB::select('exec CapeCodMA.GET_AreaNitrogen_Unattenuated ' . $id);
+
 		$nitrogen_att = DB::select('exec CapeCodMA.GET_AreaNitrogen_attenuated ' . $id);
-		// dd($nitrogen_att);
+		$nitrogen_att = [
+			'Total_Att' => $n_load_orig
+		];
+
 		JavaScript::put([
 				'nitrogen_unatt' => $nitrogen[0],
-				'nitrogen_att' => $nitrogen_att[0],
+				'nitrogen_att' => $nitrogen_att,
 				'center_x'	=> $embayment->longitude,
 				'center_y'	=> $embayment->latitude,
 				'selectlayer' => $embayment->embay_id,
@@ -141,7 +124,7 @@ class WizardController extends Controller
 
 		return view('layouts/wizard', ['embayment'=>$embayment, 'subembayments'=>$subembayments, 
 			// 'nitrogen_att'=>$nitrogen_att[0], 'nitrogen_unatt'=>$nitrogen[0], 
-			'goal'=>$total_goal, 'treatments'=>$treatments, 'progress'=>$progress]);
+			'goal'=>$total_goal, 'treatments'=>$treatments, 'progress'=>$progress, 'remaining'=>$remaining]);
 
 	}
 
@@ -183,7 +166,7 @@ class WizardController extends Controller
 			// this means the poly string was too long to be sent as a single url parameter so we are going to concatenate the strings	
 			$poly = $poly + $part2;
 		}
-		DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING, NOCOUNT ON');
+		// DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING, NOCOUNT ON');
 		$scenarioid = Session::get('scenarioid');
 		$scenario = Scenario::find($scenarioid);
 		$embay_id = $scenario->AreaID;
@@ -205,31 +188,7 @@ class WizardController extends Controller
 				'poly_nitrogen' => $parcels
 			]);
 
-
-		/**********************************************
-		*	We need to get the total Nitrogen for the custom polygon that this technology will treat 
-		*	(fertilizer, stormwater, septic, groundwater, etc.)
-		*	and report that back to the technology pop-up. After the user adjusts the treatment settings
-		*	we need to save that as "treated_nitrogen" and be able to attenuate it 
-		*	If this is a collection & treat (sewer) then we will need to 
-		*	create a new treatment record with a parent_treatment_id so we 
-		*	can store the N load and the destination point where it will be treated.
-		*
-		**********************************************/
-
-		// $treatment = Treatment::find($treatment_id);
-		// $treatment->POLY_STRING = $poly;
-		// $treatment->Custom_POLY = 1;
-		// $treatment->save();
-		// dd($treatment);
-		// $total_septic_nitrogen = $parcels;
-		// foreach ($parcels as $parcel) 
-		// {
-		// 	$total_septic_nitrogen += $parcel->wtp_nload_septic;
-		// }
-
 		return $parcels;
-		// return view ('layouts/test_septic', ['parcels'=>$parcels, 'poly_nitrogen'=>$poly_nitrogen]);
 	}
 
 
@@ -247,12 +206,13 @@ class WizardController extends Controller
 		// return $test;
 		$treatment_id = $data['treatment'];
 		$poly = $data['polystring'];
-		DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING, NOCOUNT ON');
+		// DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING, NOCOUNT ON');
 		$scenarioid = Session::get('scenarioid');
 		$scenario = Scenario::find($scenarioid);
 		$embay_id = $scenario->AreaID;
 
-
+		$query = 'exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'';
+		Log::info($query);
 		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
 
 		if ($parcels) {

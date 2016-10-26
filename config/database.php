@@ -1,6 +1,6 @@
 <?php
 
-if (strpos(url()->full(), 'devdb') > 0)
+if (strpos(url()->full(), 'devdb') > 0 || env('APP_ENV')== 'local')
 	{
 		$which = 'dev_sqlsrv';
 	}
@@ -8,7 +8,7 @@ if (strpos(url()->full(), 'devdb') > 0)
 	{
 		$which = 'sqlsrv';
 	}
-// $which = 'dev_sqlsrv';
+$which = 'dev_sqlsrv';
 return [
 
 	/*

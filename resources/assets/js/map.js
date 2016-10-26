@@ -192,7 +192,7 @@ require([
 			var url = '/poly';
 						
 			var data = {treatment: treatment, polystring: polystring};
-
+console.log(data);
 			$.ajax({
 					method: 'POST',
 					data: data,

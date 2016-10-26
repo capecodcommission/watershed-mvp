@@ -18,8 +18,8 @@
 		<div class="acc_cCont">
 		
 		<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="wmvp_results_{{session('scenarioid')}}">View Scenario Summary</a>
-			Total Unattenuated Nitrogen: <span class="wizard-span">@{{unatt|round}}kg</span><br />
-			Total Attenuated Nitrogen: <span  class="wizard-span">@{{att|round}}kg</span></p>
+			<span class="remaining"><strong>Nitrogen Remaining to Threshold:</strong> <span></span>kg</span>
+			</p>
 			<hr>
 			<fieldset class="right"><p>Want to choose a create a new scenario <br />or select a different embayment? <br /><a href="{{url('/')}}" class="button--cta">Start Over</a></p></fieldset>
 			<p>Nitrogen is treated at different entrance points:</p>
@@ -49,8 +49,8 @@
 		</div>
 		<div class="acc_cCont">
 			<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="wmvp_results_{{session('scenarioid')}}">View Scenario Summary</a>
-			Total Unattenuated Load from Fertilizer: <span class="wizard-span">@{{fert_unatt|round}}kg</span> <br>
-			Total Attenuated Load from Fertilizer: <span class="wizard-span">@{{fert_att | round }}kg</span></p>
+			<span class="remaining"><strong>Nitrogen Remaining to Threshold:</strong> <span></span>kg</span>
+			</p>
 			<hr>
 			@if(session('fert_applied')==1)
 			<div class="technology disabled">
@@ -83,8 +83,8 @@
 			<div class="acc_cCont">
 				<p>
 				<a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="wmvp_results_{{session('scenarioid')}}">View Scenario Summary</a>
-				Unattenuated Nitrogen from Stormwater: <span class="wizard-span">@{{storm_unatt|round}}kg</span> <br>
-				Attenuated Nitrogen from Stormwater: <span class="wizard-span">@{{storm_att|round}}kg</span></p>
+				<span class="remaining"><strong>Nitrogen Remaining to Threshold:</strong> <span></span>kg</span>
+				</p>
 				<hr>
 				
 				<div class="technology_list">
@@ -154,8 +154,8 @@
 		</div>
 		<div class="acc_cCont">
 		<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="wmvp_results_{{session('scenarioid')}}">View Scenario Summary</a>
-			Unattenuated Nitrogen from Septic: <span class="wizard-span">@{{septic_unatt|round}}kg</span><br>
-			Attenuated Nitrogen from Septic: <span class="wizard-span">@{{septic_att|round}}kg</span></p>
+			<span class="remaining"><strong>Nitrogen Remaining to Threshold:</strong> <span></span>kg</span>
+			</p>
 			<hr>
 			<div class="technology">
 				<a href="{{url('/tech/collect/40')}}" class="popdown">
@@ -234,7 +234,7 @@
 		</div>
 		<div class="acc_cCont">
 			<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="wmvp_results_{{session('scenarioid')}}">View Scenario Summary</a>
-			{{-- Existing Nitrogen from Groundwater: (<span id="getNitrogen">Calculate Groundwater</span>) --}}</p>
+			<span class="remaining"><strong>Nitrogen Remaining to Threshold:</strong> <span></span>kg</span></p>
 			<hr>
 
 			<div class="technology_list">
@@ -367,19 +367,15 @@
 	<label class="backdrop" for="acc-6"><!-- <i class="fa fa-times"></i> --></label>
 	<article class="acc_cBox">
 		<div class="acc_cImg">
-		<!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/308355/img-4.jpg" alt="" /> -->
+		
 		<header>
 			<h3>Summary</h3>
-			<!-- <p>Web Designer</p> -->
+			
 		</header>
 		</div>
 		<div class="acc_cCont">
-		<!-- <p>Existing Nitrogen Load: kg</p> -->
-		<ul>
-	{{--	@foreach($treatments as $treatment)
-			 <li>{{$treatment->TreatmentType_ID}} -> {{$treatment->Nload_Reduction}}kg</li> 
-		@endforeach--}}
-		</ul>
+		<p><span class="remaining"><strong>Nitrogen Remaining to Threshold:</strong> <span></span>kg</span></p>
+
 		<p>Overall Nitrogen Reduction: </p>
 			
 			<p><a href="{{url('download', session('scenarioid'))}}">Download Results (.xls)</a></p>

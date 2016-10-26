@@ -18,76 +18,6 @@ Vue.component('subembayment', {
 	});
 
 
-/********************************************
-
-*	This doesn't actually work. Removing for now
-
-Vue.component('Treatment', {
-	template: '#treatment-template',
-	props: [
-				'TreatmentID',
-				// 'TreatmentType_ID',
-				'Treatment_Rate', // this is the ppm or percent set by the user
-				// 'ScenarioID',
-				'Polygon',
-				'Total_Orig_Nitrogen' // this is the total Nitrogen this treatment is dealing with
-				
-			],
-	computed: {
-				Nitrogen_Removed: function() // this is the *attenuated* Nitrogen removed by this treatment
-				{
-					return this.Total_Orig_Nitrogen * (this.Treatment_Rate/100)
-				}
-
-			},
-	methods: {
-		drawPolygon: function() {
-			$('#popdown-opacity').hide();
-			// $( "#info" ).trigger( "click" );
-			// dom.byId("info")
-
-			map.disableMapNavigation();
-			tb.activate('polygon');
-			// console.log('polygon clicked');
-			// $('#popdown-opacity').show();
-			// console.log(poly_nitrogen);
-			// $('#total_nitrogen_polygon').text(poly_nitrogen + 'kg');
-			// this.$http.post('/getpolygon/'+'/'+polystring, {
-			// 	//treatment: 
-			// }
-			// this.Total_Orig_Nitrogen = "/testmap/Nitrogen"+'/'+treatment+'/'+polystring;
-			$('#select_destination').show();
-		}
-	}
-});
-
-****************************************************
-*
-*	Neither does this:
-
-Vue.component('parcel', {
-	template: '#parcel-template',
-	props: [
-				'TreatmentWizId',
-				'WtpParcelId',
-				'WtpSubwaterId',
-				'WtpNloadSeptic',
-				'WtpLandUseExisting',
-				'WtpTownId',
-				'WtpWwfExisting',
-				'my-treatment'
-			],
-	computed: {
-			NLoad_Treated: function()
-				{
-					return (this.WtpWwfExisting * this.my-treatment * 365 * 3.785)/1000000;
-				}
-	}
-
-});
-****************************************************
-*/
-
 new Vue({
 				http: {
 				  // root: '/root',
@@ -152,14 +82,6 @@ new Vue({
 						return ( this.storm_att - this.storm_att_treated);
 					},	
 
-					// total_treated: function()
-					// {
-					// 	return (this.total_att - this.fert_difference - this.storm_difference);
-					// },
-					// difference: function()
-					// {
-					// 	return ((this.total_att - this.total_treated));
-					// },
 					groundwater_unatt: function()
 					{
 						return (this.fert_unatt_treated + this.storm_unatt_treated + this.atmosphere_unatt);
