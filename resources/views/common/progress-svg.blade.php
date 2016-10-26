@@ -8,7 +8,7 @@
 				<div class="progress">
 					<h3></h3>
 					<!-- progress bar -->
-					<h4 class="remaining">N remaining to target:<br /><span></span>kg</h4>
+					<h4 class="remaining">N remaining to threshold:<br /><span></span>kg</h4>
 				</div>
 			</div>
 		</div>
