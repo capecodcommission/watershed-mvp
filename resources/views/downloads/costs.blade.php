@@ -10,7 +10,7 @@
 			<h1>Scenario: {{$scenario->ScenarioID}} for {{$scenario->AreaName}}</h1>
 			<p></p>
 			<h2>Cost Breakdown</h2>
-		
+
 			<table>
 				<thead>
 					<tr>
@@ -85,8 +85,8 @@
 						<td>=SUM(H8:H{{$row}})</td>
 						<td>=SUM(I8:I{{$row}})</td>
 						<td>=SUM(J8:J{{$row}})</td>
-						<td class="total_cost">=SUM(K8:K{{$row}})</td>
-						<td class="avg_cost_per_kg">=(SUM(K8:K{{$row}})/SUM(D8:D{{$row}}))</td>
+						<td class="total_cost">=SUM(K8:K{{$row }})</td>
+						<td class="avg_cost_per_kg">=((SUM(K8:K{{$row}})/SUM(D8:D{{$row}}))/12.46)</td>
 					</tr>
 				</tbody>
 			</table>

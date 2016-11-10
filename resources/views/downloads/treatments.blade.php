@@ -8,7 +8,7 @@
 			<p>Link to scenario: {{url('map', [$scenario->AreaID, $scenario->ScenarioID])}}</p>
 
 			<h2>Embayment Stats</h2>
-			<table>	
+			<table>
 				<tr>
 					<td>Unsewered Parcels</td>
 					<td>{{$scenario->parcels_septic + $scenario->parcels_gwdp}}</td>
@@ -40,16 +40,16 @@
 				<tr>
 					<td>Existing Nitrogen - Septic</td>
 					<td>{{$scenario->Nload_Sept}}</td>
-				</tr>	
+				</tr>
 				<tr>
 					<td>Existing Nitrogen - Stormwater</td>
 					<td>{{$scenario->Nload_Storm}}</td>
-				</tr>							
+				</tr>
 			</table>
 
 			<h2>Technology Stack</h2>
 			<table>
-				<thead>	
+				<thead>
 					<tr>
 						<th>Technology</th>
 						<th>ID</th>
@@ -65,9 +65,9 @@
 					</tr>
 				</thead>
 				<tbody>
-				<?php 
+				<?php
 					$start_row = 20;
-					$row = $start_row - 1; 
+					$row = $start_row - 1;
 				?>
 					@foreach($scenario->treatments as $result)
 					<tr>
@@ -92,10 +92,10 @@
 						<td></td>
 						<td></td>
 						<td></td>
-						<td></td>		
 						<td></td>
-						<td></td>		
-						<td></td>		
+						<td></td>
+						<td></td>
+						<td></td>
 					</tr>
 					<tr>
 						<td></td>
@@ -105,10 +105,10 @@
 						<td><strong>Total Scenario Cost</strong></td>
 						<td><strong>Avg Cost per kg N removed</strong></td>
 						<td></td>
-						<td></td>	
-						<td></td>		
-						<td></td>	
-						<td></td>		
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
 					</tr>
 					<tr class="summary">
 						<td><strong>Scenario Totals:</strong></td>
@@ -116,7 +116,7 @@
 						<td></td>
 						<td class="total_nitrogen">=SUM(D{{$start_row}}:D{{$row}})</td>
 						<td class="total_cost">=SUM(E{{$start_row}}:E{{$row}})</td>
-						<td class="avg_cost_per_kg">=(SUM(E{{$start_row}}:E{{$row}})/SUM(D{{$start_row}}:D{{$row}}))</td>
+						<td class="avg_cost_per_kg">=((SUM(E{{$start_row}}:E{{$row}})/SUM(D{{$start_row}}:D{{$row}}))/12.46)</td>
 						<td></td>
 						<td></td>
 						<td></td>
@@ -143,10 +143,10 @@
 							<td>{{$town->wtt_tot_parcels}}</td>
 							<td>{{round($town->wtt_unatt_n_removed)}}</td>
 						</tr>
-	
+
 					@endforeach
 				</tbody>
-			</table>	
+			</table>
 
 			<p>Scenario Created: {{$scenario->CreateDate}}</p>
 			<p>Created by: {{$scenario->user->name}} ({{$scenario->user->email}}) </p>
