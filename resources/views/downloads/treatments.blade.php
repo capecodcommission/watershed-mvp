@@ -76,7 +76,7 @@
 						<td>{{$result->Treatment_Parcels}}</td>
 						<td>{{round($result->Nload_Reduction)}}</td>
 						<td>{{money_format('%10.0n', $result->Cost_Total)}}</td>
-						<td>@if($result->Nload_Reduction > 0) {{$result->Cost_Total/$result->Nload_Reduction}} @endif <?php $row++; ?></td>
+						<td>@if($result->Nload_Reduction > 0) {{($result->Cost_Total/$result->Nload_Reduction)/12.46}} @endif <?php $row++; ?></td>
 						<td>{{$result->Treatment_UnitMetric}}</td>
 						<td>{{$result->Treatment_MetricValue}}</td>
 						<td>{{$result->Treatment_Wastewater_Flow}}</td>
