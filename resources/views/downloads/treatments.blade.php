@@ -55,7 +55,7 @@
 						<th>ID</th>
 						<th>Parcels Affected</th>
 						<th>Nitrogen Removed (kg)</th>
-						<th>Treatment Total Cost</th>
+						<th>Total Present Worth</th>
 						<th>Cost per kg Nitrogen Removed</th>
 						<th>Unit Metric</th>
 						<th>Num Units</th>

@@ -18,13 +18,13 @@
 						<th>ID</th>
 						<th>Parcels Affected</th>
 						<th>Nitrogen Removed (kg)</th>
-						<th>Capital Cost</th>
+						<th>Treatment Construction Cost</th>
 						<th>OM Cost</th>
 						<th>Collection Cost</th>
 						<th>Transport/Disposal Cost</th>
 						<th>NonConstruction Cost</th>
 						<th>Monitoring Cost</th>
-						<th>Treatment Total Cost</th>
+						<th>Total Present Worth</th>
 						<th>Cost per kg Nitrogen Removed</th>
 					</tr>
 				</thead>
@@ -65,7 +65,7 @@
 						<td></td>
 						<td></td>
 						<td><strong>Total Nitrogen Removed</strong></td>
-						<td><strong>Total Capital Cost</strong></td>
+						<td><strong>Total Treatment Construction Cost</strong></td>
 						<td><strong>Total OM Cost</strong></td>
 						<td><strong>Total Collection Cost</strong></td>
 						<td><strong>Total Transport/Disposal Cost</strong></td>
