@@ -1,7 +1,7 @@
 		<title>{{$tech->Technology_Strategy}}</title>
 		<link rel="stylesheet" href="{{url('/css/jquery.popdown.css')}}">
 <meta name="csrf-token" id="token" content="{{ csrf_token() }}">
-		
+
 
 <div class="popdown-content" id="app">
 	<header><h2>{{$tech->Technology_Strategy}}</h2></header>
@@ -11,10 +11,10 @@
 				<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
 					<img src="http://www.cch2o.org/Matrix/icons/{{$tech->Icon}}" width="75">
 				 {{$tech->Technology_Strategy}}&nbsp;<i class="fa fa-question-circle"></i>
-				</a>			
+				</a>
 			</div>
 
-			<!-- 
+			<!--
 					This needs to be a case/switch based on the show_in_wmvp field
 					0 => (this shouldn't ever appear because this technology shouldn't have been listed)
 					1 => user will enter a unit metric to use for calculations (acres, linear feet, etc)
@@ -27,7 +27,7 @@
 				@if($tech->Show_In_wMVP == 1)
 					<!-- <p class="select"><button id="select_area">Select a location</button> <span>@{{subembayment}}</span></p> -->
 					<p>
-						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated: 
+						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated:
 						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;"></label>
 					</p>
 				@elseif($tech->Show_In_wMVP == 2)
@@ -38,15 +38,15 @@
 				@elseif($tech->Show_In_wMVP == 3)
 					<p class="select"><button id="select_area">Select a location</button> <span>@{{subembayment}}</span></p>
 					<p>
-						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated: 
+						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated:
 						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;"></label>
 					</p>
 				@endif
 <p class="select"><button id="select_area">Select a Subembayment</button> <span></span></p>
 			<p>
 				Enter a valid reduction rate between {{round($tech->Absolu_Reduc_perMetric_Low)}} and {{round($tech->Absolu_Reduc_perMetric_High)}}kg per {{$tech->Unit_Metric}}.<br />
-				
-				<input type="range" id="embayment_percent" min="{{round($tech->Absolu_Reduc_perMetric_Low, 2)}}" max="{{round($tech->Absolu_Reduc_perMetric_High, 2)}}" v-model="embayment_percent" value='{{$tech->Nutri_Reduc_N_Low}}'> @{{embayment_percent}}
+
+				<input type="range" id="embayment_percent" min="{{round($tech->Absolu_Reduc_perMetric_Low, 2)}}" max="{{round($tech->Absolu_Reduc_perMetric_High, 2)}}" v-model="embayment_percent" value='{{$tech->Nutri_Reduc_N_Low}}' step="0.1"> @{{embayment_percent}}
 			</p>
 			<p>
 				<button id="applytreatment">Apply</button>
@@ -58,7 +58,7 @@
 </div>
 
 
-<script src="{{url('/js/main.js')}}"></script> 
+<script src="{{url('/js/main.js')}}"></script>
 
 
 <script>
@@ -70,10 +70,10 @@
 			// console.log('button clicked');
 				$('#popdown-opacity').hide();
 				map.on('click', function(e){
-				if (destination_active > 0) 
+				if (destination_active > 0)
 				{
 					// console.log(e.mapPoint.x, e.mapPoint.y);
-				
+
 					var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y + '/'+treatment;
 					$.ajax({
 						method: 'GET',
@@ -115,7 +115,7 @@
 					$( "#update" ).trigger( "click" );
 					var newtreatment = '<li class="technology" data-treatment="{{$treatment->TreatmentID}}"><a href="{{url('/edit', $treatment->TreatmentID)}}" class="popdown"><img src="http://www.cch2o.org/Matrix/icons/{{$tech->Icon}}" alt=""></a></li>';
 					$('ul.selected-treatments').append(newtreatment);
-					$('ul.selected-treatments li[data-treatment="{{$treatment->TreatmentID}}"] a').popdown();					
+					$('ul.selected-treatments li[data-treatment="{{$treatment->TreatmentID}}"] a').popdown();
 				});
 		});
 

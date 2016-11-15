@@ -2,23 +2,23 @@
 	<head>
 		<title>WatershedMVP Scenario Results</title>
 			<link rel="stylesheet" href="{{url('/css/app.css')}}">
-  			<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>  
+  			<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
   			<script>window.name = 'wmvp_results_{{$scenario->ScenarioID}}';</script>
 	</head>
 	<body>
 		<div class="wrapper">
 		<div class="content full-width">
 			@include('common.navigation')
-		
+
 	      	<h1>Embayment: {{$scenario->AreaName}}</h1>
 			<h2 class="author">Created by: {{$scenario->user->name}} on {{date('Y-m-d', strtotime($scenario->CreateDate))}}</h2>
 			<div id="app">
-			<?php 
+			<?php
 				$scenario_cost = 0;
 				$n_removed = 0;
 				setlocale(LC_MONETARY, 'en_US');
 			?>
-		
+
 
 			@if(count($scenario->treatments) > 0)
 
@@ -50,11 +50,11 @@
 								<td><?php echo money_format('%10.0n', $result->Cost_Total);?></td>
 									<?php $scenario_cost += $result->Cost_Total; ?>
 								<td><?php if ($result->Nload_Reduction > 0) {
-								echo money_format('%10.0n', $result->Cost_Total/$result->Nload_Reduction);}?></td>
+								echo money_format('%10.0n', ($result->Cost_Total/$result->Nload_Reduction)/12.46);}?></td>
 								<td><a data-treatment="{{$result->TreatmentID}}" class="deletetreatment button--cta"><i class="fa fa-trash-o"></i> Delete</a></td>
 
 							@endif
-	
+
 					</tr>
 					@endforeach
 					<tr id="totals">
@@ -64,7 +64,7 @@
 						<td><strong><?php echo round($n_removed);?>kg</strong></td>
 						<td><strong><?php echo money_format('%10.0n', $scenario_cost);?></strong></td>
 						<td colspan="2"><strong><?php if ($result->Nload_Reduction > 0) {echo money_format('%10.0n', $scenario_cost/$n_removed);}?></strong> (Avg cost/kg)</td>
-						
+
 					</tr>
 				</tbody>
 			</table>
@@ -86,7 +86,7 @@
 							<td>{{$town->wtt_tot_parcels}}</td>
 							<td>{{round($town->wtt_unatt_n_removed)}}kg</td>
 						</tr>
-	
+
 					@endforeach
 				</tbody>
 			</table>
@@ -122,7 +122,7 @@
 			<p><sup>3</sup>A negative number in this column means the user has exceeded the threshold for this subembayment.</p>
 
 			<p><a href="{{url('map', [$scenario->AreaID, $scenario->ScenarioID])}}" class="button" target="wmvp_scenario_{{$scenario->ScenarioID}}">back to map</a> <a href="{{url('download', $scenario->ScenarioID)}}" class="button--cta right" target="_blank"><i class="fa fa-download"></i> Download Results (.xls)</a></p>
-					
+
 		@else
 		<p>No treatments have been applied to this scenario yet.</p>
 		<p><a href="{{url('map', [$scenario->AreaID, $scenario->ScenarioID])}}" class="button" target="wmvp_scenario_{{$scenario->ScenarioID}}">Return to map</a> </p>

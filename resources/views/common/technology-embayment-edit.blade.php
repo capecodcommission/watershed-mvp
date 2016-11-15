@@ -1,7 +1,7 @@
 		<title>{{$tech->Technology_Strategy}}</title>
 		<link rel="stylesheet" href="{{url('/css/jquery.popdown.css')}}">
 <meta name="csrf-token" id="token" content="{{ csrf_token() }}">
-		
+
 
 <div class="popdown-content" id="app">
 	<header><h2>{{$tech->Technology_Strategy}}</h2></header>
@@ -11,10 +11,10 @@
 				<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
 					<img src="http://www.cch2o.org/Matrix/icons/{{$tech->Icon}}" width="75">
 				 {{$tech->Technology_Strategy}}&nbsp;<i class="fa fa-question-circle"></i>
-				</a>			
+				</a>
 			</div>
 
-			<!-- 
+			<!--
 					This needs to be a case/switch based on the show_in_wmvp field
 					0 => (this shouldn't ever appear because this technology shouldn't have been listed)
 					1 => user will enter a unit metric to use for calculations (acres, linear feet, etc)
@@ -29,7 +29,7 @@
 				@if($tech->Show_In_wMVP == 1)
 					<!-- <p class="select"><button id="select_area">Select a location</button> <span>@{{subembayment}}</span></p> -->
 					<p>
-						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated: 
+						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated:
 						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;" value="{{$treatment->Treatment_MetricValue}}"></label>
 					</p>
 				@elseif($tech->Show_In_wMVP == 2)
@@ -40,14 +40,14 @@
 				@elseif($tech->Show_In_wMVP == 3)
 					<p class="select"><button id="select_area">Select a polygon</button> <span>@{{subembayment}}</span></p>
 					<p>
-						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated: 
+						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated:
 						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;" value="{{$treatment->Treatment_MetricValue}}"></label>
 					</p>
 				@endif
 			<p>
 				Enter a valid reduction rate between {{round($tech->Absolu_Reduc_perMetric_Low)}} and {{round($tech->Absolu_Reduc_perMetric_High)}}kg per {{$tech->Unit_Metric}}.<br />
-				
-				<input type="range" id="embayment-percent" min="{{round($tech->Absolu_Reduc_perMetric_Low, 2)}}" max="{{round($tech->Absolu_Reduc_perMetric_High, 2)}}" v-model="embayment_percent" value='{{$treatment->Treatment_Value}}'> @{{embayment_percent}}
+
+				<input type="range" id="embayment-percent" min="{{round($tech->Absolu_Reduc_perMetric_Low, 2)}}" max="{{round($tech->Absolu_Reduc_perMetric_High, 2)}}" v-model="embayment_percent" value='{{$treatment->Treatment_Value}}' step="0.1"> @{{embayment_percent}}
 			</p>
 			<p>
 				<button id="updatetreatment">Update</button>
@@ -59,7 +59,7 @@
 </div>
 
 
-<script src="{{url('/js/main.js')}}"></script> 
+<script src="{{url('/js/main.js')}}"></script>
 
 
 <script>
@@ -72,7 +72,7 @@
 				map.on('click', function(e){
 
 					// console.log(e.mapPoint.x, e.mapPoint.y);
-				
+
 					var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y;
 					$.ajax({
 						method: 'GET',
@@ -121,7 +121,7 @@
 						});
 
 				});
-	
+
 
 
 	$('#deletetreatment').on('click', function(e){
