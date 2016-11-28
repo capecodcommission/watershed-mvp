@@ -220,7 +220,7 @@
 			</div>
 			<div class="technology">
 				<a href="{{url('/tech/septic/37')}}" class="popdown">
-					<img src="http://www.cch2o.org/Matrix/icons/titl3_5.svg" alt="" ><br />
+					<img src="http://www.cch2o.org/Matrix/icons/title_5.svg" alt="" ><br />
 					Title 5 Septic System Replacement (Base Line Condition)</a>
 			</div>
 		</div>
@@ -263,7 +263,7 @@
 				</div>
 				<div class="technology">
 					<a href="{{url('/tech/groundwater/5')}}"  class="popdown">
-						<img src="http://www.cch2o.org/Matrix/icons/phytoirrigationr.svg" alt=""><br />
+						<img src="http://www.cch2o.org/Matrix/icons/phytoirrigation.svg" alt=""><br />
 						Phytoirrigation
 					</a>
 				</div>
