@@ -263,7 +263,7 @@
 				</div>
 				<div class="technology">
 					<a href="{{url('/tech/groundwater/5')}}"  class="popdown">
-						<img src="http://www.cch2o.org/Matrix/icons/phytoirrigation.svg" alt=""><br />
+						<img src="http://www.cch2o.org/Matrix/icons/phytoirrigationr.svg" alt=""><br />
 						Phytoirrigation
 					</a>
 				</div>
