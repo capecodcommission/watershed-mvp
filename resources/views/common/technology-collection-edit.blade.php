@@ -118,14 +118,14 @@
 
 
 	$('#deletetreatment').on('click', function(e){
-		var url = "{{url('delete', $treatment->TreatmentID)}}";
+		var url = "{{url('delete_treatment', $treatment->TreatmentID)}}";
 		$.ajax({
 			method: 'GET',
 			url: url
 		})
 			.done(function(msg){
 				$('#popdown-opacity').hide();
-				$("li.technology [data-treatment='{{$treatment->TreatmentID}}']").remove();
+				$("li[data-treatment='{{$treatment->TreatmentID}}']").remove();
 			});
 		});
 

@@ -13,6 +13,9 @@ use JavaScript;
 
 use Session;
 use Excel;
+use Auth;
+use App\User;
+use Log;
 
 class ScenarioController extends Controller
 {
@@ -36,17 +39,49 @@ class ScenarioController extends Controller
 		// need to return a (rounded) int that represents the user's current progress toward the embayment's target.
 		// first get the embayment's starting and target N levels
 		// then get the current N_Removed
-		$removed = DB::select('exec CapeCodMA.CALC_ScenarioNitrogen ' . $scenarioid);
-		$removed = $removed[0]->N_Removed;
-		$current = $scenario->Nload_Existing - $removed;
-		$progress = round($scenario->Nload_Total_Target/$current * 100);
+
+		$removed = 0;
+		$n_load_orig = 0;
+		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
+		// $subembayments = DB::select('exec CapeCodMA.GET_SubembaymentNitrogen ' . $id);
+		$total_goal = 0;
+		foreach ($subembayments as $key) 
+		{
+			$n_load_orig += $key->n_load_att;
+			$removed += $key->n_load_att_removed;
+			$total_goal += $key->n_load_target;
+		}
+		$current = $n_load_orig - $removed;
+		$remaining = $current - $total_goal;
+		if($remaining < 0)
+		{
+			$remaining = 0;
+		}
+		if ($current > 0) {
+			$progress = round($total_goal/$current * 100);
+		}
+		else
+		{
+			$progress = 100;
+		}
+
+
+		/* This is the old code that calculated the **UNattenuated** N removed, which isn't accurate for the target goal/progress
+
+		// $removed = DB::select('exec CapeCodMA.CALC_ScenarioNitrogen ' . $scenarioid);
+		// $removed = $removed[0]->N_Removed;
+		// $current = $scenario->Nload_Existing - $removed;
+		// $progress = round($scenario->Nload_Total_Target/$current * 100);
 
 		// Need to get the progress for each subembayment.
 		$sub_removed = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
 		// dd($sub_removed);
-		$data['embayment'] = $progress;
-		$data['subembayments'] = $sub_removed;
 
+		*/
+		$data['remaining'] = $remaining;
+		$data['embayment'] = $progress;
+		$data['subembayments'] = $subembayments;
+		// dd($data);
 
 		return $data;
 	}
@@ -60,17 +95,16 @@ class ScenarioController extends Controller
 	 **/
 	public function getScenarioResults($scenarioid)
 	{	
-		// $scenarioid = session('scenarioid');
-		$scenario = Scenario::find($scenarioid);
-		// $embay_id = session('embay_id');
-		$results = DB::select('exec CapeCodMA.Get_ScenarioResults '. $scenarioid);
-		// dd($results);
+	
+		$scenario = Scenario::findOrFail($scenarioid);
+		// dd($scenario);
 		$towns = DB::select('select wtt.*, t.town from dbo.wiz_treatment_towns wtt inner join capecodma.matowns t on t.town_id = wtt.wtt_town_id
   where wtt.wtt_scenario_id = ' . $scenarioid);
 		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
-		// Need to calculate all the treatments applied and Nitrogen removed from this scenario
 
-		return view('layouts/results', ['results'=>$results, 'scenario'=>$scenario, 'towns'=>$towns, 'subembayments'=>$subembayments]);
+		return view('layouts/results', ['scenario'=>$scenario, 'towns'=>$towns, 'subembayments'=>$subembayments]);
+		
+		
 
 	}
 
@@ -99,19 +133,19 @@ class ScenarioController extends Controller
 	public function downloadScenarioResults($scenarioid)
 	{
 		$scenario = Scenario::find($scenarioid);
+		// $embayment = DB::select('select * from capecodma.embayments where embay_id = ' . $scenario->AreaID);
 		// $embay_id = $scenario->AreaID;
-		// dd($scenario);
-		$results = DB::select('exec CapeCodMA.Get_ScenarioResults '. $scenarioid);
-		$towns = DB::select('select wtt.*, t.town from dbo.wiz_treatment_towns wtt inner join capecodma.matowns t on t.town_id = wtt.wtt_town_id
-  where wtt.wtt_scenario_id = ' . $scenarioid);
+		Log::info($scenario->treatments);
+		// $results = DB::select('exec CapeCodMA.Get_ScenarioResults '. $scenarioid);
+		$towns = DB::select('select wtt.*, t.town from dbo.wiz_treatment_towns wtt inner join capecodma.matowns t on t.town_id = wtt.wtt_town_id where wtt.wtt_scenario_id = ' . $scenarioid);
 		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
 		$filename = 'scenario_' . $scenarioid;
-		Excel::create($filename, function($excel) use($scenario, $results, $towns, $subembayments) 
+		Excel::create($filename, function($excel) use($scenario, $towns, $subembayments) 
 		{
 
-			$excel->sheet('Scenario Results', function($sheet) use ($scenario, $results, $towns){
+			$excel->sheet('Scenario Results', function($sheet) use ($scenario, $towns){
 				$sheet->setColumnFormat(array('C:D' => '#,##0_-', 'E' => '"$"#,##0_-', 'F' => '"$"#,##0.00_-'));
-				$sheet->loadView('downloads.treatments', array('results'=>$results, 'scenario'=>$scenario,  'towns'=>$towns));
+				$sheet->loadView('downloads.treatments', array( 'scenario'=>$scenario,  'towns'=>$towns));
 
 			});
 
@@ -120,12 +154,34 @@ class ScenarioController extends Controller
 				$sheet->loadView('downloads.subembayments', array( 'scenario'=>$scenario, 'subembayments'=>$subembayments));
 			});
 
-			$excel->sheet('Cost Breakdown', function($sheet) use ($scenario, $results){
+			$excel->sheet('Cost Breakdown', function($sheet) use ($scenario){
 				$sheet->setColumnFormat(array('C:D' => '#,##0_-', 'E:L' => '"$"#,##0_-'));
-				$sheet->loadView('downloads.costs', array('results'=>$results, 'scenario'=>$scenario));
+				$sheet->loadView('downloads.costs', array('scenario'=>$scenario));
 
 			});			
 
 		})->export('xls');
+	}
+
+	/**
+	 * Delete the scenario for the logged-in user
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function deleteScenario($id)
+	{
+		$user = Auth::user();
+		$scenario = Scenario::find($id);
+		if ($scenario->user_id == $user->user_id) 
+		{
+			$scenario->delete();
+			return 1;
+		}
+		else
+		{
+			// user doesn't have permission to delete this scenario
+			return 0;
+		}
 	}
 }

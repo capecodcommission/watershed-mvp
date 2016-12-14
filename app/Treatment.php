@@ -53,6 +53,9 @@ class Treatment extends Model
     	return $this->belongsTo('App\Scenario', 'ScenarioID', 'ScenarioID');
     }
 
-
+    public function technology()
+    {
+    	return $this->hasOne('App\Technology', 'Technology_ID', 'TreatmentType_ID');
+    }
  
 }

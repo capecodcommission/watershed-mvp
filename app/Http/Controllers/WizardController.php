@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Log;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Auth;
 
 use App\Embayment;
 use App\Scenario;
@@ -20,6 +21,8 @@ class WizardController extends Controller
 	//
 	public function start($id, $scenarioid = null)
 	{
+		$user = Auth::user();
+
 		$embayment = Embayment::find($id);
 		
 		// Need to create a new scenario or find existing one that the user is editing
@@ -35,11 +38,10 @@ class WizardController extends Controller
 				}
 				else
 				{
-					
+					$scenario = $user->scenarios()->create([
+						'AreaID'=>$id, 'ScenarioPeriod'=>'Existing'
+					]);
 					// user selected a different embayment, need to create a new scenario 
-					$scenario = new Scenario;
-					$scenario->areaid = $id;
-					$scenario->save();
 					$scenarioid = $scenario->ScenarioID;
 					
 					Session::put('scenarioid', $scenarioid);
@@ -47,18 +49,15 @@ class WizardController extends Controller
 					Session::put('fert_applied', 0);
 					Session::put('storm_applied', 0);
 					Session::save();
-					
-
 				}
 			}
 			else
 			{
 					//  need to create a new scenario 
 					// $scenarioid = DB::select('exec CapeCodMA.CreateScenario ' . $id);
-					// $scenarioid = $scenarioid[0]->scenarioid;
-					$scenario = new Scenario;
-					$scenario->areaid = $id;
-					$scenario->save();
+				$scenario = $user->scenarios()->create([
+						'AreaID'=>$id, 'ScenarioPeriod'=>'Existing'
+					]);
 
 					$scenarioid = $scenario->ScenarioID;
 
@@ -75,49 +74,57 @@ class WizardController extends Controller
 		}
 		else
 		{
-			// dd($scenarioid);
 			Session::put('scenarioid', $scenarioid);
-			// dd(session('scenarioid'));
 			Session::save();
 		}
-
 
 		$scenario = Scenario::find($scenarioid);
 		$treatments = $scenario->treatments;
 
-		// Get the scenario's current progress
-		$removed = DB::select('exec CapeCodMA.CALC_ScenarioNitrogen ' . $scenarioid);
-		$removed = $removed[0]->N_Removed;
-		$current = $scenario->Nload_Existing - $removed;
+		$removed = 0;
+		$n_load_orig = 0;
+		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
+		$total_goal = 0;
+
+		foreach ($subembayments as $key) 
+		{
+			$n_load_orig += $key->n_load_att;
+			$removed += $key->n_load_att_removed;
+			$total_goal += $key->n_load_target;
+		}
+		$current = $n_load_orig - $removed;
 		if ($current > 0) {
-			$progress = round($scenario->Nload_Total_Target/$current * 100);
+			$progress = round($total_goal/$current * 100);
 		}
 		else
 		{
 			$progress = 100;
 		}
-
-
-			
-		$subembayments = DB::select('exec CapeCodMA.GET_SubembaymentNitrogen ' . $id);
-		$total_goal = 0;
-		foreach ($subembayments as $key) {
-			$total_goal += $key->n_load_target;
+		$remaining = $current - $total_goal;
+		if($remaining < 0)
+		{
+			$remaining = 0;
 		}
-
 		$nitrogen = DB::select('exec CapeCodMA.GET_AreaNitrogen_Unattenuated ' . $id);
+
 		$nitrogen_att = DB::select('exec CapeCodMA.GET_AreaNitrogen_attenuated ' . $id);
-		// dd($nitrogen_att);
+		$nitrogen_att = [
+			'Total_Att' => $n_load_orig
+		];
+
 		JavaScript::put([
 				'nitrogen_unatt' => $nitrogen[0],
-				'nitrogen_att' => $nitrogen_att[0],
+				'nitrogen_att' => $nitrogen_att,
 				'center_x'	=> $embayment->longitude,
 				'center_y'	=> $embayment->latitude,
-				'selectlayer' => $embayment->embay_id
+				'selectlayer' => $embayment->embay_id,
+				'treatments' => $treatments
 			]);
 		
 
-		return view('layouts/wizard', ['embayment'=>$embayment, 'subembayments'=>$subembayments, 'nitrogen_att'=>$nitrogen_att[0], 'nitrogen_unatt'=>$nitrogen[0], 'goal'=>$total_goal, 'treatments'=>$treatments, 'progress'=>$progress]);
+		return view('layouts/wizard', ['embayment'=>$embayment, 'subembayments'=>$subembayments, 
+			// 'nitrogen_att'=>$nitrogen_att[0], 'nitrogen_unatt'=>$nitrogen[0], 
+			'goal'=>$total_goal, 'treatments'=>$treatments, 'progress'=>$progress, 'remaining'=>$remaining]);
 
 	}
 
@@ -152,15 +159,71 @@ class WizardController extends Controller
 	 * @return void
 	 * @author 
 	 **/
-	public function getPolygon($treatment_id, $poly)
+	public function getPolygon($treatment_id, $poly, $part2 = null)
 	{
-		DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING, NOCOUNT ON');
+		if ($part2) 
+		{
+			// this means the poly string was too long to be sent as a single url parameter so we are going to concatenate the strings	
+			$poly = $poly + $part2;
+		}
+		// DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING, NOCOUNT ON');
 		$scenarioid = Session::get('scenarioid');
-		$embay_id = Session::get('embay_id');
+		$scenario = Scenario::find($scenarioid);
+		$embay_id = $scenario->AreaID;
+
 
 		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
 
-		$poly_nitrogen = $parcels[0]->Septic;
+		if ($parcels) {
+			$poly_nitrogen = $parcels[0]->Septic;
+		}
+		else
+		{
+			$parcels = 0;
+			$poly_nitrogen = 0;
+		}
+		
+
+		JavaScript::put([
+				'poly_nitrogen' => $parcels
+			]);
+
+		return $parcels;
+	}
+
+
+	/**
+	 * Get Nitrogen Totals from a polygon string
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	public function getPolygon2(Request $data)
+	{
+		// dd($data);
+		    // Log::info('Data received '.$data);
+		$data = $data->all();
+		// return $test;
+		$treatment_id = $data['treatment'];
+		$poly = $data['polystring'];
+		// DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING, NOCOUNT ON');
+		$scenarioid = Session::get('scenarioid');
+		$scenario = Scenario::find($scenarioid);
+		$embay_id = $scenario->AreaID;
+
+		$query = 'exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'';
+		Log::info($query);
+		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
+
+		if ($parcels) {
+			$poly_nitrogen = $parcels[0]->Septic;
+		}
+		else
+		{
+			$parcels = 0;
+			$poly_nitrogen = 0;
+		}
+		
 
 		JavaScript::put([
 				'poly_nitrogen' => $parcels
@@ -192,9 +255,6 @@ class WizardController extends Controller
 		return $parcels;
 		// return view ('layouts/test_septic', ['parcels'=>$parcels, 'poly_nitrogen'=>$poly_nitrogen]);
 	}
-
-
-
 
 	
 	

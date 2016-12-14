@@ -10,7 +10,7 @@
 			<h1>Scenario: {{$scenario->ScenarioID}} for {{$scenario->AreaName}}</h1>
 			<p></p>
 			<h2>Cost Breakdown</h2>
-		
+
 			<table>
 				<thead>
 					<tr>
@@ -18,21 +18,21 @@
 						<th>ID</th>
 						<th>Parcels Affected</th>
 						<th>Nitrogen Removed (kg)</th>
-						<th>Capital Cost</th>
+						<th>Treatment Construction Cost</th>
 						<th>OM Cost</th>
 						<th>Collection Cost</th>
 						<th>Transport/Disposal Cost</th>
 						<th>NonConstruction Cost</th>
 						<th>Monitoring Cost</th>
-						<th>Treatment Total Cost</th>
+						<th>Total Present Worth</th>
 						<th>Cost per kg Nitrogen Removed</th>
 					</tr>
 				</thead>
 				<tbody>
 				<?php $row = 7; ?>
-					@foreach($results as $result)
+					@foreach($scenario->treatments as $result)
 					<tr>
-						<td>{{$result->Technology_Strategy}}</td>
+						<td>{{$result->technology->Technology_Strategy}}</td>
 						<td>{{$result->TreatmentID}}</td>
 						<td>{{$result->Treatment_Parcels}}</td>
 						<td>{{round($result->Nload_Reduction)}}</td>
@@ -43,7 +43,7 @@
 						<td>{{round($result->Cost_NonConstruction, 2)}}</td>
 						<td>{{round($result->Cost_Monitor, 2)}}</td>
 						<td>{{money_format('%10.0n', $result->Cost_Total)}}</td>
-						<td>@if($result->Nload_Reduction > 0) {{$result->Cost_Total/$result->Nload_Reduction}} @endif <?php $row++; ?></td>
+						<td>@if($result->Nload_Reduction > 0) {{($result->Cost_Total/$result->Nload_Reduction)/12.46}} @endif <?php $row++; ?></td>
 					</tr>
 					@endforeach
 					<tr style="border-top: 2px double #000000;">
@@ -65,7 +65,7 @@
 						<td></td>
 						<td></td>
 						<td><strong>Total Nitrogen Removed</strong></td>
-						<td><strong>Total Capital Cost</strong></td>
+						<td><strong>Total Treatment Construction Cost</strong></td>
 						<td><strong>Total OM Cost</strong></td>
 						<td><strong>Total Collection Cost</strong></td>
 						<td><strong>Total Transport/Disposal Cost</strong></td>
@@ -85,8 +85,8 @@
 						<td>=SUM(H8:H{{$row}})</td>
 						<td>=SUM(I8:I{{$row}})</td>
 						<td>=SUM(J8:J{{$row}})</td>
-						<td class="total_cost">=SUM(K8:K{{$row}})</td>
-						<td class="avg_cost_per_kg">=(SUM(K8:K{{$row}})/SUM(D8:D{{$row}}))</td>
+						<td class="total_cost">=SUM(K8:K{{$row }})</td>
+						<td class="avg_cost_per_kg">=((SUM(K8:K{{$row}})/SUM(D8:D{{$row}}))/12.46)</td>
 					</tr>
 				</tbody>
 			</table>

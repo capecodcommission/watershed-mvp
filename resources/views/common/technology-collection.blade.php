@@ -64,33 +64,40 @@
 			$('#select_destination_'+treatment).show();
 			// console.log(msg);
 		});
-		$('#select_destination_'+ treatment).on('click', function(f){
+		$('#select_destination_'+ treatment).on('click', function(f)
+		{
 			f.preventDefault();
-			// console.log('button clicked');
-				$('#popdown-opacity').hide();
-				map.on('click', function(e){
-					// console.log(e);
-				
+			destination_active = 1;
+			$('#popdown-opacity').hide();
+
+			map.on('click', function(e)
+			{		
+				if (destination_active > 0) 
+				{
 					var url = "{{url('/map/move/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y +'/' + treatment;
 					$.ajax({
 						method: 'GET',
 						url: url
 					})
 						.done(function(msg){
-							msg = $.parseJSON(msg);
-							// console.log(msg.SUBEM_DISP);
-							// console.log(msg);
-							$('#'+msg.SUBEM_NAME+'> .stats').show();
-							// $('.notification_count').remove();
-							$('#popdown-opacity').show();
-							$('.select > span').text('Selected: '+msg.SUBEM_DISP);
-							$('.select > span').show();
-							$('#select_destination_'+treatment).hide();
-							
-							console.log('unbound');
-						})
-						$(this).off(e);
+								msg = $.parseJSON(msg);
+								// console.log(msg.SUBEM_DISP);
+								// console.log(msg);
+								$('#'+msg.SUBEM_NAME+'> .stats').show();
+								// $('.notification_count').remove();
+								$('#popdown-opacity').show();
+								$('.select > span').text('Selected: '+msg.SUBEM_DISP);
+								$('.select > span').show();
+								$('#select_destination_'+treatment).hide();
+								destination_active = 0;
+								
+							})
+					}
 			});
+				// console.log(map);
+				// map.remove('select-destination');
+				// console.log('unbound');
+
 		});
 	$('#apply_treatment_'+treatment).on('click', function(e){
 			e.preventDefault();

@@ -11,23 +11,32 @@
 |
 */
 
-Route::get('/', 'StartController@index');
+
+Route::group(['middleware' => 'auth'], function () {
+   
+Route::get('/start', 'StartController@index');
 
 Route::get('/map/{embayment}/{scenarioid?}', 'WizardController@start');
 
+Route::post('/poly', 'WizardController@getPolygon2');
+Route::post('/update_polygon', 'TechnologyController@updatePolygon');
+// Route::get('/update_polygon/{treatment}/{new_poly}', 'TechnologyController@updatePolygon');
+// Route::post('/poly/', 'WizardController@getPolygon2');
+// Route::get('/poly/{params}', 'WizardController@getPolygon2')->where('params', '.*');
 
+// Route::get('/poly/{treatment}/{poly}/{part2?}', 'WizardController@getPolygon');
 
-// this route should be changed or recreated to be more accurate for what it does
-// which is take a polygon string and retrieve the parcels contained within, along with N load, etc.
+// Just leaving this here in case it is referenced somewhere in the code
 Route::get('/testmap/Nitrogen/{treatment}/{poly}', 'WizardController@getPolygon');
 
 Route::get('/tech/{type}/{tech}', 'TechnologyController@get');
 Route::get('/edit/{treatment}', 'TechnologyController@edit');
 Route::get('/update/{type}/{treatment}/{rate}/{units?}', 'TechnologyController@update');
-Route::get('/delete/{treatment}', 'TechnologyController@delete');
+Route::get('/delete_treatment/{treatment}', 'TechnologyController@delete');
 Route::get('/cancel/{treatment}', 'TechnologyController@cancel');
 
 
+Route::get('/delete_scenario/{scenarioid}', 'ScenarioController@deleteScenario');
 
 Route::get('/apply_percent/{treatment}/{rate}/{type}/{units?}', 'TechnologyController@ApplyTreatment_Percent');
 Route::get('/apply_storm/{treatment}/{rate}/{units}/{location}', 'TechnologyController@ApplyTreatment_Storm');
@@ -50,13 +59,16 @@ Route::get('/download/{scenarioid}', 'ScenarioController@downloadScenarioResults
 
 Route::get('progress', 'ScenarioController@getProgress');
 
-
-Route::resource('/api/treatments', 'ApiTreatmentController');
-Route::get('/test/{embayment}', 'WizardController@test');
-
-Route::get('/testmap', function(){
-	return view('testmap');
+Route::get('/', 'HomeController@index');
+Route::get('/home', 'HomeController@index');
 });
-Route::get('/testleaf', function(){
-	return view('testleaf');
+
+
+
+Route::auth();
+
+
+Route::get('/help', function(){
+	return view('help');
 });
+

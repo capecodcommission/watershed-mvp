@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Treatment;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Scenario extends Model
 {
@@ -12,6 +13,7 @@ class Scenario extends Model
 
     protected $table = 'CapeCodMa.Scenario_Wiz';
 	protected $primaryKey = 'ScenarioID';
+	use SoftDeletes;
 
 	protected $fillable = [
 		'CreatedBy', // this should be the FK to users table
@@ -54,11 +56,12 @@ class Scenario extends Model
 		'Nload_Reduction_Attenuation',
 		'Nload_Reduction_InEmbay',
 		'ScenarioProgress',
-		'ScenarioComplete'
+		'ScenarioComplete',
+		'user_id'
 
 	];
 	
-	
+	protected $dates = ['deleted_at'];
 
     /**
      * The name of the "created at" and "updated at" columns.
@@ -72,7 +75,13 @@ class Scenario extends Model
 
     public function treatments()
     {
-    	return $this->hasMany('App\Treatment', 'ScenarioID', 'ScenarioID')->whereNull('Parent_TreatmentId');
+    	// return $this->hasMany('App\Treatment', 'ScenarioID', 'ScenarioID')->whereNull('Parent_TreatmentId');
+    	return $this->hasMany('App\Treatment', 'ScenarioID', 'ScenarioID');
+    }
+
+    public function user()
+    {
+    	return $this->belongsTo('App\User');
     }
 
 }

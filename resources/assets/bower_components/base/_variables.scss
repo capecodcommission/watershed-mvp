@@ -24,12 +24,18 @@ $light-gray: #ddd;
 $logo-blue: #1565c0;
 $cta-color: #FAB430;
 $error-color: #D8000C;
-$required-color: #ff0000;
 
+$heading-color: $logo-blue;
 
 // Font Colors
 $base-font-color: $dark-gray;
 $action-color: $blue;
+$alert-color: #fff6bf !default;
+$error-color: #fbe3e4 !default;
+$notice-color: #e5edf8 !default;
+$success-color: #e6efc2 !default;
+$required-color: #f00000; 
+
 
 // Border
 $base-border-color: $light-gray;

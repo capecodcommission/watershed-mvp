@@ -100,9 +100,13 @@
 		 var location;
 			$('#select_area_'+treatment).on('click', function(f){
 				f.preventDefault();
-				// console.log('button clicked');
-					$('#popdown-opacity').hide();
-					map.on('click', function(e){
+			destination_active = 1;
+			$('#popdown-opacity').hide();
+
+			map.on('click', function(e)
+			{		
+				if (destination_active > 0) 
+				{
 						// console.log('map clicked');
 						// console.log(e.mapPoint.x, e.mapPoint.y);
 					
@@ -122,7 +126,9 @@
 								$('.select > span').text('Selected: '+msg.SUBEM_DISP);
 								$('.select > span').show();
 								$('#select_area_'+treatment).hide();
+								destination_active = 0;
 							})
+				}
 
 				});
 			});

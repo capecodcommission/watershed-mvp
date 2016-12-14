@@ -37,6 +37,8 @@
 	
 	<script>
 		var selectlayer = {{$embayment->EMBAY_ID}};
+		var center_x = {{$embayment->longitude}};
+		var center_y = {{$embayment->latitude}};
 		window.name = 'wmvp_scenario_{{session('scenarioid')}}';
 	</script>
 
@@ -71,6 +73,57 @@
 
 		});
 	</script>
+	<script>
+			var progress;
+			progress = {{$progress}};
+			remaining = Math.round({{$remaining}});
+			$('div.progress h3').text(progress + '%');
+			$('.remaining span').text(remaining);
+
+			if(progress >= 100)
+			{
+				progress = 100;
+			}
+			
+			$('div.progress').css('height', progress+'%');
+
+			$('#update').on('click', function(e){
+				var url= '/getScenarioProgress';
+
+				$.ajax({
+						method: 'GET',
+						url: url
+					})
+						.done(function(msg){
+							progress = msg.embayment;
+							remaining = Math.round(msg.remaining);
+
+							$('div.progress h3').text(progress + '%');
+							$('.remaining span').text(remaining);
+							if(progress > 100)
+							{
+								progress = 100;
+							}	
+
+							$('div.progress').animate({'height': progress+'%'}, 500);
+
+							subembayments = msg.subembayments;
+							$.each(subembayments, function(key, value)
+							{
+								// console.log(value);
+								var sub_progress = Math.round((value.n_load_target/value.n_load_scenario) * 100);
+								$('#progress_'+value.subem_id).text(sub_progress);
+								if (sub_progress > 100) 
+								{
+									sub_progress = 100;
+								}
+								$('#subem_'+value.subem_id + ' .sub-progress').animate({'width': sub_progress+'%'}, 500);
+								$('#subem_'+value.subem_id + ' .stats .stat-data.scenario-progress').text(Math.round(value.n_load_scenario)+'kg');
+							});
+							
+						})
+			});
+		</script>
 	
 </body>
 </html>
