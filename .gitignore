@@ -5,6 +5,8 @@ Homestead.yaml
 Homestead.json
 .env
 
+/public/208viewer
+/public/images
 /public/fim
 /public/sam
 /public/backup
