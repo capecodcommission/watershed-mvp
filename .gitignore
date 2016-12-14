@@ -11,3 +11,7 @@ Homestead.json
 /www/bootstrap/autoload.php
 /public/.DS_Store
 /database/queries
+
+# OS generated files #
+######################
+.DS_Store
