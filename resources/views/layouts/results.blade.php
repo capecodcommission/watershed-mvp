@@ -41,7 +41,7 @@
 							@if(!$result->Parent_TreatmentId)
 								<td>
 									<div class="technology">
-										<img src="http://www.cch2o.org/Matrix/icons/{{$result->technology->Icon}}" alt="">
+										<img src="http://2016.watershedmvp.org/images/SVG/{{$result->technology->Icon}}" alt="">
 									</div>
 								</td>
 								<td>{{$result->technology->Technology_Strategy}} ({{$result->TreatmentID}})</td>
