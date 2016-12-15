@@ -6631,10 +6631,10 @@ nav.toolbar {
   float: left;
   text-align: center; }
   .technology img {
-    background: #2caae4;
+    /*background: #2caae4;*/
     border-radius: 50%;
-    padding: 1em;
-    width: 3em; }
+    /*padding: 1em;*/
+    width: 5.5em; }
   .technology.disabled img {
     background-color: #ddd; }
   .technology.treatment.info {
