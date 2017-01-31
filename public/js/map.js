@@ -438,6 +438,12 @@ require([
 		// console.log(Subembayments);
 		map.addLayer(Subembayments);
 
+		var nitro_template = new InfoTemplate({
+				title: 'Test',
+				content: "<table>" + "<thead><tr><th>Header</th></tr></thead>" + "<tbody><tr><td>" + thing + "</td></tr></tbody></table>"
+			});
+
+
 		var NitrogenLayer = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/0', {
 				mode: FeatureLayer.MODE_ONDEMAND,
 				outFields: ["*"],
@@ -448,6 +454,8 @@ require([
 		NitrogenLayer.setDefinitionExpression('Embay_id = ' + selectlayer);
 		NitrogenLayer.hide();
 		map.addLayer(NitrogenLayer);
+
+		console.log(NitrogenLayer)
 
 
 		var WasteWater = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/1', {
