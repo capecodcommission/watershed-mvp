@@ -440,7 +440,7 @@ require([
 
 		var nitro_template = new InfoTemplate({
 				title: 'Test',
-				content: "<table>" + "<thead><tr><th>Header</th></tr></thead>" + "<tbody><tr><td>" + thing + "</td></tr></tbody></table>"
+				content: "<table>" + "<thead><tr><th>Header</th></tr></thead>" + "<tbody><tr><td>" + 'thing' + "</td></tr></tbody></table>"
 			});
 
 
@@ -452,6 +452,7 @@ require([
 
 		);
 		NitrogenLayer.setDefinitionExpression('Embay_id = ' + selectlayer);
+		NitrogenLayer.setInfoTemplate(nitro_template);
 		NitrogenLayer.hide();
 		map.addLayer(NitrogenLayer);
 
