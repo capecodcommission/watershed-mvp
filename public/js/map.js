@@ -410,9 +410,7 @@ require([
 		var subwater_template = new InfoTemplate({
 
 			title: "<b>Subwatershed</b>", 
-			content: "Subwater I :" + "${SUBWATER_I}" + "<br>" +
-						"Subwater N :" + "${SUBWATER_N}" + "<br>" +
-						"Subwater D :" + "${SUBWATER_D}"
+			content: "${SUBWATER_D}"
 		});
 
 
