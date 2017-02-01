@@ -451,9 +451,9 @@ require([
 		);
 		NitrogenLayer.setDefinitionExpression('Embay_id = ' + selectlayer);
 		NitrogenLayer.hide();
-
-		NitrogenLayer.setInfoTemplate(nitro_template);
 		map.addLayer(NitrogenLayer);
+
+		console.log(NitrogenLayer)
 
 
 		var WasteWater = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/1', {
