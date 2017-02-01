@@ -407,11 +407,19 @@ require([
 		// map.centerAndZoom(point, 11);
 		// map.setExtent(embayments.fullExtent);
 
+		var subwater_template = new InfoTemplate({
+
+			title: "<b>Subwatershed</b>", 
+			content: "Subwater I :" + "${SUBWATER_I}" + "<br>" +
+						"Subwater N :" + "${SUBWATER_N}" + "<br>" +
+						"Subwater D :" + "${SUBWATER_D}"
+		});
+
 
 		var Subwatersheds = new FeatureLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/6", {
 			mode: FeatureLayer.MODE_ONDEMAND,
 			outFields: ["*"],
-			// maxAllowableOffset: map.extent,
+			infoTemplate: subwater_template,
 			opacity: 1
 		});
 		Subwatersheds.setDefinitionExpression('EMBAY_ID = ' + selectlayer);
