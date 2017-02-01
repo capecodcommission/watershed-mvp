@@ -438,7 +438,7 @@ require([
 		// console.log(Subembayments);
 		map.addLayer(Subembayments);
 
-		var nitro_template = new PopupTemplate({title: 'Title', description: 'Content'});
+		var nitro_template = new InfoTemplate({title: 'Title', content: 'Content'});
 
 
 		var NitrogenLayer = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/0', {
