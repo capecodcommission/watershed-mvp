@@ -47,7 +47,8 @@ require([
 	],
 	function(
 		Map,
-		// Popup, PopupTemplate,
+		// Popup, 
+		PopupTemplate,
 		BasemapGallery, 
 		arcgisUtils,
 		parser,
