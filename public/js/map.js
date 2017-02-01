@@ -424,7 +424,7 @@ require([
 
 		var subem_template = new InfoTemplate({
 
-			title: "<b>${SUBEM_DISP}</b>", 
+			title: "<b>Subembayment</b>", 
 			content: "${SUBEM_DISP}"
 		});
 			// subem_template.setTitle("<b>${SUBEM_DISP}</b>");
@@ -446,7 +446,14 @@ require([
 
 			title: "Info", 
 			content: "Water Use Existing: " + "${WaterUseExisting}" + "<br>" +
-						"Waste Water Treatment Existing: " + "${WWTreatmentExisting}"
+						"Waste Water Treatment Existing: " + "${WWTreatmentExisting}" + "<br>" +
+						"Land Use Category Existing: " + "${LandUseCatExisting}" + "<br>" +
+						"Water Use Source: " + "${WaterUseSource}" + "<br>" +
+						"Nitrogen Load (Septic Existing): " + "${NLoad_Septic_Existing}" + "<br>" +
+						"Nitrogen Load (Fertilization): " + "${Nload_Fert}" + "<br>" +
+						"Nitrogen Load (Stormwater): " + "${Nload_Stormwater}" + "<br>" +
+						"Nitrogen Load (Atmosphere): " + "${Nload_Atmosphere}" + "<br>" +
+						"Nitrogen Load (Full): " + "${Nload_Full}"
 		});
 
 
@@ -564,7 +571,7 @@ require([
 			// console.log(NitrogenLayer);
 			if ($(this).attr('data-visible') == 'off') {
 				NitrogenLayer.show();
-				console.log(NitrogenLayer)
+				
 				$(this).attr('data-visible', 'on');
 			} else {
 				NitrogenLayer.hide();
