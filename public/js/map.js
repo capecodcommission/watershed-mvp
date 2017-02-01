@@ -28,7 +28,7 @@ require([
 		"esri/tasks/identify",
 		"esri/InfoTemplate",
 		      // "esri/dijit/Popup",
-        //    "esri/dijit/PopupTemplate",
+           "esri/dijit/PopupTemplate",
 		// "esri/tasks/infoWindow",
 		"esri/dijit/LayerList",
 		"esri/geometry/Extent",
