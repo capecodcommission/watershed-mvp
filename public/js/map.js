@@ -313,7 +313,7 @@ require([
 					var template = new InfoTemplate({
 						title: popupVal,
 						content: '<div align="left" class="treatment info technology"><img style="width:60px;height:60px;float:right;margin-right:10px;" src=" '
-									+ imageURL + '" /><strong>Treatment Stats</strong>:<br /> ' 
+									+ imageURL + '" /><strong>Treatment Statistics</strong>:<br /> ' 
 									+ treatmentArea + " Acres<br/>" 
 									+ parcels + " parcels treated<br/>" + n_removed + "kg (unatt) N removed.<br />"
 									// + "<button class='edit_poly' data-treatment='"+Treatment.TreatmentID+"'>Edit Polygon</button>  "
@@ -559,7 +559,6 @@ require([
 			if ($(this).attr('data-visible') == 'off') {
 				NitrogenLayer.show();
 				console.log(NitrogenLayer)
-				alrt('DO SOMETHING')
 				$(this).attr('data-visible', 'on');
 			} else {
 				NitrogenLayer.hide();
