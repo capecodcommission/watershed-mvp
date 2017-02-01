@@ -447,12 +447,12 @@ require([
 		var NitrogenLayer = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/0', {
 				mode: FeatureLayer.MODE_ONDEMAND,
 				outFields: ["*"],
-				opacity: 1
+				opacity: 1,
+				infoTemplate: nitro_template
 			}
 
 		);
 		NitrogenLayer.setDefinitionExpression('Embay_id = ' + selectlayer);
-		NitrogenLayer.setInfoTemplate(nitro_template);
 		NitrogenLayer.hide();
 		map.addLayer(NitrogenLayer);
 
