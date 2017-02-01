@@ -433,7 +433,7 @@ require([
 			opacity: 1
 		});
 		Subembayments.setDefinitionExpression('EMBAY_ID = ' + selectlayer);
-		Subembayments.setInfoTemplate(subem_template);
+		Subembayments.setInfoTemplate(subem_template)
 		// Subembayments.show();
 		Subembayments.hide();
 		// console.log(Subembayments);
@@ -559,6 +559,7 @@ require([
 			if ($(this).attr('data-visible') == 'off') {
 				NitrogenLayer.show();
 				console.log(NitrogenLayer)
+				alrt('DO SOMETHING')
 				$(this).attr('data-visible', 'on');
 			} else {
 				NitrogenLayer.hide();
