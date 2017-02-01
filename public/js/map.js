@@ -28,7 +28,7 @@ require([
 		"esri/tasks/identify",
 		"esri/InfoTemplate",
 		      // "esri/dijit/Popup",
-           "esri/dijit/PopupTemplate",
+        //    "esri/dijit/PopupTemplate",
 		// "esri/tasks/infoWindow",
 		"esri/dijit/LayerList",
 		"esri/geometry/Extent",
@@ -47,8 +47,7 @@ require([
 	],
 	function(
 		Map,
-		// Popup, 
-		PopupTemplate,
+		// Popup, PopupTemplate,
 		BasemapGallery, 
 		arcgisUtils,
 		parser,
@@ -314,7 +313,7 @@ require([
 					var template = new InfoTemplate({
 						title: popupVal,
 						content: '<div align="left" class="treatment info technology"><img style="width:60px;height:60px;float:right;margin-right:10px;" src=" '
-									+ imageURL + '" /><strong>Treatment Statistics</strong>:<br /> ' 
+									+ imageURL + '" /><strong>Treatment Stats</strong>:<br /> ' 
 									+ treatmentArea + " Acres<br/>" 
 									+ parcels + " parcels treated<br/>" + n_removed + "kg (unatt) N removed.<br />"
 									// + "<button class='edit_poly' data-treatment='"+Treatment.TreatmentID+"'>Edit Polygon</button>  "
@@ -430,11 +429,10 @@ require([
 		var Subembayments = new FeatureLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/11", {
 			mode: FeatureLayer.MODE_ONDEMAND,
 			outFields: ["SUBEM_DISP"],
-			infoTemplate: subem_template,
+			template: subem_template,
 			opacity: 1
 		});
 		Subembayments.setDefinitionExpression('EMBAY_ID = ' + selectlayer);
-		Subembayments.setInfoTemplate(subem_template)
 		// Subembayments.show();
 		Subembayments.hide();
 		// console.log(Subembayments);
@@ -454,8 +452,6 @@ require([
 		NitrogenLayer.setDefinitionExpression('Embay_id = ' + selectlayer);
 		NitrogenLayer.hide();
 		map.addLayer(NitrogenLayer);
-
-		console.log(NitrogenLayer)
 
 
 		var WasteWater = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/1', {
