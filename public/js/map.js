@@ -438,21 +438,23 @@ require([
 		// console.log(Subembayments);
 		map.addLayer(Subembayments);
 
-		var nitro_template = new InfoTemplate();
-			nitro_template.setTitle("<b>Title</b>");
-			nitro_template.setContent("Content"); 
+		var nitro_template = new InfoTemplate({
+			title: 'Title',
+			content: 'Content'
+		});
 
 
 		var NitrogenLayer = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/0', {
 				mode: FeatureLayer.MODE_ONDEMAND,
 				outFields: ["*"],
-				opacity: 1,
-				infoTemplate: nitro_template
+				opacity: 1
 			}
 
 		);
 		NitrogenLayer.setDefinitionExpression('Embay_id = ' + selectlayer);
 		NitrogenLayer.hide();
+
+		NitrogenLayer.setInfoTemplate(nitro_template);
 		map.addLayer(NitrogenLayer);
 
 
@@ -557,6 +559,7 @@ require([
 			// console.log(NitrogenLayer);
 			if ($(this).attr('data-visible') == 'off') {
 				NitrogenLayer.show();
+				console.log(NitrogenLayer)
 				$(this).attr('data-visible', 'on');
 			} else {
 				NitrogenLayer.hide();
