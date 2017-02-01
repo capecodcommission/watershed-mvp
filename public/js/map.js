@@ -422,14 +422,18 @@ require([
 
 
 
-		var subem_template = new InfoTemplate();
-			subem_template.setTitle("<b>${SUBEM_DISP}</b>");
-			subem_template.setContent("${SUBEM_DISP}");  
+		var subem_template = new InfoTemplate({
+
+			title: "<b>${SUBEM_DISP}</b>", 
+			content: "${SUBEM_DISP}"
+		});
+			// subem_template.setTitle("<b>${SUBEM_DISP}</b>");
+			// subem_template.setContent("${SUBEM_DISP}");  
 
 		var Subembayments = new FeatureLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/11", {
 			mode: FeatureLayer.MODE_ONDEMAND,
 			outFields: ["SUBEM_DISP"],
-			template: subem_template,
+			infoTemplate: subem_template,
 			opacity: 1
 		});
 		Subembayments.setDefinitionExpression('EMBAY_ID = ' + selectlayer);
@@ -438,7 +442,12 @@ require([
 		// console.log(Subembayments);
 		map.addLayer(Subembayments);
 
-		var nitro_template = new InfoTemplate({title: 'Title', content: 'Content'});
+		var nitro_template = new InfoTemplate({
+
+			title: "Info", 
+			content: "Water Use Existing: " + "${WaterUseExisting}" + "<br>" +
+						"Waste Water Treatment Existing: " + "${WWTreatmentExisting}"
+		});
 
 
 		var NitrogenLayer = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/0', {
