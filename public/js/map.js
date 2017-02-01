@@ -438,14 +438,14 @@ require([
 		// console.log(Subembayments);
 		map.addLayer(Subembayments);
 
-		var nitro_template = new InfoTemplate('Title', 'Content');
+		var nitro_template = new PopupTemplate({title: 'Title', description: 'Content'});
 
 
 		var NitrogenLayer = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/0', {
 				mode: FeatureLayer.MODE_ONDEMAND,
 				outFields: ["*"],
 				opacity: 1,
-				InfoTemplate: nitro_template
+				infoTemplate: nitro_template
 			}
 
 		);
