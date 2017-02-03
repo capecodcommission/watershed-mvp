@@ -489,6 +489,8 @@ require([
 			}	
 		})
 
+		console.log(inBuffer)
+
 		NitrogenLayer.setDefinitionExpression('OBJECTID in ' + inBuffer)
 		NitrogenLayer.hide();
 		map.addLayer(NitrogenLayer);
