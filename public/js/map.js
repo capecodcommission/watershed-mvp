@@ -593,13 +593,14 @@ require([
 						inBuffer.push(response.features[i].geometry)
 					}
 
-					console.log(inBuffer)
-
 					var query = new Query()
 					query.geometry = geometryEngine.union(inBuffer)
+					query.spatialRelationship = 'within'
 
-					NitrogenLayer.selectFeatures(query)
+					NitrogenLayer.setDefinitionExpression(NitrogenLayer.selectFeatures(query))
+
 					NitrogenLayer.show()
+
 				})
 
 				$(this).attr('data-visible', 'on');
