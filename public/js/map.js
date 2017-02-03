@@ -594,7 +594,7 @@ require([
 					}
 
 					var query = new Query()
-					query.geometry = union(inBuffer)
+					query.geometry = this.geometryEngine.union(inBuffer)
 
 					NitrogenLayer.selectFeatures(query, function(results) {
 						results.show()
