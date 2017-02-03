@@ -490,7 +490,10 @@ require([
 
 				var query1 = new Query()
 				query1.geometry = geometryEngine.union(inBuffer)
-				NitrogenLayer.selectFeatures(query, NitrogenLayer.SELECTION_NEW)
+				NitrogenLayer.selectFeatures(query, NitrogenLayer.SELECTION_NEW, function (results) {
+
+					NitrogenLayer.setDefinitionExpression(results)
+				})
 			})
 
 		NitrogenLayer.hide();
