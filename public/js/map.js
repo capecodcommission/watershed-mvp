@@ -598,13 +598,9 @@ require([
 					var query = new Query()
 					query.geometry = geometryEngine.union(inBuffer)
 
-					NitrogenLayer.selectFeatures(query, function(results) {
-						var newLayer = results
-					})
+					NitrogenLayer.selectFeatures(query, FeatureLayer.SELECTION_NEW)
 				})
 
-
-				newLayer.show()
 				$(this).attr('data-visible', 'on');
 			} else {
 				NitrogenLayer.hide();
