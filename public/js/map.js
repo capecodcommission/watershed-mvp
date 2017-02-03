@@ -438,18 +438,14 @@ require([
 
 		var Subembayments = new FeatureLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/11", {
 			mode: FeatureLayer.MODE_ONDEMAND,
-			outFields: ["*"],
+			outFields: ["SUBEM_DISP"],
 			infoTemplate: subem_template,
-			opacity: 1,
-			definitionExpression: 'EMBAY_ID = ' + selectlayer
+			opacity: 1
 		});
-
-		var ids = Subembayments.SUBEM_ID
-		console.log(ids)
-		// Subembayments.setDefinitionExpression('EMBAY_ID = ' + selectlayer);
+		Subembayments.setDefinitionExpression('EMBAY_ID = ' + selectlayer);
 		// Subembayments.show();
 		Subembayments.hide();
-		// console.log(Subembayments);
+		console.log(Subembayments);
 		map.addLayer(Subembayments);
 
 		var nitro_template = new InfoTemplate({
@@ -473,6 +469,7 @@ require([
 				opacity: 1,
 				infoTemplate: nitro_template
 			}
+
 		);
 		NitrogenLayer.setDefinitionExpression('Embay_id = ' + selectlayer);
 		NitrogenLayer.hide();
