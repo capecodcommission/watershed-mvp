@@ -485,7 +485,7 @@ require([
 
 		var symbol = new SimpleMarkerSymbol(
           SimpleMarkerSymbol.STYLE_CIRCLE, 
-          12, 
+          8, 
           new SimpleLineSymbol(
             SimpleLineSymbol.STYLE_NULL, 
             new Color([247, 34, 101, 0.9]), 
