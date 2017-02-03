@@ -604,7 +604,7 @@ require([
 				})
 
 
-				// NitrogenLayer.show()
+				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
 			} else {
 				NitrogenLayer.hide();
