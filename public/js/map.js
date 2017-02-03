@@ -43,7 +43,8 @@ require([
 		"dojo/dom",
 		"dojo/on", "dijit/registry", 
 		"dojo/dom-construct",
-		"dojo/domReady!"
+		"dojo/domReady!",
+		"esri/geometry/geometryEngine"
 	],
 	function(
 		Map,
@@ -73,7 +74,8 @@ require([
 		event,
 		dom, on,
 		registry,
-		domConstruct
+		domConstruct,
+		geometryEngine
 	) {
 		parser.parse();
 
@@ -471,7 +473,7 @@ require([
 			}
 
 		);
-		NitrogenLayer.setDefinitionExpression('Embay_id = ' + selectlayer);
+		// NitrogenLayer.setDefinitionExpression('Embay_id = ' + selectlayer);
 		NitrogenLayer.hide();
 		map.addLayer(NitrogenLayer);
 
@@ -578,14 +580,29 @@ require([
 			if ($(this).attr('data-visible') == 'off') {
 
 				var query = new Query()
+				query.where = "1=1"
 
-				query.geometry = Subembayments
+				Subembayments.queryFeatures(query,selectinBuffer)
 
-				query.spatialRelationship = 'within'
+				function selectinBuffer(response) {
 
-				NitrogenLayer.queryFeatures(query, function(response) {
-					response.show()
-				})
+					var inBuffer = []
+
+					for (var i = 0; i < response.features.length; i++) {
+
+						inBuffer.push(response.features[i].geometry)
+					}
+
+					var query = new Query()
+					query.geometry = geometryEngine.union(inBuffer)
+
+					NitrogenLayer.selectFeatures(query, function(results) {
+						results.show()
+					})
+				}
+
+
+				// NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
 			} else {
 				NitrogenLayer.hide();
