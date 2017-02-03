@@ -597,9 +597,9 @@ require([
 					query.geometry = geometryEngine.union(inBuffer)
 					query.spatialRelationship = 'within'
 
-					NitrogenLayer.setDefinitionExpression(NitrogenLayer.selectFeatures(query))
+					var output = NitrogenLayer.setDefinitionExpression(NitrogenLayer.selectFeatures(query))
 
-					NitrogenLayer.show()
+					output.show()
 
 				})
 
