@@ -476,6 +476,23 @@ require([
 
 		);
 		// NitrogenLayer.setDefinitionExpression('Embay_id = ' + selectlayer);
+		var query = new Query()
+			query.where = "1=1"
+
+			Subembayments.queryFeatures(query, function (response) {
+
+				var inBuffer = []
+
+				for (var i = 0; i < response.features.length; i++) {
+
+					inBuffer.push(response.features[i].geometry)
+				}
+
+				var query = new Query()
+				query.geometry = geometryEngine.union(inBuffer)
+				NitrogenLayer.selectFeatures(query)
+			})
+			
 		NitrogenLayer.hide();
 		map.addLayer(NitrogenLayer);
 
@@ -580,29 +597,7 @@ require([
 			e.preventDefault();
 			// console.log(NitrogenLayer);
 			if ($(this).attr('data-visible') == 'off') {
-
-				var query = new Query()
-				query.where = "1=1"
-
-				Subembayments.queryFeatures(query, function (response) {
-
-					var inBuffer = []
-
-					for (var i = 0; i < response.features.length; i++) {
-
-						inBuffer.push(response.features[i].geometry)
-					}
-
-					var query = new Query()
-					query.geometry = geometryEngine.union(inBuffer)
-					query.spatialRelationship = 'within'
-
-					var output = NitrogenLayer.setDefinitionExpression(NitrogenLayer.selectFeatures(query))
-
-					output.show()
-
-				})
-
+				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
 			} else {
 				NitrogenLayer.hide();
