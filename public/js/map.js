@@ -490,9 +490,9 @@ require([
 
 				var query = new Query()
 				query.geometry = geometryEngine.union(inBuffer)
-				NitrogenLayer.selectFeatures(query)
+				NitrogenLayer.setDefinitionExpression(query)
 			})
-			
+
 		NitrogenLayer.hide();
 		map.addLayer(NitrogenLayer);
 
