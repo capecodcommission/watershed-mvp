@@ -475,7 +475,7 @@ require([
 			}
 
 		);
-		NitrogenLayer.setDefinitionExpression('Embay_id = ' + selectlayer);
+		// NitrogenLayer.setDefinitionExpression('Embay_id = ' + selectlayer);
 
 		NitrogenLayer.hide();
 		map.addLayer(NitrogenLayer);
@@ -593,7 +593,7 @@ require([
     		var query = new Query()
     		query.geometry = geometryEngine.union(inBuffer)
 
-    		NitrogenLayer.selectFeatures(query, FeatureLayer.SELECTION_NEW, function(results) {})
+    		NitrogenLayer.selectFeatures(query, FeatureLayer.SELECTION_NEW, function(results) {console.log(results)})
 		}
 
 		$('#nitrogen').on('click', function(e) {
@@ -606,7 +606,7 @@ require([
 
 				Subembayments.queryFeatures(query, selectinBuffer)
 
-				NitrogenLayer.show()
+				// NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
 			} else {
 				NitrogenLayer.hide();
