@@ -477,7 +477,24 @@ require([
 		);
 		// NitrogenLayer.setDefinitionExpression('Embay_id = ' + selectlayer);
 
-		NitrogenLayer.hide();
+		// NitrogenLayer.hide();
+
+		var symbol = new SimpleMarkerSymbol(
+          SimpleMarkerSymbol.STYLE_CIRCLE, 
+          12, 
+          new SimpleLineSymbol(
+            SimpleLineSymbol.STYLE_NULL, 
+            new Color([247, 34, 101, 0.9]), 
+            1
+          ),
+          new Color([207, 34, 171, 0.5])
+        );
+
+        NitrogenLayer.setSelectionSymbol(symbol)
+
+        var nullsymbol = new SimpleMarkerSymbol().setSize(0)
+        NitrogenLayer.setRenderer(new SimpleRenderer(nullsymbol))
+
 		map.addLayer(NitrogenLayer);
 
 
@@ -593,7 +610,7 @@ require([
     		var query = new Query()
     		query.geometry = geometryEngine.union(inBuffer)
 
-    		NitrogenLayer.selectFeatures(query, FeatureLayer.SELECTION_NEW, function(results) {results.show()})
+    		NitrogenLayer.selectFeatures(query, FeatureLayer.SELECTION_NEW, function(results) {})
 		}
 
 		$('#nitrogen').on('click', function(e) {
