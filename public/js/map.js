@@ -475,23 +475,8 @@ require([
 			}
 
 		);
-		// NitrogenLayer.setDefinitionExpression('Embay_id = ' + selectlayer);
-		var query = new Query()
-			query.where = "1=1"
+		NitrogenLayer.setDefinitionExpression('Embay_id = ' + selectlayer);
 
-		var inBuffer = []
-
-		Subembayments.queryFeatures(query, function (response) {
-
-			for (var i = 0; i < response.features.length; i++) {
-
-				inBuffer.push(response.features[i].attributes.OBJECTID)
-			}	
-		})
-
-		console.log(inBuffer)
-
-		NitrogenLayer.setDefinitionExpression('OBJECTID in ' + inBuffer)
 		NitrogenLayer.hide();
 		map.addLayer(NitrogenLayer);
 
@@ -592,10 +577,35 @@ require([
 		// console.log('testing');
 		// Turn on/off each layer when the user clicks the link in the sidebar.
 
+		function selectinBuffer(response) {
+
+			var feature;  
+    		var features = response.features;         
+    		var inBuffer = []; 
+
+    		for (var i = 0; i < features.length; i++) {
+    			
+    			feature = features[i]
+
+    			inBuffer.push(feature.geometry)
+    		}
+
+    		var query = new Query()
+    		query.geometry = inBuffer
+
+    		NitrogenLayer.selectFeatures(query, FeatureLayer.SELECTION_NEW, function(results) {})
+		}
+
 		$('#nitrogen').on('click', function(e) {
 			e.preventDefault();
 			// console.log(NitrogenLayer);
 			if ($(this).attr('data-visible') == 'off') {
+
+				var query = new Query()
+				query.where = "1=1"
+
+				Subembayments.queryFeatures(query, selectinBuffer)
+
 				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
 			} else {
