@@ -599,12 +599,12 @@ require([
 					query.geometry = geometryEngine.union(inBuffer)
 
 					NitrogenLayer.selectFeatures(query, function(results) {
-						results.show()
+						var newLayer = results
 					})
 				})
 
 
-				NitrogenLayer.show()
+				newLayer.show()
 				$(this).attr('data-visible', 'on');
 			} else {
 				NitrogenLayer.hide();
