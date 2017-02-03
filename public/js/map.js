@@ -627,7 +627,7 @@ require([
 
 				Subembayments.queryFeatures(query, selectinBuffer)
 
-				// NitrogenLayer.show()
+				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
 			} else {
 				NitrogenLayer.hide();
@@ -641,7 +641,7 @@ require([
 			e.preventDefault();
 
 			if ($(this).attr('data-visible') == 'off') {
-				Subembayments.setDefinitionExpression('EMBAY_ID = ' + selectlayer);
+				// Subembayments.setDefinitionExpression('EMBAY_ID = ' + selectlayer);
 				Subembayments.show();
 				// console.log(Subembayments);
 				$(this).attr('data-visible', 'on');
