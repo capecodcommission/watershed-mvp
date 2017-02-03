@@ -488,9 +488,9 @@ require([
 					inBuffer.push(response.features[i].geometry)
 				}
 
-				var query = new Query()
-				query.geometry = geometryEngine.union(inBuffer)
-				NitrogenLayer.setDefinitionExpression(query)
+				var query1 = new Query()
+				query1.geometry = geometryEngine.union(inBuffer)
+				NitrogenLayer.selectFeatures(query, NitrogenLayer.SELECTION_NEW)
 			})
 
 		NitrogenLayer.hide();
