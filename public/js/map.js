@@ -584,9 +584,7 @@ require([
 				var query = new Query()
 				query.where = "1=1"
 
-				Subembayments.queryFeatures(query,selectinBuffer)
-
-				function selectinBuffer(response) {
+				Subembayments.queryFeatures(query, function (response) {
 
 					var inBuffer = []
 
@@ -594,6 +592,8 @@ require([
 
 						inBuffer.push(response.features[i].geometry)
 					}
+
+					console.log(inBuffer)
 
 					var query = new Query()
 					query.geometry = geometryEngine.union(inBuffer)
