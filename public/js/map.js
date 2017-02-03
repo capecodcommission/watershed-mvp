@@ -479,23 +479,17 @@ require([
 		var query = new Query()
 			query.where = "1=1"
 
-			Subembayments.queryFeatures(query, function (response) {
+		var inBuffer = []
 
-				var inBuffer = []
+		Subembayments.queryFeatures(query, function (response) {
 
-				for (var i = 0; i < response.features.length; i++) {
+			for (var i = 0; i < response.features.length; i++) {
 
-					inBuffer.push(response.features[i].geometry)
-				}
+				inBuffer.push(response.features[i].attributes.OBJECTID)
+			}	
+		})
 
-				var query1 = new Query()
-				query1.geometry = geometryEngine.union(inBuffer)
-				NitrogenLayer.selectFeatures(query, NitrogenLayer.SELECTION_NEW, function (results) {
-
-					NitrogenLayer.setDefinitionExpression(results)
-				})
-			})
-
+		NitrogenLayer.setDefinitionExpression('OBJECTID in ' + inBuffer)
 		NitrogenLayer.hide();
 		map.addLayer(NitrogenLayer);
 
