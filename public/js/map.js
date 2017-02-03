@@ -445,7 +445,7 @@ require([
 		Subembayments.setDefinitionExpression('EMBAY_ID = ' + selectlayer);
 		// Subembayments.show();
 		Subembayments.hide();
-		console.log(Subembayments);
+		// console.log(Subembayments);
 		map.addLayer(Subembayments);
 
 		var nitro_template = new InfoTemplate({
@@ -576,8 +576,16 @@ require([
 			e.preventDefault();
 			// console.log(NitrogenLayer);
 			if ($(this).attr('data-visible') == 'off') {
-				NitrogenLayer.show();
-				
+
+				var query = new Query()
+
+				query.geometry = Subembayments.getExtent()
+
+				query.spatialRelationship = 'within'
+
+				NitrogenLayer.queryFeatures(query, function(response) {
+					response.show()
+				})
 				$(this).attr('data-visible', 'on');
 			} else {
 				NitrogenLayer.hide();
