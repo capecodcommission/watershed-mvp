@@ -440,14 +440,16 @@ require([
 			mode: FeatureLayer.MODE_ONDEMAND,
 			outFields: ["*"],
 			infoTemplate: subem_template,
-			opacity: 1
+			opacity: 1,
+			definitionExpression: 'EMBAY_ID = ' + selectlayer
 		});
-		Subembayments.setDefinitionExpression('EMBAY_ID = ' + selectlayer);
+
+		var ids = Subembayments.SUBEM_ID
+		console.log(ids)
+		// Subembayments.setDefinitionExpression('EMBAY_ID = ' + selectlayer);
 		// Subembayments.show();
 		Subembayments.hide();
-
-		console.log(Subembayments);
-		
+		// console.log(Subembayments);
 		map.addLayer(Subembayments);
 
 		var nitro_template = new InfoTemplate({
@@ -471,7 +473,6 @@ require([
 				opacity: 1,
 				infoTemplate: nitro_template
 			}
-
 		);
 		NitrogenLayer.setDefinitionExpression('Embay_id = ' + selectlayer);
 		NitrogenLayer.hide();
