@@ -42,6 +42,7 @@ require([
 		 "dojo/_base/event",
 		"dojo/dom",
 		"dojo/on", "dijit/registry", 
+		"esri/geometry/geometryEngine",
 		"dojo/dom-construct",
 		"dojo/domReady!",
 		"esri/geometry/geometryEngine"
@@ -74,8 +75,9 @@ require([
 		event,
 		dom, on,
 		registry,
-		domConstruct,
-		geometryEngine
+
+		geometryEngine,
+		domConstruct
 	) {
 		parser.parse();
 
@@ -594,7 +596,7 @@ require([
 					}
 
 					var query = new Query()
-					query.geometry = this.geometryEngine.union(inBuffer)
+					query.geometry = geometryEngine.union(inBuffer)
 
 					NitrogenLayer.selectFeatures(query, function(results) {
 						results.show()
