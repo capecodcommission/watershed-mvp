@@ -579,7 +579,7 @@ require([
 
 				var query = new Query()
 
-				query.geometry = getGeometries(Subembayments)
+				query.geometry = Subembayments
 
 				query.spatialRelationship = 'within'
 
