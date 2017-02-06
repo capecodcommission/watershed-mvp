@@ -468,7 +468,8 @@ require([
 						"<tr>" + "<td>" + "Unattn Nitrogen Load (Fertilization) (Kg/Yr): " + "</td>" + "<td>" + "${Nload_Fert:NumberFormat(places:2)}" + "</td>" + "</tr>" +
 						"<tr>" + "<td>" + "Unattn Nitrogen Load (Stormwater) (Kg/Yr): " + "</td>" + "<td>" + "${Nload_Stormwater:NumberFormat(places:2)}" + "</td>" + "</tr>" +
 						"<tr>" + "<td>" + "Unattn Nitrogen Load (Atmosphere) (Kg/Yr): " + "</td>" + "<td>" + "${Nload_Atmosphere:NumberFormat(places:2)}" + "</td>" + "</tr>" +
-						"<tr>" + "<td>" + "Unattn Nitrogen Load (Full) (Kg/Yr): " + "</td>" + "<td>" + "${Nload_Full:NumberFormat(places:2)}" + "</td>" + "</tr>" + "</tbody></table>"
+						"<tr>" + "<td>" + "Unattn Nitrogen Load (Full) (Kg/Yr): " + "</td>" + "<td>" + "${Nload_Full:NumberFormat(places:2)}" + "</td>" + "</tr>" + 
+						"</tbody></table>"
 		});
 
 
@@ -481,21 +482,21 @@ require([
 
 		);
 
-		var symbol = new SimpleMarkerSymbol(
-          SimpleMarkerSymbol.STYLE_CIRCLE, 
-          8, 
-          new SimpleLineSymbol(
-            SimpleLineSymbol.STYLE_NULL, 
-            new Color([247, 34, 101, 0.9]), 
-            1
-          ),
-          new Color([207, 34, 171, 0.5])
-        );
+		// var symbol = new SimpleMarkerSymbol(
+  //         SimpleMarkerSymbol.STYLE_CIRCLE, 
+  //         8, 
+  //         new SimpleLineSymbol(
+  //           SimpleLineSymbol.STYLE_NULL, 
+  //           new Color([247, 34, 101, 0.9]), 
+  //           1
+  //         ),
+  //         new Color([207, 34, 171, 0.5])
+  //       );
 
-        NitrogenLayer.setSelectionSymbol(symbol)
+  //       NitrogenLayer.setSelectionSymbol(symbol)
 
-        var nullsymbol = new SimpleMarkerSymbol().setSize(0)
-        NitrogenLayer.setRenderer(new SimpleRenderer(nullsymbol))
+  //       var nullsymbol = new SimpleMarkerSymbol().setSize(0)
+  //       NitrogenLayer.setRenderer(new SimpleRenderer(nullsymbol))
 
 		map.addLayer(NitrogenLayer);
 
