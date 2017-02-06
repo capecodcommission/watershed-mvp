@@ -111,7 +111,7 @@ require([
 			}
 		});
 	
-
+		map.infoWindow.resize(300, 200);
 
 		var fillSymbol = new SimpleFillSymbol();
 
