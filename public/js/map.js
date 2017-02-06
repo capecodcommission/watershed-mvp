@@ -482,18 +482,9 @@ require([
 
 		);
 
-		// var symbol = new SimpleMarkerSymbol(
-  //         SimpleMarkerSymbol.STYLE_CIRCLE, 
-  //         8, 
-  //         new SimpleLineSymbol(
-  //           SimpleLineSymbol.STYLE_NULL, 
-  //           new Color([247, 34, 101, 0.9]), 
-  //           1
-  //         ),
-  //         new Color([207, 34, 171, 0.5])
-  //       );
+		var symbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 8, new SimpleLineSymbol( SimpleLineSymbol.STYLE_NULL, new Color("orange"), 1), new Color("orange"));
 
-  //       NitrogenLayer.setSelectionSymbol(symbol)
+        NitrogenLayer.setSelectionSymbol(symbol)
 
         var nullsymbol = new SimpleMarkerSymbol().setSize(0)
         NitrogenLayer.setRenderer(new SimpleRenderer(nullsymbol))
@@ -613,9 +604,7 @@ require([
     		var query = new Query()
     		query.geometry = geometryEngine.union(inBuffer)
 
-    		NitrogenLayer.selectFeatures(query, FeatureLayer.SELECTION_NEW, function(results) {
-    			console.log(results)
-    		})
+    		NitrogenLayer.selectFeatures(query, FeatureLayer.SELECTION_NEW, function(results) {})
 		}
 
 		$('#nitrogen').on('click', function(e) {
