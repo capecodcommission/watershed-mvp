@@ -482,7 +482,7 @@ require([
 
 		);
 
-		var symbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 8, new SimpleLineSymbol( SimpleLineSymbol.STYLE_NULL, new Color("orange"), 1), new Color("orange"));
+		var symbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 8, new SimpleLineSymbol( SimpleLineSymbol.STYLE_NULL, new Color([255,153,0]), 1), new Color([255,153,0]));
 
         NitrogenLayer.setSelectionSymbol(symbol)
 
