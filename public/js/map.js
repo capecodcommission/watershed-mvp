@@ -24,6 +24,7 @@ require([
 		"esri/symbols/SimpleLineSymbol",
 		"esri/graphic",
 		"esri/Color",
+		"esri/renderers/ClassBreaksRenderer",
 
 		"esri/tasks/query",
 		"esri/tasks/QueryTask",
@@ -67,6 +68,7 @@ require([
 		SimpleLineSymbol,
 		Graphic,
 		Color,
+		ClassBreaksRenderer,
 
 		Query,
 		QueryTask,
@@ -484,16 +486,16 @@ require([
 
 		// NitrogenLayer.hide();
 
-		var symbol = new SimpleMarkerSymbol()
-          // SimpleMarkerSymbol.STYLE_CIRCLE, 
-          // 8, 
-          // new SimpleLineSymbol(
-          //   SimpleLineSymbol.STYLE_NULL, 
-          //   new Color([247, 34, 101, 0.9]), 
-          //   1
-          // ),
-          // new Color([207, 34, 171, 0.5])
-        // );
+		var symbol = new SimpleMarkerSymbol(
+          SimpleMarkerSymbol.STYLE_CIRCLE, 
+          8, 
+          new SimpleLineSymbol(
+            SimpleLineSymbol.STYLE_NULL, 
+            new Color([247, 34, 101, 0.9]), 
+            1
+          ),
+          new Color([207, 34, 171, 0.5])
+        );
 
         NitrogenLayer.setSelectionSymbol(symbol)
 
@@ -614,6 +616,10 @@ require([
 
     		var query = new Query()
     		query.geometry = geometryEngine.union(inBuffer)
+
+    		var renderer = new ClassBreaksRenderer(symbol,"Nload_Full")
+
+    		NitrogenLayer.setRenderer(renderer)
 
     		NitrogenLayer.selectFeatures(query, FeatureLayer.SELECTION_NEW, function(results) {})
 		}
