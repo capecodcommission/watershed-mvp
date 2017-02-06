@@ -495,8 +495,8 @@ require([
 
   //       NitrogenLayer.setSelectionSymbol(symbol)
 
-  //       var nullsymbol = new SimpleMarkerSymbol().setSize(0)
-  //       NitrogenLayer.setRenderer(new SimpleRenderer(nullsymbol))
+        var nullsymbol = new SimpleMarkerSymbol().setSize(0)
+        NitrogenLayer.setRenderer(new SimpleRenderer(nullsymbol))
 
 		map.addLayer(NitrogenLayer);
 
