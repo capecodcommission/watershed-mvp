@@ -24,7 +24,6 @@ require([
 		"esri/symbols/SimpleLineSymbol",
 		"esri/graphic",
 		"esri/Color",
-		"esri/renderers/ClassBreaksRenderer",
 
 		"esri/tasks/query",
 		"esri/tasks/QueryTask",
@@ -68,7 +67,6 @@ require([
 		SimpleLineSymbol,
 		Graphic,
 		Color,
-		ClassBreaksRenderer,
 
 		Query,
 		QueryTask,
@@ -113,7 +111,7 @@ require([
 			}
 		});
 	
-		map.infoWindow.resize(300, 200);
+
 
 		var fillSymbol = new SimpleFillSymbol();
 
@@ -482,9 +480,6 @@ require([
 			}
 
 		);
-		// NitrogenLayer.setDefinitionExpression('Embay_id = ' + selectlayer);
-
-		// NitrogenLayer.hide();
 
 		var symbol = new SimpleMarkerSymbol(
           SimpleMarkerSymbol.STYLE_CIRCLE, 
@@ -617,11 +612,9 @@ require([
     		var query = new Query()
     		query.geometry = geometryEngine.union(inBuffer)
 
-    		var renderer = new ClassBreaksRenderer(symbol,"Nload_Full")
-
-    		NitrogenLayer.setRenderer(renderer)
-
-    		NitrogenLayer.selectFeatures(query, FeatureLayer.SELECTION_NEW, function(results) {})
+    		NitrogenLayer.selectFeatures(query, FeatureLayer.SELECTION_NEW, function(results) {
+    			console.log(results)
+    		})
 		}
 
 		$('#nitrogen').on('click', function(e) {
