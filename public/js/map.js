@@ -459,15 +459,46 @@ require([
 		var nitro_template = new InfoTemplate({
 
 			title: "Info", 
-			content: "Water Use Existing: " + "${WaterUseExisting}" + "<br>" +
-						"Waste Water Treatment Existing: " + "${WWTreatmentExisting}" + "<br>" +
-						"Land Use Category Existing: " + "${LandUseCatExisting}" + "<br>" +
-						"Water Use Source: " + "${WaterUseSource}" + "<br>" +
-						"Nitrogen Load (Septic Existing): " + "${NLoad_Septic_Existing}" + "<br>" +
-						"Nitrogen Load (Fertilization): " + "${Nload_Fert}" + "<br>" +
-						"Nitrogen Load (Stormwater): " + "${Nload_Stormwater}" + "<br>" +
-						"Nitrogen Load (Atmosphere): " + "${Nload_Atmosphere}" + "<br>" +
-						"Nitrogen Load (Full): " + "${Nload_Full}"
+			content: "<table class = 'table'><tbody>" +
+						"<tr>" + "<td>" + "Water Use (Gal/Day): " + "</td>" + "<td>" + "${WaterUseExisting}" + "</td>" + "</tr>" +
+						"<tr>" + "<td>" + "Waste Water Treatment (Gal/Day): " + "</td>" + "<td>" + "${WWTreatmentExisting}" + "</td>" + "</tr>" +
+						"<tr>" + "<td>" + "Land Use Category: " + "</td>" + "<td>" + "${LandUseCatExisting}" + "</td>" + "</tr>" +
+						"<tr>" + "<td>" + "Water Use Source: " + "</td>" + "<td>" + "${WaterUseSource}" + "</td>" + "</tr>" +
+						"<tr>" + "<td>" + "Unattn Nitrogen Load (Septic) (Kg/Yr): " + "</td>" + "<td>" + "${NLoad_Septic_Existing}" + "</td>" + "</tr>" +
+						"<tr>" + "<td>" + "Unattn Nitrogen Load (Fertilization) (Kg/Yr): " + "</td>" + "<td>" + "${Nload_Fert}" + "</td>" + "</tr>" +
+						"<tr>" + "<td>" + "Unattn Nitrogen Load (Stormwater) (Kg/Yr): " + "</td>" + "<td>" + "${Nload_Stormwater}" + "</td>" + "</tr>" +
+						"<tr>" + "<td>" + "Unattn Nitrogen Load (Atmosphere) (Kg/Yr): " + "</td>" + "<td>" + "${Nload_Atmosphere}" + "</td>" + "</tr>" +
+						"<tr>" + "<td>" + "Unattn Nitrogen Load (Full) (Kg/Yr): " + "</td>" + "<td>" + "${Nload_Full}" + "</td>" + "</tr>" + "</tbody></table>",
+			fieldInfos: [{
+				fieldName: "WaterUseExisting",
+				format: {
+					places: 2
+				},
+				fieldName: "WWTreatmentExisting",
+				format: {
+					places: 2
+				},
+				fieldName: "NLoad_Septic_Existing",
+				format: {
+					places: 2
+				},
+				fieldName: "Nload_Fert",
+				format: {
+					places: 2
+				},
+				fieldName: "Nload_Stormwater",
+				format: {
+					places: 2
+				},
+				fieldName: "Nload_Atmosphere",
+				format: {
+					places: 2
+				},
+				fieldName: "Nload_Full",
+				format: {
+					places: 2
+				}
+			}]
 		});
 
 
