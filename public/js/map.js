@@ -484,16 +484,16 @@ require([
 
 		// NitrogenLayer.hide();
 
-		var symbol = new SimpleMarkerSymbol(
-          SimpleMarkerSymbol.STYLE_CIRCLE, 
-          8, 
-          new SimpleLineSymbol(
-            SimpleLineSymbol.STYLE_NULL, 
-            new Color([247, 34, 101, 0.9]), 
-            1
-          ),
-          new Color([207, 34, 171, 0.5])
-        );
+		var symbol = new SimpleMarkerSymbol()
+          // SimpleMarkerSymbol.STYLE_CIRCLE, 
+          // 8, 
+          // new SimpleLineSymbol(
+          //   SimpleLineSymbol.STYLE_NULL, 
+          //   new Color([247, 34, 101, 0.9]), 
+          //   1
+          // ),
+          // new Color([207, 34, 171, 0.5])
+        // );
 
         NitrogenLayer.setSelectionSymbol(symbol)
 
