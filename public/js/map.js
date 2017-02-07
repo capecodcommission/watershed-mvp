@@ -476,7 +476,7 @@ require([
 
 
 		var NitrogenLayer = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/0', {
-				mode: FeatureLayer.MODE_ONDEMAND,
+				mode: FeatureLayer.MODE_AUTO,
 				outFields: ["*"],
 				opacity: 1,
 				infoTemplate: nitro_template
@@ -486,7 +486,7 @@ require([
 		var symbol = new SimpleMarkerSymbol()
 			symbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE)
 			symbol.setColor(new Color([255,153,0]))
-			symbol.setSize("8")
+			// symbol.setSize("8")
 
 			// NitrogenLayer.setSelectionSymbol(symbol)
 
@@ -497,7 +497,8 @@ require([
 	        	minsize: 5,
 	        	maxSize: 50,
 	        	minDataValue: 0,
-	        	maxDataValue: 250
+	        	maxDataValue: 250,
+	        	valueUnit: "unknown"
 	        }])
 
         // var nullsymbol = new SimpleMarkerSymbol().setSize(0)
