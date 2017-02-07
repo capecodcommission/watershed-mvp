@@ -499,7 +499,11 @@ require([
 
         NitrogenLayer.setRenderer(new SimpleRenderer(symbol).setVisualVariables([{
         	type: "sizeInfo",
-        	field: "Nload_Full"
+        	field: "Nload_Full",
+        	minsize: 5,
+        	maxSize: 50,
+        	minDataValue: 0,
+        	maxDataValue: 250
         }]))
 
 		map.addLayer(NitrogenLayer);
