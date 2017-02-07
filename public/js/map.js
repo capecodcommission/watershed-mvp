@@ -487,7 +487,7 @@ require([
 			symbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE)
 			symbol.setColor(new Color([255,153,0]))
 
-        NitrogenLayer.setSelectionSymbol(symbol)
+        // NitrogenLayer.setSelectionSymbol(symbol)
 
         var nullsymbol = new SimpleMarkerSymbol().setSize(0)
 
@@ -501,11 +501,6 @@ require([
         }]))
 
 		map.addLayer(NitrogenLayer);
-
-		// var query = new Query()
-		// 	query.where = "1=1"
-
-		// Subembayments.queryFeatures(query, selectinBuffer)
 
 
 		var WasteWater = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/1', {
