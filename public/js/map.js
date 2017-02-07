@@ -487,8 +487,6 @@ require([
 			symbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE)
 			symbol.setColor(new Color([255,153,0]))
 
-        // NitrogenLayer.setSelectionSymbol(symbol)
-
         var nullsymbol = new SimpleMarkerSymbol().setSize(0)
 
         NitrogenLayer.setRenderer(new SimpleRenderer(symbol).setVisualVariables([{
@@ -499,6 +497,8 @@ require([
         	minDataValue: 0,
         	maxDataValue: 250
         }]))
+
+        NitrogenLayer.setSelectionSymbol(symbol)
 
 		map.addLayer(NitrogenLayer);
 
