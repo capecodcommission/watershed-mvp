@@ -486,15 +486,15 @@ require([
 
 		var symbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 8, 
 			new SimpleLineSymbol( SimpleLineSymbol.STYLE_NULL, new Color([255,153,0]), 1), 
-			new Color([255,153,0]));
+			new Color([255,153,0])).setVisualVariables([{
+    			type: "sizeInfo",
+    			field: "Nload_Full"
+    		}]);
 
         NitrogenLayer.setSelectionSymbol(symbol)
 
         var nullsymbol = new SimpleMarkerSymbol().setSize(0)
-        NitrogenLayer.setRenderer(new SimpleRenderer(nullsymbol).setVisualVariables([{
-    			type: "sizeInfo",
-    			field: "Nload_Full"
-    		}]))
+        NitrogenLayer.setRenderer(new SimpleRenderer(nullsymbol))
 
 		map.addLayer(NitrogenLayer);
 
