@@ -484,14 +484,22 @@ require([
 
 		);
 
-		var symbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 8, 
-			new SimpleLineSymbol( SimpleLineSymbol.STYLE_NULL, new Color([255,153,0]), 1), 
-			new Color([255,153,0]));
+		var symbol = new SimpleMarkerSymbol()
+			symbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE)
+			symbol.setColor(new Color([255,153,0]))
 
         NitrogenLayer.setSelectionSymbol(symbol)
 
         var nullsymbol = new SimpleMarkerSymbol().setSize(0)
-        NitrogenLayer.setRenderer(new SimpleRenderer(nullsymbol))
+
+        NitrogenLayer.setRenderer(new SimpleRenderer(nullsymbol).setVisualVariables([{
+        	type: "sizeInfo",
+        	field: "Nload_Full",
+        	minSize: 3,
+        	maxSize: 20,
+        	minDataValue: 0,
+        	maxDataValue: 250
+        }]))
 
 		map.addLayer(NitrogenLayer);
 
@@ -610,18 +618,18 @@ require([
 
     		NitrogenLayer.selectFeatures(query, FeatureLayer.SELECTION_NEW, function(results) {
 
-    			var renderer = new SimpleRenderer(symbol)
+    			// var renderer = new SimpleRenderer(symbol)
 
-    			renderer.setVisualVariables([{
-	    			type: "sizeInfo",
-	    			field: "Nload_Full",
-	    			minSize: 3,
-	    			maxSize: 20,
-	    			minDataValue: 0,
-	    			maxDataValue: 250
-	    		}])
+    			// renderer.setVisualVariables([{
+	    		// 	type: "sizeInfo",
+	    		// 	field: "Nload_Full",
+	    		// 	minSize: 3,
+	    		// 	maxSize: 20,
+	    		// 	minDataValue: 0,
+	    		// 	maxDataValue: 250
+	    		// }])
 
-	    		NitrogenLayer.setRenderer(renderer)
+	    		// NitrogenLayer.setRenderer(renderer)
     		})
 		}
 
