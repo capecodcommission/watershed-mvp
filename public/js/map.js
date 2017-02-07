@@ -487,6 +487,8 @@ require([
 			symbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE)
 			symbol.setColor(new Color([255,153,0]))
 
+			NitrogenLayer.setSelectionSymbol(symbol)
+
 		var renderer = new SimpleRenderer(symbol)
 			renderer.setVisualVariables([{
 	        	type: "sizeInfo",
@@ -500,8 +502,6 @@ require([
         var nullsymbol = new SimpleMarkerSymbol().setSize(0)
 
         NitrogenLayer.setRenderer(renderer)
-
-        // NitrogenLayer.setSelectionSymbol(symbol)
 
 		map.addLayer(NitrogenLayer);
 
@@ -618,7 +618,7 @@ require([
     		var query = new Query()
     		query.geometry = geometryEngine.union(inBuffer)
 
-    		NitrogenLayer.selectFeatures(query, FeatureLayer.SELECTION_ADD, function(results) {})
+    		NitrogenLayer.selectFeatures(query, FeatureLayer.SELECTION_NEW, function(results) {})
 		}
 
 		$('#nitrogen').on('click', function(e) {
