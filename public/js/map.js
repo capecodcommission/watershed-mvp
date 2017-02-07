@@ -499,9 +499,9 @@ require([
 	        	maxDataValue: 250
 	        })
 
-        // var nullsymbol = new SimpleMarkerSymbol().setSize(0)
+        var nullsymbol = new SimpleMarkerSymbol().setSize(0)
 
-        NitrogenLayer.setRenderer(renderer)
+        NitrogenLayer.setRenderer(new SimpleRenderer(nullsymbol))
 
 		map.addLayer(NitrogenLayer);
 
@@ -619,6 +619,8 @@ require([
     		query.geometry = geometryEngine.union(inBuffer)
 
     		NitrogenLayer.selectFeatures(query, FeatureLayer.SELECTION_NEW)
+
+    		NitrogenLayer.setRenderer(renderer)
 		}
 
 		$('#nitrogen').on('click', function(e) {
