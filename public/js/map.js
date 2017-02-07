@@ -490,11 +490,6 @@ require([
 
         NitrogenLayer.setSelectionSymbol(symbol)
 
-        var query = new Query()
-			query.where = "1=1"
-
-		Subembayments.queryFeatures(query, selectinBuffer)
-
         var nullsymbol = new SimpleMarkerSymbol().setSize(0)
 
         NitrogenLayer.setRenderer(new SimpleRenderer(symbol).setVisualVariables([{
@@ -507,6 +502,11 @@ require([
         }]))
 
 		map.addLayer(NitrogenLayer);
+
+		var query = new Query()
+			query.where = "1=1"
+
+		Subembayments.queryFeatures(query, selectinBuffer)
 
 
 		var WasteWater = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/1', {
