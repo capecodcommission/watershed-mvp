@@ -608,8 +608,8 @@ require([
     		var query = new Query()
     		query.geometry = geometryEngine.union(inBuffer)
 
-    		NitrogenLayer.setSizeInfo({
-
+    		NitrogenLayer.setVisualVariables({
+    			type: "sizeInfo",
     			field: "Nload_Full"
     		})
 
