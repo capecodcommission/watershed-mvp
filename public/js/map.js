@@ -488,7 +488,7 @@ require([
 			symbol.setColor(new Color([255,153,0]))
 			symbol.setSize("8")
 
-			NitrogenLayer.setSelectionSymbol(symbol)
+			// NitrogenLayer.setSelectionSymbol(symbol)
 
 		var renderer = new SimpleRenderer(symbol)
 			renderer.setSizeInfo({
@@ -618,7 +618,12 @@ require([
     		var query = new Query()
     		query.geometry = geometryEngine.union(inBuffer)
 
-    		NitrogenLayer.selectFeatures(query, FeatureLayer.SELECTION_NEW)
+    		NitrogenLayer.selectFeatures(query, FeatureLayer.SELECTION_NEW, function(results) {
+
+    			var features = results.getSelectedFeatures()
+
+    			features.setRenderer(renderer)
+    		})
 		}
 
 		$('#nitrogen').on('click', function(e) {
