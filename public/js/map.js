@@ -491,15 +491,10 @@ require([
 			// NitrogenLayer.setSelectionSymbol(symbol)
 
 		var renderer = new SimpleRenderer(symbol)
-			// renderer.setVisualVariables([{
-	  //       	type: "sizeInfo",
-	  //       	field: "Nload_Full",
-	  //       	minsize: 1,
-	  //       	maxSize: 20,
-	  //       	minDataValue: 0,
-	  //       	maxDataValue: 250,
-	  //       	valueUnit: "unknown"
-	  //       }])
+			renderer.setVisualVariables([{
+	        	type: "sizeInfo",
+	        	field: "Nload_Full"
+	        }])
 
         // var nullsymbol = new SimpleMarkerSymbol().setSize(0)
 
