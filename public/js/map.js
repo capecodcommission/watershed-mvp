@@ -476,7 +476,7 @@ require([
 
 
 		var NitrogenLayer = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/0', {
-				mode: FeatureLayer.MODE_AUTO,
+				mode: FeatureLayer.MODE_ONDEMAND,
 				outFields: ["*"],
 				opacity: 1,
 				infoTemplate: nitro_template
@@ -619,8 +619,6 @@ require([
     		query.geometry = geometryEngine.union(inBuffer)
 
     		NitrogenLayer.selectFeatures(query, FeatureLayer.SELECTION_NEW)
-
-    		NitrogenLayer.setRenderer(renderer)
 		}
 
 		$('#nitrogen').on('click', function(e) {
