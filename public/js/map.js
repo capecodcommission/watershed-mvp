@@ -486,6 +486,7 @@ require([
 		var symbol = new SimpleMarkerSymbol()
 			symbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE)
 			symbol.setColor(new Color([255,153,0]))
+			symbol.setSize("8")
 
 			// NitrogenLayer.setSelectionSymbol(symbol)
 
@@ -618,7 +619,7 @@ require([
     		var query = new Query()
     		query.geometry = geometryEngine.union(inBuffer)
 
-    		NitrogenLayer.selectFeatures(query, FeatureLayer.SELECTION_NEW, function(results) {})
+    		NitrogenLayer.selectFeatures(query, FeatureLayer.SELECTION_NEW)
 		}
 
 		$('#nitrogen').on('click', function(e) {
