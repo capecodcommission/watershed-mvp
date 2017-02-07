@@ -488,18 +488,18 @@ require([
 			symbol.setColor(new Color([255,153,0]))
 			symbol.setSize("8")
 
-			NitrogenLayer.setSelectionSymbol(symbol)
+			// NitrogenLayer.setSelectionSymbol(symbol)
 
 		var renderer = new SimpleRenderer(symbol)
-			renderer.setVisualVariables([{
-	        	type: "sizeInfo",
-	        	field: "Nload_Full",
-	        	minsize: 5,
-	        	maxSize: 50,
-	        	minDataValue: 0,
-	        	maxDataValue: 250,
-	        	valueUnit: "unknown"
-	        }])
+			// renderer.setVisualVariables([{
+	  //       	type: "sizeInfo",
+	  //       	field: "Nload_Full",
+	  //       	minsize: 5,
+	  //       	maxSize: 50,
+	  //       	minDataValue: 0,
+	  //       	maxDataValue: 250,
+	  //       	valueUnit: "unknown"
+	  //       }])
 
         // var nullsymbol = new SimpleMarkerSymbol().setSize(0)
 
