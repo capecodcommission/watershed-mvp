@@ -24,6 +24,7 @@ require([
 		"esri/symbols/SimpleLineSymbol",
 		"esri/graphic",
 		"esri/Color",
+		"esri/renderers/Renderer",
 
 		"esri/tasks/query",
 		"esri/tasks/QueryTask",
@@ -67,6 +68,7 @@ require([
 		SimpleLineSymbol,
 		Graphic,
 		Color,
+		Renderer,
 
 		Query,
 		QueryTask,
@@ -607,7 +609,7 @@ require([
     		query.geometry = geometryEngine.union(inBuffer)
 
     		NitrogenLayer.setSizeInfo({
-    			
+
     			field: "Nload_Full"
     		})
 
