@@ -620,9 +620,7 @@ require([
 
     		NitrogenLayer.selectFeatures(query, FeatureLayer.SELECTION_NEW, function(results) {
 
-    			var features = NitrogenLayer.getSelectedFeatures()
-
-    			features.setRenderer(renderer)
+    			console.log(results.features)
     		})
 		}
 
