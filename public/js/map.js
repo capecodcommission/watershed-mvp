@@ -617,7 +617,7 @@ require([
 	    			field: "Nload_Full"
 	    		}])
 
-	    		results.setRenderer(renderer)
+	    		NitrogenLayer.setRenderer(renderer)
     		})
 		}
 
