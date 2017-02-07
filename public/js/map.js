@@ -618,7 +618,7 @@ require([
     		var query = new Query()
     		query.geometry = geometryEngine.union(inBuffer)
 
-    		NitrogenLayer.selectFeatures(query, FeatureLayer.SELECTION_NEW, function(results) {})
+    		NitrogenLayer.selectFeatures(query, FeatureLayer.SELECTION_ADD, function(results) {})
 		}
 
 		$('#nitrogen').on('click', function(e) {
