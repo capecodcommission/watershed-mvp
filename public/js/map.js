@@ -488,17 +488,18 @@ require([
 			symbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE)
 			symbol.setColor(new Color([255,153,0]))
 
-        NitrogenLayer.setSelectionSymbol(symbol)
+        // NitrogenLayer.setSelectionSymbol(symbol)
+
+        var query = new Query()
+			query.where = "1=1"
+
+		Subembayments.queryFeatures(query, selectinBuffer)
 
         var nullsymbol = new SimpleMarkerSymbol().setSize(0)
 
-        NitrogenLayer.setRenderer(new SimpleRenderer(nullsymbol).setVisualVariables([{
+        NitrogenLayer.setRenderer(new SimpleRenderer(symbol).setVisualVariables([{
         	type: "sizeInfo",
-        	field: "Nload_Full",
-        	minSize: 3,
-        	maxSize: 20,
-        	minDataValue: 0,
-        	maxDataValue: 250
+        	field: "Nload_Full"
         }]))
 
 		map.addLayer(NitrogenLayer);
@@ -616,21 +617,7 @@ require([
     		var query = new Query()
     		query.geometry = geometryEngine.union(inBuffer)
 
-    		NitrogenLayer.selectFeatures(query, FeatureLayer.SELECTION_NEW, function(results) {
-
-    			// var renderer = new SimpleRenderer(symbol)
-
-    			// renderer.setVisualVariables([{
-	    		// 	type: "sizeInfo",
-	    		// 	field: "Nload_Full",
-	    		// 	minSize: 3,
-	    		// 	maxSize: 20,
-	    		// 	minDataValue: 0,
-	    		// 	maxDataValue: 250
-	    		// }])
-
-	    		// NitrogenLayer.setRenderer(renderer)
-    		})
+    		NitrogenLayer.selectFeatures(query, FeatureLayer.SELECTION_NEW, function(results) {})
 		}
 
 		$('#nitrogen').on('click', function(e) {
@@ -638,10 +625,10 @@ require([
 			// console.log(NitrogenLayer);
 			if ($(this).attr('data-visible') == 'off') {
 
-				var query = new Query()
-				query.where = "1=1"
+				// var query = new Query()
+				// query.where = "1=1"
 
-				Subembayments.queryFeatures(query, selectinBuffer)
+				// Subembayments.queryFeatures(query, selectinBuffer)
 
 				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
