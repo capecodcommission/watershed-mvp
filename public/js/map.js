@@ -488,7 +488,7 @@ require([
 			symbol.setColor(new Color([255,153,0]))
 			symbol.setSize("8")
 
-			// NitrogenLayer.setSelectionSymbol(symbol)
+			NitrogenLayer.setSelectionSymbol(symbol)
 
 		var renderer = new SimpleRenderer(symbol)
 			renderer.setSizeInfo({
@@ -498,12 +498,6 @@ require([
 	        	minDataValue: 0,
 	        	maxDataValue: 250
 	        })
-
-	        
-		var query = new Query()
-		query.where = "1=1"
-
-		Subembayments.queryFeatures(query, selectinBuffer)
 
         // var nullsymbol = new SimpleMarkerSymbol().setSize(0)
 
@@ -632,10 +626,10 @@ require([
 			// console.log(NitrogenLayer);
 			if ($(this).attr('data-visible') == 'off') {
 
-				// var query = new Query()
-				// query.where = "1=1"
+				var query = new Query()
+				query.where = "1=1"
 
-				// Subembayments.queryFeatures(query, selectinBuffer)
+				Subembayments.queryFeatures(query, selectinBuffer)
 
 				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
