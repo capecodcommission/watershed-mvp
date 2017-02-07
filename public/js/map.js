@@ -491,7 +491,10 @@ require([
         NitrogenLayer.setSelectionSymbol(symbol)
 
         var nullsymbol = new SimpleMarkerSymbol().setSize(0)
-        NitrogenLayer.setRenderer(new SimpleRenderer(nullsymbol))
+        NitrogenLayer.setRenderer(new SimpleRenderer(nullsymbol).setVisualVariables([{
+    			type: "sizeInfo",
+    			field: "Nload_Full"
+    		}]))
 
 		map.addLayer(NitrogenLayer);
 
@@ -607,11 +610,6 @@ require([
 
     		var query = new Query()
     		query.geometry = geometryEngine.union(inBuffer)
-
-    		NitrogenLayer.setVisualVariables([{
-    			type: "sizeInfo",
-    			field: "Nload_Full"
-    		}])
 
     		NitrogenLayer.selectFeatures(query, FeatureLayer.SELECTION_NEW, function(results) {})
 		}
