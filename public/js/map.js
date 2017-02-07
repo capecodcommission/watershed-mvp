@@ -488,7 +488,7 @@ require([
 			symbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE)
 			symbol.setColor(new Color([255,153,0]))
 
-        // NitrogenLayer.setSelectionSymbol(symbol)
+        NitrogenLayer.setSelectionSymbol(symbol)
 
         var query = new Query()
 			query.where = "1=1"
