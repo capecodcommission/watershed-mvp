@@ -488,7 +488,7 @@ require([
 			symbol.setColor(new Color([255,153,0]))
 			symbol.setSize("8")
 
-			NitrogenLayer.setSelectionSymbol(symbol)
+			// NitrogenLayer.setSelectionSymbol(symbol)
 
 		var renderer = new SimpleRenderer(symbol)
 			renderer.setSizeInfo({
@@ -503,6 +503,7 @@ require([
 
         NitrogenLayer.setRenderer(new SimpleRenderer(nullsymbol))
 
+        NitrogenLayer.hide()
 		map.addLayer(NitrogenLayer);
 
 
