@@ -481,7 +481,6 @@ require([
 				opacity: 1,
 				infoTemplate: nitro_template
 			}
-
 		);
 
 		var symbol = new SimpleMarkerSymbol()
@@ -503,10 +502,10 @@ require([
 
 		map.addLayer(NitrogenLayer);
 
-		var query = new Query()
-			query.where = "1=1"
+		// var query = new Query()
+		// 	query.where = "1=1"
 
-		Subembayments.queryFeatures(query, selectinBuffer)
+		// Subembayments.queryFeatures(query, selectinBuffer)
 
 
 		var WasteWater = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/1', {
@@ -629,10 +628,10 @@ require([
 			// console.log(NitrogenLayer);
 			if ($(this).attr('data-visible') == 'off') {
 
-				// var query = new Query()
-				// query.where = "1=1"
+				var query = new Query()
+				query.where = "1=1"
 
-				// Subembayments.queryFeatures(query, selectinBuffer)
+				Subembayments.queryFeatures(query, selectinBuffer)
 
 				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
