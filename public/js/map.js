@@ -614,7 +614,11 @@ require([
 
     			renderer.setVisualVariables([{
 	    			type: "sizeInfo",
-	    			field: "Nload_Full"
+	    			field: "Nload_Full",
+	    			minSize: 3,
+	    			maxSize: 20,
+	    			minDataValue: 0,
+	    			maxDataValue: 250
 	    		}])
 
 	    		NitrogenLayer.setRenderer(renderer)
