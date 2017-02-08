@@ -503,7 +503,7 @@ require([
 
 			NitrogenLayer.setRenderer(renderer)
 
-			NitrogenLayer.setDefinitionExpression("SUBEM_ID = 229")
+			NitrogenLayer.setDefinitionExpression(stringthing)
 
 	        NitrogenLayer.hide()
 			map.addLayer(NitrogenLayer);
@@ -627,7 +627,7 @@ require([
     			
     			feature = features[i]
 
-    			inBuffer.push(feature.attributes["SUBEM_ID"].toString())
+    			inBuffer.push(feature.attributes["SUBEM_ID"])
     		}
 
     		for (var j = 0; j < inBuffer.length; j++) {
@@ -635,7 +635,7 @@ require([
     			stringthing += "SUBEM_ID = " + String(inBuffer[j]) + " OR "
     		}
 
-    		stringthing = stringthing.substring(0,stringthing.lastIndexOf("OR")) + '';
+    		stringthing = stringthing.substring(0,stringthing.lastIndexOf("OR")) + "";
 
     		console.log(stringthing)
 		}
