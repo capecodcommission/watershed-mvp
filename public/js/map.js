@@ -613,10 +613,10 @@ require([
     			
     			feature = features[i]
 
-    			inBuffer.push(feature.attributes["SUBEM_ID"])
+    			inBuffer.push(feature.attributes["SUBEM_ID"].toString())
     		}
 
-    		console.log(inBuffer)
+    		console.log(inBuffer.toString())
 
     		// NitrogenLayer.setDefinitionExpression('SUBEM_ID in' + inBuffer)
 		}
