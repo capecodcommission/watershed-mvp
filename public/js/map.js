@@ -501,10 +501,10 @@ require([
 
         // var nullsymbol = new SimpleMarkerSymbol().setSize(0)
 
-        NitrogenLayer.setRenderer(renderer)
+  //       NitrogenLayer.setRenderer(renderer)
 
-        NitrogenLayer.hide()
-		map.addLayer(NitrogenLayer);
+  //       NitrogenLayer.hide()
+		// map.addLayer(NitrogenLayer);
 
 
 		var WasteWater = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/1', {
@@ -627,8 +627,6 @@ require([
     		stringthing = stringthing.substring(0,stringthing.lastIndexOf("OR")) + '';
 
     		console.log(stringthing)
-
-    		NitrogenLayer.setDefinitionExpression(stringthing)
 		}
 
 		$('#nitrogen').on('click', function(e) {
@@ -640,6 +638,13 @@ require([
 				query.where = "1=1"
 
 				Subembayments.queryFeatures(query, selectinBuffer)
+
+				NitrogenLayer.setDefinitionExpression(stringthing)
+
+	    		NitrogenLayer.setRenderer(renderer)
+
+		        NitrogenLayer.hide()
+				map.addLayer(NitrogenLayer);
 
 				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
