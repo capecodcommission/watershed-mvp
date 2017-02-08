@@ -620,10 +620,10 @@ require([
     		}
 
     		for (var i = 0; i < inBuffer.length; i++) {
-    			buffString += inBuffer[i]
+    			buffString += inBuffer[i] + ','
     		}
 
-    		console.log(buffString)
+    		buffString = buffString.replace(/,\s*$/, "")
 		}
 
 		$('#nitrogen').on('click', function(e) {
@@ -638,7 +638,7 @@ require([
 
 				// inBuffer = inBuffer.toString().replace("[", "").replace("]", "")
 
-				// NitrogenLayer.setDefinitionExpression('SUBEM_ID in' + "(" + buffString + ")")
+				NitrogenLayer.setDefinitionExpression("SUBEM_ID in" + "(" + buffString + ")")
 
 				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
