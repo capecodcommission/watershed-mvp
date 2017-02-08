@@ -501,7 +501,7 @@ require([
 
         // var nullsymbol = new SimpleMarkerSymbol().setSize(0)
 
-        // NitrogenLayer.setRenderer(renderer)
+        NitrogenLayer.setRenderer(renderer)
 
         NitrogenLayer.hide()
 		map.addLayer(NitrogenLayer);
@@ -639,7 +639,7 @@ require([
 
 				Subembayments.queryFeatures(query, selectinBuffer)
 
-				NitrogenLayer.setDefinitionExpression(stringthing)
+				NitrogenLayer.setDefinitionExpression(String(stringthing))
 
 				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
