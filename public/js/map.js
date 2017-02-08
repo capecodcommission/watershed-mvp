@@ -626,8 +626,6 @@ require([
 
     		stringthing = stringthing.substring(0,stringthing.lastIndexOf("OR")) + '';
 
-    		NitrogenLayer.setDefinitionExpression(stringthing)
-
     		console.log(stringthing)
 		}
 
@@ -640,6 +638,8 @@ require([
 				query.where = "1=1"
 
 				Subembayments.queryFeatures(query, selectinBuffer)
+
+				NitrogenLayer.setDefinitionExpression(stringthing)
 
 				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
