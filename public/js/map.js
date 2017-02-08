@@ -603,11 +603,13 @@ require([
 		// console.log('testing');
 		// Turn on/off each layer when the user clicks the link in the sidebar.
 
+
+		var inBuffer = []; 
+
 		function selectinBuffer(response) {
 
 			var feature;  
-    		var features = response.features;         
-    		var inBuffer = []; 
+    		var features = response.features;   
 
     		for (var i = 0; i < features.length; i++) {
     			
@@ -617,8 +619,6 @@ require([
     		}
 
     		console.log(inBuffer.toString())
-
-    		NitrogenLayer.setDefinitionExpression('SUBEM_ID =' + '229')
 		}
 
 		$('#nitrogen').on('click', function(e) {
@@ -630,6 +630,8 @@ require([
 				query.where = "1=1"
 
 				Subembayments.queryFeatures(query, selectinBuffer)
+
+				NitrogenLayer.setDefinitionExpression('SUBEM_ID in' + inBuffer)
 
 				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
