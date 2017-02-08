@@ -630,7 +630,7 @@ require([
 
 				Subembayments.queryFeatures(query, selectinBuffer)
 
-				NitrogenLayer.setDefinitionExpression("SUBEM_ID = " inBuffer)
+				NitrogenLayer.setDefinitionExpression("SUBEM_ID = " + inBuffer)
 
 				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
