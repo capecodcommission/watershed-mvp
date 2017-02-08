@@ -619,7 +619,9 @@ require([
     			inBuffer.push(feature.attributes["SUBEM_ID"].toString())
     		}
 
-    		console.log(inBuffer)
+    		for (var j = 0; j < inBuffer.length; j++) {
+    			NitrogenLayer.setDefinitionExpression("SUBEM_ID = " + inBuffer[j])
+    		}
 		}
 
 		$('#nitrogen').on('click', function(e) {
