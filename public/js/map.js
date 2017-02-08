@@ -605,7 +605,7 @@ require([
 
 
 		var inBuffer = []; 
-		var buffString = ''
+		var stringthing = ''
 
 		function selectinBuffer(response) {
 
@@ -621,9 +621,10 @@ require([
 
     		for (var j = 0; j < inBuffer.length; j++) {
 
-    			console.log(inBuffer[j])
-    			NitrogenLayer.setDefinitionExpression("SUBEM_ID = " + inBuffer[j])
+    			stringthing += 'SUBEM_ID =' + inBuffer[i] + 'OR'
     		}
+
+    		stringthing = stringthing.substring(0,stringthing.lastIndexOf("OR")) + '';
 		}
 
 		$('#nitrogen').on('click', function(e) {
@@ -635,6 +636,8 @@ require([
 				query.where = "1=1"
 
 				Subembayments.queryFeatures(query, selectinBuffer)
+
+				NitrogenLayer.setDefinitionExpression(stringthing)
 
 				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
