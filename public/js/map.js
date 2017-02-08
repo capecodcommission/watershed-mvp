@@ -501,7 +501,7 @@ require([
 
         // var nullsymbol = new SimpleMarkerSymbol().setSize(0)
 
-        // NitrogenLayer.setRenderer(renderer)
+        NitrogenLayer.setRenderer(renderer)
 
         NitrogenLayer.hide()
 		map.addLayer(NitrogenLayer);
