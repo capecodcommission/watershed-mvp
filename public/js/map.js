@@ -475,7 +475,6 @@ require([
 		// http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/0
 		var NitrogenLayer = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13', {
 				mode: FeatureLayer.MODE_ONDEMAND,
-				outFields: ["*"],
 				opacity: 1,
 				infoTemplate: nitro_template
 			}
@@ -504,7 +503,7 @@ require([
 
 			NitrogenLayer.setRenderer(renderer)
 
-			NitrogenLayer.setDefinitionExpression('SUBEM_ID = 229')
+			NitrogenLayer.setDefinitionExpression(stringthing)
 
 	        NitrogenLayer.hide()
 			map.addLayer(NitrogenLayer);
