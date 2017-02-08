@@ -486,7 +486,7 @@ require([
 			symbol.setColor(new Color([255,153,0]))
 			symbol.setSize("8")
 
-			NitrogenLayer.setSelectionSymbol(symbol)
+			// NitrogenLayer.setSelectionSymbol(symbol)
 
 		var renderer = new SimpleRenderer(symbol)
 			renderer.setSizeInfo({
@@ -501,7 +501,7 @@ require([
 
         // var nullsymbol = new SimpleMarkerSymbol().setSize(0)
 
-        NitrogenLayer.setRenderer(renderer)
+        // NitrogenLayer.setRenderer(renderer)
 
         NitrogenLayer.hide()
 		map.addLayer(NitrogenLayer);
@@ -640,7 +640,6 @@ require([
 				Subembayments.queryFeatures(query, selectinBuffer)
 
 				NitrogenLayer.setDefinitionExpression(stringthing)
-				map.addLayer(NitrogenLayer)
 
 				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
