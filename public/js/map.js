@@ -619,7 +619,7 @@ require([
     			inBuffer.push(feature.attributes["SUBEM_ID"].toString())
     		}
 
-    		buffString = '(' + inBuffer + ')'
+    		buffString = '(' + inBuffer.toString() + ')'
 
     		console.log(buffString)
 		}
@@ -634,7 +634,7 @@ require([
 
 				Subembayments.queryFeatures(query, selectinBuffer)
 
-				NitrogenLayer.setDefinitionExpression("SUBEM_ID in" + buffString.toString())
+				NitrogenLayer.setDefinitionExpression("SUBEM_ID in" + buffString)
 
 				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
