@@ -624,6 +624,8 @@ require([
     		}
 
     		buffString = buffString.replace(/,\s*$/, "")
+
+    		console.log(buffString)
 		}
 
 		$('#nitrogen').on('click', function(e) {
