@@ -502,11 +502,9 @@ require([
 
 			Subembayments.queryFeatures(query, selectinBuffer)
 
-			NitrogenLayer.setRenderer(renderer)
+			// NitrogenLayer.setRenderer(renderer)
 
 			NitrogenLayer.setDefinitionExpression(stringthing)
-
-    		NitrogenLayer.setRenderer(renderer)
 
 	        NitrogenLayer.hide()
 			map.addLayer(NitrogenLayer);
