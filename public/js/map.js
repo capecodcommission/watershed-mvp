@@ -475,6 +475,7 @@ require([
 		// http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/0
 		var NitrogenLayer = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13', {
 				mode: FeatureLayer.MODE_ONDEMAND,
+				outFields: ["*"],
 				opacity: 1,
 				infoTemplate: nitro_template
 			}
@@ -503,19 +504,8 @@ require([
 
 			NitrogenLayer.setRenderer(renderer)
 
-			NitrogenLayer.setDefinitionExpression(stringthing)
-
 	        NitrogenLayer.hide()
 			map.addLayer(NitrogenLayer);
-
-	    // NitrogenLayer.setDefinitionExpression('SUBEM_ID =')
-
-        // var nullsymbol = new SimpleMarkerSymbol().setSize(0)
-
-  //       NitrogenLayer.setRenderer(renderer)
-
-  //       NitrogenLayer.hide()
-		// map.addLayer(NitrogenLayer);
 
 
 		var WasteWater = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/1', {
@@ -637,7 +627,7 @@ require([
 
     		stringthing = stringthing.substring(0,stringthing.lastIndexOf("OR")) + "";
 
-    		console.log(String(stringthing))
+    		console.log(stringthing)
 		}
 
 		$('#nitrogen').on('click', function(e) {
@@ -645,6 +635,7 @@ require([
 			// console.log(NitrogenLayer);
 			if ($(this).attr('data-visible') == 'off') {
 
+				NitrogenLayer.setDefinitionExpression(stringthing.toString())
 				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
 			} else {
