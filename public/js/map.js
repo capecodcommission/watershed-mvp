@@ -503,7 +503,7 @@ require([
 
 			NitrogenLayer.setRenderer(renderer)
 
-			NitrogenLayer.setDefinitionExpression(stringthing)
+			NitrogenLayer.setDefinitionExpression("SUBEM_ID = 229")
 
 	        NitrogenLayer.hide()
 			map.addLayer(NitrogenLayer);
