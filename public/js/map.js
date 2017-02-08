@@ -618,7 +618,7 @@ require([
     			inBuffer.push(feature.attributes["SUBEM_ID"].toString())
     		}
 
-    		console.log(inBuffer.toString())
+    		inBuffer = inBuffer.toString()
 		}
 
 		$('#nitrogen').on('click', function(e) {
