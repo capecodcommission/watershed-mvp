@@ -618,7 +618,7 @@ require([
     			inBuffer.push(feature.attributes["SUBEM_ID"].toString())
     		}
 
-    		inBuffer = inBuffer.toString()
+    		inBuffer = inBuffer.toString().replace("[", "").replace("]", "")
 		}
 
 		$('#nitrogen').on('click', function(e) {
@@ -631,7 +631,7 @@ require([
 
 				Subembayments.queryFeatures(query, selectinBuffer)
 
-				NitrogenLayer.setDefinitionExpression('SUBEM_ID in' + "(" + inBuffer.replace("[", "").replace("]", "") + ")")
+				NitrogenLayer.setDefinitionExpression('SUBEM_ID in' + "(" + inBuffer + ")")
 
 				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
