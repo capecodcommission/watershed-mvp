@@ -632,7 +632,7 @@ require([
 
 				inBuffer = '223,229'
 
-				NitrogenLayer.setDefinitionExpression("SUBEM_ID = " + '(' + inBuffer + ')')
+				NitrogenLayer.setDefinitionExpression("SUBEM_ID in " + '(' + inBuffer + ')')
 
 				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
