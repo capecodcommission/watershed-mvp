@@ -621,7 +621,7 @@ require([
 
     		for (var j = 0; j < inBuffer.length; j++) {
 
-    			stringthing += 'SUBEM_ID =' + inBuffer[i] + 'OR'
+    			stringthing += 'SUBEM_ID =' + inBuffer[j] + ' OR '
     		}
 
     		stringthing = stringthing.substring(0,stringthing.lastIndexOf("OR")) + '';
