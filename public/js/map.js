@@ -606,7 +606,7 @@ require([
 
 		var inBuffer = []; 
 		var buffString = ''
-		
+
 		function selectinBuffer(response) {
 
 			var feature;  
@@ -620,7 +620,7 @@ require([
     		}
 
     		for (var i = 0; i < inBuffer.length; i++) {
-    			buffstring += inBuffer[i]
+    			buffString += inBuffer[i]
     		}
 		}
 
