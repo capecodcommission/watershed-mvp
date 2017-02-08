@@ -502,7 +502,7 @@ require([
 
 			Subembayments.queryFeatures(query, selectinBuffer)
 
-			// NitrogenLayer.setRenderer(renderer)
+			NitrogenLayer.setRenderer(renderer)
 
 			NitrogenLayer.setDefinitionExpression('SUBEM_ID = 229')
 
