@@ -616,7 +616,7 @@ require([
 
 
 		var inBuffer = []; 
-		var stringthing = ''
+		var stringthing = ""
 
 		function selectinBuffer(response) {
 
@@ -637,7 +637,7 @@ require([
 
     		stringthing = stringthing.substring(0,stringthing.lastIndexOf("OR")) + "";
 
-    		console.log(stringthing)
+    		console.log(String(stringthing))
 		}
 
 		$('#nitrogen').on('click', function(e) {
