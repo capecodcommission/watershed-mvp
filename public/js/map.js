@@ -640,6 +640,7 @@ require([
 				Subembayments.queryFeatures(query, selectinBuffer)
 
 				NitrogenLayer.setDefinitionExpression(stringthing)
+				map.addLayer(NitrogenLayer)
 
 				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
