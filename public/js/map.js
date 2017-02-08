@@ -446,7 +446,7 @@ require([
 
 		var Subembayments = new FeatureLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/11", {
 			mode: FeatureLayer.MODE_ONDEMAND,
-			outFields: ["SUBEM_DISP"],
+			outFields: ["*"],
 			infoTemplate: subem_template,
 			opacity: 1
 		});
@@ -497,7 +497,7 @@ require([
 	        	maxDataValue: 250
 	        })
 
-	    NitrogenLayer.setDefinitionExpression('SUBEM_ID =')
+	    // NitrogenLayer.setDefinitionExpression('SUBEM_ID =')
 
         // var nullsymbol = new SimpleMarkerSymbol().setSize(0)
 
