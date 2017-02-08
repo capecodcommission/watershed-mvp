@@ -497,6 +497,20 @@ require([
 	        	maxDataValue: 250
 	        })
 
+	        var query = new Query()
+				query.where = "1=1"
+
+			Subembayments.queryFeatures(query, selectinBuffer)
+
+			NitrogenLayer.setRenderer(renderer)
+
+			NitrogenLayer.setDefinitionExpression(stringthing)
+
+    		NitrogenLayer.setRenderer(renderer)
+
+	        NitrogenLayer.hide()
+			map.addLayer(NitrogenLayer);
+
 	    // NitrogenLayer.setDefinitionExpression('SUBEM_ID =')
 
         // var nullsymbol = new SimpleMarkerSymbol().setSize(0)
@@ -633,18 +647,6 @@ require([
 			e.preventDefault();
 			// console.log(NitrogenLayer);
 			if ($(this).attr('data-visible') == 'off') {
-
-				var query = new Query()
-				query.where = "1=1"
-
-				Subembayments.queryFeatures(query, selectinBuffer)
-
-				NitrogenLayer.setDefinitionExpression(stringthing)
-
-	    		NitrogenLayer.setRenderer(renderer)
-
-		        NitrogenLayer.hide()
-				map.addLayer(NitrogenLayer);
 
 				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
