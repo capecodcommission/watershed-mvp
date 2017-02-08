@@ -436,8 +436,6 @@ require([
 		// Subwatersheds.setExtent(extent);
 		map.addLayer(Subwatersheds);
 
-
-
 		var subem_template = new InfoTemplate({
 
 			title: "<b>Subembayment</b>", 
@@ -474,8 +472,8 @@ require([
 						"</tbody></table>"
 		});
 
-
-		var NitrogenLayer = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/0', {
+		// http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/0
+		var NitrogenLayer = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13', {
 				mode: FeatureLayer.MODE_ONDEMAND,
 				outFields: ["*"],
 				opacity: 1,
@@ -499,9 +497,11 @@ require([
 	        	maxDataValue: 250
 	        })
 
-        var nullsymbol = new SimpleMarkerSymbol().setSize(0)
+	    NitrogenLayer.setDefinitionExpression('SUBEM_ID =')
 
-        NitrogenLayer.setRenderer(new SimpleRenderer(nullsymbol))
+        // var nullsymbol = new SimpleMarkerSymbol().setSize(0)
+
+        // NitrogenLayer.setRenderer(new SimpleRenderer(nullsymbol))
 
         NitrogenLayer.hide()
 		map.addLayer(NitrogenLayer);
@@ -616,10 +616,7 @@ require([
     			inBuffer.push(feature.geometry)
     		}
 
-    		var query = new Query()
-    		query.geometry = geometryEngine.union(inBuffer)
-
-    		NitrogenLayer.selectFeatures(query, FeatureLayer.SELECTION_NEW, function(results) {})
+    		console.log(features)
 		}
 
 		$('#nitrogen').on('click', function(e) {
