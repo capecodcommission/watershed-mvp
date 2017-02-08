@@ -619,9 +619,9 @@ require([
     			inBuffer.push(feature.attributes["SUBEM_ID"].toString())
     		}
 
-    		buffString = '(' + String(inBuffer) + ')'
-
-    		console.log(buffString)
+    		for (var i = 0; i < inBuffer.length; i++) {
+    			NitrogenLayer.setDefinitionExpression("SUBEM_ID in" + inBuffer[i])
+    		}
 		}
 
 		$('#nitrogen').on('click', function(e) {
@@ -633,8 +633,6 @@ require([
 				query.where = "1=1"
 
 				Subembayments.queryFeatures(query, selectinBuffer)
-
-				NitrogenLayer.setDefinitionExpression("SUBEM_ID in" + buffString)
 
 				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
