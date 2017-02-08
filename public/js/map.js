@@ -619,7 +619,7 @@ require([
     			inBuffer.push(feature.attributes["SUBEM_ID"].toString())
     		}
 
-    		buffString = '(' + inBuffer.toString() + ')'
+    		buffString = '(' + String(inBuffer) + ')'
 
     		console.log(buffString)
 		}
