@@ -625,6 +625,8 @@ require([
     		}
 
     		stringthing = stringthing.substring(0,stringthing.lastIndexOf("OR")) + '';
+
+    		console.log(stringthing)
 		}
 
 		$('#nitrogen').on('click', function(e) {
@@ -637,7 +639,7 @@ require([
 
 				Subembayments.queryFeatures(query, selectinBuffer)
 
-				NitrogenLayer.setDefinitionExpression(stringthing)
+				// NitrogenLayer.setDefinitionExpression(stringthing)
 
 				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
