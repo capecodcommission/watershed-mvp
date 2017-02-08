@@ -621,7 +621,7 @@ require([
 
     		for (var j = 0; j < inBuffer.length; j++) {
 
-    			stringthing += 'SUBEM_ID = ' + inBuffer[j] + ' OR '
+    			stringthing += "SUBEM_ID = " + inBuffer[j] + " OR "
     		}
 
     		stringthing = stringthing.substring(0,stringthing.lastIndexOf("OR")) + '';
@@ -639,7 +639,7 @@ require([
 
 				Subembayments.queryFeatures(query, selectinBuffer)
 
-				NitrogenLayer.setDefinitionExpression(stringthing.toString())
+				NitrogenLayer.setDefinitionExpression(stringthing)
 
 				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
