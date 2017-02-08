@@ -639,7 +639,7 @@ require([
 
 				Subembayments.queryFeatures(query, selectinBuffer)
 
-				// NitrogenLayer.setDefinitionExpression(stringthing)
+				NitrogenLayer.setDefinitionExpression(stringthing)
 
 				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
