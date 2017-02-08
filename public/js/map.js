@@ -620,7 +620,7 @@ require([
     		}
 
     		for (var i = 0; i < inBuffer.length; i++) {
-    			NitrogenLayer.setDefinitionExpression("SUBEM_ID =" + inBuffer[i])
+    			NitrogenLayer.setDefinitionExpression("SUBEM_ID =" + String(inBuffer[i])
     		}
 		}
 
