@@ -528,7 +528,7 @@ require([
 	        	minSize: 1,
 	        	maxSize: 20,
 	        	minDataValue: 0,
-	        	maxDataValue: 250
+	        	maxDataValue: 10000
 	        })
 
 	    WasteWater.setRenderer(wasteRenderer)
