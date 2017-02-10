@@ -517,10 +517,10 @@ require([
 		);
 
 		var wasteSymbol = new SimpleMarkerSymbol()
-			symbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE)
-			symbol.setOutline(null)
-			symbol.setColor(new Color([124,252,0]))
-			symbol.setSize("8")
+			wasteSymbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE)
+			wasteSymbol.setOutline(null)
+			wasteSymbol.setColor(new Color([124,252,0]))
+			wasteSymbol.setSize("8")
 
 		var wasteRenderer = new SimpleRenderer(wasteSymbol)
 			wasteRenderer.setSizeInfo({
