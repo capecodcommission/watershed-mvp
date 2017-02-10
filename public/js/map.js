@@ -509,14 +509,33 @@ require([
 			map.addLayer(NitrogenLayer);
 
 
-		var WasteWater = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/1', {
+		var WasteWater = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13', {
 				mode: FeatureLayer.MODE_ONDEMAND,
 				outFields: ["*"],
-				opacity: 1
+				opacity: 1,
+				infoTemplate: nitro_template
 			}
 
 		);
-		WasteWater.setDefinitionExpression('EMBAY_ID = ' + selectlayer);
+
+		var wasteSymbol = new SimpleMarkerSymbol()
+			symbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE)
+			symbol.setOutline(null)
+			symbol.setColor(new Color([0,255,0]))
+			symbol.setSize("8")
+
+			// NitrogenLayer.setSelectionSymbol(symbol)
+
+		var wasteRenderer = new SimpleRenderer(wasteSymbol)
+			wasteRenderer.setSizeInfo({
+	        	field: "WWFlowsExisting",
+	        	minSize: 1,
+	        	maxSize: 20,
+	        	minDataValue: 0,
+	        	maxDataValue: 250
+	        })
+
+	    WasteWater.setRenderer(wasteRenderer)
 
 		WasteWater.hide();
 		map.addLayer(WasteWater);
@@ -679,6 +698,8 @@ require([
 			e.preventDefault();
 
 			if ($(this).attr('data-visible') == 'off') {
+
+				WasteWater.setDefinitionExpression(queryString.toString())
 				WasteWater.show();
 				$(this).attr('data-visible', 'on');
 			} else {
