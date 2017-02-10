@@ -326,7 +326,7 @@ require([
 					var polyGraphic = new esri.Graphic(poly, polySymbol, attr);
 					var template = new InfoTemplate({
 						title: popupVal,
-						content: '<div align="left" class="treatment info technology"><img style="width:60px;height:60px;float:right;margin-right:10px;" src=" '
+						content: '<div align="left" class="treatment info technology"><img style="width:60pxfloat:right;margin-right:10px;" src=" '
 									+ imageURL + '" /><strong>Treatment Stats</strong>:<br /> ' 
 									+ treatmentArea + " Acres<br/>" 
 									+ parcels + " parcels treated<br/>" + n_removed + "kg (unatt) N removed.<br />"
@@ -464,15 +464,15 @@ require([
 
 			title: "Info", 
 			content: "<table class = 'table'><tbody>" +
-						"<tr>" + "<td height = '2'>" + "Water Use (Gal/Day): " + "</td>" + "<td height = '2'>" + "${WaterUseExisting:NumberFormat(places:2)}" + "</td>" + "</tr>" +
-						"<tr>" + "<td height = '2'>" + "Waste Water Treatment: " + "</td>" + "<td height = '2'>" + "${WWTreatmentExisting}" + "</td>" + "</tr>" +
-						"<tr>" + "<td height = '2'>" + "Land Use Category: " + "</td>" + "<td height = '2'>" + "${LandUseCatExisting}" + "</td>" + "</tr>" +
-						"<tr>" + "<td height = '2'>" + "Water Use Source: " + "</td>" + "<td height = '2'>" + "${WaterUseSource}" + "</td>" + "</tr>" +
-						"<tr>" + "<td height = '2'>" + "Unattn Nitrogen Load (Septic) (Kg/Yr): " + "</td>" + "<td height = '2'>" + "${NLoad_Septic_Existing:NumberFormat(places:2)}" + "</td>" + "</tr>" +
-						"<tr>" + "<td height = '2'>" + "Unattn Nitrogen Load (Fertilization) (Kg/Yr): " + "</td>" + "<td height = '2'>" + "${Nload_Fert:NumberFormat(places:2)}" + "</td>" + "</tr>" +
-						"<tr>" + "<td height = '2'>" + "Unattn Nitrogen Load (Stormwater) (Kg/Yr): " + "</td>" + "<td height = '2'>" + "${Nload_Stormwater:NumberFormat(places:2)}" + "</td>" + "</tr>" +
-						"<tr>" + "<td height = '2'>" + "Unattn Nitrogen Load (Atmosphere) (Kg/Yr): " + "</td>" + "<td height = '2'>" + "${Nload_Atmosphere:NumberFormat(places:2)}" + "</td>" + "</tr>" +
-						"<tr>" + "<td height = '2'>" + "Unattn Nitrogen Load (Full) (Kg/Yr): " + "</td>" + "<td height = '2'>" + "${Nload_Full:NumberFormat(places:2)}" + "</td>" + "</tr>" + 
+						"<tr style = 'height: 2px'>" + "<td>" + "Water Use (Gal/Day): " + "</td>" + "<td>" + "${WaterUseExisting:NumberFormat(places:2)}" + "</td>" + "</tr>" +
+						"<tr style = 'height: 2px'>" + "<td>" + "Waste Water Treatment: " + "</td>" + "<td>" + "${WWTreatmentExisting}" + "</td>" + "</tr>" +
+						"<tr style = 'height: 2px'>" + "<td>" + "Land Use Category: " + "</td>" + "<td>" + "${LandUseCatExisting}" + "</td>" + "</tr>" +
+						"<tr style = 'height: 2px'>" + "<td>" + "Water Use Source: " + "</td>" + "<td>" + "${WaterUseSource}" + "</td>" + "</tr>" +
+						"<tr style = 'height: 2px'>" + "<td>" + "Unattn Nitrogen Load (Septic) (Kg/Yr): " + "</td>" + "<td>" + "${NLoad_Septic_Existing:NumberFormat(places:2)}" + "</td>" + "</tr>" +
+						"<tr style = 'height: 2px'>" + "<td>" + "Unattn Nitrogen Load (Fertilization) (Kg/Yr): " + "</td>" + "<td>" + "${Nload_Fert:NumberFormat(places:2)}" + "</td>" + "</tr>" +
+						"<tr style = 'height: 2px'>" + "<td>" + "Unattn Nitrogen Load (Stormwater) (Kg/Yr): " + "</td>" + "<td>" + "${Nload_Stormwater:NumberFormat(places:2)}" + "</td>" + "</tr>" +
+						"<tr style = 'height: 2px'>" + "<td>" + "Unattn Nitrogen Load (Atmosphere) (Kg/Yr): " + "</td>" + "<td>" + "${Nload_Atmosphere:NumberFormat(places:2)}" + "</td>" + "</tr>" +
+						"<tr style = 'height: 2px'>" + "<td>" + "Unattn Nitrogen Load (Full) (Kg/Yr): " + "</td>" + "<td>" + "${Nload_Full:NumberFormat(places:2)}" + "</td>" + "</tr>" + 
 						"</tbody></table>"
 		});
 
@@ -895,8 +895,7 @@ function getDestination(evt){
 // 			  var p = new esri.tasks.IdentifyParameters();
 // 			  p.dpi = 96;
 // 			  p.geometry = map.toMap(point);
-// 			  p.height = map.height;
-// 			  p.layerIds = [0];
+// 			  p		  p.layerIds = [0];
 // 			  p.spatialReference = spatialReference;
 // 			  p.layerOption = esri.tasks.IdentifyParameters.LAYER_OPTION_VISIBLE;
 // 			  p.mapExtent = map.extent;
