@@ -25,6 +25,7 @@ require([
 		"esri/graphic",
 		"esri/Color",
 		"esri/renderers/Renderer",
+		"esri/renderers/UniqueValueRenderer",
 
 		"esri/tasks/query",
 		"esri/tasks/QueryTask",
@@ -69,6 +70,7 @@ require([
 		Graphic,
 		Color,
 		Renderer,
+		UniqueValueRenderer,
 
 		Query,
 		QueryTask,
@@ -554,11 +556,24 @@ require([
 		var TreatmentType = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/10', {
 				mode: FeatureLayer.MODE_ONDEMAND,
 				outFields: ["*"],
-				opacity: 1
+				opacity: 1,
+				infoTemplate: nitro_template
 			}
 
 		);
-		TreatmentType.setDefinitionExpression('EMBAY_ID = ' + selectlayer);
+
+		var treattypeSymbol = new SimpleMarkerSymbol()
+			treattypeSymbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE)
+			treattypeSymbol.setOutline(null)
+			treattypeSymbol.setColor(new Color([124,252,0]))
+			treattypeSymbol.setSize("5")
+
+		var treattypeRenderer = new UniqueValueRenderer(treattypeSymbol, "WWTreatmentExisting")
+			treattypeRenderer.addValue("GWDP", new SimpleMarkerSymbol().setColor(new Color([124,252,0])))
+			treattypeRenderer.addValue("SEPTIC", new SimpleMarkerSymbol().setColor(new Color([205,133,63])))
+			treattypeRenderer.addValue("SEWERED", new SimpleMarkerSymbol().setColor(new Color([238,130,238])))
+
+	    TreatmentType.setRenderer(treattypeRenderer)
 
 		TreatmentType.hide();
 		map.addLayer(TreatmentType);
@@ -723,6 +738,8 @@ require([
 			e.preventDefault();
 
 			if ($(this).attr('data-visible') == 'off') {
+
+				TreatmentType.setDefinitionExpression(queryString.toString())
 				TreatmentType.show();
 				$(this).attr('data-visible', 'on');
 			} else {
