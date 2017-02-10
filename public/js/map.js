@@ -628,7 +628,7 @@ require([
 			landuseSymbol.setColor(new Color([124,252,0]))
 			landuseSymbol.setSize("5")
 
-		var landuseRenderer = new UniqueValueRenderer(landuseSymbol, "LandUseCatExisting ")
+		var landuseRenderer = new UniqueValueRenderer(landuseSymbol, "LandUseCatExisting")
 			landuseRenderer.addValue("RESSINGLEFAM", new SimpleMarkerSymbol().setColor(new Color([122, 182, 245, 255])).setSize("5"))
 			landuseRenderer.addValue("COMMERCIAL", new SimpleMarkerSymbol().setColor(new Color([255, 255, 0, 255])).setSize("5"))
 			landuseRenderer.addValue("INDUSTRIAL", new SimpleMarkerSymbol().setColor(new Color([115, 223, 255, 255])).setSize("5"))
