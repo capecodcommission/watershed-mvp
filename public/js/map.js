@@ -646,7 +646,7 @@ require([
 
 		var FlowThrough = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/12', {
 			mode: FeatureLayer.MODE_ONDEMAND,
-			outFields: ["*"]
+			outFields: ["*"],
 			opacity: 1,
 			infoTemplate: nitro_template
 		});
@@ -852,7 +852,7 @@ require([
 
 			if ($(this).attr('data-visible') == 'off') {
 
-				
+
 				FlowThrough.show();
 				$(this).attr('data-visible', 'on');
 			} else {
