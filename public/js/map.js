@@ -611,14 +611,32 @@ require([
 		map.addLayer(ShallowGroundwater);
 
 
-		var LandUse = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/3', {
+		var LandUse = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13', {
 				mode: FeatureLayer.MODE_ONDEMAND,
 				outFields: ["*"],
 				opacity: .5
 			}
 
 		);
-		LandUse.setDefinitionExpression('EMBAY_ID = ' + selectlayer);
+
+		var landuseSymbol = new SimpleMarkerSymbol()
+			landuseSymbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE)
+			landuseSymbol.setOutline(null)
+			landuseSymbol.setColor(new Color([124,252,0]))
+			landuseSymbol.setSize("5")
+
+		var landuseRenderer = new UniqueValueRenderer(landuseSymbol, "LandUseCatExisting ")
+			landuseRenderer.addValue("RESSINGLEFAM", new SimpleMarkerSymbol().setColor(new Color([122, 182, 245, 255])).setSize("5"))
+			landuseRenderer.addValue("COMMERCIAL", new SimpleMarkerSymbol().setColor(new Color([255, 255, 0, 255])).setSize("5"))
+			landuseRenderer.addValue("INDUSTRIAL", new SimpleMarkerSymbol().setColor(new Color([115, 223, 255, 255])).setSize("5"))
+			landuseRenderer.addValue("OTHERDEV", new SimpleMarkerSymbol().setColor(new Color([107, 181, 123, 255])).setSize("5"))
+			landuseRenderer.addValue("OTHERNONDEV", new SimpleMarkerSymbol().setColor(new Color([2197, 0, 255, 255])).setSize("5"))
+			landuseRenderer.addValue("RESCONDOAPT", new SimpleMarkerSymbol().setColor(new Color([205, 205, 102, 255])).setSize("5"))
+			landuseRenderer.addValue("RESMULTIFAM", new SimpleMarkerSymbol().setColor(new Color([205, 46, 49, 255])).setSize("5"))
+			landuseRenderer.addValue("VACANTDEV", new SimpleMarkerSymbol().setColor(new Color([168, 0, 0, 255])).setSize("5"))
+			landuseRenderer.addValue("VACANTNONDEV", new SimpleMarkerSymbol().setColor(new Color([76, 115, 0, 255])).setSize("5"))
+
+		LandUse.setRenderer(landuseRenderer)
 
 		LandUse.hide();
 		map.addLayer(LandUse);
@@ -793,6 +811,8 @@ require([
 			e.preventDefault();
 
 			if ($(this).attr('data-visible') == 'off') {
+
+				LandUse.setDefinitionExpression(queryString.toString())
 				LandUse.show();
 				$(this).attr('data-visible', 'on');
 			} else {
