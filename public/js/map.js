@@ -483,6 +483,7 @@ require([
 
 		var symbol = new SimpleMarkerSymbol()
 			symbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE)
+			symbol.setOutline(null)
 			symbol.setColor(new Color([255,153,0]))
 			symbol.setSize("8")
 
@@ -515,7 +516,23 @@ require([
 			}
 
 		);
-		WasteWater.setDefinitionExpression('EMBAY_ID = ' + selectlayer);
+
+		var wasteSymbol = new SimpleMarkerSymbol()
+			wasteSymbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE)
+			wasteSymbol.setOutline(null)
+			wasteSymbol.setColor(new Color([0,255,0]))
+			wasteSymbol.setSize("8")
+
+		var wasteRenderer = new SimpleRenderer(wasteSymbol)
+			renderer.setSizeInfo({
+	        	field: "WWFlowsExisting ",
+	        	minSize: 1,
+	        	maxSize: 20,
+	        	minDataValue: 0,
+	        	maxDataValue: 250
+	        })
+
+	    WasteWater.setRenderer(wasteRenderer)
 
 		WasteWater.hide();
 		map.addLayer(WasteWater);
@@ -606,7 +623,7 @@ require([
 
 
 		var inBuffer = []; 
-		var stringthing = ""
+		var queryString = ""
 
 		function selectinBuffer(response) {
 
@@ -622,12 +639,12 @@ require([
 
     		for (var j = 0; j < inBuffer.length; j++) {
 
-    			stringthing += "SUBEM_ID = " + String(inBuffer[j]) + " OR "
+    			queryString += "SUBEM_ID = " + String(inBuffer[j]) + " OR "
     		}
 
-    		stringthing = stringthing.substring(0,stringthing.lastIndexOf("OR")) + "";
+    		queryString = queryString.substring(0,queryString.lastIndexOf("OR")) + "";
 
-    		console.log(stringthing)
+    		console.log(queryString)
 		}
 
 		$('#nitrogen').on('click', function(e) {
@@ -678,6 +695,8 @@ require([
 			e.preventDefault();
 
 			if ($(this).attr('data-visible') == 'off') {
+
+				WasteWater.setDefinitionExpression(stringthing.toString())
 				WasteWater.show();
 				$(this).attr('data-visible', 'on');
 			} else {
