@@ -513,8 +513,8 @@ require([
 				outFields: ["*"],
 				opacity: 1
 			}
+
 		);
-		
 		WasteWater.setDefinitionExpression('EMBAY_ID = ' + selectlayer);
 
 		WasteWater.hide();
@@ -635,7 +635,7 @@ require([
 			// console.log(NitrogenLayer);
 			if ($(this).attr('data-visible') == 'off') {
 
-				NitrogenLayer.setDefinitionExpression(stringthing.toString())
+				NitrogenLayer.setDefinitionExpression(queryString.toString())
 				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
 			} else {
