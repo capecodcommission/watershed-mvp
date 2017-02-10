@@ -397,7 +397,7 @@
 
 			<p><a href="{{url('download', session('scenarioid'))}}">Download Results (.xls)</a></p>
 			<p><a href="{{url('results', session('scenarioid'))}}" class="button" target="wmvp_results_{{session('scenarioid')}}">View detailed results</a></p>
-			<p><a class = 'button' href = "http://2016.watershedmvp.org/fim/" + {{$scenario->ScenarioID}}>Open Scenario in Financial Model</a></p>
+			<p><a class = 'button' href = "http://2016.watershedmvp.org/fim/">Open Scenario in Financial Model</a></p>
 		</div>
 	</article>
 	</aside>
