@@ -483,6 +483,7 @@ require([
 
 		var symbol = new SimpleMarkerSymbol()
 			symbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE)
+			symbol.setOutline(null)
 			symbol.setColor(new Color([255,153,0]))
 			symbol.setSize("8")
 
