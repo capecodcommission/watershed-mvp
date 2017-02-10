@@ -483,7 +483,6 @@ require([
 
 		var symbol = new SimpleMarkerSymbol()
 			symbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE)
-			symbol.setOutline(null)
 			symbol.setColor(new Color([255,153,0]))
 			symbol.setSize("8")
 
@@ -514,25 +513,9 @@ require([
 				outFields: ["*"],
 				opacity: 1
 			}
-
 		);
-
-		var wasteSymbol = new SimpleMarkerSymbol()
-			wasteSymbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE)
-			wasteSymbol.setOutline(null)
-			wasteSymbol.setColor(new Color([0,255,0]))
-			wasteSymbol.setSize("8")
-
-		var wasteRenderer = new SimpleRenderer(wasteSymbol)
-			renderer.setSizeInfo({
-	        	field: "WWFlowsExisting ",
-	        	minSize: 1,
-	        	maxSize: 20,
-	        	minDataValue: 0,
-	        	maxDataValue: 250
-	        })
-
-	    WasteWater.setRenderer(wasteRenderer)
+		
+		WasteWater.setDefinitionExpression('EMBAY_ID = ' + selectlayer);
 
 		WasteWater.hide();
 		map.addLayer(WasteWater);
@@ -652,7 +635,7 @@ require([
 			// console.log(NitrogenLayer);
 			if ($(this).attr('data-visible') == 'off') {
 
-				NitrogenLayer.setDefinitionExpression(queryString.toString())
+				NitrogenLayer.setDefinitionExpression(stringthing.toString())
 				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
 			} else {
@@ -695,8 +678,6 @@ require([
 			e.preventDefault();
 
 			if ($(this).attr('data-visible') == 'off') {
-
-				WasteWater.setDefinitionExpression(queryString.toString())
 				WasteWater.show();
 				$(this).attr('data-visible', 'on');
 			} else {
