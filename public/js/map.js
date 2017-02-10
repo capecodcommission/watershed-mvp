@@ -463,7 +463,7 @@ require([
 		var nitro_template = new InfoTemplate({
 
 			title: "Info", 
-			content: "<table width = '200' height = '400' class = 'table'><tbody>" +
+			content: "<table width = '200' height = '200' class = 'table'><tbody>" +
 						"<tr>" + "<td>" + "Water Use (Gal/Day): " + "</td>" + "<td>" + "${WaterUseExisting:NumberFormat(places:2)}" + "</td>" + "</tr>" +
 						"<tr>" + "<td>" + "Waste Water Treatment: " + "</td>" + "<td>" + "${WWTreatmentExisting}" + "</td>" + "</tr>" +
 						"<tr>" + "<td>" + "Land Use Category: " + "</td>" + "<td>" + "${LandUseCatExisting}" + "</td>" + "</tr>" +
