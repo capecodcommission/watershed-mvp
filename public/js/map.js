@@ -464,15 +464,15 @@ require([
 
 			title: "Info", 
 			content: "<table class = 'table'><tbody>" +
-						"<tr style = 'height: 2px'>" + "<td>" + "Water Use (Gal/Day): " + "</td>" + "<td>" + "${WaterUseExisting:NumberFormat(places:2)}" + "</td>" + "</tr>" +
-						"<tr style = 'height: 2px'>" + "<td>" + "Waste Water Treatment: " + "</td>" + "<td>" + "${WWTreatmentExisting}" + "</td>" + "</tr>" +
-						"<tr style = 'height: 2px'>" + "<td>" + "Land Use Category: " + "</td>" + "<td>" + "${LandUseCatExisting}" + "</td>" + "</tr>" +
-						"<tr style = 'height: 2px'>" + "<td>" + "Water Use Source: " + "</td>" + "<td>" + "${WaterUseSource}" + "</td>" + "</tr>" +
-						"<tr style = 'height: 2px'>" + "<td>" + "Unattn Nitrogen Load (Septic) (Kg/Yr): " + "</td>" + "<td>" + "${NLoad_Septic_Existing:NumberFormat(places:2)}" + "</td>" + "</tr>" +
-						"<tr style = 'height: 2px'>" + "<td>" + "Unattn Nitrogen Load (Fertilization) (Kg/Yr): " + "</td>" + "<td>" + "${Nload_Fert:NumberFormat(places:2)}" + "</td>" + "</tr>" +
-						"<tr style = 'height: 2px'>" + "<td>" + "Unattn Nitrogen Load (Stormwater) (Kg/Yr): " + "</td>" + "<td>" + "${Nload_Stormwater:NumberFormat(places:2)}" + "</td>" + "</tr>" +
-						"<tr style = 'height: 2px'>" + "<td>" + "Unattn Nitrogen Load (Atmosphere) (Kg/Yr): " + "</td>" + "<td>" + "${Nload_Atmosphere:NumberFormat(places:2)}" + "</td>" + "</tr>" +
-						"<tr style = 'height: 2px'>" + "<td>" + "Unattn Nitrogen Load (Full) (Kg/Yr): " + "</td>" + "<td>" + "${Nload_Full:NumberFormat(places:2)}" + "</td>" + "</tr>" + 
+						"<tr style = 'height: 2px'>" + "<td style = 'padding: 0px; margin: 0px;'>" + "Water Use (Gal/Day): " + "</td>" + "<td style = 'padding: 0px; margin: 0px;'>" + "${WaterUseExisting:NumberFormat(places:2)}" + "</td>" + "</tr>" +
+						"<tr style = 'height: 2px'>" + "<td style = 'padding: 0px; margin: 0px;'>" + "Waste Water Treatment: " + "</td>" + "<td style = 'padding: 0px; margin: 0px;'>" + "${WWTreatmentExisting}" + "</td>" + "</tr>" +
+						"<tr style = 'height: 2px'>" + "<td style = 'padding: 0px; margin: 0px;'>" + "Land Use Category: " + "</td>" + "<td style = 'padding: 0px; margin: 0px;'>" + "${LandUseCatExisting}" + "</td>" + "</tr>" +
+						"<tr style = 'height: 2px'>" + "<td style = 'padding: 0px; margin: 0px;'>" + "Water Use Source: " + "</td>" + "<td style = 'padding: 0px; margin: 0px;'>" + "${WaterUseSource}" + "</td>" + "</tr>" +
+						"<tr style = 'height: 2px'>" + "<td style = 'padding: 0px; margin: 0px;'>" + "Unattn Nitrogen Load (Septic) (Kg/Yr): " + "</td>" + "<td style = 'padding: 0px; margin: 0px;'>" + "${NLoad_Septic_Existing:NumberFormat(places:2)}" + "</td>" + "</tr>" +
+						"<tr style = 'height: 2px'>" + "<td style = 'padding: 0px; margin: 0px;'>" + "Unattn Nitrogen Load (Fertilization) (Kg/Yr): " + "</td>" + "<td style = 'padding: 0px; margin: 0px;'>" + "${Nload_Fert:NumberFormat(places:2)}" + "</td>" + "</tr>" +
+						"<tr style = 'height: 2px'>" + "<td style = 'padding: 0px; margin: 0px;'>" + "Unattn Nitrogen Load (Stormwater) (Kg/Yr): " + "</td>" + "<td style = 'padding: 0px; margin: 0px;'>" + "${Nload_Stormwater:NumberFormat(places:2)}" + "</td>" + "</tr>" +
+						"<tr style = 'height: 2px'>" + "<td style = 'padding: 0px; margin: 0px;'>" + "Unattn Nitrogen Load (Atmosphere) (Kg/Yr): " + "</td>" + "<td style = 'padding: 0px; margin: 0px;'>" + "${Nload_Atmosphere:NumberFormat(places:2)}" + "</td>" + "</tr>" +
+						"<tr style = 'height: 2px'>" + "<td style = 'padding: 0px; margin: 0px;'>" + "Unattn Nitrogen Load (Full) (Kg/Yr): " + "</td>" + "<td style = 'padding: 0px; margin: 0px;'>" + "${Nload_Full:NumberFormat(places:2)}" + "</td>" + "</tr>" + 
 						"</tbody></table>"
 		});
 
