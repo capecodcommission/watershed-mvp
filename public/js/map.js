@@ -614,7 +614,8 @@ require([
 		var LandUse = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13', {
 				mode: FeatureLayer.MODE_ONDEMAND,
 				outFields: ["*"],
-				opacity: .5
+				opacity: .5,
+				infoTemplate: nitro_template
 			}
 
 		);
