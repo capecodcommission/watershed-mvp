@@ -487,8 +487,6 @@ require([
 			symbol.setColor(new Color([255,153,0]))
 			symbol.setSize("8")
 
-			// NitrogenLayer.setSelectionSymbol(symbol)
-
 		var renderer = new SimpleRenderer(symbol)
 			renderer.setSizeInfo({
 	        	field: "Nload_Full",
@@ -521,10 +519,8 @@ require([
 		var wasteSymbol = new SimpleMarkerSymbol()
 			symbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE)
 			symbol.setOutline(null)
-			symbol.setColor(new Color([0,255,0]))
+			symbol.setColor(new Color([124,252,0]))
 			symbol.setSize("8")
-
-			// NitrogenLayer.setSelectionSymbol(symbol)
 
 		var wasteRenderer = new SimpleRenderer(wasteSymbol)
 			wasteRenderer.setSizeInfo({
