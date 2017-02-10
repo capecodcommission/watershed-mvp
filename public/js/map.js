@@ -652,7 +652,7 @@ require([
 			// console.log(NitrogenLayer);
 			if ($(this).attr('data-visible') == 'off') {
 
-				NitrogenLayer.setDefinitionExpression(stringthing.toString())
+				NitrogenLayer.setDefinitionExpression(queryString.toString())
 				NitrogenLayer.show()
 				$(this).attr('data-visible', 'on');
 			} else {
@@ -696,7 +696,7 @@ require([
 
 			if ($(this).attr('data-visible') == 'off') {
 
-				WasteWater.setDefinitionExpression(stringthing.toString())
+				WasteWater.setDefinitionExpression(queryString.toString())
 				WasteWater.show();
 				$(this).attr('data-visible', 'on');
 			} else {
