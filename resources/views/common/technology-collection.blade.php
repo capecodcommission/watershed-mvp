@@ -58,6 +58,7 @@
 			f.preventDefault();
 			$('#popdown-opacity').hide();
 			map.disableMapNavigation();
+			map.infoWindow.hide();
 			tb.activate('polygon');
 			// console.log(tb);
 			$('#select_polygon_'+treatment).hide();
