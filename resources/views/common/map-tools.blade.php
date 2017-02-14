@@ -6,6 +6,7 @@
              data-dojo-props="title:'Switch Basemap', closable:false, open:false">
             <div data-dojo-type="dijit/layout/ContentPane" style="width:380px; height:280px; overflow:auto;">
                 <div id="basemapGallery"></div>
+                <div id = "legendDiv"></div>
             </div>
         </div>
 
