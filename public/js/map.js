@@ -251,7 +251,7 @@ require([
 		  var options = {
 			allowAddVertices: true,//registry.byId("vtx_ca").checked,
 			allowDeleteVertices: true, //registry.byId("vtx_cd").checked,
-			uniformScaling: true //registry.byId("uniform_scaling").checked
+			uniformScaling: true, //registry.byId("uniform_scaling").checked
 			showTooltips: false
 		  };
 		  editToolbar.activate(tool, graphic, options);
