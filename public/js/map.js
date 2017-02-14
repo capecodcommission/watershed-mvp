@@ -121,13 +121,10 @@ require([
 		});
 	
 		//add the legend
-      	map.on("layers-add-result", function (evt) {
+      	map.on("layer-resume", function (evt) {
 	        var layerInfo = arrayUtils.map(evt.layers, function (layer, index) {
-
-	        	if (layer.attr('data-visible') == 'on') {
-	        		return {layer:layer.layer, title:layer.layer.name};
-	        	}
-	          // return {layer:layer.layer, title:layer.layer.name};
+	        	
+	          return {layer:layer.layer, title:layer.layer.name};
 	        });
 	        if (layerInfo.length > 0) {
 	          var legendDijit = new Legend({
