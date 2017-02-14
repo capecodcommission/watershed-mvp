@@ -134,6 +134,7 @@ require([
 
 				var tool = evt.target.id.toLowerCase();
 				map.disableMapNavigation();
+				console.log(tool)
 				tb.activate(tool);
 			});
 			
