@@ -114,6 +114,12 @@ require([
 		map.on("load", function(e){
 			initToolbar();
 			map.infoWindow.resize(375,400)
+
+			var legendDijit = new Legend({
+		            map: map,
+		            layerInfos: []
+		        }, "legendDiv");
+		        legendDijit.startup();
 			if (treatments.length > 0) 
 			{
 				addTreatmentPolygons(treatments);
@@ -875,12 +881,7 @@ require([
 			e.preventDefault();
 
 			if ($(this).attr('data-visible') == 'off') {
-
-				var legendDijit = new Legend({
-		            map: map,
-		            layerInfos: [{layer: FlowThrough, title: "Flow Through"}]
-		        }, "legendDiv");
-		        legendDijit.startup();
+				legendDijit.refresh([{layer: FlowThrough, title: "FlowThrough Coefficients"}])
 				FlowThrough.show();
 				$(this).attr('data-visible', 'on');
 			} else {
