@@ -117,7 +117,7 @@
 			f.preventDefault();
 			$('#popdown-opacity').hide();
 			map.disableMapNavigation();
-			tb.activate('polygon');
+			tb.activate('polygon', {showTooltips: false});
 
 
 		});

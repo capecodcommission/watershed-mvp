@@ -139,7 +139,7 @@
 				// dom.byId("info")
 
 				map.disableMapNavigation();
-				tb.activate('polygon');
+				tb.activate('polygon', {showTooltips: false});
 
 			});
 			$('#updatetreatment').on('click', function(e){

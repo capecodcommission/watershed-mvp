@@ -142,7 +142,7 @@
 			// dom.byId("info")
 
 			map.disableMapNavigation();
-			tb.activate('polygon');
+			tb.activate('polygon', {showTooltips: false});
 			// console.log('polygon clicked');
 			// $('#popdown-opacity').show();
 

@@ -66,7 +66,7 @@
 			f.preventDefault();
 			$('#popdown-opacity').hide();
 			map.disableMapNavigation();
-			tb.activate('polygon');
+			tb.activate('polygon', {showTooltips: false});
 			// console.log(tb);
 			$('#select_polygon').hide();
 			$('#select_destination').show();
