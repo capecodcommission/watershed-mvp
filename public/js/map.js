@@ -134,7 +134,7 @@ require([
 
 				var tool = evt.target.id.toLowerCase();
 				map.disableMapNavigation();
-				tb.activate(tool, {showTooltips: false});
+				tb.activate(tool);
 			});
 			
 			editToolbar = new Edit(map);
@@ -251,8 +251,8 @@ require([
 		  var options = {
 			allowAddVertices: true,//registry.byId("vtx_ca").checked,
 			allowDeleteVertices: true, //registry.byId("vtx_cd").checked,
-			uniformScaling: true, //registry.byId("uniform_scaling").checked
-			showTooltips: false
+			uniformScaling: true //registry.byId("uniform_scaling").checked
+		
 		  };
 		  editToolbar.activate(tool, graphic, options);
 		}
