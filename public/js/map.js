@@ -134,7 +134,7 @@ require([
 
 				var tool = evt.target.id.toLowerCase();
 				map.disableMapNavigation();
-				tb.activate(tool);
+				tb.activate(tool, {showTooltips: false});
 			});
 			
 			editToolbar = new Edit(map);
