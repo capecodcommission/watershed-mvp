@@ -20,13 +20,15 @@
     <option value="Imagery">Imagery<options>
     <option value="ShadedRelief">Shaded Relief<options>
   </select> -->
-</div>
+		</div>
     </div>
-    <div data-dojo-type="dijit/layout/AccordionContainer">
-      <div data-dojo-type="dijit/layout/ContentPane" id="legendPane"
-           data-dojo-props="title:'Legend', selected:true">
-        <div id="legendDiv"></div>
-      </div>
+    <div style="position:absolute; right:1200px; top:20px; z-Index:100;">
+        <div data-dojo-type="dijit/TitlePane"
+             data-dojo-props="title:'Legend', closable:false, open:false">
+            <div data-dojo-type="dijit/layout/ContentPane" style="width:380px; height:280px; overflow:auto;">
+                <div id="LegendDiv"></div>
+            </div>
+        </div>
     </div>
 		<div class="js-menu sliding-panel-content is-visible">
 <!-- 		<div id="info">
