@@ -134,10 +134,11 @@ require([
 	      //   }
 	      // });
 
-      	// var legendDijit = new Legend({
-	      //       map: map
-	      //     }, "legendDiv");
-	      //   legendDijit.startup();
+      	var legendDijit = new Legend({
+	            map: map,
+	            layerInfos: []
+	          }, "legendDiv");
+	        legendDijit.startup();
 
 		var fillSymbol = new SimpleFillSymbol();
 
@@ -731,7 +732,7 @@ require([
 
 				NitrogenLayer.setDefinitionExpression(queryString.toString())
 				NitrogenLayer.show()
-				legendDijit.refresh([{layer: NitrogenLayer, title: "Nitrogen Load"}])
+				// legendDijit.refresh([{layer: NitrogenLayer, title: "Nitrogen Load"}])
 				$(this).attr('data-visible', 'on');
 			} else {
 				NitrogenLayer.hide();
@@ -894,10 +895,10 @@ require([
 
 		});
 
-	var legendDijit = new Legend({
-	            map: map
-	          }, "legendDiv");
-	        legendDijit.startup();
+	// var legendDijit = new Legend({
+	//             map: map
+	//           }, "legendDiv");
+	//         legendDijit.startup();
 
 
 var getDestinationPoint = map.on("select-destination", getDestination);
