@@ -134,10 +134,10 @@ require([
 	      //   }
 	      // });
 
-      	var legendDijit = new Legend({
-	            map: map
-	          }, "legendDiv");
-	        legendDijit.startup();
+      	// var legendDijit = new Legend({
+	      //       map: map
+	      //     }, "legendDiv");
+	      //   legendDijit.startup();
 
 		var fillSymbol = new SimpleFillSymbol();
 
@@ -893,6 +893,11 @@ require([
 
 
 		});
+
+	var legendDijit = new Legend({
+	            map: map
+	          }, "legendDiv");
+	        legendDijit.startup();
 
 
 var getDestinationPoint = map.on("select-destination", getDestination);
