@@ -115,11 +115,6 @@ require([
 			initToolbar();
 			map.infoWindow.resize(375,400)
 
-			var legendDijit = new Legend({
-		            map: map,
-		            layerInfos: []
-		        }, "legendDiv");
-		        legendDijit.startup();
 			if (treatments.length > 0) 
 			{
 				addTreatmentPolygons(treatments);
@@ -731,6 +726,12 @@ require([
 
     		console.log(queryString)
 		}
+
+		var legendDijit = new Legend({
+		            map: map,
+		            layerInfos: []
+		        }, "legendDiv");
+		    legendDijit.startup();
 
 		$('#nitrogen').on('click', function(e) {
 			e.preventDefault();
