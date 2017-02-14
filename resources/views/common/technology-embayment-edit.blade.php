@@ -99,7 +99,7 @@
 			// dom.byId("info")
 
 			map.disableMapNavigation();
-			tb.activate('polygon', {showTooltips: false});
+			tb.activate('polygon');
 			// console.log('polygon clicked');
 			// $('#popdown-opacity').show();
 

@@ -81,7 +81,7 @@
 			}
 			var tool = evt.target.id.toLowerCase();
 			map.disableMapNavigation();
-			tb.activate(tool, {showTooltips: false});
+			tb.activate(tool);
 		  });
 		}
 

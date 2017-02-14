@@ -61,7 +61,7 @@
 			$('#popdown-opacity').hide();
 			func = 'septic';
 			map.disableMapNavigation();
-			tb.activate('polygon', {showTooltips: false});
+			tb.activate('polygon');
 			$('#select_polygon_'+treatment).hide();
 			// $('#select_destination').show();
 
