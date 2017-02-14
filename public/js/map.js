@@ -121,24 +121,24 @@ require([
 		});
 	
 		//add the legend
-      	// map.on("layers-add-result", function (evt) {
-	      //   var layerInfo = arrayUtils.map(evt.layers, function (layer, index) {
-	      //     return {layer:layer.layer, title:layer.layer.name};
-	      //   });
-	      //   if (layerInfo.length > 0) {
-	      //     var legendDijit = new Legend({
-	      //       map: map,
-	      //       layerInfos: layerInfo
-	      //     }, "legendDiv");
-	      //     legendDijit.startup();
-	      //   }
-	      // });
-
-      	var legendDijit = new Legend({
+      	map.on("layers-add-result", function (evt) {
+	        var layerInfo = arrayUtils.map(evt.layers, function (layer, index) {
+	          return {layer:layer.layer, title:layer.layer.name};
+	        });
+	        if (layerInfo.length > 0) {
+	          var legendDijit = new Legend({
 	            map: map,
-	            layerInfos: [{layer:NitrogenLayer, title: "Nitrogen Layer"}]
+	            layerInfos: layerInfo
 	          }, "legendDiv");
-	        legendDijit.startup();
+	          legendDijit.startup();
+	        }
+	      });
+
+      	// var legendDijit = new Legend({
+	      //       map: map,
+	      //       layerInfos: [{layer:NitrogenLayer, title: "Nitrogen Layer"}]
+	      //     }, "legendDiv");
+	      //   legendDijit.startup();
 
 		var fillSymbol = new SimpleFillSymbol();
 
@@ -895,10 +895,18 @@ require([
 
 		});
 
-	// var legendDijit = new Legend({
-	//             map: map
-	//           }, "legendDiv");
-	//         legendDijit.startup();
+	map.on("layers-add-result", function (evt) {
+	        var layerInfo = arrayUtils.map(evt.layers, function (layer, index) {
+	          return {layer:layer.layer, title:layer.layer.name};
+	        });
+	        if (layerInfo.length > 0) {
+	          var legendDijit = new Legend({
+	            map: map,
+	            layerInfos: layerInfo
+	          }, "legendDiv");
+	          legendDijit.startup();
+	        }
+	      });
 
 
 var getDestinationPoint = map.on("select-destination", getDestination);
