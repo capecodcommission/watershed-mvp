@@ -134,21 +134,18 @@ require([
 
 				var tool = evt.target.id.toLowerCase();
 				map.disableMapNavigation();
-				map.infoWindow.hide();
 				tb.activate(tool);
 			});
 			
 			editToolbar = new Edit(map);
 			// $('.edit_poly').on('click', function(e){
 			on(dom.byId('edit_polygon'), 'click', function(e){
-				map.infoWindow.hide();
 				// console.log(e);
 				edit_active = 1;
 				// polyGLs[0].on('click', function(evt){
 					// console.log(this);
 
 				map.graphics.on("click", function(evt) {
-					map.infoWindow.hide();
 					// console.log(edit_active);
 					if (edit_active > 0) {
 					// console.log(this);
@@ -190,7 +187,6 @@ require([
 			//deactivate the toolbar and clear existing graphics 
 			tb.deactivate();
 			map.enableMapNavigation();
-			// map.infoWindow.show();
 			// console.log(treatment);
 			// figure out which symbol to use
 			var symbol;
