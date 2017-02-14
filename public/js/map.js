@@ -124,6 +124,7 @@ require([
 		function initToolbar() {
 			tb = new Draw(map);
 			tb.on("draw-end", addGraphic);
+
 			
 			// event delegation so a click handler is not
 			// needed for each individual button
@@ -134,8 +135,8 @@ require([
 
 				var tool = evt.target.id.toLowerCase();
 				map.disableMapNavigation();
-				console.log(tool)
-				tb.activate(tool);
+				// console.log(tool)
+				tb.activate(tool,showTooltips: false);
 			});
 			
 			editToolbar = new Edit(map);
