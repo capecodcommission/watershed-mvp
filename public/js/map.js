@@ -111,7 +111,7 @@ require([
 		// map.on("load", initToolbar);
 		map.on("load", function(e){
 			initToolbar();
-			map.infoWindow.resize(400,400)
+			map.infoWindow.resize(300,400)
 			if (treatments.length > 0) 
 			{
 				addTreatmentPolygons(treatments);
