@@ -730,7 +730,7 @@ require([
 			e.preventDefault();
 			// console.log(NitrogenLayer);
 			if ($(this).attr('data-visible') == 'off') {
-
+				console.log(legendDijit)
 				NitrogenLayer.setDefinitionExpression(queryString.toString())
 				NitrogenLayer.show()
 				// legendDijit.refresh([{layer: NitrogenLayer, title: "Nitrogen Load"}])
