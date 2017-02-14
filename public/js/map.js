@@ -571,9 +571,9 @@ require([
 			treattypeSymbol.setSize("5")
 
 		var treattypeRenderer = new UniqueValueRenderer(treattypeSymbol, "WWTreatmentExisting")
-			treattypeRenderer.addValue("GWDP", new SimpleMarkerSymbol().setColor(new Color([124,252,0])).setSize("5"))
-			treattypeRenderer.addValue("SEPTIC", new SimpleMarkerSymbol().setColor(new Color([205,133,63])).setSize("5"))
-			treattypeRenderer.addValue("SEWERED", new SimpleMarkerSymbol().setColor(new Color([238,130,238])).setSize("5"))
+			treattypeRenderer.addValue("GWDP", new SimpleMarkerSymbol().setColor(new Color([124,252,0])).setSize("5").setOutline(null))
+			treattypeRenderer.addValue("SEPTIC", new SimpleMarkerSymbol().setColor(new Color([205,133,63])).setSize("5").setOutline(null))
+			treattypeRenderer.addValue("SEWERED", new SimpleMarkerSymbol().setColor(new Color([238,130,238])).setSize("5").setOutline(null))
 
 	    TreatmentType.setRenderer(treattypeRenderer)
 
@@ -629,15 +629,15 @@ require([
 			landuseSymbol.setSize("5")
 
 		var landuseRenderer = new UniqueValueRenderer(landuseSymbol, "LandUseCatExisting")
-			landuseRenderer.addValue("RESSINGLEFAM", new SimpleMarkerSymbol().setColor(new Color([122, 182, 245, 255])).setSize("5"))
-			landuseRenderer.addValue("COMMERCIAL", new SimpleMarkerSymbol().setColor(new Color([255, 255, 0, 255])).setSize("5"))
-			landuseRenderer.addValue("INDUSTRIAL", new SimpleMarkerSymbol().setColor(new Color([115, 223, 255, 255])).setSize("5"))
-			landuseRenderer.addValue("OTHERDEV", new SimpleMarkerSymbol().setColor(new Color([107, 181, 123, 255])).setSize("5"))
-			landuseRenderer.addValue("OTHERNONDEV", new SimpleMarkerSymbol().setColor(new Color([2197, 0, 255, 255])).setSize("5"))
-			landuseRenderer.addValue("RESCONDOAPT", new SimpleMarkerSymbol().setColor(new Color([205, 205, 102, 255])).setSize("5"))
-			landuseRenderer.addValue("RESMULTIFAM", new SimpleMarkerSymbol().setColor(new Color([205, 46, 49, 255])).setSize("5"))
-			landuseRenderer.addValue("VACANTDEV", new SimpleMarkerSymbol().setColor(new Color([168, 0, 0, 255])).setSize("5"))
-			landuseRenderer.addValue("VACANTNONDEV", new SimpleMarkerSymbol().setColor(new Color([76, 115, 0, 255])).setSize("5"))
+			landuseRenderer.addValue("RESSINGLEFAM", new SimpleMarkerSymbol().setColor(new Color([122, 182, 245, 255])).setSize("5").setOutline(null))
+			landuseRenderer.addValue("COMMERCIAL", new SimpleMarkerSymbol().setColor(new Color([255, 255, 0, 255])).setSize("5").setOutline(null))
+			landuseRenderer.addValue("INDUSTRIAL", new SimpleMarkerSymbol().setColor(new Color([115, 223, 255, 255])).setSize("5").setOutline(null))
+			landuseRenderer.addValue("OTHERDEV", new SimpleMarkerSymbol().setColor(new Color([107, 181, 123, 255])).setSize("5").setOutline(null))
+			landuseRenderer.addValue("OTHERNONDEV", new SimpleMarkerSymbol().setColor(new Color([2197, 0, 255, 255])).setSize("5").setOutline(null))
+			landuseRenderer.addValue("RESCONDOAPT", new SimpleMarkerSymbol().setColor(new Color([205, 205, 102, 255])).setSize("5").setOutline(null))
+			landuseRenderer.addValue("RESMULTIFAM", new SimpleMarkerSymbol().setColor(new Color([205, 46, 49, 255])).setSize("5").setOutline(null))
+			landuseRenderer.addValue("VACANTDEV", new SimpleMarkerSymbol().setColor(new Color([168, 0, 0, 255])).setSize("5").setOutline(null))
+			landuseRenderer.addValue("VACANTNONDEV", new SimpleMarkerSymbol().setColor(new Color([76, 115, 0, 255])).setSize("5").setOutline(null))
 
 		LandUse.setRenderer(landuseRenderer)
 
