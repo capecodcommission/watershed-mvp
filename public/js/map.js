@@ -121,19 +121,19 @@ require([
 		});
 	
 		//add the legend
-      	map.on("layers-add-result", function (evt) {
-	        var layerInfo = arrayUtils.map(evt.layers, function (layer, index) {
+      	// map.on("layers-add-result", function (evt) {
+	      //   var layerInfo = arrayUtils.map(evt.layers, function (layer, index) {
 
-	          return {layer:layer.layer, title:layer.layer.name};
-	        });
-	        if (layerInfo.length > 0) {
-	          var legendDijit = new Legend({
-	            map: map,
-	            layerInfos: layerInfo
-	          }, "legendDiv");
-	          legendDijit.startup();
-	        }
-	      });
+	      //     return {layer:layer.layer, title:layer.layer.name};
+	      //   });
+	      //   if (layerInfo.length > 0) {
+	      //     var legendDijit = new Legend({
+	      //       map: map,
+	      //       layerInfos: layerInfo
+	      //     }, "legendDiv");
+	      //     legendDijit.startup();
+	      //   }
+	      // });
 
       	// var legendDijit = new Legend({
 	      //       map: map,
@@ -730,7 +730,7 @@ require([
 			e.preventDefault();
 			// console.log(NitrogenLayer);
 			if ($(this).attr('data-visible') == 'off') {
-				console.log(legendDijit)
+
 				NitrogenLayer.setDefinitionExpression(queryString.toString())
 				NitrogenLayer.show()
 				// legendDijit.refresh([{layer: NitrogenLayer, title: "Nitrogen Load"}])
@@ -876,7 +876,11 @@ require([
 
 			if ($(this).attr('data-visible') == 'off') {
 
-
+				var legendDijit = new Legend({
+		            map: map,
+		            layerInfos: layerInfo
+		        }, "legendDiv");
+		        legendDijit.startup();
 				FlowThrough.show();
 				$(this).attr('data-visible', 'on');
 			} else {
