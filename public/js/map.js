@@ -114,11 +114,6 @@ require([
 		map.on("load", function(e){
 			initToolbar();
 			map.infoWindow.resize(375,400)
-			var legendDijit = new Legend({
-	            map: map,
-	            layerInfos: [{layer:EcologicalIndicators,title: "ecologicalindicators"}]
-	          }, "legendDiv");
-	          legendDijit.startup();
 			if (treatments.length > 0) 
 			{
 				addTreatmentPolygons(treatments);
@@ -128,7 +123,7 @@ require([
 		//add the legend
       	// map.on("layer-resume", function (evt) {
 	      //   var layerInfo = arrayUtils.map(evt.layers, function (layer, index) {
-
+	        	
 	      //     return {layer:layer.layer, title:layer.layer.name};
 	      //   });
 	      //   if (layerInfo.length > 0) {
