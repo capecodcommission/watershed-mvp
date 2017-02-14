@@ -878,7 +878,7 @@ require([
 
 				var legendDijit = new Legend({
 		            map: map,
-		            layerInfos: layerInfo
+		            layerInfos: [{layer: FlowThrough, title: "Flow Through"}]
 		        }, "legendDiv");
 		        legendDijit.startup();
 				FlowThrough.show();
