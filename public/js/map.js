@@ -123,7 +123,11 @@ require([
 		//add the legend
       	map.on("layers-add-result", function (evt) {
 	        var layerInfo = arrayUtils.map(evt.layers, function (layer, index) {
-	          return {layer:layer.layer, title:layer.layer.name};
+
+	        	if (layer.attr('data-visible') == 'on') {
+	        		return {layer:layer.layer, title:layer.layer.name};
+	        	}
+	          // return {layer:layer.layer, title:layer.layer.name};
 	        });
 	        if (layerInfo.length > 0) {
 	          var legendDijit = new Legend({
@@ -894,20 +898,6 @@ require([
 
 
 		});
-
-	map.on("layers-add-result", function (evt) {
-	        var layerInfo = arrayUtils.map(evt.layers, function (layer, index) {
-	          return {layer:layer.layer, title:layer.layer.name};
-	        });
-	        if (layerInfo.length > 0) {
-	          var legendDijit = new Legend({
-	            map: map,
-	            layerInfos: {layer: NitrogenLayer, title: "Nitrogen"}
-	          }, "legendDiv");
-	          legendDijit.startup();
-	        }
-	      });
-
 
 var getDestinationPoint = map.on("select-destination", getDestination);
 
