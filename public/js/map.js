@@ -133,7 +133,7 @@ require([
 	          }, "legendDiv");
 	          legendDijit.startup();
 	        }
-	      // });
+	      });
 
       	// var legendDijit = new Legend({
 	      //       map: map,
