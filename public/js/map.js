@@ -902,7 +902,7 @@ require([
 	        if (layerInfo.length > 0) {
 	          var legendDijit = new Legend({
 	            map: map,
-	            layerInfos: [{layer: NitrogenLayer, title: "Nitrogen"}]
+	            layerInfos: {layer: NitrogenLayer, title: "Nitrogen"}
 	          }, "legendDiv");
 	          legendDijit.startup();
 	        }

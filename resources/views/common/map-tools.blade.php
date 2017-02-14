@@ -22,7 +22,7 @@
   </select> -->
 		</div>
     </div>
-    <div style="position:absolute; right:210px; top:20px; z-Index:100;">
+    <div style="position:absolute; right:250px; top:20px; z-Index:100;">
         <div data-dojo-type="dijit/TitlePane"
              data-dojo-props="title:'Legend', closable:false, open:false">
             <div data-dojo-type="dijit/layout/ContentPane" style="width:380px; height:280px; overflow:auto;">
