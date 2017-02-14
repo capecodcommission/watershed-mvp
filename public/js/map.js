@@ -754,7 +754,6 @@ require([
 			e.preventDefault();
 
 			if ($(this).attr('data-visible') == 'off') {
-				legendDijit.refresh([{layer: Subembayments, title: "Subembayments"}])
 				Subembayments.show();
 				// console.log(Subembayments);
 				$(this).attr('data-visible', 'on');
@@ -769,7 +768,6 @@ require([
 			e.preventDefault();
 
 			if ($(this).attr('data-visible') == 'off') {
-				legendDijit.refresh([{layer: Subwatersheds, title: "Subwatersheds"}])
 				Subwatersheds.show();
 				$(this).attr('data-visible', 'on');
 			} else {
@@ -799,7 +797,6 @@ require([
 			e.preventDefault();
 
 			if ($(this).attr('data-visible') == 'off') {
-				legendDijit.refresh([{layer: Towns, title: "Towns"}])
 				Towns.show();
 				$(this).attr('data-visible', 'on');
 			} else {
@@ -828,7 +825,6 @@ require([
 			e.preventDefault();
 
 			if ($(this).attr('data-visible') == 'off') {
-				legendDijit.refresh([{layer: TreatmentFacilities, title: "Treatment Facilities"}])
 				TreatmentFacilities.show();
 				$(this).attr('data-visible', 'on');
 			} else {
@@ -857,7 +853,6 @@ require([
 			e.preventDefault();
 
 			if ($(this).attr('data-visible') == 'off') {
-				legendDijit.refresh([{layer: ShallowGroundwater, title: "Shallow Groundwater"}])
 				ShallowGroundwater.show();
 				$(this).attr('data-visible', 'on');
 			} else {
