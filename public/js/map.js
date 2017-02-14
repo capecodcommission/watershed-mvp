@@ -726,7 +726,7 @@ require([
 
 				NitrogenLayer.setDefinitionExpression(queryString.toString())
 				NitrogenLayer.show()
-				legendDijit.refresh([layer: NitrogenLayer, title: "Nitrogen Load"])
+				legendDijit.refresh([{layer: NitrogenLayer, title: "Nitrogen Load"}])
 				$(this).attr('data-visible', 'on');
 			} else {
 				NitrogenLayer.hide();
