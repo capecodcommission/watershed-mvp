@@ -866,7 +866,7 @@ require([
 			e.preventDefault();
 
 			if ($(this).attr('data-visible') == 'off') {
-
+				legendDijit.refresh([{layer: LandUse, title: "Land Use Category"}])
 				LandUse.setDefinitionExpression(queryString.toString())
 				LandUse.show();
 				$(this).attr('data-visible', 'on');
@@ -896,6 +896,7 @@ require([
 		$('.subembayment').on('click', function(e){
 			// console.log('subembayment clicked');
 			var sub = $(this).data('layer');
+			legendDijit.refresh([{layer: Subembayments, title: "Subembayments"}])
 			Subembayments.setDefinitionExpression('SUBEM_ID = ' + sub);
 			Subembayments.show();
 
