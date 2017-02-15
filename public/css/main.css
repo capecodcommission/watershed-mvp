@@ -294,7 +294,7 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
 
-table .esriLegendLayer td {
+table .esriLegendLayer > tbody > tr > td {
 
   line-height: 1px;
   padding: 0px;
