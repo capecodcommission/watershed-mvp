@@ -25,7 +25,7 @@
     <div style="position:absolute; right:250px; top:20px; z-Index:100;">
         <div data-dojo-type="dijit/TitlePane"
              data-dojo-props="title:'Legend', closable:false, open:false">
-            <div data-dojo-type="dijit/layout/ContentPane" style="width:240px; height:180px; overflow:visible;">
+            <div data-dojo-type="dijit/layout/ContentPane" style="width:240px; height:380px; overflow:auto;">
                 <div id="legendDiv"></div>
             </div>
         </div>
