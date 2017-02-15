@@ -3977,7 +3977,7 @@ table {
   border-collapse: collapse;
   margin: 0;
   table-layout: auto;
-  width: 75%; }
+  width: 100%; }
 
 th {
   border-bottom: 1px solid #a6a6a6;
