@@ -296,13 +296,8 @@ html {
 
 .esriLegendService {
 
-  table {
-    margin: 0px;
-    font-size: 30px;
-  }
-
   tr {
-    padding-bottom: 1px;
+    line-height: 1px;
   }
 }
 
