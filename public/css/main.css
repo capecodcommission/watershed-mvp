@@ -300,7 +300,7 @@ html {
   line-height: 1px;
 }
 
-.esriLegendLayer td {
+td .esriLegendLayer {
 
   line-height: 1px;
   padding: 0px;
