@@ -893,7 +893,7 @@ require([
 							layers[i].setInfoTemplate(null)
 						}
 					}
-					$(this).toggleClass('enabled')
+					$(this).toggleClass('enabled fa-eye-slash')
 				} else {
 
 					for (var i = 0; i < layers.length; i++) {
@@ -903,7 +903,7 @@ require([
 							layers[i].setInfoTemplate(nitro_template)
 						}
 					}
-					$(this).toggleClass('enabled')
+					$(this).toggleClass('enabled fa-eye-slash')
 				}
 			});
 
