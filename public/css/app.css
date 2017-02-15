@@ -368,7 +368,7 @@ fieldset {
  *    `fieldset` elements in all browsers.
  */
 
-legend {
+#legendDiv {
   box-sizing: border-box; /* 1 */
   color: inherit; /* 2 */
   display: table; /* 1 */
