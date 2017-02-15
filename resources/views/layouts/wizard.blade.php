@@ -71,7 +71,28 @@
 						})
 			});
 			$('.disable-popups-button').on('click', function(e){
-				map.infoWindow.hide(e.mapPoint)
+				var layers = [NitrogenLayer, Subembayments, Subwatersheds, WasteWater, Towns, TreatmentType, TreatmentFacilities, EcologicalIndicators, ShallowGroundwater, LandUse, FlowThrough]
+
+				if (e.hasClass('enabled')) {
+					for (var i = 0; i < layers.length; i++) {
+
+						if (layers[i].visible) {
+
+							layers[i].disableMouseEvents()
+						}
+					}
+					e.toggleClass('enabled')
+				} else {
+
+					for (var i = 0; i < layers.length; i++) {
+
+						if (layers[i].visible) {
+
+							layers[i].enableMouseEvents()
+						}
+					}
+					e.toggleClass('enabled')
+				}
 			});
 
 		});

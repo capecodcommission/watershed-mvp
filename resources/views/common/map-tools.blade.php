@@ -1,7 +1,7 @@
 <div class="tool" style="padding: .8em 1em;">		
 <label><i class="fa fa-globe fa-2x js-menu-trigger sliding-panel-button"></i>
 </label>
-<label style="position:absolute; right:50px; top:20px; z-Index:100;"><i class="fa fa-eye fa-2x js-menu-trigger disable-popups-button"></i>
+<label style="position:absolute; right:50px; top:20px; z-Index:100;"><i class="fa fa-eye fa-2x js-menu-trigger disable-popups-button enabled"></i>
 </label>
     <div style="position:absolute; right:80px; top:20px; z-Index:100;">
         <div data-dojo-type="dijit/TitlePane"
