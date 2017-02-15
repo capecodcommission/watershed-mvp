@@ -296,8 +296,11 @@ html {
 
 .esriLegendService {
 
-  tr {
-    line-height: 1px;
+  table {
+
+    td {
+      line-height: 2px;
+    }
   }
 }
 
