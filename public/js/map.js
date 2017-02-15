@@ -709,7 +709,7 @@ require([
 		var legendDijit = new Legend({
 		            map: map,
 		            layerInfos: [],
-		            arrangement: esri.dijit.Legend.ALIGN_RIGHT
+		            arrangement: esri.dijit.Legend.ALIGN_LEFT
 		        }, "legendDiv");
 		    legendDijit.startup();
 

@@ -301,8 +301,8 @@ html {
     font-size: 30px;
   }
 
-  td {
-    height: 1px;
+  tr {
+    padding-bottom: 1px;
   }
 }
 
