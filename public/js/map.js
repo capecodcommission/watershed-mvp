@@ -890,7 +890,7 @@ require([
 
 						if (layers[i].visible) {
 
-							layers[i].disableMouseEvents()
+							layers[i].setInfoTemplate(null)
 						}
 					}
 					$(this).toggleClass('enabled')
@@ -900,7 +900,7 @@ require([
 
 						if (layers[i].visible) {
 
-							layers[i].enableMouseEvents()
+							layers[i].setInfoTemplate(nitro_template)
 						}
 					}
 					$(this).toggleClass('enabled')
