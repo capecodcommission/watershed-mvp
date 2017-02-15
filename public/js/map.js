@@ -885,7 +885,7 @@ require([
 		$('#disable-popups').on('click', function(e){
 				var layers = [NitrogenLayer, Subembayments, Subwatersheds, WasteWater, Towns, TreatmentType, TreatmentFacilities, EcologicalIndicators, ShallowGroundwater, LandUse, FlowThrough]
 
-				if (e.hasClass('enabled')) {
+				if ($(this).hasClass('enabled')) {
 					for (var i = 0; i < layers.length; i++) {
 
 						if (layers[i].visible) {
@@ -893,7 +893,7 @@ require([
 							layers[i].disableMouseEvents()
 						}
 					}
-					e.toggleClass('enabled')
+					$(this).toggleClass('enabled')
 				} else {
 
 					for (var i = 0; i < layers.length; i++) {
@@ -903,7 +903,7 @@ require([
 							layers[i].enableMouseEvents()
 						}
 					}
-					e.toggleClass('enabled')
+					$(this).toggleClass('enabled')
 				}
 			});
 
