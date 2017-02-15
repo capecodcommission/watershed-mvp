@@ -294,12 +294,12 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
 
-table .esriLegendLayer > tbody > tr > td {
+table.esriLegendLayer > tbody > tr > td {
 
   line-height: 1px;
   padding: 0px;
   height: 50px;
-  width: 150px;
+  width: 100px;
 }
 
 /* makes the font 33% larger relative to the icon container */
