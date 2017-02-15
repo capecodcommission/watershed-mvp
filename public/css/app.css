@@ -368,7 +368,7 @@ fieldset {
  *    `fieldset` elements in all browsers.
  */
 
-#legendDiv {
+legend {
   box-sizing: border-box; /* 1 */
   color: inherit; /* 2 */
   display: table; /* 1 */
@@ -3978,6 +3978,13 @@ table {
   margin: 0.75em 0;
   table-layout: fixed;
   width: 100%; }
+
+table.esriLegendLayer {
+  border-collapse: collapse;
+  margin: 0;
+  table-layout: fixed;
+  width: 10%; 
+}
 
 th {
   border-bottom: 1px solid #a6a6a6;
