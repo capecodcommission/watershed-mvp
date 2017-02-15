@@ -294,14 +294,21 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
 
-.esriLegendService table {
+.esriLegendLayer table {
 
-  padding-bottom: 1px;
+  padding: 0px;
 }
 
-.esriLegendService td {
+.esriLegendLayer td {
 
   line-height: 1px;
+  padding: 0px;
+}
+
+.esriLegendLayer tr {
+
+  line-height: 1px;
+  padding: 0px;
 }
 
 /* makes the font 33% larger relative to the icon container */
