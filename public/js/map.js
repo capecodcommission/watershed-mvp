@@ -708,7 +708,8 @@ require([
 
 		var legendDijit = new Legend({
 		            map: map,
-		            layerInfos: []
+		            layerInfos: [],
+		            arrangement: esri.dijit.Legend.ALIGN_RIGHT
 		        }, "legendDiv");
 		    legendDijit.startup();
 
@@ -717,8 +718,8 @@ require([
 			// console.log(NitrogenLayer);
 			if ($(this).attr('data-visible') == 'off') {
 				legendDijit.refresh([{
-					layer: NitrogenLayer
-					// title: "Nitrogen Load"
+					layer: NitrogenLayer, 
+					title: "Nitrogen Load"
 				}])
 				NitrogenLayer.setDefinitionExpression(queryString.toString())
 				NitrogenLayer.show()
