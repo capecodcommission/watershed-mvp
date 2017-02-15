@@ -16,7 +16,7 @@
     </div>
     <div style="position:absolute; right:250px; top:20px; z-Index:100;">
         <div data-dojo-type="dijit/TitlePane" data-dojo-props="title:'Legend', closable:false, open:false">
-            <div data-dojo-type="dijit/layout/ContentPane" style="width:280px; height:580px; overflow:auto;">
+            <div data-dojo-type="dijit/layout/ContentPane" style="width:280px; height:580px; overflow:auto; top: 0px; right: 0px; position: absolute; z-index: 99; opacity: 0.9; background-color: whitesmoke; border-bottom-left-radius: 8px; padding: 0px 0px 0px 10px;">
                 <div style = "top: 0px; right: 0px; padding: 0px 0px 0px 10px;" id="legendDiv"></div>
             </div>
         </div>
