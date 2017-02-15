@@ -70,30 +70,30 @@
 							$('#getNitrogen').text(nitrogen + 'kg');
 						})
 			});
-			$('.disable-popups-button').on('click', function(e){
-				var layers = [NitrogenLayer, Subembayments, Subwatersheds, WasteWater, Towns, TreatmentType, TreatmentFacilities, EcologicalIndicators, ShallowGroundwater, LandUse, FlowThrough]
+			// $('.disable-popups-button').on('click', function(e){
+			// 	var layers = [NitrogenLayer, Subembayments, Subwatersheds, WasteWater, Towns, TreatmentType, TreatmentFacilities, EcologicalIndicators, ShallowGroundwater, LandUse, FlowThrough]
 
-				if (e.hasClass('enabled')) {
-					for (var i = 0; i < layers.length; i++) {
+			// 	if (e.hasClass('enabled')) {
+			// 		for (var i = 0; i < layers.length; i++) {
 
-						if (layers[i].visible) {
+			// 			if (layers[i].visible) {
 
-							layers[i].disableMouseEvents()
-						}
-					}
-					e.toggleClass('enabled')
-				} else {
+			// 				layers[i].disableMouseEvents()
+			// 			}
+			// 		}
+			// 		e.toggleClass('enabled')
+			// 	} else {
 
-					for (var i = 0; i < layers.length; i++) {
+			// 		for (var i = 0; i < layers.length; i++) {
 
-						if (layers[i].visible) {
+			// 			if (layers[i].visible) {
 
-							layers[i].enableMouseEvents()
-						}
-					}
-					e.toggleClass('enabled')
-				}
-			});
+			// 				layers[i].enableMouseEvents()
+			// 			}
+			// 		}
+			// 		e.toggleClass('enabled')
+			// 	}
+			// });
 
 		});
 	</script>

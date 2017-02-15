@@ -882,6 +882,31 @@ require([
 
 		});
 
+		$('#disable-popups').on('click', function(e){
+				var layers = [NitrogenLayer, Subembayments, Subwatersheds, WasteWater, Towns, TreatmentType, TreatmentFacilities, EcologicalIndicators, ShallowGroundwater, LandUse, FlowThrough]
+
+				if (e.hasClass('enabled')) {
+					for (var i = 0; i < layers.length; i++) {
+
+						if (layers[i].visible) {
+
+							layers[i].disableMouseEvents()
+						}
+					}
+					e.toggleClass('enabled')
+				} else {
+
+					for (var i = 0; i < layers.length; i++) {
+
+						if (layers[i].visible) {
+
+							layers[i].enableMouseEvents()
+						}
+					}
+					e.toggleClass('enabled')
+				}
+			});
+
 var getDestinationPoint = map.on("select-destination", getDestination);
 
 function getDestination(evt){
