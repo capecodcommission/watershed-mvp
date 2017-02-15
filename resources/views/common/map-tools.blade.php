@@ -1,6 +1,8 @@
 <div class="tool" style="padding: .8em 1em;">		
 <label><i class="fa fa-globe fa-2x js-menu-trigger sliding-panel-button"></i>
 </label>
+<label style="position:absolute; right:50px; top:20px; z-Index:100;"><i class="fa fa-eye fa-2x js-menu-trigger disable-popups-button"></i>
+</label>
     <div style="position:absolute; right:80px; top:20px; z-Index:100;">
         <div data-dojo-type="dijit/TitlePane"
              data-dojo-props="title:'Switch Basemap', closable:false, open:false">
@@ -8,19 +10,7 @@
                 <div id="basemapGallery"></div>
             </div>
         </div>
-
-        <div id="basemaps-wrapper" class="leaflet-bar">
- <!--  <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">
-    <option value="Topographic">Topographic<options>
-    <option value="Streets">Streets</option>
-    <option value="NationalGeographic">National Geographic<options>
-    <option value="Oceans">Oceans<options>
-    <option value="Gray">Gray<options>
-    <option value="DarkGray">Dark Gray<options>
-    <option value="Imagery">Imagery<options>
-    <option value="ShadedRelief">Shaded Relief<options>
-  </select> -->
-		</div>
+        <div id="basemaps-wrapper" class="leaflet-bar"></div>
     </div>
     <div style="position:absolute; right:250px; top:20px; z-Index:100;">
         <div data-dojo-type="dijit/TitlePane" data-dojo-props="title:'Legend', closable:false, open:false">

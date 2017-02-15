@@ -70,6 +70,9 @@
 							$('#getNitrogen').text(nitrogen + 'kg');
 						})
 			});
+			$('.disable-popups-button').on('click', function(e){
+				map.infoWindow.hide(e.mapPoint)
+			});
 
 		});
 	</script>
