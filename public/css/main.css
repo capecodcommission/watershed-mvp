@@ -209,7 +209,7 @@ dl {
 
 table {
   border-collapse: collapse;
-  /*margin: 0.75em 0;*/
+  margin: 0.75em 0;
   table-layout: fixed;
   width: 100%; }
 
@@ -293,14 +293,6 @@ html {
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
-
-table.esriLegendLayer > tbody > tr > td {
-
-  line-height: 1px;
-  padding: 0px;
-  height: 50px;
-  width: 100px;
-}
 
 /* makes the font 33% larger relative to the icon container */
 .fa-lg {

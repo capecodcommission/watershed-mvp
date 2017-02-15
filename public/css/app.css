@@ -3979,13 +3979,6 @@ table {
   table-layout: fixed;
   width: 100%; }
 
-table.esriLegendLayer {
-  border-collapse: collapse;
-  margin: 0;
-  table-layout: fixed;
-  width: 10%; 
-}
-
 th {
   border-bottom: 1px solid #a6a6a6;
   font-weight: 600;
@@ -4034,6 +4027,11 @@ hr {
   border-right: 0;
   border-top: 0;
   margin: 1.5em 0; }
+
+.esriLegendLayer table {
+  margin: 0;
+  
+}
 
 img,
 picture {
