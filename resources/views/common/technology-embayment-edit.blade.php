@@ -117,6 +117,7 @@
 					})
 						.done(function(msg){
 							msg = Math.round(msg)
+							console.log(msg)
 							$('#popdown-opacity').hide();
 							$( "#update" ).trigger( "click" );
 						});
