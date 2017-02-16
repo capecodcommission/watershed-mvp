@@ -417,7 +417,7 @@ class TechnologyController extends Controller
 					return $updated;
 					break;	
 					
-				case 'embayment':
+				case 'embay':
 					$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment] '. $treat_id . ', '. $rate . ', ' . $units);
 					return $updated;
 					break;
