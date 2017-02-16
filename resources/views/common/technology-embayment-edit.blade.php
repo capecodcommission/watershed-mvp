@@ -116,6 +116,7 @@
 						url: url
 					})
 						.done(function(msg){
+							msg = Math.round(msg)
 							$('#popdown-opacity').hide();
 							$( "#update" ).trigger( "click" );
 						});
