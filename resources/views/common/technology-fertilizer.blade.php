@@ -87,7 +87,7 @@
 
 		});
 		$('#canceltreatment').on('click', function(e){
-		$('#fert-percent').val() = 0
+		$('#fert-percent').val(0) 
 		var url = "{{url('cancel', $treatment->TreatmentID)}}";
 		$.ajax({
 			method: 'GET',
