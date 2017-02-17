@@ -63,7 +63,9 @@
 
 <script>
 	$(document).ready(function(){
-	 treatment = {{$treatment->TreatmentID}};
+		var subem_id = ''
+	 	treatment = {{$treatment->TreatmentID}};
+
 		$('#select_area').on('click', function(f){
 			f.preventDefault();
 			destination_active = 1;
@@ -84,6 +86,7 @@
 							// console.log(msg.SUBEM_DISP);
 							// console.log(msg);
 							$('#'+msg.SUBEM_NAME+'> .stats').show();
+							subem_id = msg.SUBEM_ID
 							// $('.notification_count').remove();
 							$('#select_area').hide();
 							$('#popdown-opacity').show();
@@ -101,7 +104,7 @@
 			var percent = $('#embayment_percent').val();
 			var units = $('#unit_metric').val();
 			// need a new route to handle embayment (absolute metrics)
-			var url = "{{url('apply_embayment')}}" + '/' +  treatment + '/' + percent + '/' + units;
+			var url = "{{url('apply_embayment')}}" + '/' +  treatment + '/' + percent + '/' + units + '/' + subem_id
 			// console.log(url);
 			$.ajax({
 				method: 'GET',

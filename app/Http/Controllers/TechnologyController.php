@@ -175,9 +175,10 @@ class TechnologyController extends Controller
 	 * @return void
 	 * @author 
 	 **/
-	public function ApplyTreatment_Embayment($treat_id, $rate, $units)
+	public function ApplyTreatment_Embayment($treat_id, $rate, $units, $subemid = null)
 	{
 		$n_removed = $rate * $units;
+		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $subemid . ', ' . $scenarioid . ', ' . $treatment->TreatmentID . ', \'subembayment\'');
 		$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment] ' . $treat_id . ', ' . $rate . ', ' . $units);
 	}
 
