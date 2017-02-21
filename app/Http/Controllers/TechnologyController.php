@@ -181,6 +181,7 @@ class TechnologyController extends Controller
 		$scenarioid = session('scenarioid');
 		$n_parcels = 0;
 
+		Session::put('subemid', $subemid);
 
 		if ($subemid) 
 		{
@@ -436,21 +437,14 @@ class TechnologyController extends Controller
 				case 'embay':
 					$n_total = 0;
 					$scenarioid = session('scenarioid');
+					$subemid = session('subemid');
 					$n_parcels = 0;
 
 					
-					$parcels = DB::raw("select 
-											wtp_town_id, 
-											count(wtp_town_id) as NumParcels, 
-											sum(wtp_nload_septic) as Septic, 
-											sum(wtp_nload_fert) as Fert,	
-											sum(wtp_nload_storm) as Storm,		
-											sum(wtp_nload_orig) as Original
-
-										from capecodma.wiz_treatment_parcels 
-										where treatment_wiz_id =" + $treat_id + " 
-										group by wtp_town_id"
-									);
+					if ($subemid) 
+					{
+						$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $subemid . ', ' . $scenarioid . ', ' . $treat_id . ', \'subembayment\'');
+					} 
 					
 
 					foreach ($parcels as $parcel) 
@@ -460,10 +454,6 @@ class TechnologyController extends Controller
 					}
 
 					$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $n_total . ', ' . $n_parcels);
-					$n_removed = session('n_removed');
-					$n_removed += $updated[0]->removed;
-					Session::put('n_removed', $n_removed);
-					return $n_removed;
 
 					break;
 				default:
