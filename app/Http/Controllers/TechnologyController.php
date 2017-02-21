@@ -394,7 +394,7 @@ class TechnologyController extends Controller
 	 * @return void
 	 * @author 
 	 **/
-	public function update($type, $treat_id, $rate, $units=null)
+	public function update($type, $treat_id, $rate, $units=null, $subemid=null)
 	{
 		$treatment = Treatment::find($treat_id);
 			switch ($type) 
@@ -434,7 +434,25 @@ class TechnologyController extends Controller
 					break;	
 					
 				case 'embay':
-					$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment] '. $treat_id . ', '. $rate . ', ' . $units);
+					$n_total = 0;
+					$scenarioid = session('scenarioid');
+					$n_parcels = 0;
+
+
+					if ($subemid) 
+					{
+						$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $subemid . ', ' . $scenarioid . ', ' . $treat_id . ', \'subembayment\'');
+						// $updated = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $subemid . ', ' . $scenarioid . ', ' . $treat_id . ', \'subembayment\'');
+					} 
+
+					foreach ($parcels as $parcel) 
+					{
+						$n_total += $parcel->Original;
+						$n_parcels += $parcel->NumParcels;
+					}
+
+					$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $n_total . ', ' . $n_parcels);
+					// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment] '. $treat_id . ', '. $rate . ', ' . $units);
 					return $updated;
 					break;
 				default:
