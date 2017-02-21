@@ -194,7 +194,7 @@ class TechnologyController extends Controller
 			$n_parcels += $parcel->NumParcels;
 		}
 
-		$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment] ' . $treat_id . ', ' . $n_parcels . ', ' . $n_total);
+		$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $n_total . ', ' . $n_parcels);
 	}
 
 
