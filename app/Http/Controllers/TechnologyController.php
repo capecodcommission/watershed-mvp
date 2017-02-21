@@ -439,7 +439,7 @@ class TechnologyController extends Controller
 					$n_parcels = 0;
 
 					
-					$parcelss = DB::raw("select 
+					$parcels = DB::raw("select 
 											wtp_town_id, 
 											count(wtp_town_id) as NumParcels, 
 											sum(wtp_nload_septic) as Septic, 
@@ -453,15 +453,18 @@ class TechnologyController extends Controller
 									);
 					
 
-					foreach ($parcelss as $parcel) 
+					foreach ($parcels as $parcel) 
 					{
 						$n_total += $parcel->Original;
 						$n_parcels += $parcel->NumParcels;
 					}
 
 					$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $n_total . ', ' . $n_parcels);
+					$n_removed = session('n_removed');
+					$n_removed += $updated[0]->removed;
+					Session::put('n_removed', $n_removed);
+					return $n_removed;
 
-					return $updated;
 					break;
 				default:
 					
