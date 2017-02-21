@@ -438,12 +438,20 @@ class TechnologyController extends Controller
 					$scenarioid = session('scenarioid');
 					$n_parcels = 0;
 
+					
+					$parcels = DB::raw("select 
+											wtp_town_id, 
+											count(wtp_town_id) as NumParcels, 
+											sum(wtp_nload_septic) as Septic, 
+											sum(wtp_nload_fert) as Fert,	
+											sum(wtp_nload_storm) as Storm,		
+											sum(wtp_nload_orig) as Original
 
-					if ($subemid) 
-					{
-						$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $subemid . ', ' . $scenarioid . ', ' . $treat_id . ', \'subembayment\'');
-						// $updated = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $subemid . ', ' . $scenarioid . ', ' . $treat_id . ', \'subembayment\'');
-					} 
+										from capecodma.wiz_treatment_parcels 
+										where treatment_wiz_id =" + $treat_id + " 
+										group by wtp_town_id"
+									);
+					
 
 					foreach ($parcels as $parcel) 
 					{
@@ -452,7 +460,7 @@ class TechnologyController extends Controller
 					}
 
 					$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $n_total . ', ' . $n_parcels);
-					// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment] '. $treat_id . ', '. $rate . ', ' . $units);
+
 					return $updated;
 					break;
 				default:
