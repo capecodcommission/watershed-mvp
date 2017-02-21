@@ -186,9 +186,13 @@ class TechnologyController extends Controller
 			// $updated = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $subemid . ', ' . $scenarioid . ', ' . $treat_id . ', \'subembayment\'');
 		} 
 
-		$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment] ' . $treat_id . ', ' . $rate . ', ' . $units);
+		// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment] ' . $treat_id . ', ' . $rate . ', ' . $units);
 
-		$n_removed += $updated[0]->removed;
+		foreach ($parcels as $parcel) 
+		{
+			$n_removed += $parcel->Original
+		}
+		
 		Session::put('n_removed', $n_removed);
 		return $n_removed;
 	}
