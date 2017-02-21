@@ -65,6 +65,7 @@
 <script>
 	$(document).ready(function(){
 	 treatment = {{$treatment->TreatmentID}};
+	 var subemid = '';
 		$('#select_area').on('click', function(f){
 			f.preventDefault();
 			// console.log('button clicked');
@@ -81,6 +82,7 @@
 						.done(function(msg){
 							msg = $.parseJSON(msg);
 							console.log(msg.SUBEM_DISP);
+							subemid = msg.SUBEM_ID;
 							// console.log(msg);
 							$('#'+msg.SUBEM_NAME+'> .stats').show();
 							// $('.notification_count').remove();
@@ -110,7 +112,7 @@
 					e.preventDefault();
 					var rate = $('#embayment-percent').val();
 					var units = $('#unit_metric').val();
-					var url = "{{url('/update/embay', $treatment->TreatmentID)}}"  + '/' + rate + '/' + units;
+					var url = "{{url('/update/embay', $treatment->TreatmentID)}}"  + '/' + rate + '/' + units + '/' + subemid;
 					$.ajax({
 						method: 'GET',
 						url: url
