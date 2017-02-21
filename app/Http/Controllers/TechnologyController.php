@@ -191,7 +191,7 @@ class TechnologyController extends Controller
 		foreach ($parcels as $parcel) 
 		{
 			$n_total += $parcel->Original;
-			$n_parcels += $parcel->NumParcels
+			$n_parcels += $parcel->NumParcels;
 		}
 
 		$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment] ' . $treat_id . ', ' . $n_parcels . ', ' . $n_total);
