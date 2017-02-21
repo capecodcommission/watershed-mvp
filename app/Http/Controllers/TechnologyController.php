@@ -439,7 +439,7 @@ class TechnologyController extends Controller
 					$n_parcels = 0;
 
 					
-					$parcels = DB::raw("select 
+					$parcelss = DB::raw("select 
 											wtp_town_id, 
 											count(wtp_town_id) as NumParcels, 
 											sum(wtp_nload_septic) as Septic, 
@@ -453,7 +453,7 @@ class TechnologyController extends Controller
 									);
 					
 
-					foreach ($parcels as $parcel) 
+					foreach ($parcelss as $parcel) 
 					{
 						$n_total += $parcel->Original;
 						$n_parcels += $parcel->NumParcels;
