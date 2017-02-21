@@ -190,8 +190,8 @@ class TechnologyController extends Controller
 
 		foreach ($parcels as $parcel) 
 		{
-			$n_removed += $parcel->Original
-		};
+			$n_removed += $parcel->Original;
+		}
 
 		Session::put('n_removed', $n_removed);
 		return $n_removed;
