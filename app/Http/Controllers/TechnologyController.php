@@ -180,21 +180,19 @@ class TechnologyController extends Controller
 		$n_removed = $rate * $units;
 		$scenarioid = session('scenarioid');
 
+
 		if ($subemid) 
 		{
 			$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $subemid . ', ' . $scenarioid . ', ' . $treat_id . ', \'subembayment\'');
 			// $updated = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $subemid . ', ' . $scenarioid . ', ' . $treat_id . ', \'subembayment\'');
 		} 
 
-		// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment] ' . $treat_id . ', ' . $rate . ', ' . $units);
-
 		foreach ($parcels as $parcel) 
 		{
-			$n_removed += $parcel->Original;
+			$n_total += $parcel->Original;
 		}
 
-		Session::put('n_removed', $n_removed);
-		return $n_removed;
+		$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment] ' . $treat_id . ', ' . 1 . ', ' . $n_total);
 	}
 
 
