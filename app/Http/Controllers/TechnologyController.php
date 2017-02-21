@@ -179,6 +179,7 @@ class TechnologyController extends Controller
 	{
 		$n_total = 0;
 		$scenarioid = session('scenarioid');
+		$n_parcels = 0;
 
 
 		if ($subemid) 
@@ -190,9 +191,10 @@ class TechnologyController extends Controller
 		foreach ($parcels as $parcel) 
 		{
 			$n_total += $parcel->Original;
+			$n_parcels += $parcel->NumParcels
 		}
 
-		$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment] ' . $treat_id . ', ' . 1 . ', ' . $n_total);
+		$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment] ' . $treat_id . ', ' . $n_parcels . ', ' . $n_total);
 	}
 
 
