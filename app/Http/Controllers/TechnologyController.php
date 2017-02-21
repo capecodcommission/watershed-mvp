@@ -443,14 +443,14 @@ class TechnologyController extends Controller
 					
 					if ($subemid) 
 					{
-						$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $subemid . ', ' . $scenarioid . ', ' . $treat_id . ', \'subembayment\'');
+						$parcels = DB::raw("select * from dbo.wiz_treatment_towns where wtt_treatment_id =" + $treat_id);
 					} 
 					
 
 					foreach ($parcels as $parcel) 
 					{
-						$n_total += $parcel->Original;
-						$n_parcels += $parcel->NumParcels;
+						$n_total += $parcel->wtt_unatt_n_removed;
+						$n_parcels += $parcel->wtt_tot_parcels;
 					}
 
 					$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $n_total . ', ' . $n_parcels);
