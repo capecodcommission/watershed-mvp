@@ -181,12 +181,12 @@ class TechnologyController extends Controller
 		$scenarioid = session('scenarioid');
 		$n_parcels = 0;
 
-		Session::put('subemid', $subemid);
+		
 
 		if ($subemid) 
 		{
 			$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $subemid . ', ' . $scenarioid . ', ' . $treat_id . ', \'subembayment\'');
-			// $updated = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $subemid . ', ' . $scenarioid . ', ' . $treat_id . ', \'subembayment\'');
+			Session::put('subemid', $subemid);
 		} 
 
 		foreach ($parcels as $parcel) 
@@ -440,12 +440,7 @@ class TechnologyController extends Controller
 					$subemid = session('subemid');
 					$n_parcels = 0;
 
-					
-					if ($subemid) 
-					{
-						$parcels = DB::raw("select * from dbo.wiz_treatment_towns where wtt_treatment_id =" + $treat_id);
-					} 
-					
+					$parcels = DB::table("dbo.wiz_treatment_parcel")->select("*")->where("wtt_treatment_id", "=", $treat_id)->get();
 
 					foreach ($parcels as $parcel) 
 					{
