@@ -351,39 +351,39 @@ require([
 					polyGraphic.setInfoTemplate(template);
 					map.graphics.add(polyGraphic);
 				}
-				else {
-					var nodes = [];
-					var rings = [];
-					var point_string = Treatment.POLY_STRING;
-						point_string = point_string.replace('POINT(', '');
-						point_string = point_string.replace(', 3857)', '');
-					var geometry = point_string.split(', ');
+				// else {
+				// 	var nodes = [];
+				// 	var rings = [];
+				// 	var point_string = Treatment.POLY_STRING;
+				// 		point_string = point_string.replace('POINT(', '');
+				// 		point_string = point_string.replace(', 3857)', '');
+				// 	var geometry = point_string.split(', ');
 
-					for (var j = 0; j < geometry.length; j++) 
-					{
-						var space = geometry[j].indexOf(' ');
-						var x = geometry[j].substr(0, space);
-						var y = geometry[j].substr(space);
-						// console.log('geometry: ' + geometry[j]);
-						// console.log('x: ' + x + ' y: '+y);
+				// 	for (var j = 0; j < geometry.length; j++) 
+				// 	{
+				// 		var space = geometry[j].indexOf(' ');
+				// 		var x = geometry[j].substr(0, space);
+				// 		var y = geometry[j].substr(space);
+				// 		// console.log('geometry: ' + geometry[j]);
+				// 		// console.log('x: ' + x + ' y: '+y);
 						
-						xList.push(x);
-						yList.push(y);
-						var point = [parseFloat(x), parseFloat(y)];
-						nodes.push(point);
-					};
-					rings.push(nodes);
-					var geo = { rings: rings, spatialReference: sr };
+				// 		xList.push(x);
+				// 		yList.push(y);
+				// 		var point = [parseFloat(x), parseFloat(y)];
+				// 		nodes.push(point);
+				// 	};
+				// 	rings.push(nodes);
+				// 	var geo = { rings: rings, spatialReference: sr };
 
-					var pointgeom = new esri.geometry.Point(geo);
-                    var pointGraphic = new esri.Graphic(pointgeom, pointSymbol, {
-                    	keeper: true
-                    });
+				// 	var pointgeom = new esri.geometry.Point(geo);
+    //                 var pointGraphic = new esri.Graphic(pointgeom, pointSymbol, {
+    //                 	keeper: true
+    //                 });
 
-                    pointGLs.add(pointGraphic)
+    //                 pointGLs.add(pointGraphic)
 
-                    map.addLayer(pointGLs)
-				}
+    //                 map.addLayer(pointGLs)
+				// }
 			}
 		}
 
