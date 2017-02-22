@@ -27,7 +27,8 @@ class MapController extends Controller
 		// need to update the record in the treatment_wiz table with the location of the treatment
 		// use point as the polygon value; 
 		// add the point to wiz_treatment_parcels so the N removed gets credited to the subembayment
-
+		Session::put('x', $x);
+		Session::put('y', $y);
 
 		return json_encode($subembayment[0]);
 	}

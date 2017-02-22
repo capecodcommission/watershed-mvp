@@ -177,7 +177,6 @@ class TechnologyController extends Controller
 	 **/
 	public function ApplyTreatment_Embayment($treat_id, $rate, $units, $subemid = null)
 	{
-		$n_total = 0;
 		$scenarioid = session('scenarioid');
 		$n_parcels = 0;
 
