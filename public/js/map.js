@@ -29,6 +29,8 @@ require([
 		"esri/renderers/UniqueValueRenderer",
 		"esri/renderers/ClassBreaksRenderer",
 		"esri/symbols/PictureMarkerSymbol",
+		"esri/geometry/Point",
+		"esri/graphic",
 
 		"esri/tasks/query",
 		"esri/tasks/QueryTask",
@@ -77,6 +79,8 @@ require([
 		UniqueValueRenderer,
 		ClassBreaksRenderer,
 		PictureMarkerSymbol,
+		Point,
+		Graphic,
 
 		Query,
 		QueryTask,
@@ -266,9 +270,12 @@ require([
 		function addTreatmentPolygons(treatments)
 		{	
 			var polyGLs = [];
+			var pointGLs = []
 			var polyGL = new esri.layers.GraphicsLayer();
 			var areaGL = new esri.layers.GraphicsLayer();
+			var pointGL = new esri.layers.GraphicsLayer();
 			polyGLs.push(polyGL);
+			pointGLs.push(pointGL);
 			// console.log(polyGLs);
 			// areaGLs.push(areaGL);
 			var sr = { wkid: 102100, latestWkid: 3857 };
@@ -343,6 +350,38 @@ require([
 					});
 					polyGraphic.setInfoTemplate(template);
 					map.graphics.add(polyGraphic);
+				} else {
+					var nodes = [];
+					var rings = [];
+					var point_string = Treatment.POLY_STRING;
+						point_string = point_string.replace('POINT(', '');
+						point_string = point_string.replace(', 3857)', '');
+					var geometry = point_string.split(', ');
+
+					for (var j = 0; j < geometry.length; j++) 
+					{
+						var space = geometry[j].indexOf(' ');
+						var x = geometry[j].substr(0, space);
+						var y = geometry[j].substr(space);
+						// console.log('geometry: ' + geometry[j]);
+						// console.log('x: ' + x + ' y: '+y);
+						
+						xList.push(x);
+						yList.push(y);
+						var point = [parseFloat(x), parseFloat(y)];
+						nodes.push(point);
+					};
+					rings.push(nodes);
+					var geo = { rings: rings, spatialReference: sr };
+
+					var pointgeom = new esri.geometry.Point(geo);
+                    var pointGraphic = new esri.Graphic(pointgeom, pointSymbol, {
+                    	keeper: true
+                    });
+
+                    pointGls[i].add(pointGraphic)
+
+                    map.addLayer(pointGls[i])
 				}
 			}
 		}
