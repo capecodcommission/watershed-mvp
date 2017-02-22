@@ -298,7 +298,7 @@ require([
 							   );
 					var imageURL = "http://2016.watershedmvp.org/images/SVG/"+Treatment.treatment_icon;
 					var pointSymbol = new PictureMarkerSymbol(imageURL,30,30)
-
+				}
 
 				
 				if (Treatment.Custom_POLY == 1) 
