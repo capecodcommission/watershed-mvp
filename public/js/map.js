@@ -355,24 +355,33 @@ require([
 
 				if (Treatment.Custom_POLY == 0 && Treatment.POLY_STRING.startsWith('POINT')) {
 
+					var nodes1 = []
+					var rings1 = []
+
 					var point_string = Treatment.POLY_STRING;
 						point_string = point_string.replace('POINT(', '');
 						point_string = point_string.replace(', 3857)', '');
-					var geometry = point_string.split(', ');
+					var geometry1 = point_string.split(', ');
 
-					var pointGeo = {
-						x: parseFloat(geometry[0]),
-						y: parseFloat(geometry[1]),
-						spatialReference: sr
+					for (var k = 0; k < geometry1.length; k++) {
+
+						var space = geometry1[k].indexOf(' ');
+						var x = geometry1[k].substr(0, space);
+						var y = geometry1[k].substr(space);
+
+						var point1 = [parseFloat(x), parseFloat(y)]
+
+						nodes1.push(point1)
 					}
 
-					var pointGeom = new Point(pointGeo)
-					var pointGraphic = new Graphic(pointGeom, pointSymbol, {
-						keeper: true
-					})
+					rings1.push(nodes1)
 
-					pointGLs[i].add(pointGraphic)
-					map.addLayer(pointGLs[i])
+					var geoPoints = { rings: rings1, spatialReference: sr}
+
+					var pointGeom = new Point(geoPoints)
+					var pointGraphic = new Graphic(pointGeom, pointSymbol)
+
+					map.graphics.add(pointGraphic)
 				}
 			}
 
