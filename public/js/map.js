@@ -369,6 +369,7 @@ require([
 					pointRings.push([parseFloat(x), parseFloat(y)])					
 				}
 			}
+			console.log(pointRings)
 
 			// for (var j = 0; j < treatments.length; j++) {
 
