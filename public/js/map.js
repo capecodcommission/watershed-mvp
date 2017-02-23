@@ -386,7 +386,7 @@ require([
 
 						pointGLs[i].add(pointGraphic)
 
-						map.addLayer(pointGLs[i])
+						map.graphics.add(pointGLs[i])
 					}
 				}
 			}
