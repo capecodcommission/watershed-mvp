@@ -306,7 +306,7 @@ require([
 							   new Color([0, 0, 0, 0.0])
 							   );
 					var imageURL = "http://2016.watershedmvp.org/images/SVG/"+Treatment.treatment_icon;
-					var pointSymbol = new PictureMarkerSymbol(imageURL,30,30)
+					// var pointSymbol = new PictureMarkerSymbol(imageURL,30,30)
 				}
 
 				
@@ -370,19 +370,14 @@ require([
 				}
 			}
 
-			var pointGeo = {
-				rings: pointRings,
-				spatialReference: sr
-			}
-
 			for (var j = 0; j < treatments.length; j++) {
 
 				var Treatment = treatments[j]
 
 				if (Treatment.POLY_STRING.startsWith('POINT(')) {
 
-					var imageURL = "http://2016.watershedmvp.org/images/SVG/"+Treatment.treatment_icon;
-					var pointSymbol = new PictureMarkerSymbol(imageURL,30,30)
+					var imageURL1 = "http://2016.watershedmvp.org/images/SVG/"+Treatment.treatment_icon;
+					var pointSymbol = new PictureMarkerSymbol(imageURL1,30,30)
 					
 					for (var k = 0; k < pointRings.length; k++) {
 						
