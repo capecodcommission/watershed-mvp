@@ -364,8 +364,8 @@ require([
 					for (var j = 0; j < geometry.length; j++) {
 						
 						var rings = {
-							x: parseFloat(geometry[j][0])
-							y: parseFloat(geometry[j][1])
+							x: parseFloat(geometry[j][0]),
+							y: parseFloat(geometry[j][1]),
 							spatialReference: sr
 						}
 
