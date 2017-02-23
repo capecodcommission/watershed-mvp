@@ -381,7 +381,7 @@ require([
 					var pointGeom = new Point(geoPoints)
 					var pointGraphic = new Graphic(pointGeom, pointSymbol)
 
-					map.graphics.add(pointGraphic)
+					map.addLayer(pointGraphic)
 				}
 			}
 
