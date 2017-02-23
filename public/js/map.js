@@ -362,30 +362,19 @@ require([
 						point_string = point_string.replace(', 3857)', '');
 					var geometry = point_string.split(', ');
 
-					
-					var x = geometry[0]
-					var y = geometry[1]
+					var pointRings = {
+						x: parseFloat(geometry[0]),
+						y: parseFloat(geometry[1]),
+						spatialReference: sr
+					}
 
-					pointRings.push([parseFloat(x), parseFloat(y)])	
-
-					for (var k = 0; k < pointRings.length; k++) {
-							
-						var pointGeo = {
-							x: pointRings[k][0],
-							y: pointRings[k][1],
-							spatialReference: sr
-						}
-
-						console.log(pointGeo)
-
-						var pointGeom = new Point(pointGeo)
-						var pointGraphic = new Graphic(pointGeom, pointSymbol, {
-							keeper: true
-						})
-
-						pointGLs[i].add(pointGraphic)
-						map.addLayer(pointGLs[i])
-					}	
+					var pointGeom = new Point(pointRings)
+					var pointGraphic = new Graphic(pointGeom, pointSymbol, {
+						keeper: true
+					})
+			
+					pointGLs[i].add(pointGraphic)
+					map.addLayer(pointGLs[i])	
 				}
 			}
 			// console.log(pointRings)
