@@ -280,6 +280,22 @@ require([
 			// areaGLs.push(areaGL);
 			pointRings = []
 			var sr = { wkid: 102100, latestWkid: 3857 };
+
+			for (var i = 0; i < treatments.length; i++) {
+
+				var Treatment = treatments[i]
+
+				if (Treatment.Custom_POLY == 0 && Treatment.POLY_STRING.startsWith('POINT')) {
+
+					var point_string = Treatment.POLY_STRING;
+						point_string = point_string.replace('POINT(', '');
+						point_string = point_string.replace(', 3857)', '');
+					var geometry1 = point_string.split(', ');
+
+					pointRings.push([parseFloat(geometry1[0]),parseFloat(geometry1[1])])
+				}
+			}
+
 			for (var i = treatments.length - 1; i >= 0; i--) 
 			{
 				var Treatment = treatments[i];
@@ -355,18 +371,25 @@ require([
 
 				if (Treatment.Custom_POLY == 0 && Treatment.POLY_STRING.startsWith('POINT')) {
 
-					var nodes1 = []
-					var rings1 = []
+					for (var k = 0; k < pointRings.length; k++) {
+						
+						var pointGeo = {
+							x: pointRings[k][0],
+							y: pointRings[k][1],
+							spatialReference: sr
+						}
 
-					var point_string = Treatment.POLY_STRING;
-						point_string = point_string.replace('POINT(', '');
-						point_string = point_string.replace(', 3857)', '');
-					var geometry1 = point_string.split(', ');
+						var pointGeom = new Point(pointGeo)
+						var pointGraphic = new Graphic(pointGeom, pointSymbol, {
+							keeper: true
+						})
 
-					pointRings.push([parseFloat(geometry1[0]),parseFloat(geometry1[1])])
+						pointGLs[i].add(pointGraphic)
+
+						map.addLayer(pointGLs[i])
+					}
 				}
 			}
-			
 
 			console.log(pointRings)
 
