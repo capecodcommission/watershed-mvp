@@ -365,9 +365,8 @@ require([
 
 					for (var j = 0; j < geometry.length; j++) 
 					{
-						var space = geometry[j].indexOf(' ');
-						var x = geometry[j].substr(0, space);
-						var y = geometry[j].substr(space);
+						var x = geometry[j][0]
+						var y = geometry[j][1]
 						// console.log('geometry: ' + geometry[j]);
 						// console.log('x: ' + x + ' y: '+y);
 						
