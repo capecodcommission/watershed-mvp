@@ -370,20 +370,22 @@ require([
 
 					for (var k = 0; k < pointRings.length; k++) {
 							
-							var pointGeo = {
-								x: pointRings[k][0],
-								y: pointRings[k][1],
-								spatialReference: sr
-							}
+						var pointGeo = {
+							x: pointRings[k][0],
+							y: pointRings[k][1],
+							spatialReference: sr
+						}
 
-							var pointGeom = new Point(pointGeo)
-							var pointGraphic = new Graphic(pointGeom, pointSymbol, {
-								keeper: true
-							})
+						console.log(pointGeo)
 
-							pointGLs[i].add(pointGraphic)
-							map.addLayer(pointGLs[i])
-						}	
+						var pointGeom = new Point(pointGeo)
+						var pointGraphic = new Graphic(pointGeom, pointSymbol, {
+							keeper: true
+						})
+
+						pointGLs[i].add(pointGraphic)
+						map.addLayer(pointGLs[i])
+					}	
 				}
 			}
 			// console.log(pointRings)
