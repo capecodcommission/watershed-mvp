@@ -360,40 +360,49 @@ require([
 						point_string = point_string.replace(', 3857)', '');
 					var geometry = point_string.split(', ');
 
-					var x = parseFloat(geometry[0])
-					var	y = parseFloat(geometry[1])
-					
-					pointRings.push([x,y])
-				}
-			}
-
-			console.log(pointRings)
-
-			for (var k = 0; k < treatments.length; k++) {
-				
-				var Treatment = treatments[k]
-
-				if (Treatment.Custom_POLY == 0 && Treatment.POLY_STRING.startsWith('POINT')) {
-
-					var imageURL = "http://2016.watershedmvp.org/images/SVG/"+Treatment.treatment_icon;
-					var pointSymbol = new PictureMarkerSymbol(imageURL,30,30)
-
-					for (var l = 0; l < pointRings.length; l++) {
-						
-						var pointGeo = {
-							x: pointRings[l][0],
-							y: pointRings[l][1],
-							spatialReference: sr
-						}
-
-						var pointGeom = new Point(pointGeo)
-						var pointGraphic = new Graphic(pointGeom, pointSymbol)
-
-						pointGLs[k].add(pointGraphic)
-						map.addLayer(pointGLs[k])
+					var pointGeo = {
+						x: parseFloat(geometry[0]),
+						y: parseFloat(geometry[1]),
+						spatialReference: sr
 					}
+
+					var pointGeom = new Point(pointGeo)
+					var pointGraphic = new Graphic(pointGeom, pointSymbol, {
+						keeper: true
+					})
+
+					pointGLs[i].add(pointGraphic)
+					map.addLayer(pointGLs[i])
 				}
 			}
+
+			// console.log(pointRings)
+
+			// for (var k = 0; k < treatments.length; k++) {
+				
+			// 	var Treatment = treatments[k]
+
+			// 	if (Treatment.Custom_POLY == 0 && Treatment.POLY_STRING.startsWith('POINT')) {
+
+			// 		var imageURL = "http://2016.watershedmvp.org/images/SVG/"+Treatment.treatment_icon;
+			// 		var pointSymbol = new PictureMarkerSymbol(imageURL,30,30)
+
+			// 		for (var l = 0; l < pointRings.length; l++) {
+						
+			// 			var pointGeo = {
+			// 				x: pointRings[l][0],
+			// 				y: pointRings[l][1],
+			// 				spatialReference: sr
+			// 			}
+
+			// 			var pointGeom = new Point(pointGeo)
+			// 			var pointGraphic = new Graphic(pointGeom, pointSymbol)
+
+			// 			pointGLs[k].add(pointGraphic)
+			// 			map.addLayer(pointGLs[k])
+			// 		}
+			// 	}
+			// }
 		}
 
 
