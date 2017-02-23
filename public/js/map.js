@@ -306,7 +306,7 @@ require([
 							   new Color([0, 0, 0, 0.0])
 							   );
 					var imageURL = "http://2016.watershedmvp.org/images/SVG/"+Treatment.treatment_icon;
-					// var pointSymbol = new PictureMarkerSymbol(imageURL,30,30)
+					var pointSymbol = new PictureMarkerSymbol(imageURL,30,30)
 				}
 
 				
@@ -366,7 +366,15 @@ require([
 					var x = geometry[0]
 					var y = geometry[1]
 
-					pointRings.push([parseFloat(x), parseFloat(y)])					
+					pointRings.push([parseFloat(x), parseFloat(y), spatialReference: sr])		
+
+					var pointGeom = new Point(pointRings)
+					var pointGraphic = new Graphic(pointGeom, pointSymbol, {
+						keeper: true
+					})
+					pointGLs[i].add(pointGraphic)
+					map.addLayer(pointGLs[i])
+
 				}
 			}
 			console.log(pointRings)
