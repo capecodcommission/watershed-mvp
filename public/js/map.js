@@ -364,8 +364,8 @@ require([
 					var geometry1 = point_string.split(', ');
 
 					var geoPoints = {
-						x: geometry1[0],
-						y: geometry1[1],
+						x: parseFloat(geometry1[0]),
+						y: parseFloat(geometry1[1]),
 						spatialReference: sr
 					}
 
