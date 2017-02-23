@@ -361,33 +361,21 @@ require([
 						point_string = point_string.replace(', 3857)', '');
 					var geometry = point_string.split(', ');
 
-					console.log(geometry)
-
-					// for (var j = 0; j < geometry.length; j++) 
-					// {
-					// 	var x = geometry[j][0]
-					// 	var y = geometry[j][1]
-					// 	// console.log('geometry: ' + geometry[j]);
-					// 	// console.log('x: ' + x + ' y: '+y);
+					for (var j = 0; j < geometry.length; j++) {
 						
-					// 	xList.push(x);
-					// 	yList.push(y);
-					// 	var point = [parseFloat(x), parseFloat(y)];
-					// 	nodes.push(point);
-					// };
-					// rings.push(geometry);
+						var rings = {
+							x: parseFloat(geometry[j][0])
+							y: parseFloat(geometry[j][1])
+							spatialReference: sr
+						}
 
-					// console.log(rings)
-					var geo = { rings: geometry, spatialReference: sr };
-
-					var pointgeom = new esri.geometry.Point(geo);
-                    var pointGraphic = new esri.Graphic(pointgeom, pointSymbol, {
+						var pointgeom = new esri.geometry.Point(geo);
+						var pointGraphic = new esri.Graphic(pointgeom, pointSymbol, {
                     	keeper: true
-                    });
-
-                    pointGLs.add(pointGraphic)
-
-                    map.addLayer(pointGLs)
+                    	});
+                    	pointGLs[i].add(pointGraphic)
+                    	map.addLayer(pointGLs[i])
+					}
 				}
 			}
 		}
