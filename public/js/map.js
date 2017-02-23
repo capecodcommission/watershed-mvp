@@ -375,10 +375,10 @@ require([
 					// 	var point = [parseFloat(x), parseFloat(y)];
 					// 	nodes.push(point);
 					// };
-					rings.push(geometry);
+					// rings.push(geometry);
 
-					console.log(rings)
-					var geo = { rings: rings, spatialReference: sr };
+					// console.log(rings)
+					var geo = { rings: geometry, spatialReference: sr };
 
 					var pointgeom = new esri.geometry.Point(geo);
                     var pointGraphic = new esri.Graphic(pointgeom, pointSymbol, {
