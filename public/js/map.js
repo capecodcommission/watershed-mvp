@@ -363,25 +363,12 @@ require([
 						point_string = point_string.replace(', 3857)', '');
 					var geometry1 = point_string.split(', ');
 
-					var geoPoints = {
-						x: parseFloat(geometry1[0]),
-						y: parseFloat(geometry1[1]),
-						spatialReference: sr
-					}
-					nodes1.push([geoPoints])
-
-					console.log(nodes1)
-
-					var pointGeom = new Point(nodes1)
-					var pointGraphic = new Graphic(pointGeom, pointSymbol, {
-						keeper: true
-					})
-
-					map.graphics.add(pointGraphic)
+					pointRings.push([parseFloat(geometry1[0]),parseFloat(geometry1[1])])
 				}
 			}
+			
 
-			// console.log(pointRings)
+			console.log(pointRings)
 
 			// for (var k = 0; k < treatments.length; k++) {
 				
