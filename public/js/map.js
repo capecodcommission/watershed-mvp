@@ -278,6 +278,7 @@ require([
 			pointGLs.push(pointGL);
 			// console.log(polyGLs);
 			// areaGLs.push(areaGL);
+			pointRings = []
 			var sr = { wkid: 102100, latestWkid: 3857 };
 			for (var i = treatments.length - 1; i >= 0; i--) 
 			{
@@ -351,39 +352,46 @@ require([
 					polyGraphic.setInfoTemplate(template);
 					map.graphics.add(polyGraphic);
 				}
-				// else {
-				// 	var nodes = [];
-				// 	var rings = [];
-				// 	var point_string = Treatment.POLY_STRING;
-				// 		point_string = point_string.replace('POINT(', '');
-				// 		point_string = point_string.replace(', 3857)', '');
-				// 	var geometry = point_string.split(', ');
 
-				// 	for (var j = 0; j < geometry.length; j++) 
-				// 	{
-				// 		var space = geometry[j].indexOf(' ');
-				// 		var x = geometry[j].substr(0, space);
-				// 		var y = geometry[j].substr(space);
-				// 		// console.log('geometry: ' + geometry[j]);
-				// 		// console.log('x: ' + x + ' y: '+y);
+				if (Treatment.Custom_POLY == 0 && Treatment.POLY_STRING.startsWith('POINT')) {
+
+					var point_string = Treatment.POLY_STRING;
+						point_string = point_string.replace('POINT(', '');
+						point_string = point_string.replace(', 3857)', '');
+					var geometry = point_string.split(', ');
+
+					var x = parseFloat(geometry[0])
+					var	y = parseFloat(geometry[1])
+					
+					pointRings.push([x,y])
+				}
+			}
+
+			for (var k = 0; k < treatments.length; k++) {
+				
+				var Treatment = treatments[k]
+
+				if (Treatment.Custom_POLY == 0 && Treatment.POLY_STRING.startsWith('POINT')) {
+
+					var imageURL = "http://2016.watershedmvp.org/images/SVG/"+Treatment.treatment_icon;
+					var pointSymbol = new PictureMarkerSymbol(imageURL,30,30)
+
+					for (var l = 0; l < pointRings.length; l++) {
 						
-				// 		xList.push(x);
-				// 		yList.push(y);
-				// 		var point = [parseFloat(x), parseFloat(y)];
-				// 		nodes.push(point);
-				// 	};
-				// 	rings.push(nodes);
-				// 	var geo = { rings: rings, spatialReference: sr };
+						var pointGeo = {
+							x: pointRings[l][0],
+							y: pointRings[l][1],
+							spatialReference: sr
+						}
 
-				// 	var pointgeom = new esri.geometry.Point(geo);
-    //                 var pointGraphic = new esri.Graphic(pointgeom, pointSymbol, {
-    //                 	keeper: true
-    //                 });
+						var pointGeom = new Point(pointGeo)
+						var pointGraphic = new Graphic(pointGeom, pointSymbol)
 
-    //                 pointGLs.add(pointGraphic)
+						pointGLs.add(pointGraphic)
+					}
 
-    //                 map.addLayer(pointGLs)
-				// }
+					map.addLayer(pointGLs)
+				}
 			}
 		}
 
