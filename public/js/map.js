@@ -354,17 +354,15 @@ require([
 
 
 				if (Treatment.POLY_STRING.startsWith('POINT(')) {
+
 					var rings = [];
 					var point_string = Treatment.POLY_STRING;
 						point_string = point_string.replace('POINT(', '');
 						point_string = point_string.replace(', 3857)', '');
 					var geometry = point_string.split(', ');
-
-					
-						
 					var rings = {
-						x: parseFloat(geometry[0]),
-						y: parseFloat(geometry[1]),
+						x: parseFloat(geometry[i][0]),
+						y: parseFloat(geometry[i][1]),
 						spatialReference: sr
 					}
 
