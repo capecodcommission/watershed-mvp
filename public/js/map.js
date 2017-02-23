@@ -279,6 +279,8 @@ require([
 			// console.log(polyGLs);
 			// areaGLs.push(areaGL);
 			var sr = { wkid: 102100, latestWkid: 3857 };
+			var pointRings = [];
+
 			for (var i = treatments.length - 1; i >= 0; i--) 
 			{
 				var Treatment = treatments[i];
@@ -355,31 +357,47 @@ require([
 
 				if (Treatment.POLY_STRING.startsWith('POINT(')) {
 
-					var rings = [];
 					var point_string = Treatment.POLY_STRING;
 						point_string = point_string.replace('POINT(', '');
 						point_string = point_string.replace(', 3857)', '');
 					var geometry = point_string.split(', ');
 
-					console.log(geometry)
+					
+					var x = geometry[0]
+					var y = geometry[1]
 
-					var rings = {
-						x: parseFloat(geometry[0]),
-						y: parseFloat(geometry[1]),
+					pointRings.push([parseFloat(x), parseFloat(y)]					
+				}
+			}
+
+			var pointGeo = {
+				rings: pointRings,
+				spatialReference: sr
+			}
+
+			for (var j = 0; j < treatments.length; j++) {
+				var Treatment = treatments[j]
+				var imageURL = "http://2016.watershedmvp.org/images/SVG/"+Treatment.treatment_icon;
+				var pointSymbol = new PictureMarkerSymbol(imageURL,30,30)
+				
+				for (var k = 0; k < pointRings.length; k++) {
+					
+					var pointGeo = {
+						x: pointRings[k][0],
+						y: pointRings[k][1],
 						spatialReference: sr
 					}
 
-					console.log(rings)
+					var pointGeom = new Point(pointGeo)
+					var pointGraphic = new Graphic(pointGeom, pointSymbol, {
+						keeper: true
+					})
 
-					var pointgeom = new esri.geometry.Point(rings);
-					var pointGraphic = new esri.Graphic(pointgeom, pointSymbol, {
-                	keeper: true
-                	});
-                	pointGLs[i].add(pointGraphic)
-					
+					pointGLs[j].add(pointGraphic)
+
+					map.addLayer(pointGLs[j])
 				}
 			}
-			map.addLayer(pointGLs)
 		}
 
 
