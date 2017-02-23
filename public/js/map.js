@@ -366,7 +366,7 @@ require([
 					var x = geometry[0]
 					var y = geometry[1]
 
-					pointRings.push([parseFloat(x), parseFloat(y)]					
+					pointRings.push([parseFloat(x), parseFloat(y)])					
 				}
 			}
 
