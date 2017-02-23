@@ -390,9 +390,8 @@ require([
 						var pointGraphic = new Graphic(pointGeom, pointSymbol)
 
 						pointGLs[k].add(pointGraphic)
+						map.addLayer(pointGLs[k])
 					}
-
-					map.addLayer(pointGLs[k])
 				}
 			}
 		}
