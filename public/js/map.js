@@ -354,7 +354,6 @@ require([
 
 
 				if (Treatment.POLY_STRING.startsWith('POINT(')) {
-					var nodes = [];
 					var rings = [];
 					var point_string = Treatment.POLY_STRING;
 						point_string = point_string.replace('POINT(', '');
@@ -369,14 +368,14 @@ require([
 							spatialReference: sr
 						}
 
+						console.log(rings)
+
 						var pointgeom = new esri.geometry.Point(rings);
 						var pointGraphic = new esri.Graphic(pointgeom, pointSymbol, {
                     	keeper: true
                     	});
                     	pointGLs[i].add(pointGraphic)
-
-                    	console.log(pointGLs[i])
-                    	map.addLayer(pointGLs[i])
+                    	map.graphics.add(pointGLs[i])
 					}
 				}
 			}
