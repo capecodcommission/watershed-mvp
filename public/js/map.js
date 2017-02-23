@@ -395,6 +395,8 @@ require([
 
 						pointGLs.add(pointGraphic)
 
+						console.log(pointGLs)
+
 						map.addLayer(pointGLs)
 					}
 				}
