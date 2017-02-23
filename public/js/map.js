@@ -364,7 +364,7 @@ require([
 					var geometry1 = point_string.split(', ');
 
 					for (var k = 0; k < geometry1.length; k++) {
-						
+
 						var x = geometry1[k][0]
 						var y = geometry1[k][1]
 
@@ -374,6 +374,8 @@ require([
 					}
 
 					rings1.push(nodes1)
+
+					console.log(rings1)
 
 					var geoPoints = { rings: rings1, spatialReference: sr}
 
