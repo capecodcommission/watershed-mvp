@@ -370,34 +370,34 @@ require([
 				}
 			}
 
-			for (var j = 0; j < treatments.length; j++) {
+			// for (var j = 0; j < treatments.length; j++) {
 
-				var Treatment = treatments[j]
+			// 	var Treatment = treatments[j]
 
-				if (Treatment.POLY_STRING.startsWith('POINT(')) {
+			// 	if (Treatment.POLY_STRING.startsWith('POINT(')) {
 
-					var imageURL1 = "http://2016.watershedmvp.org/images/SVG/"+Treatment.treatment_icon;
-					var pointSymbol = new PictureMarkerSymbol(imageURL1,30,30)
+			// 		var imageURL1 = "http://2016.watershedmvp.org/images/SVG/"+Treatment.treatment_icon;
+			// 		var pointSymbol = new PictureMarkerSymbol(imageURL1,30,30)
 					
-					for (var k = 0; k < pointRings.length; k++) {
+			// 		for (var k = 0; k < pointRings.length; k++) {
 						
-						var pointGeo = {
-							x: pointRings[k][0],
-							y: pointRings[k][1],
-							spatialReference: sr
-						}
+			// 			var pointGeo = {
+			// 				x: pointRings[k][0],
+			// 				y: pointRings[k][1],
+			// 				spatialReference: sr
+			// 			}
 
-						var pointGeom = new Point(pointGeo)
-						var pointGraphic = new Graphic(pointGeom, pointSymbol, {
-							keeper: true
-						})
+			// 			var pointGeom = new Point(pointGeo)
+			// 			var pointGraphic = new Graphic(pointGeom, pointSymbol, {
+			// 				keeper: true
+			// 			})
 
-						pointGLs[j].add(pointGraphic)
+			// 			pointGLs[j].add(pointGraphic)
 
-						map.addLayer(pointGLs[j])
-					}
-				}
-			}
+			// 			map.addLayer(pointGLs[j])
+			// 		}
+			// 	}
+			// }
 		}
 
 
