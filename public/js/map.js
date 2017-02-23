@@ -363,19 +363,19 @@ require([
 
 					console.log(geometry)
 
-					for (var j = 0; j < geometry.length; j++) 
-					{
-						var x = geometry[j][0]
-						var y = geometry[j][1]
-						// console.log('geometry: ' + geometry[j]);
-						// console.log('x: ' + x + ' y: '+y);
+					// for (var j = 0; j < geometry.length; j++) 
+					// {
+					// 	var x = geometry[j][0]
+					// 	var y = geometry[j][1]
+					// 	// console.log('geometry: ' + geometry[j]);
+					// 	// console.log('x: ' + x + ' y: '+y);
 						
-						xList.push(x);
-						yList.push(y);
-						var point = [parseFloat(x), parseFloat(y)];
-						nodes.push(point);
-					};
-					rings.push(nodes);
+					// 	xList.push(x);
+					// 	yList.push(y);
+					// 	var point = [parseFloat(x), parseFloat(y)];
+					// 	nodes.push(point);
+					// };
+					rings.push(geometry);
 
 					console.log(rings)
 					var geo = { rings: rings, spatialReference: sr };
