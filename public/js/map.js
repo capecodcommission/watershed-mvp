@@ -308,7 +308,7 @@ require([
 				}
 
 				
-				if (Treatment.Custom_POLY == 1) 
+				if (Treatment.Custom_POLY == 1 && Treatment.POLY_STRING) 
 				{
 					var nodes = [];
 					var rings = [];
