@@ -366,41 +366,58 @@ require([
 					var x = geometry[0]
 					var y = geometry[1]
 
-					pointRings.push([parseFloat(x), parseFloat(y)])		
+					pointRings.push([parseFloat(x), parseFloat(y)])	
+
+					for (var k = 0; k < pointRings.length; k++) {
+							
+							var pointGeo = {
+								x: pointRings[k][0],
+								y: pointRings[k][1],
+								spatialReference: sr
+							}
+
+							var pointGeom = new Point(pointGeo)
+							var pointGraphic = new Graphic(pointGeom, pointSymbol, {
+								keeper: true
+							})
+
+							pointGLs[i].add(pointGraphic)
+							map.addLayer(pointGLs[i])
+						}	
 				}
 			}
-			console.log(pointRings)
+			// console.log(pointRings)
 
-			for (var k = treatments.length - 1; k >= 0; k--) {
+			// for (var k = treatments.length - 1; k >= 0; k--) {
 
-				var Treatment = treatments[k]
+			// 	var Treatment = treatments[k]
 
-				if (Treatment.POLY_STRING.startsWith('POINT(')) {
+			// 	if (Treatment.POLY_STRING.startsWith('POINT(')) {
 
-					var imageURL1 = "http://2016.watershedmvp.org/images/SVG/"+Treatment.treatment_icon;
-					var pointSymbol = new PictureMarkerSymbol(imageURL1,30,30)
+			// 		var imageURL1 = "http://2016.watershedmvp.org/images/SVG/"+Treatment.treatment_icon;
+			// 		var pointSymbol = new PictureMarkerSymbol(imageURL1,30,30)
 					
-					for (var l = 0; l < pointRings.length; l++) {
+			// 		for (var l = 0; l < pointRings.length; l++) {
 						
-						var pointGeo = {
-							x: pointRings[l][0],
-							y: pointRings[l][1],
-							spatialReference: sr
-						}
+			// 			var pointGeo = {
+			// 				x: pointRings[l][0],
+			// 				y: pointRings[l][1],
+			// 				spatialReference: sr
+			// 			}
 
-						var pointGeom = new Point(pointGeo)
-						var pointGraphic = new Graphic(pointGeom, pointSymbol, {
-							keeper: true
-						})
+			// 			var pointGeom = new Point(pointGeo)
+			// 			var pointGraphic = new Graphic(pointGeom, pointSymbol, {
+			// 				keeper: true
+			// 			})
 
-						pointGLs.add(pointGraphic)
+			// 			pointGLs.add(pointGraphic)
 
-						console.log(pointGLs)
+			// 			console.log(pointGLs)
 
-						map.addLayer(pointGLs)
-					}
-				}
-			}
+			// 			map.addLayer(pointGLs)
+			// 		}
+			// 	}
+			// }
 		}
 
 
