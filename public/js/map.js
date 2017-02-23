@@ -367,6 +367,8 @@ require([
 				}
 			}
 
+			console.log(pointRings)
+
 			// for (var k = 0; k < treatments.length; k++) {
 				
 			// 	var Treatment = treatments[k]
