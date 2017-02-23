@@ -353,7 +353,7 @@ require([
 				}
 
 
-				if (Treatment.POLY_STRING.includes('POINT(')) {
+				if (Treatment.POLY_STRING.startsWith('POINT(')) {
 					var nodes = [];
 					var rings = [];
 					var point_string = Treatment.POLY_STRING;
@@ -369,7 +369,7 @@ require([
 							spatialReference: sr
 						}
 
-						var pointgeom = new esri.geometry.Point(geo);
+						var pointgeom = new esri.geometry.Point(rings);
 						var pointGraphic = new esri.Graphic(pointgeom, pointSymbol, {
                     	keeper: true
                     	});
