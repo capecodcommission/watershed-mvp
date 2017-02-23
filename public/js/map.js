@@ -383,8 +383,8 @@ require([
 							keeper: true
 						})
 
-						pointGLs[i].add(pointGraphic)
-						map.addLayer(pointGLs[i])
+						pointGLs[k].add(pointGraphic)
+						map.addLayer(pointGLs[k])
 					}	
 				}
 			}
