@@ -360,23 +360,24 @@ require([
 						point_string = point_string.replace(', 3857)', '');
 					var geometry = point_string.split(', ');
 
-					for (var j = 0; j < geometry.length; j++) {
+					
 						
-						var rings = {
-							x: parseFloat(geometry[j][0]),
-							y: parseFloat(geometry[j][1]),
-							spatialReference: sr
-						}
-
-						console.log(rings)
-
-						var pointgeom = new esri.geometry.Point(rings);
-						var pointGraphic = new esri.Graphic(pointgeom, pointSymbol, {
-                    	keeper: true
-                    	});
-                    	pointGLs[i].add(pointGraphic)
-                    	map.graphics.add(pointGLs[i])
+					var rings = {
+						x: parseFloat(geometry[0]),
+						y: parseFloat(geometry[1]),
+						spatialReference: sr
 					}
+
+					console.log(rings)
+
+					var pointgeom = new esri.geometry.Point(rings);
+					var pointGraphic = new esri.Graphic(pointgeom, pointSymbol, {
+                	keeper: true
+                	});
+                	pointGLs[i].add(pointGraphic)
+
+                	map.addLayer(pointGLs[i])
+					
 				}
 			}
 		}
