@@ -374,9 +374,9 @@ require([
 					var pointGraphic = new esri.Graphic(pointgeom, pointSymbol, {
                 	keeper: true
                 	});
-                	pointGLs.add(pointGraphic)
+                	pointGLs[i].push(pointGraphic)
 
-                	map.addLayer(pointGLs)
+                	map.addLayer(pointGLs[i])
 					
 				}
 			}
