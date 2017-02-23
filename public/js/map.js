@@ -374,6 +374,8 @@ require([
                     	keeper: true
                     	});
                     	pointGLs[i].add(pointGraphic)
+
+                    	console.log(pointGLs[i])
                     	map.addLayer(pointGLs[i])
 					}
 				}
