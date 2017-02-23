@@ -355,62 +355,30 @@ require([
 				}
 
 
-				if (Treatment.POLY_STRING.startsWith('POINT(')) {
+				// if (Treatment.POLY_STRING.startsWith('POINT(')) {
 
-					var point_string = Treatment.POLY_STRING;
-						point_string = point_string.replace('POINT(', '');
-						point_string = point_string.replace(', 3857)', '');
-					var geometry = point_string.split(', ');
+				// 	var point_string = Treatment.POLY_STRING;
+				// 		point_string = point_string.replace('POINT(', '');
+				// 		point_string = point_string.replace(', 3857)', '');
+				// 	var geometry = point_string.split(', ');
 
-					var pointRings = {
-						x: parseFloat(geometry[0]),
-						y: parseFloat(geometry[1]),
-						spatialReference: sr
-					}
+				// 	var pointRings = {
+				// 		x: parseFloat(geometry[0]),
+				// 		y: parseFloat(geometry[1]),
+				// 		spatialReference: sr
+				// 	}
 
-					console.log(pointRings)
+				// 	console.log(pointRings)
 
-					var pointGeom = new Point(pointRings)
-					var pointGraphic = new Graphic(pointGeom, pointSymbol, {
-						keeper: true
-					})
+				// 	var pointGeom = new Point(pointRings)
+				// 	var pointGraphic = new Graphic(pointGeom, pointSymbol, {
+				// 		keeper: true
+				// 	})
 			
-					pointGLs[i].add(pointGraphic)
-					map.addLayer(pointGLs[i])	
-				}
+				// 	pointGLs[i].add(pointGraphic)
+				// 	map.addLayer(pointGLs[i])	
+				// }
 			}
-			// console.log(pointRings)
-
-			// for (var k = treatments.length - 1; k >= 0; k--) {
-
-			// 	var Treatment = treatments[k]
-
-			// 	if (Treatment.POLY_STRING.startsWith('POINT(')) {
-
-			// 		var imageURL1 = "http://2016.watershedmvp.org/images/SVG/"+Treatment.treatment_icon;
-			// 		var pointSymbol = new PictureMarkerSymbol(imageURL1,30,30)
-					
-			// 		for (var l = 0; l < pointRings.length; l++) {
-						
-			// 			var pointGeo = {
-			// 				x: pointRings[l][0],
-			// 				y: pointRings[l][1],
-			// 				spatialReference: sr
-			// 			}
-
-			// 			var pointGeom = new Point(pointGeo)
-			// 			var pointGraphic = new Graphic(pointGeom, pointSymbol, {
-			// 				keeper: true
-			// 			})
-
-			// 			pointGLs.add(pointGraphic)
-
-			// 			console.log(pointGLs)
-
-			// 			map.addLayer(pointGLs)
-			// 		}
-			// 	}
-			// }
 		}
 
 
