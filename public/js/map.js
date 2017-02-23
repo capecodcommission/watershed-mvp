@@ -368,17 +368,16 @@ require([
 						y: parseFloat(geometry1[1]),
 						spatialReference: sr
 					}
+					nodes1.push([geoPoints])
 
-					console.log(geoPoints)
+					console.log(nodes1)
 
-					var pointGeom = new Point(geoPoints)
+					var pointGeom = new Point(nodes1)
 					var pointGraphic = new Graphic(pointGeom, pointSymbol, {
 						keeper: true
 					})
 
-					pointGLs[i].add(pointGraphic)
-
-					map.addLayer(pointGLs[i])
+					map.graphics.add(pointGraphic)
 				}
 			}
 
