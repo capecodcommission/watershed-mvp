@@ -360,9 +360,12 @@ require([
 						point_string = point_string.replace('POINT(', '');
 						point_string = point_string.replace(', 3857)', '');
 					var geometry = point_string.split(', ');
+
+					console.log(geometry)
+
 					var rings = {
-						x: parseFloat(geometry[i][0]),
-						y: parseFloat(geometry[i][1]),
+						x: parseFloat(geometry[0]),
+						y: parseFloat(geometry[1]),
 						spatialReference: sr
 					}
 
