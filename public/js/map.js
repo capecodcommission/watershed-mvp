@@ -376,11 +376,10 @@ require([
                 	keeper: true
                 	});
                 	pointGLs[i].add(pointGraphic)
-
-                	map.addLayer(pointGLs[i])
 					
 				}
 			}
+			map.addLayer(pointGLs)
 		}
 
 
