@@ -386,14 +386,16 @@ require([
 							keeper: true
 						})
 
-						pointGLs[i].add(pointGraphic)
+						pointGLs.push(pointGraphic)
 
 						map.addLayer(pointGLs[i])
 					}
+					
+					map.addLayer(pointGLs[i])
 				}
 			}
 
-			console.log(pointRings)
+			// console.log(pointRings)
 
 			// for (var k = 0; k < treatments.length; k++) {
 				
