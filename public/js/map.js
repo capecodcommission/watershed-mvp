@@ -278,7 +278,13 @@ require([
 			pointGLs.push(pointGL);
 			// console.log(polyGLs);
 			// areaGLs.push(areaGL);
-			pointRings = []
+			var pointRings = []
+			var imageURL1 = ''
+			var treatmentArea1 = ''
+			var parcels1 = ''
+			var n_removed1 = ''
+			var popupVal1 = ''
+
 			var sr = { wkid: 102100, latestWkid: 3857 };
 
 			for (var i = 0; i < treatments.length; i++) {
@@ -286,6 +292,12 @@ require([
 				var Treatment = treatments[i]
 
 				if (Treatment.Custom_POLY == 0 && Treatment.POLY_STRING.startsWith('POINT')) {
+
+					imageURL1 = "http://2016.watershedmvp.org/images/SVG/"+Treatment.treatment_icon;
+					treatmentArea1 = Math.round(Treatment.Treatment_Acreage);
+					parcels1 = Treatment.Treatment_Parcels;
+					n_removed1 = Math.round(Treatment.Nload_Reduction);
+					popupVal1 = treatmentType + ' (' + Treatment.TreatmentID + ')';
 
 					var point_string = Treatment.POLY_STRING;
 						point_string = point_string.replace('POINT(', '');
@@ -385,6 +397,17 @@ require([
 						var pointGraphic = new Graphic(pointGeom, pointSymbol, {
 							keeper: true
 						})
+
+						var template = new InfoTemplate({
+						title: popupVal1,
+						content: '<div align="left" class="treatment info technology"><img style="width:60pxfloat:right;margin-right:10px;" src=" '
+									+ imageURL1 + '" /><strong>Treatment Stats</strong>:<br /> ' 
+									+ treatmentArea1 + " Acres<br/>" 
+									+ parcels1 + " parcels treated<br/>" + n_removed1 + "kg (unatt) N removed.<br />"
+									// + "<button class='edit_poly' data-treatment='"+Treatment.TreatmentID+"'>Edit Polygon</button>  "
+									// + "<button class='save_poly' data-treatment='"+Treatment.TreatmentID+"'>Save Polygon</button></div>"
+
+					});
 
 						pointGLs[k].add(pointGraphic.setInfoTemplate(template))
 
