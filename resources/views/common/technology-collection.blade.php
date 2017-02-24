@@ -101,7 +101,6 @@
 
 		});
 	$('#apply_treatment_'+treatment).on('click', function(e){
-			$('#disable-popups').trigger()
 			e.preventDefault();
 			var rate = $('#septic-rate').val();
 			var url = "{{url('/apply_septic')}}" + '/' +  treatment + '/' + rate;
