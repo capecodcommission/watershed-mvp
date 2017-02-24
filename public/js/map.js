@@ -299,7 +299,7 @@ require([
 					treatmentArea1 = Math.round(Treatment.Treatment_Acreage);
 					parcels1 = Treatment.Treatment_Parcels;
 					n_removed1 = Math.round(Treatment.Nload_Reduction);
-					popupVal1 = treatmentType + ' (' + Treatment.TreatmentID + ')';
+					popupVal1 = treatmentType1 + ' (' + Treatment.TreatmentID + ')';
 
 					var point_string = Treatment.POLY_STRING;
 						point_string = point_string.replace('POINT(', '');
