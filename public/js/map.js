@@ -386,13 +386,11 @@ require([
 							keeper: true
 						})
 
-						pointGLs.push(pointGraphic)
+						pointGLs[k].add(pointGraphic)
+
+						map.addLayer(pointGLs[k])
 					}
 				}
-			}
-			for (var i = 0; i < pointGLs.length; i++) {
-						
-				map.addLayer(pointGLs[0])
 			}
 		}
 
