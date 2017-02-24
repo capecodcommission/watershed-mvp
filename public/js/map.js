@@ -1005,6 +1005,8 @@ require([
 
 				if (Treatment.Custom_POLY == 0 && Treatment.POLY_STRING.startsWith('POINT')) {
 
+					console.log(pointRings)
+
 					for (var k = 0; k < pointRings.length; k++) {
 						
 						var pointGeo = {
