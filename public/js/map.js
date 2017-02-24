@@ -573,7 +573,7 @@ require([
 		var renderer = new SimpleRenderer(symbol)
 			renderer.setSizeInfo({
 	        	field: "Nload_Full",
-	        	minSize: 1,
+	        	minSize: 3,
 	        	maxSize: 20,
 	        	minDataValue: 0,
 	        	maxDataValue: 250
