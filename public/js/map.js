@@ -284,6 +284,7 @@ require([
 			var parcels1 = ''
 			var n_removed1 = ''
 			var popupVal1 = ''
+			var treatmentType1 = ''
 
 			var sr = { wkid: 102100, latestWkid: 3857 };
 
@@ -293,6 +294,7 @@ require([
 
 				if (Treatment.Custom_POLY == 0 && Treatment.POLY_STRING.startsWith('POINT')) {
 
+					treatmentType1 = Treatment.TreatmentType_Name;
 					imageURL1 = "http://2016.watershedmvp.org/images/SVG/"+Treatment.treatment_icon;
 					treatmentArea1 = Math.round(Treatment.Treatment_Acreage);
 					parcels1 = Treatment.Treatment_Parcels;
