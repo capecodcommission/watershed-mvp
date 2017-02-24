@@ -62,6 +62,7 @@
 			// console.log(tb);
 			$('#select_polygon_'+treatment).hide();
 			$('#select_destination_'+treatment).show();
+			$('#disable-popups').trigger()
 			// console.log(msg);
 		});
 		$('#select_destination_'+ treatment).on('click', function(f)
@@ -100,6 +101,7 @@
 
 		});
 	$('#apply_treatment_'+treatment).on('click', function(e){
+			$('#disable-popups').trigger()
 			e.preventDefault();
 			var rate = $('#septic-rate').val();
 			var url = "{{url('/apply_septic')}}" + '/' +  treatment + '/' + rate;
