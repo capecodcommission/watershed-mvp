@@ -392,7 +392,7 @@ require([
 			}
 			for (var i = 0; i < pointGLs.length; i++) {
 						
-				map.addLayer(pointGLs[i])
+				map.addLayer(pointGLs[0])
 			}
 		}
 
