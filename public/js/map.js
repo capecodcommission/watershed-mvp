@@ -387,41 +387,14 @@ require([
 						})
 
 						pointGLs.push(pointGraphic)
+					}
 
+					for (var i = 0; i < pointGLs.length; i++) {
+						
 						map.addLayer(pointGLs[i])
 					}
-					
-					map.addLayer(pointGLs[i])
 				}
 			}
-
-			// console.log(pointRings)
-
-			// for (var k = 0; k < treatments.length; k++) {
-				
-			// 	var Treatment = treatments[k]
-
-			// 	if (Treatment.Custom_POLY == 0 && Treatment.POLY_STRING.startsWith('POINT')) {
-
-			// 		var imageURL = "http://2016.watershedmvp.org/images/SVG/"+Treatment.treatment_icon;
-			// 		var pointSymbol = new PictureMarkerSymbol(imageURL,30,30)
-
-			// 		for (var l = 0; l < pointRings.length; l++) {
-						
-			// 			var pointGeo = {
-			// 				x: pointRings[l][0],
-			// 				y: pointRings[l][1],
-			// 				spatialReference: sr
-			// 			}
-
-			// 			var pointGeom = new Point(pointGeo)
-			// 			var pointGraphic = new Graphic(pointGeom, pointSymbol)
-
-			// 			pointGLs[k].add(pointGraphic)
-			// 			map.addLayer(pointGLs[k])
-			// 		}
-			// 	}
-			// }
 		}
 
 
