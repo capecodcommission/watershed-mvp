@@ -386,7 +386,7 @@ require([
 							keeper: true
 						})
 
-						pointGLs[k].add(pointGraphic)
+						pointGLs[k].add(pointGraphic.setInfoTemplate(template))
 
 						map.addLayer(pointGLs[k])
 					}
