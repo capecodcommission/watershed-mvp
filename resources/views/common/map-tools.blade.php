@@ -26,7 +26,7 @@
 			<button id="Polygon">Draw Polygon</button>
 		</div> -->
 		
-			<div class="info"  data-dojo-type="dijit/layout/ContentPane">
+			<div class="info"  data-dojo-type="dijit/layout/ContentPane" style = "z-Index: 100;">
 				
 			<h4>Map Layers</h4>
 
