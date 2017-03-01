@@ -5,7 +5,7 @@
 <label style="position:absolute; right:50px; top:20px; z-Index:100;">
 	<i id ='disable-popups' class="fa fa-eye fa-2x js-menu-trigger enabled"></i>
 </label>
-    <div style="position:absolute; right:80px; top:20px; z-Index:100;">
+    <div style="position:absolute; right:80px; top:20px; z-Index:101;">
         <div data-dojo-type="dijit/TitlePane"
              data-dojo-props="title:'Switch Basemap', closable:false, open:false">
             <div data-dojo-type="dijit/layout/ContentPane" style="width:380px; height:280px; overflow:auto;">
@@ -14,7 +14,7 @@
         </div>
         <div id="basemaps-wrapper" class="leaflet-bar"></div>
     </div>
-    <div style="position:absolute; right:250px; top:20px; z-Index:101;">
+    <div style="position:absolute; right:250px; top:20px; z-Index:100;">
         <div data-dojo-type="dijit/TitlePane" data-dojo-props="title:'Legend', closable:false, open:false">
             <div data-dojo-type="dijit/layout/ContentPane" style="width:300px; height:580px; overflow:auto; ">
                 <div id="legendDiv"></div>
