@@ -21,12 +21,12 @@
             </div>
         </div>
     </div>
-		<div class="js-menu sliding-panel-content is-visible">
+		<div class="js-menu sliding-panel-content is-visible" style = "z-Index: 100;">
 <!-- 		<div id="info">
 			<button id="Polygon">Draw Polygon</button>
 		</div> -->
 		
-			<div class="info"  data-dojo-type="dijit/layout/ContentPane" style = "z-Index: 100;">
+			<div class="info"  data-dojo-type="dijit/layout/ContentPane">
 				
 			<h4>Map Layers</h4>
 
