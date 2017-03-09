@@ -195,7 +195,7 @@ require([
 			//deactivate the toolbar and clear existing graphics 
 			tb.deactivate();
 			map.enableMapNavigation();
-			// console.log(treatment);
+			console.log(treatment);
 			// figure out which symbol to use
 			var symbol;
 			symbol = fillSymbol;
@@ -221,7 +221,7 @@ require([
 					url: url
 				})
 				.done(function(msg) {
-					console.log(msg);
+					// console.log(msg);
 					$('#total_nitrogen_polygon').text(msg);
 					$('#popdown-opacity').show();
 					
