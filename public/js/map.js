@@ -197,9 +197,8 @@ require([
 			map.enableMapNavigation();
 			// console.log(treatment);
 			// figure out which symbol to use
-			console.log(evt)
-
-			var symbol = polySymbol;
+			var symbol;
+			symbol = fillSymbol;
 			var polystring = '';
 			var attr = {'treatment_id': treatment};
 			map.graphics.add(new Graphic(evt.geometry, symbol, attr));
@@ -222,7 +221,7 @@ require([
 					url: url
 				})
 				.done(function(msg) {
-					// console.log(msg);
+					console.log(msg);
 					$('#total_nitrogen_polygon').text(msg);
 					$('#popdown-opacity').show();
 					
