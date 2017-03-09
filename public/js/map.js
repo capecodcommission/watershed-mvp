@@ -197,8 +197,9 @@ require([
 			map.enableMapNavigation();
 			// console.log(treatment);
 			// figure out which symbol to use
-			var symbol;
-			symbol = fillSymbol;
+			console.log(evt)
+
+			var symbol = polySymbol;
 			var polystring = '';
 			var attr = {'treatment_id': treatment};
 			map.graphics.add(new Graphic(evt.geometry, symbol, attr));
