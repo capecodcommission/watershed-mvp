@@ -130,9 +130,8 @@
 		})
 			.done(function(msg){
 				$('#popdown-opacity').hide();
+				location.reload()
 			});
-
-		location.reload()
 	});
 
 
