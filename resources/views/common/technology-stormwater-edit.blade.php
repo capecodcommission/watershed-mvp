@@ -103,7 +103,7 @@
 	$(document).ready(function(){
 	 treatment = {{$treatment->TreatmentID}};
 	 @if($tech->Show_In_wMVP < 4)
-		 var location;
+		 // var location;
 			$('#select_area').on('click', function(f){
 				f.preventDefault();
 				// console.log('button clicked');
@@ -121,7 +121,7 @@
 								msg = $.parseJSON(msg);
 								console.log(msg.SUBEM_DISP);
 								// console.log(msg);
-								location = msg.SUBEM_ID;
+								// location = msg.SUBEM_ID;
 								$('#'+msg.SUBEM_NAME+'> .stats').show();
 								// $('.notification_count').remove();
 								$('#popdown-opacity').show();
@@ -204,6 +204,7 @@
 			.done(function(msg){
 				$('#popdown-opacity').hide();
 				$("li[data-treatment='{{$treatment->TreatmentID}}']").remove();
+				location.reload()
 			});
 		});
 

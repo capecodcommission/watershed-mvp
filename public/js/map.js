@@ -227,7 +227,7 @@ require([
 					
 				}).fail(function(msg){
 					// console.log(msg);
-					alert('There was a problem saving the polygon. Please send this error message to sue@bluegear.io: <br />Response: ' + msg.status + ' ' + msg.statusText );
+					alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg.status + ' ' + msg.statusText );
 				});
 
 			var area = evt.geometry.getExtent();
@@ -1082,7 +1082,7 @@ require([
 					$("li.technology[data-treatment='"+treat_id+"'] a").trigger('click');
 				}).fail(function(msg){
 					// console.log(msg);
-					alert('There was a problem saving the polygon. Please send this error message to sue@bluegear.io: <br />Response: ' + msg.status + ' ' + msg.statusText );
+					alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg.status + ' ' + msg.statusText );
 				});
 
 		}

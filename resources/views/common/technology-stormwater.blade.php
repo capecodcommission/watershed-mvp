@@ -97,7 +97,7 @@
 	$(document).ready(function(){
 	 treatment = {{$treatment->TreatmentID}};
 	 @if($tech->Show_In_wMVP < 4)
-		 var location;
+		 var location1;
 			$('#select_area_'+treatment).on('click', function(f){
 				f.preventDefault();
 			destination_active = 1;
@@ -119,7 +119,7 @@
 								msg = $.parseJSON(msg);
 								// console.log(msg.SUBEM_DISP);
 								// console.log(msg);
-								location = msg.SUBEM_ID;
+								location1 = msg.SUBEM_ID;
 								$('#'+msg.SUBEM_NAME+'> .stats').show();
 								// $('.notification_count').remove();
 								$('#popdown-opacity').show();
@@ -162,7 +162,7 @@
 					units = 0.00000000;
 				}
 
-				var url = "{{url('/apply_storm')}}" + '/' +  treatment + '/' + percent + '/' + units + '/' + location;
+				var url = "{{url('/apply_storm')}}" + '/' +  treatment + '/' + percent + '/' + units + '/' + location1;
 				// console.log(url);
 				$.ajax({
 					method: 'GET',
@@ -217,6 +217,7 @@
 		})
 			.done(function(msg){
 				$('#popdown-opacity').hide();
+				location.reload()
 			});
 		});
 
