@@ -142,7 +142,7 @@
 				});
 
 			map.destroy()
-			map.refresh()
+			map.reposition()
 		});
 
 		$('#canceltreatment').on('click', function(e){
