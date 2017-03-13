@@ -117,9 +117,9 @@
 			.done(function(msg){
 				$('#popdown-opacity').hide();
 				$("li[data-treatment='{{$treatment->TreatmentID}}']").remove();
+				location.reload()
 			});
 
-			location.reload()
 		});
 
 
