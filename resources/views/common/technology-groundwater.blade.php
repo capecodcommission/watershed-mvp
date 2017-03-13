@@ -141,7 +141,7 @@
 					$('ul.selected-treatments li[data-treatment="{{$treatment->TreatmentID}}"] a').popdown();	
 				});
 
-			console.log(treatments)
+			map.destroy()
 		});
 
 		$('#canceltreatment').on('click', function(e){
