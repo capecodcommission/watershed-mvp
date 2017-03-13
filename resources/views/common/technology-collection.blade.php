@@ -29,7 +29,7 @@
 			</p>
 			<p>
 				<button id="apply_treatment_{{$treatment->TreatmentID}}">Apply</button>
-				<button id="cancel_treatment" class='button--cta right'>Cancel</button>
+				<button id="cancel_treatment_{{$treatment->TreatmentID}}" class='button--cta right'>Cancel</button>
 			</p>
 	</section>
 </div>
