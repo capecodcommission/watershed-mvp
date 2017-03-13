@@ -123,6 +123,17 @@
 				});
 		});
 
+		$('#canceltreatment').on('click', function(e){
+		var url = "{{url('cancel', $treatment->TreatmentID)}}";
+		$.ajax({
+			method: 'GET',
+			url: url
+		})
+			.done(function(msg){
+				$('#popdown-opacity').hide();
+				location.reload()
+			});
+		});
 
 	});
 </script>
