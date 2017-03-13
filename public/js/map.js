@@ -195,7 +195,7 @@ require([
 			//deactivate the toolbar and clear existing graphics 
 			tb.deactivate();
 			map.enableMapNavigation();
-			console.log(evt);
+			// console.log(evt);
 			// figure out which symbol to use
 			var symbol;
 			symbol = fillSymbol;
