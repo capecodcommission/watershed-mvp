@@ -140,6 +140,8 @@
 					$('ul.selected-treatments').append(newtreatment);
 					$('ul.selected-treatments li[data-treatment="{{$treatment->TreatmentID}}"] a').popdown();	
 				});
+
+			map.setExtent(map.extent)
 		});
 
 		$('#canceltreatment').on('click', function(e){

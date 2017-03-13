@@ -120,6 +120,7 @@ require([
 		map.on("load", function(e){
 			initToolbar();
 			map.infoWindow.resize(375,400)
+			console.log(treatments)
 
 			if (treatments.length > 0) 
 			{
