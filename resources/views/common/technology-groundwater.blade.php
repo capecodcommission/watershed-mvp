@@ -141,7 +141,7 @@
 					$('ul.selected-treatments li[data-treatment="{{$treatment->TreatmentID}}"] a').popdown();	
 				});
 
-			map.destroy()
+			
 			map.setExtent(map.extent)
 		});
 
