@@ -142,6 +142,7 @@
 				});
 
 			map.destroy()
+			map.refresh()
 		});
 
 		$('#canceltreatment').on('click', function(e){
