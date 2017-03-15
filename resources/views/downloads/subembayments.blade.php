@@ -20,6 +20,8 @@
 				$n_scen_total = 0;
 				$n_target_total = 0;
 				$n_rem_total = 0;
+				$n_rem_septic = 0;
+				$n_rem_treated = 0;
 			?>
 			
 			<h2>Subembayments</h2>
@@ -32,6 +34,8 @@
 						<th>Scenario N</th>
 						<th>Threshold N</th>
 						<th>N Remaining to Threshold ***</th>
+						<th>N Septic</th>
+						<th>N Treated</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -44,6 +48,8 @@
 						<td>{{round($sub->n_load_scenario)}}</td> <?php $n_scen_total += $sub->n_load_scenario; ?>
 						<td>{{round($sub->n_load_target)}}</td> <?php $n_target_total += $sub->n_load_target; ?>
 						<td>{{round($sub->n_load_scenario - $sub->n_load_target)}}</td> <?php $n_rem_total += $sub->n_load_scenario - $sub->n_load_target; ?>
+						<td>{{round($sub->n_load_att_septic)}}</td> <?php $n_rem_septic += $sub->n_load_att_septic; ?>
+						<td>{{round($sub->n_load_att_treated)}}</td> <?php $n_rem_treated += $sub->n_load_att_treated; ?>
 					</tr>
 					@endforeach
 					
@@ -54,6 +60,8 @@
 						<td><strong><?php echo round($n_scen_total);?>kg</strong></td>
 						<td><strong><?php echo round($n_target_total);?>kg</strong></td>
 						<td><strong><?php echo round($n_rem_total);?>kg</strong></td>
+						<td><strong><?php echo round($n_rem_septic);?>kg</strong></td>
+						<td><strong><?php echo round($n_rem_treated);?>kg</strong></td>
 					</tr>
 				</tbody>
 
