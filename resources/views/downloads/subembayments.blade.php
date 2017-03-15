@@ -11,6 +11,16 @@
 			<h1>Scenario: {{$scenario->ScenarioID}} for {{$scenario->AreaName}}</h1>
 			<p></p>
 			<div id="app">
+
+			<?php
+				$scenario_cost = 0;
+				$n_removed = 0;
+				$n_att_total = 0;
+				$n_att_rem_total = 0;
+				$n_scen_total = 0;
+				$n_target_total = 0;
+				$n_rem_total = 0;
+			?>
 			
 			<h2>Subembayments</h2>
 			<table>
@@ -25,17 +35,26 @@
 					</tr>
 				</thead>
 				<tbody>
+
 					@foreach($subembayments as $sub)
 					<tr>
 						<td>{{$sub->subem_disp}}</td>
-						<td>{{round($sub->n_load_att)}}</td>
-						<td>{{round($sub->n_load_att_removed)}}</td>
-						<td>{{round($sub->n_load_scenario)}}</td>
-						<td>{{round($sub->n_load_target)}}</td>
-						<td>{{round($sub->n_load_scenario - $sub->n_load_target)}}</td>
+						<td>{{round($sub->n_load_att)}}</td> <?php $n_att_total += $sub->n_load_att; ?>
+						<td>{{round($sub->n_load_att_removed)}}</td> <?php $n_att_rem_total += $sub->n_load_att_removed; ?>
+						<td>{{round($sub->n_load_scenario)}}</td> <?php $n_scen_total += $sub->n_load_scenario; ?>
+						<td>{{round($sub->n_load_target)}}</td> <?php $n_target_total += $sub->n_load_target; ?>
+						<td>{{round($sub->n_load_scenario - $sub->n_load_target)}}</td> <?php $n_rem_total += $sub->n_load_scenario - $sub->n_load_target; ?>
 					</tr>
-
 					@endforeach
+					
+					<tr>
+						<td><strong>Subembayment Totals</strong></td>
+						<td><strong><?php echo round($n_att_total);?>kg</strong></td>
+						<td><strong><?php echo round($n_att_rem_total);?>kg</strong></td>
+						<td><strong><?php echo round($n_scen_total);?>kg</strong></td>
+						<td><strong><?php echo round($n_target_total);?>kg</strong></td>
+						<td><strong><?php echo round($n_rem_total);?>kg</strong></td>
+					</tr>
 				</tbody>
 
 			</table>
