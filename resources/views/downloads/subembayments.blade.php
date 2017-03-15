@@ -34,7 +34,7 @@
 						<th>Scenario N</th>
 						<th>Threshold N</th>
 						<th>N Remaining to Threshold ***</th>
-						<th>Unattenuated Septic Removed</th>
+						<th>Unattenuated Septic Load</th>
 						<th>Unattenuated NLoad Total</th>
 					</tr>
 				</thead>
