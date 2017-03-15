@@ -237,8 +237,6 @@ require([
 		}
 
 
-
-
 		function activateToolbar(graphic) {
 		  var tool = 0;
 		  

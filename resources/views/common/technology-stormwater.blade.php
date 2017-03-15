@@ -178,7 +178,6 @@
 						$('ul.selected-treatments').append(newtreatment);
 						$('ul.selected-treatments li[data-treatment="{{$treatment->TreatmentID}}"] a').popdown();
 					});
-				location.reload()
 			});
 			@else
 				$('#apply_treatment_'+treatment).on('click', function(e){
