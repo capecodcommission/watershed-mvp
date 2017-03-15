@@ -103,17 +103,26 @@
 					</tr>
 				</thead>
 				<tbody>
+
 					@foreach($subembayments as $sub)
 					<tr>
 						<td>{{$sub->subem_disp}}</td>
-						<td>{{round($sub->n_load_att)}}kg</td>
-						<td>{{round($sub->n_load_att_removed)}}kg</td>
-						<td>{{round($sub->n_load_scenario)}}kg</td>
-						<td>{{round($sub->n_load_target)}}kg</td>
-						<td>{{round($sub->n_load_scenario - $sub->n_load_target)}}</td>
+						<td>{{round($sub->n_load_att)}}kg</td> <?php $n_att_total += $sub->n_load_att; ?>
+						<td>{{round($sub->n_load_att_removed)}}kg</td> <?php $n_att_rem_total += $sub->n_load_att_removed; ?>
+						<td>{{round($sub->n_load_scenario)}}kg</td> <?php $n_scen_total += $sub->n_load_scenario; ?>
+						<td>{{round($sub->n_load_target)}}kg</td> <?php $n_target_total += $sub->n_load_target; ?>
+						<td>{{round($sub->n_load_scenario - $sub->n_load_target)}}</td> <?php $n_rem_total += $sub->n_load_scenario - $sub->n_load_target; ?>
 					</tr>
-
 					@endforeach
+
+					<tr>
+						<td>Subembayment Totals</td>
+						<td><strong><?php echo round($n_att_total);?>kg</strong></td>
+						<td><strong><?php echo round($n_att_rem_total);?>kg</strong></td>
+						<td><strong><?php echo round($n_scen_total);?>kg</strong></td>
+						<td><strong><?php echo round($n_target_total);?>kg</strong></td>
+						<td><strong><?php echo round($n_rem_total);?>kg</strong></td>
+					</tr>
 				</tbody>
 
 			</table>
