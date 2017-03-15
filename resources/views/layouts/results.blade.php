@@ -10,6 +10,7 @@
 		<div class="content full-width">
 			@include('common.navigation')
 
+			<h1>Scenario ID: {{$scenario->ScenarioID}}</h1>
 	      	<h1>Embayment: {{$scenario->AreaName}}</h1>
 			<h2 class="author">Created by: {{$scenario->user->name}} on {{date('Y-m-d', strtotime($scenario->CreateDate))}}</h2>
 			<div id="app">
@@ -121,7 +122,7 @@
 					@endforeach
 
 					<tr>
-						<td>Subembayment Totals</td>
+						<td><strong>Subembayment Totals</strong></td>
 						<td><strong><?php echo round($n_att_total);?>kg</strong></td>
 						<td><strong><?php echo round($n_att_rem_total);?>kg</strong></td>
 						<td><strong><?php echo round($n_scen_total);?>kg</strong></td>
