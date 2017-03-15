@@ -16,6 +16,11 @@
 			<?php
 				$scenario_cost = 0;
 				$n_removed = 0;
+				$n_att_total = 0;
+				$n_att_rem_total = 0;
+				$n_scen_total = 0;
+				$n_target_total = 0;
+				$n_rem_total = 0;
 				setlocale(LC_MONETARY, 'en_US');
 			?>
 
