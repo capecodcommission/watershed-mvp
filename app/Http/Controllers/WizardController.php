@@ -83,10 +83,10 @@ class WizardController extends Controller
 
 		foreach ($treatments as $key) {
 			if ($key->TreatmentType_Name == 'Fertilizer Management') {
-				Session::put('fert_applied', 1)
+				Session::put('fert_applied', 1);
 			}
 			else {
-				Session::put('fert_applied', 0)
+				Session::put('fert_applied', 0);
 			}
 		}
 
