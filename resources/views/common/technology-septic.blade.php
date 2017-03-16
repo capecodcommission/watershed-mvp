@@ -60,7 +60,7 @@
 			f.preventDefault();
 			$('#popdown-opacity').hide();
 			func = 'septic';
-			map.disableMapNavigation();
+			// map.disableMapNavigation();
 			tb.activate('polygon');
 			$('#select_polygon_'+treatment).hide();
 			// $('#select_destination').show();
