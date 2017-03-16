@@ -9,6 +9,7 @@ use App\Http\Requests;
 use DB;
 use App\Treatment;
 use App\Embayment;
+use App\Scenario;
 use Session;
 use Log;
 
