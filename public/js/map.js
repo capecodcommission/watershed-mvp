@@ -141,7 +141,7 @@ require([
 				}
 
 				var tool = evt.target.id.toLowerCase();
-				map.disableMapNavigation();
+				// map.disableMapNavigation();
 				tb.activate(tool);
 			});
 			
