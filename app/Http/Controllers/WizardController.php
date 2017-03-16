@@ -81,6 +81,15 @@ class WizardController extends Controller
 		$scenario = Scenario::find($scenarioid);
 		$treatments = $scenario->treatments;
 
+		foreach ($treatments as $key) {
+			if ($key->TreatmentType_Name == 'Fertilizer Management') {
+				Session::put('fert_applied', 1)
+			}
+			else {
+				Session::put('fert_applied', 0)
+			}
+		}
+
 		$removed = 0;
 		$n_load_orig = 0;
 		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
