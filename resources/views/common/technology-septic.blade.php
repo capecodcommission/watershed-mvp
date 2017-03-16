@@ -62,7 +62,6 @@
 			func = 'septic';
 			// map.disableMapNavigation();
 			tb.activate('polygon');
-			map.enableScrollWheelZoom();
 			$('#select_polygon_'+treatment).hide();
 			// $('#select_destination').show();
 
