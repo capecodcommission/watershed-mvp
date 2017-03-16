@@ -131,6 +131,7 @@ require([
 
 		function initToolbar() {
 			tb = new Draw(map);
+			map.enableScrollWheelZoom();
 			tb.on("draw-end", addGraphic);
 			
 			// event delegation so a click handler is not
@@ -141,7 +142,8 @@ require([
 				}
 
 				var tool = evt.target.id.toLowerCase();
-				map.disableMapNavigation();
+				// map.disableMapNavigation();
+				map.enableScrollWheelZoom();
 				tb.activate(tool);
 			});
 			
