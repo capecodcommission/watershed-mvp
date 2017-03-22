@@ -123,7 +123,7 @@ require([
 			initToolbar();
 			map.infoWindow.resize(375,400)
 
-			console.log(treatments)
+			// console.log(treatments)
 
 			if (treatments.length > 0) 
 			{
@@ -200,7 +200,7 @@ require([
 		************************************/
 		function addGraphic(evt) {
 
-			console.log(treatments)
+			// console.log(treatments)
 
 			//deactivate the toolbar and clear existing graphics 
 			tb.deactivate();
@@ -231,7 +231,7 @@ require([
 					url: url
 				})
 				.done(function(msg) {
-					// console.log(msg);
+					console.log(msg);
 					$('#total_nitrogen_polygon').text(msg);
 					$('#popdown-opacity').show();
 					
