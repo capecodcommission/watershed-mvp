@@ -72,6 +72,7 @@
 			$('#select_polygon').hide();
 			$('#select_destination').show();
 			// console.log(msg);
+			console.log(map.graphics)
 		});
 		$('#select_destination').on('click', function(f){
 			f.preventDefault();
@@ -119,10 +120,6 @@
 
 
 	$('#deletetreatment').on('click', function(e){
-
-		for (var i = map.graphics.length - 1; i >= 0; i--) {
-			console.log(map.graphics[i].attributes)
-		}
 		var url = "{{url('delete_treatment', $treatment->TreatmentID)}}";
 		$.ajax({
 			method: 'GET',
