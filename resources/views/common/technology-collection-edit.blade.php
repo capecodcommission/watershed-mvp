@@ -127,7 +127,9 @@
 			.done(function(msg){
 				$('#popdown-opacity').hide();
 				$("li[data-treatment='{{$treatment->TreatmentID}}']").remove();
-				map.removeLayer(treatment)
+
+				console.log(map.graphicsLayerIds)
+				// map.removeLayer(treatment)
 				// location.reload()
 			});
 	});
