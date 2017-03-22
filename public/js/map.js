@@ -135,6 +135,8 @@ require([
 		function initToolbar() {
 			tb = new Draw(map);
 			tb.on("draw-end", addGraphic);
+
+
 			
 			// event delegation so a click handler is not
 			// needed for each individual button
@@ -196,7 +198,7 @@ require([
 		************************************/
 		function addGraphic(evt) {
 
-			console.log(type)
+			console.log(typeid)
 
 			//deactivate the toolbar and clear existing graphics 
 			tb.deactivate();
