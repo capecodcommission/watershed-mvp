@@ -869,6 +869,8 @@ require([
 				});
 
 			var area = evt.geometry.getExtent();
+
+            console.log(map.graphics)
 		}
 
 

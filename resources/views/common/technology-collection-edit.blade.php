@@ -72,7 +72,6 @@
 			$('#select_polygon').hide();
 			$('#select_destination').show();
 			// console.log(msg);
-			console.log(map.graphics)
 		});
 		$('#select_destination').on('click', function(f){
 			f.preventDefault();
@@ -128,7 +127,10 @@
 			.done(function(msg){
 				$('#popdown-opacity').hide();
 				$("li[data-treatment='{{$treatment->TreatmentID}}']").remove();
-				
+
+				// console.log(map.layerIds)
+				// map.removeLayer(treatment)
+				// location.reload()
 			});
 	});
 

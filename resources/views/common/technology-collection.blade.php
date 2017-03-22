@@ -63,7 +63,7 @@
 			// console.log(tb);
 			$('#select_polygon_'+treatment).hide();
 			$('#select_destination_'+treatment).show();
-			// console.log(msg);
+			
 		});
 		$('#select_destination_'+ treatment).on('click', function(f)
 		{
