@@ -40,7 +40,7 @@ class TechnologyController extends Controller
 		// create a new record in the treatment_wiz table for this scenario & technology
 		// get the treatmentID back and use that for the treatment_parcels table
 
-		$typeid = 0
+		$typeid = 0;
 
 		switch ($type) {
 			case 'fert':
