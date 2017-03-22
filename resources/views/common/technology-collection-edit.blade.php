@@ -130,10 +130,7 @@
 
 				for (var i = map.graphics.length - 1; i >= 0; i--) {
 					
-					if (map.graphics[i].attributes.treatment_id == treatment) {
-
-						map.graphics.remove(map.graphics[i])
-					}
+					console.log(map.graphics.attributes)
 				}
 				
 			});
