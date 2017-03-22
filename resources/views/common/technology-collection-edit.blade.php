@@ -60,6 +60,7 @@
 <script>
 	$(document).ready(function(){
 	 treatment = {{$treatment->TreatmentID}};
+	 typeid = {{$treatment->TreatmentType_ID}};
 	 func = 'collect';
 
 		$('#select_polygon').on('click', function(f){

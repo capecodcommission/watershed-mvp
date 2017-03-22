@@ -143,7 +143,7 @@
 				});
 
 			
-			location.reload()
+			
 		});
 
 		$('#canceltreatment').on('click', function(e){
