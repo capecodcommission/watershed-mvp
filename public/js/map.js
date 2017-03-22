@@ -861,7 +861,7 @@ require([
 	                    );
 	                    
 	                }
-					map.graphics.add(new Graphic(evt.geometry, polySymbol, attr));
+					// map.graphics.add(new Graphic(evt.geometry, polySymbol, attr));
 					$('#total_nitrogen_polygon').text(msg);
 					$('#popdown-opacity').show();
 					
@@ -869,7 +869,7 @@ require([
 					// console.log(msg);
 					alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg.status + ' ' + msg.statusText );
 				});
-
+			map.graphics.add(new Graphic(evt.geometry, polySymbol, attr));
 			var area = evt.geometry.getExtent();
 		}
 
