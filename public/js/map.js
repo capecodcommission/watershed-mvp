@@ -232,7 +232,7 @@ require([
 
 			var area = evt.geometry.getExtent();
 
-			// console.log(treatments)
+			console.log(treatments)
 			// addTreatmentPolygons(treatments)
 		}
 
