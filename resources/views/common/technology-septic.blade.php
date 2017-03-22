@@ -44,6 +44,9 @@
 		</div>
 	</template>
 
+
+
+
 <script src="{{url('/js/main.js')}}"></script>
 {{-- <script src="{{url('/js/app.js')}}"></script> --}}
 
@@ -51,7 +54,6 @@
 <script>
 	$(document).ready(function(){
 	 treatment = {{$treatment->TreatmentID}};
-	 typeid = {{$treatment->TreatmentType_ID}};
 
 
 		$('#select_polygon_'+treatment).on('click', function(f){
