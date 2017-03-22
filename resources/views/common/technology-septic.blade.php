@@ -45,7 +45,7 @@
 	</template>
 
 
-
+<?php JavaScript::put(['typeid' => $treatment->TreatmentType_ID]); ?>
 
 <script src="{{url('/js/main.js')}}"></script>
 {{-- <script src="{{url('/js/app.js')}}"></script> --}}
@@ -57,7 +57,6 @@
 
 
 		$('#select_polygon_'+treatment).on('click', function(f){
-			var typeid = {{$treatment->TreatmentType_ID}};
 			f.preventDefault();
 			$('#popdown-opacity').hide();
 			func = 'septic';
