@@ -40,8 +40,6 @@ class TechnologyController extends Controller
 		// create a new record in the treatment_wiz table for this scenario & technology
 		// get the treatmentID back and use that for the treatment_parcels table
 
-		$typeid = $tech->Technology_ID;
-
 		switch ($type) {
 			case 'fert':
 				return view('common/technology-fertilizer', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
@@ -51,7 +49,6 @@ class TechnologyController extends Controller
 				break;
 			case 'collect':
 				return view('common/technology-collection', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
-				JavaScript::put(['typeid' => $typeid]);
 				break;		
 			case 'septic':
 				return view('common/technology-septic', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);

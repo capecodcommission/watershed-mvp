@@ -57,6 +57,7 @@
 
 
 		$('#select_polygon_'+treatment).on('click', function(f){
+			var typeid = {{$treatment->TreatmentType_ID}};
 			f.preventDefault();
 			$('#popdown-opacity').hide();
 			func = 'septic';
