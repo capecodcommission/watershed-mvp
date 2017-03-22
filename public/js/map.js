@@ -870,7 +870,7 @@ require([
 
 			var area = evt.geometry.getExtent();
 
-            console.log(map.graphics.graphics.attributes)
+            console.log(map.graphics.graphics)
 		}
 
 
