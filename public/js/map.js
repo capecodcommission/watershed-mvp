@@ -123,6 +123,8 @@ require([
 			initToolbar();
 			map.infoWindow.resize(375,400)
 
+			console.log(treatments)
+
 			if (treatments.length > 0) 
 			{
 				addTreatmentPolygons(treatments);
@@ -198,7 +200,7 @@ require([
 		************************************/
 		function addGraphic(evt) {
 
-			console.log(treatment)
+			console.log(treatments)
 
 			//deactivate the toolbar and clear existing graphics 
 			tb.deactivate();
