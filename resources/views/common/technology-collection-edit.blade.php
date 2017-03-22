@@ -119,6 +119,10 @@
 
 
 	$('#deletetreatment').on('click', function(e){
+
+		for (var i = map.graphics.length - 1; i >= 0; i--) {
+			console.log(map.graphics[i].attributes)
+		}
 		var url = "{{url('delete_treatment', $treatment->TreatmentID)}}";
 		$.ajax({
 			method: 'GET',
@@ -127,11 +131,6 @@
 			.done(function(msg){
 				$('#popdown-opacity').hide();
 				$("li[data-treatment='{{$treatment->TreatmentID}}']").remove();
-
-				for (var i = map.graphics.length - 1; i >= 0; i--) {
-					
-					console.log(map.graphics.attributes)
-				}
 				
 			});
 	});
