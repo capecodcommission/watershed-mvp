@@ -198,7 +198,7 @@ require([
 		************************************/
 		function addGraphic(evt) {
 
-			console.log(type)
+			// console.log(typeid)
 
 			//deactivate the toolbar and clear existing graphics 
 			tb.deactivate();
