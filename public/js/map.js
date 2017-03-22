@@ -115,6 +115,8 @@ require([
 			slider: true,
 			sliderOrientation: "horizontal"
 		});
+
+		var treatarray = []
 		// map.on("load", createToolbar);
 		// map.on("load", initToolbar);
 		map.on("load", function(e){
@@ -124,6 +126,7 @@ require([
 			if (treatments.length > 0) 
 			{
 				addTreatmentPolygons(treatments);
+				treatarray.push(treatments)
 			}
 		});
 
@@ -232,7 +235,7 @@ require([
 
 			var area = evt.geometry.getExtent();
 
-			console.log(treatments)
+			console.log(treatarray)
 			// addTreatmentPolygons(treatments)
 		}
 
