@@ -116,7 +116,7 @@ require([
 			sliderOrientation: "horizontal"
 		});
 
-		var treatarray = []
+		
 		// map.on("load", createToolbar);
 		// map.on("load", initToolbar);
 		map.on("load", function(e){
@@ -126,7 +126,7 @@ require([
 			if (treatments.length > 0) 
 			{
 				addTreatmentPolygons(treatments);
-				treatarray.push(treatments)
+				
 			}
 		});
 
@@ -196,7 +196,7 @@ require([
 		************************************/
 		function addGraphic(evt) {
 
-			var typeid = {{$treatment->TreatmentType_ID}}
+			var typeid = {{$treatment->TreatmentType_ID}};
 			console.log(typeid)
 
 			//deactivate the toolbar and clear existing graphics 
@@ -238,9 +238,6 @@ require([
 				});
 
 			var area = evt.geometry.getExtent();
-
-			// console.log(treatarray)
-			// addTreatmentPolygons(treatments)
 		}
 
 
