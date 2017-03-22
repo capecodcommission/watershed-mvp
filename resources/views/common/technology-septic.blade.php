@@ -54,7 +54,7 @@
 <script>
 	$(document).ready(function(){
 	 treatment = {{$treatment->TreatmentID}};
-
+	 typeid = {{$treatment->TreatmentType_ID}};
 
 		$('#select_polygon_'+treatment).on('click', function(f){
 			f.preventDefault();
