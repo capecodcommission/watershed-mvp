@@ -128,8 +128,7 @@
 				$('#popdown-opacity').hide();
 				$("li[data-treatment='{{$treatment->TreatmentID}}']").remove();
 
-				var thing = map.getLayer(treatment)
-				console.log(thing)
+				console.log(map.graphics)
 				// map.removeLayer(treatment)
 				// location.reload()
 			});
