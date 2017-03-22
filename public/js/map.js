@@ -195,6 +195,10 @@ require([
 
 		************************************/
 		function addGraphic(evt) {
+
+			var typeid = {{$treatment->TreatmentType_ID}}
+			console.log(typeid)
+
 			//deactivate the toolbar and clear existing graphics 
 			tb.deactivate();
 			map.enableMapNavigation();
