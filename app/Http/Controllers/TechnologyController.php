@@ -49,7 +49,6 @@ class TechnologyController extends Controller
 				break;
 			case 'collect':
 				return view('common/technology-collection', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
-				Session::put('typeid',$treatment->TreatmentType_ID);
 				break;		
 			case 'septic':
 				return view('common/technology-septic', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
