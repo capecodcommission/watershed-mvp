@@ -188,7 +188,5 @@ class ScenarioController extends Controller
 	public function saveScenario($id) 
 	{
 		$result = DB::select('exec CapeCodMA.SAVE_Scenario ' . $id);
-
-		return 1;
 	}
 }
