@@ -20,6 +20,9 @@ Route::get('/map/{embayment}/{scenarioid?}', 'WizardController@start');
 
 Route::post('/poly', 'WizardController@getPolygon2');
 Route::post('/update_polygon', 'TechnologyController@updatePolygon');
+
+Route::get('/save/{id}', 'ScenarioController@saveScenario');
+
 // Route::get('/update_polygon/{treatment}/{new_poly}', 'TechnologyController@updatePolygon');
 // Route::post('/poly/', 'WizardController@getPolygon2');
 // Route::get('/poly/{params}', 'WizardController@getPolygon2')->where('params', '.*');

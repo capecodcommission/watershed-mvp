@@ -136,7 +136,11 @@
 			<p><sup>2</sup>A negative number in this column represents Nitrogen added to a subembayment as part of a collection treatment.</p>
 			<p><sup>3</sup>A negative number in this column means the user has exceeded the threshold for this subembayment.</p>
 
-			<p><a href="{{url('map', [$scenario->AreaID, $scenario->ScenarioID])}}" class="button" target="wmvp_scenario_{{$scenario->ScenarioID}}">back to map</a> <a href="{{url('download', $scenario->ScenarioID)}}" class="button--cta right" target="_blank"><i class="fa fa-download"></i> Download Results (.xls)</a></p>
+			<p>
+				<a href="{{url('map', [$scenario->AreaID, $scenario->ScenarioID])}}" class="button" target="wmvp_scenario_{{$scenario->ScenarioID}}">back to map</a> 
+				<a href="{{url('download', $scenario->ScenarioID)}}" class="button--cta right" target="_blank"><i class="fa fa-download"></i> Download Results (.xls)</a>
+				<a href="{{url('save', $scenario->ScenarioID)}}" class="button" target="wmvp_scenario_{{$scenario->ScenarioID}}">Save Changes</a> 
+			</p>
 
 		@else
 		<p>No treatments have been applied to this scenario yet.</p>
