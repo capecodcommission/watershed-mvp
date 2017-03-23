@@ -130,7 +130,17 @@
 		})
 			.done(function(msg){
 				$('#popdown-opacity').hide();
-				location.reload()
+
+				for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
+                
+	                if (map.graphics.graphics[i].attributes) {
+
+	                    if (map.graphics.graphics[i].attributes.treatment_id == treatment) {
+
+	                    	map.graphics.remove(map.graphics.graphics[i])
+	                    }
+	                }
+           		}
 			});
 	});
 
