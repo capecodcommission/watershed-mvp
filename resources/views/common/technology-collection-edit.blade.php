@@ -138,6 +138,8 @@
 	                    }
 	                }
            		}
+
+           		$('#update').trigger('click')
 			});
 	});
 
