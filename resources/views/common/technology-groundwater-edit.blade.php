@@ -173,6 +173,8 @@
 	                    }
 	                }
            		}
+
+           		$( "#update" ).trigger( "click" );
 			});
 		});
 

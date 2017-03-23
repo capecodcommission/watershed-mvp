@@ -128,6 +128,8 @@
 	                    }
 	                }
            		}
+
+           		$( "#update" ).trigger( "click" );
 			});
 
 		});
