@@ -102,7 +102,7 @@
 					})
 						.done(function(msg){
 							msg = $.parseJSON(msg);
-							console.log(msg.SUBEM_DISP);
+							// console.log(msg.SUBEM_DISP);
 							// console.log(msg);
 							$('#'+msg.SUBEM_NAME+'> .stats').show();
 							// $('.notification_count').remove();

@@ -869,14 +869,6 @@ require([
 				});
 
 			var area = evt.geometry.getExtent();
-
-            for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
-                
-                if (map.graphics.graphics[i].attributes) {
-
-                    console.log(map.graphics.graphics[i].attributes)
-                }
-            }
 		}
 
 
@@ -2044,7 +2036,7 @@ require([
 
     		queryString = queryString.substring(0,queryString.lastIndexOf("OR")) + "";
 
-    		console.log(queryString)
+    		// console.log(queryString)
 		}
 
 		var legendDijit = new Legend({

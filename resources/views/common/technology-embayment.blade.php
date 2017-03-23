@@ -111,7 +111,7 @@
 				url: url
 			})
 				.done(function(msg){
-					console.log(msg);
+					// console.log(msg);
 					msg = Math.round(msg);
 					$('#n_removed').text(msg);
 					$('#popdown-opacity').hide();
