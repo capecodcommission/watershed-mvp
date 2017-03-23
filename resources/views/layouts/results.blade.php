@@ -139,7 +139,7 @@
 			<p>
 				<a href="{{url('map', [$scenario->AreaID, $scenario->ScenarioID])}}" class="button" target="wmvp_scenario_{{$scenario->ScenarioID}}">back to map</a> 
 				<a href="{{url('download', $scenario->ScenarioID)}}" class="button--cta right" target="_blank"><i class="fa fa-download"></i> Download Results (.xls)</a>
-				<a href="{{url('save', $scenario->ScenarioID)}}" class="button">Save Changes</a> 
+				<a id = 'saved' class="save button">Save Changes</a> 
 			</p>
 
 		@else
@@ -153,6 +153,7 @@
 
 	<script>
 	$(document).ready(function(){
+		scenario = {{$scenario->ScenarioID}};
 		$('.deletetreatment').on('click', function(e){
 
 			e.preventDefault();
@@ -164,6 +165,20 @@
 			})
 				.done(function(msg){
 					$('#treat_'+treat).remove();
+				});
+			});
+
+		// href="{{url('save', $scenario->ScenarioID)}}"
+		$('.save').on('click', function(e){
+
+			e.preventDefault();
+			var url = "{{url('save')}}" + '/' + scenario;
+			$.ajax({
+				method: 'GET',
+				url: url
+			})
+				.done(function(msg){
+					$('#saved').addClass('--cta')
 				});
 			});
 	});
