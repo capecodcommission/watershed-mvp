@@ -178,7 +178,7 @@
 				url: url
 			})
 				.done(function(msg){
-					$('#saved').addClass('--cta')
+					$('#saved').addClass('button--cta')
 				});
 			});
 	});
