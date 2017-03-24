@@ -100,7 +100,6 @@
 		})
 			.done(function(msg){
 				$('#popdown-opacity').hide();
-				location.reload()	
 			});
 		});
 
