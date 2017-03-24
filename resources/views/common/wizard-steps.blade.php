@@ -398,8 +398,31 @@
 			<p><a href="{{url('download', session('scenarioid'))}}">Download Results (.xls)</a></p>
 			<p><a href="{{url('results', session('scenarioid'))}}" class="button" target="wmvp_results_{{session('scenarioid')}}">View detailed results</a></p>
 			<p><a class = 'button' href = "http://2016.watershedmvp.org/fim/scenario/{{session('scenarioid')}}/treatmentsDetails">Open Scenario in Financial Model</a></p>
+			<p><a id = 'saved' class="save button">Save Changes</a></p>
 		</div>
 	</article>
 	</aside>
 </section>
 </div>
+
+<script>
+	$(document).ready(function(){
+
+		scenario = {{$scenario->ScenarioID}};
+
+		$('.save').on('click', function(e){
+
+			e.preventDefault();
+			var url = "{{url('save')}}" + '/' + scenario;
+
+			$.ajax({
+
+				method: 'GET',
+				url: url
+			}).done(function(msg){
+
+				$('#saved').addClass('button--cta')
+			});
+		});
+	});
+</script>
