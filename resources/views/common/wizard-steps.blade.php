@@ -408,7 +408,7 @@
 <script>
 	$(document).ready(function(){
 
-		scenario = {{$scenario->ScenarioID}};
+		scenario = {{session('scenarioid')}};
 
 		$('.save').on('click', function(e){
 
