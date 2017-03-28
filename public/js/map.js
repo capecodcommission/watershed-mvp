@@ -114,7 +114,8 @@ require([
 			basemap: "dark-gray",
 			slider: true,
 			sliderOrientation: "horizontal",
-            logo: false
+            logo: false,
+            showAttribution: false
 		});
 
 		
