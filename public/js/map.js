@@ -111,7 +111,7 @@ require([
 			// extent: initialExtent,
 			// infoWindow: subem_template,
 			zoom: 14,
-			basemap: "gray",
+			basemap: "dark-gray",
 			slider: true,
 			sliderOrientation: "horizontal"
 		});
