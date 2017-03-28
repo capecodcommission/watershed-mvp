@@ -15,7 +15,7 @@
 				<br />{{$tech->Technology_Strategy}}&nbsp;<i class="fa fa-question-circle"></i>
 				</a>			
 			</div>
-					<p class="select"><button data-loading-text = "loading..." id="select_polygon_{{$treatment->TreatmentID}}">Draw a polygon</button> <span>@{{subembayment}}</span></p>
+					<p class="select"><button id="select_polygon_{{$treatment->TreatmentID}}">Draw a polygon</button> <span>@{{subembayment}}</span></p>
 
 					
 					
