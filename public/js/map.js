@@ -113,7 +113,8 @@ require([
 			zoom: 14,
 			basemap: "dark-gray",
 			slider: true,
-			sliderOrientation: "horizontal"
+			sliderOrientation: "horizontal",
+            logo: false
 		});
 
 		
