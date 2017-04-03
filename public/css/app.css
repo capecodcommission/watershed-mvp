@@ -4540,12 +4540,7 @@ html {
 .fa-eye:before {
   content: ""; }
 
-.fa-eye {
-
-  color: white;
-}
-
-.fa-eye-slash {
+.fa-eye-white {
 
   color: white;
 }
@@ -4728,6 +4723,9 @@ html {
 
 .fa-globe:before {
   content: ""; }
+
+.fa-globe-white {
+  color: white; }
 
 .fa-wrench:before {
   content: ""; }
