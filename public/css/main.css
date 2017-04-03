@@ -768,6 +768,16 @@ html {
 .fa-eye:before {
   content: ""; }
 
+.fa-eye {
+
+  color: white;
+}
+
+.fa-eye-slash {
+
+  color: white;
+}
+
 .fa-eye-slash:before {
   content: ""; }
 
