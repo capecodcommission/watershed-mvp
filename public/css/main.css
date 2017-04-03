@@ -768,15 +768,8 @@ html {
 .fa-eye:before {
   content: ""; }
 
-.fa-eye {
-
-  color: white;
-}
-
-.fa-eye-slash {
-
-  color: white;
-}
+.fa-eye-white {
+  color: white; }
 
 .fa-eye-slash:before {
   content: ""; }
@@ -956,6 +949,9 @@ html {
 
 .fa-globe:before {
   content: ""; }
+
+.fa-globe-white {
+  color: white; }
 
 .fa-wrench:before {
   content: ""; }

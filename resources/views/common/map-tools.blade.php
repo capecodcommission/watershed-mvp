@@ -1,9 +1,9 @@
 <div class="tool" style="padding: .8em 1em;">		
 <label>
-	<i class="fa fa-globe fa-2x js-menu-trigger sliding-panel-button"></i>
+	<i class="fa fa-globe fa-globe-white fa-2x js-menu-trigger sliding-panel-button"></i>
 </label>
 <label style="position:absolute; right:50px; top:20px; z-Index:100;">
-	<i id ='disable-popups' class="fa fa-eye fa-2x js-menu-trigger enabled"></i>
+	<i id ='disable-popups' class="fa fa-eye fa-eye-white fa-2x js-menu-trigger enabled"></i>
 </label>
     <div style="position:absolute; right:80px; top:20px; z-Index:101;">
         <div data-dojo-type="dijit/TitlePane"
