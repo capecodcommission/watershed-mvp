@@ -173,9 +173,13 @@ class ScenarioController extends Controller
 	{
 		$user = Auth::user();
 		$scenario = Scenario::find($id);
+
+		$treatments = $scenario->treatments;
 		if ($scenario->user_id == $user->user_id) 
 		{
-			$scenario->delete();
+			foreach ($treatments as $key) {
+				$scenario->delete($key->TreatmentID);
+			}
 			return 1;
 		}
 		else
