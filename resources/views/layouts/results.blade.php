@@ -88,7 +88,7 @@
 					@foreach($towns as $town)
 						<tr>
 							<td>{{$town->town}}</td>
-							<td>{{$town->treatment_id}}</td>
+							<td>{{$town->wtt_treatment_id}}</td>
 							<td>{{$town->wtt_tot_parcels}}</td>
 							<td>{{round($town->wtt_unatt_n_removed)}}kg</td>
 						</tr>

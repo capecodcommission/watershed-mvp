@@ -98,8 +98,14 @@ class ScenarioController extends Controller
 	
 		$scenario = Scenario::findOrFail($scenarioid);
 		// dd($scenario);
-		$towns = DB::select('select wtt.*, t.town from CapeCodMA.parcelMaster wtt inner join capecodma.matowns t on t.town_id = wtt.town_id
-  where wtt.scenario_id = ' . $scenarioid);
+		$towns = DB::table('CapeCodMA.parcelMaster')
+			->join('CapeCodMA.MAtowns','CapeCodMA.MAtowns.TOWN_ID', '=', 'CapeCodMA.parcelMaster.town_id')
+			->select(
+				'CapeCodMA.MATowns.TOWN as town', 
+				'CapeCodMA.parcelMaster.treatment_id as wtt_treatment_id',
+				DB::raw('sum(CapeCodMA.parcelMaster.parcel_id) as wtt_tot_parcels'),
+				DB::raw('sum(CapeCodMA.parcelMaster.final_nload_removed) as wtt_unatt_n_removed'))
+			->where('CapeCodMA.parcelMaster.scenario_id', '=', $scenarioid);
 		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
 
 		return view('layouts/results', ['scenario'=>$scenario, 'towns'=>$towns, 'subembayments'=>$subembayments]);
