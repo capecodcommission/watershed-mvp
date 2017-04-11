@@ -98,7 +98,7 @@ class ScenarioController extends Controller
 	
 		$scenario = Scenario::findOrFail($scenarioid);
 		// dd($scenario);
-		$towns = DB::select('select wtt.*, t.town from dbo.parcelMaster wtt inner join capecodma.matowns t on t.town_id = wtt.town_id
+		$towns = DB::select('select wtt.*, t.town from CapeCodMA.parcelMaster wtt inner join capecodma.matowns t on t.town_id = wtt.town_id
   where wtt.scenario_id = ' . $scenarioid);
 		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
 
