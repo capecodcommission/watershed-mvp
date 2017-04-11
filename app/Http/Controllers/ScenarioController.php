@@ -104,7 +104,8 @@ class ScenarioController extends Controller
 				DB::raw('CapeCodMA.MATowns.TOWN as town'), 
 				DB::raw('CapeCodMA.parcelMaster.treatment_id as wtt_treatment_id'),
 				DB::raw('count(CapeCodMA.parcelMaster.parcel_id) as wtt_tot_parcels'),
-				DB::raw('sum(CapeCodMA.parcelMaster.final_nload_removed) as wtt_unatt_n_removed'))
+				DB::raw('sum(CapeCodMA.parcelMaster.running_nload_removed) as wtt_unatt_n_removed')
+			)
 			->where('CapeCodMA.parcelMaster.scenario_id', '=', $scenarioid)
 			->groupBy('CapeCodMA.MAtowns.TOWN','CapeCodMA.parcelMaster.treatment_id')
 			->get();
