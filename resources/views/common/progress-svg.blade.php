@@ -1,7 +1,7 @@
 		<div id="overall_progress">
 			
 		
-			<h4 id="update">Scenario Progress</h4>
+			<h4 id="update" style = "color:white">Scenario Progress</h4>
 
 			<div class="progress-container">
 				<div class="target"></div>
