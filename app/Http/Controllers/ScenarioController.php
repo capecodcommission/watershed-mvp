@@ -186,7 +186,7 @@ class ScenarioController extends Controller
 		$user = Auth::user();
 		$scenario = Scenario::find($id);
 		
-		$result = DB::select('exec CapeCodMA.DeleteScenario ' . $id)
+		$result = DB::select('exec CapeCodMA.DeleteScenario ' . $id);
 	}
 
 	public function saveScenario($id) 
