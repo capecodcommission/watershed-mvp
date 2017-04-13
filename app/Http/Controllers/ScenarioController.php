@@ -185,17 +185,8 @@ class ScenarioController extends Controller
 	{
 		$user = Auth::user();
 		$scenario = Scenario::find($id);
-
-		if ($scenario->user_id == $user->user_id) 
-		{
-			DB::select('exec CapeCodMA.DeleteScenario ' . $id)
-			return 1;
-		}
-		else
-		{
-			// user doesn't have permission to delete this scenario
-			return 0;
-		}
+		
+		$result = DB::select('exec CapeCodMA.DeleteScenario ' . $id)
 	}
 
 	public function saveScenario($id) 
