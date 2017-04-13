@@ -22,7 +22,7 @@
 			</p>
 			<p>
 				<button id="updatetreatment">Update</button>
-				<button id="deletetreatment" class='button--cta right'><i class="fa fa-trash-o"></i> Delete</button>
+				<button data-treatment = "{{$treatment->TreatmentID}}" id="deletetreatment" class='button--cta right'><i class="fa fa-trash-o"></i> Delete</button>
 			</p>
 
 	</section>
@@ -54,7 +54,8 @@
 		});
 		$('#deletetreatment').on('click', function(e){
 		// var url = "{{url('delete_treatment', $treatment->TreatmentID, 'fert')}}";
-		var url = "{{url('delete_treatment')}}" + '/' + $treatment->TreatmentID.toString() + '/' + 'fert'
+		var treat = $(this).data('treatment');
+		var url = "{{url('delete_treatment')}}" + '/' + treat
 		$.ajax({
 			method: 'GET',
 			url: url
