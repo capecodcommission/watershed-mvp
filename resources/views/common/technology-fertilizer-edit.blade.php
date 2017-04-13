@@ -54,7 +54,7 @@
 		});
 		$('#deletetreatment').on('click', function(e){
 		// var url = "{{url('delete_treatment', $treatment->TreatmentID, 'fert')}}";
-		var url = "{{url('delete_treatment')}}" + '/' + $treatment->TreatmentID + '/' + 'fert'
+		var url = "{{url('delete_treatment')}}" + '/' + $treatment->TreatmentID.toString() + '/' + 'fert'
 		$.ajax({
 			method: 'GET',
 			url: url
