@@ -186,12 +186,9 @@ class ScenarioController extends Controller
 		$user = Auth::user();
 		$scenario = Scenario::find($id);
 
-		$treatments = $scenario->treatments;
 		if ($scenario->user_id == $user->user_id) 
 		{
-			foreach ($treatments as $key) {
-				$scenario->delete($key->TreatmentID);
-			}
+			DB::select('exec CapeCodMA.DeleteScenario ' . $id)
 			return 1;
 		}
 		else
