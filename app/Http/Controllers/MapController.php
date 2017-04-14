@@ -49,7 +49,8 @@ class MapController extends Controller
 		// use point as the polygon value; use treatment as parent_treatment_id
 		// need to add the Nitrogen to the selected destination and have it ADDED to that subembayment's total
 		$scenarioid = session('scenarioid');
-		$move = DB::select("exec CapeCodMA.CALC_MoveNitrogen '$x', '$y', $treatment, $scenarioid");
+		// $move = DB::select("exec CapeCodMA.CALC_MoveNitrogen '$x', '$y', $treatment, $scenarioid");
+		$move = DB::select("exec CapeCodMA.CALC_MoveNitrogen1 '$x', '$y', $treatment, $scenarioid");
 
 		return json_encode($subembayment[0]);
 	}
