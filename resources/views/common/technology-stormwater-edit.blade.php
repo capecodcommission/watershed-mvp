@@ -87,7 +87,7 @@
 			</p>
 			<p>
 				<button id="updatetreatment">Update</button>
-				<button id="deletetreatment" class='button--cta right'><i class="fa fa-trash-o"></i> Delete</button>
+				<button id="deletetreatment" data-treatment = "{{$treatment->TreatmentID}}" class='button--cta right'><i class="fa fa-trash-o"></i> Delete</button>
 			</p>
 
 
@@ -196,7 +196,9 @@
 
 
 		$('#deletetreatment').on('click', function(e){
-		var url = "{{url('delete_treatment', $treatment->TreatmentID, 'storm')}}";
+		var treat = $(this).data('treatment');
+		// var url = "{{url('delete_treatment', $treatment->TreatmentID)}}";
+		var url = "{{url('delete_treatment')}}" + '/' + treat + '/' + 'fert'
 		$.ajax({
 			method: 'GET',
 			url: url
