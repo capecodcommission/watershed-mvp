@@ -496,6 +496,10 @@ class TechnologyController extends Controller
 		if ($type == 'fert') {
 
 			Session::put('fert_applied',0);
+		} 
+		else if ($type == 'storm') {
+			
+			Session::put('storm_applied',0);
 		}
 		// Treatment::destroy($treat_id);
 		return 1;
