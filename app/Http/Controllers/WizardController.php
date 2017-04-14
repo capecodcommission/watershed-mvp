@@ -92,7 +92,8 @@ class WizardController extends Controller
 
 		$removed = 0;
 		$n_load_orig = 0;
-		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
+		// $subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
+		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments1 ' . $scenarioid);
 		$total_goal = 0;
 
 		foreach ($subembayments as $key) 
@@ -181,7 +182,9 @@ class WizardController extends Controller
 		$embay_id = $scenario->AreaID;
 
 
-		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
+		// $parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
+
+		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon1 ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
 
 		if ($parcels) {
 			$poly_nitrogen = $parcels[0]->Septic;
@@ -222,10 +225,10 @@ class WizardController extends Controller
 
 		// $query = 'exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'';
 		// Log::info($query);
-		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
+		// $parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
 
 
-		// $parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon1 ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');	
+		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon1 ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');	
 
 		if ($parcels) {
 			$poly_nitrogen = $parcels[0]->Septic;
