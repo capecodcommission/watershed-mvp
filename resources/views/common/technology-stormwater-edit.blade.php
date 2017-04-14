@@ -198,7 +198,7 @@
 		$('#deletetreatment').on('click', function(e){
 		var treat = $(this).data('treatment');
 		// var url = "{{url('delete_treatment', $treatment->TreatmentID)}}";
-		var url = "{{url('delete_treatment')}}" + '/' + treat + '/' + 'fert'
+		var url = "{{url('delete_treatment')}}" + '/' + treat + '/' + 'storm'
 		$.ajax({
 			method: 'GET',
 			url: url
