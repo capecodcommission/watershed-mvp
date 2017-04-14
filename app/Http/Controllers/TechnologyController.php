@@ -211,9 +211,9 @@ class TechnologyController extends Controller
 	public function ApplyTreatment_Groundwater($treat_id, $rate, $units)
 	{
 
-		// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Groundwater] ' . $treat_id . ', ' . $rate . ', ' . $units);
+		$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Groundwater] ' . $treat_id . ', ' . $rate . ', ' . $units);
 
-		$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Groundwater1] ' . $treat_id . ', ' . $rate . ', ' . $units);
+		// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Groundwater1] ' . $treat_id . ', ' . $rate . ', ' . $units);
 
 	}
 
