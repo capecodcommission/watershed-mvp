@@ -35,7 +35,7 @@ Route::get('/testmap/Nitrogen/{treatment}/{poly}', 'WizardController@getPolygon'
 Route::get('/tech/{type}/{tech}', 'TechnologyController@get');
 Route::get('/edit/{treatment}', 'TechnologyController@edit');
 Route::get('/update/{type}/{treatment}/{rate}/{units?}/{subemid?}', 'TechnologyController@update');
-Route::get('/delete_treatment/{treatment}/{type}', 'TechnologyController@delete');
+Route::get('/delete_treatment/{treatment}/{type?}', 'TechnologyController@delete');
 Route::get('/cancel/{treatment}', 'TechnologyController@cancel');
 
 
