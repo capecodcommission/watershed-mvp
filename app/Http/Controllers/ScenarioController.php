@@ -42,7 +42,9 @@ class ScenarioController extends Controller
 
 		$removed = 0;
 		$n_load_orig = 0;
-		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
+		// $subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
+
+		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments1 ' . $scenarioid);
 		// $subembayments = DB::select('exec CapeCodMA.GET_SubembaymentNitrogen ' . $id);
 		$total_goal = 0;
 		foreach ($subembayments as $key) 
@@ -98,21 +100,33 @@ class ScenarioController extends Controller
 	
 		$scenario = Scenario::findOrFail($scenarioid);
 		
-		// $towns = DB::table('CapeCodMA.parcelMaster')
-		// 	->join('CapeCodMA.MAtowns','CapeCodMA.MAtowns.TOWN_ID', '=', 'CapeCodMA.parcelMaster.town_id')
-		// 	->select(
-		// 		DB::raw('CapeCodMA.MATowns.TOWN as town'), 
-		// 		DB::raw('CapeCodMA.parcelMaster.treatment_id as wtt_treatment_id'),
-		// 		DB::raw('count(CapeCodMA.parcelMaster.parcel_id) as wtt_tot_parcels'),
-		// 		DB::raw('sum(CapeCodMA.parcelMaster.running_nload_removed) as wtt_unatt_n_removed')
-		// 	)
-		// 	->where('CapeCodMA.parcelMaster.scenario_id', '=', $scenarioid)
-		// 	->groupBy('CapeCodMA.MAtowns.TOWN','CapeCodMA.parcelMaster.treatment_id')
-		// 	->get();
+		$towns = DB::table('CapeCodMA.parcelMaster')
+			->join('CapeCodMA.MAtowns','CapeCodMA.MAtowns.TOWN_ID', '=', 'CapeCodMA.parcelMaster.town_id')
+			->select(
+				DB::raw('CapeCodMA.MATowns.TOWN as town'), 
+				DB::raw('CapeCodMA.parcelMaster.treatment_id as wtt_treatment_id'),
+				DB::raw('count(CapeCodMA.parcelMaster.parcel_id) as wtt_tot_parcels'),
+				DB::raw('sum(CapeCodMA.parcelMaster.running_nload_removed) as wtt_unatt_n_removed')
+			)
+			->where('CapeCodMA.parcelMaster.scenario_id', '=', $scenarioid)
+			->groupBy('CapeCodMA.MAtowns.TOWN','CapeCodMA.parcelMaster.treatment_id')
+			->get();
 
-		$towns = DB::select('select wtt.*, t.town from dbo.wiz_treatment_towns wtt inner join capecodma.matowns t on t.town_id = wtt.wtt_town_id where wtt.wtt_scenario_id = ' . $scenarioid);
+		// $towns = DB::select('
+		// 	select 
+		// 		wtt.*, 
+		// 		t.town 
 
-		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
+		// 	from dbo.wiz_treatment_towns wtt 
+			
+		// 	inner join capecodma.matowns t 
+		// 	on t.town_id = wtt.wtt_town_id 
+
+		// 	where wtt.wtt_scenario_id = ' . $scenarioid);
+
+		// $subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
+
+		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments1 ' . $scenarioid);
 
 		return view('layouts/results', ['scenario'=>$scenario, 'towns'=>$towns, 'subembayments'=>$subembayments]);
 		
