@@ -1653,7 +1653,7 @@ require([
 							spatialReference: sr
 						}
 
-						// console.log(pointGeo)
+						console.log(pointGeo)
 
 						var pointGeom = new Point(pointGeo)
 						var pointGraphic = new Graphic(pointGeom, pointSymbol, {
