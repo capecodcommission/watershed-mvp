@@ -47,7 +47,7 @@
 			<p>
 				Enter a valid reduction rate between {{round($tech->Absolu_Reduc_perMetric_Low)}} and {{round($tech->Absolu_Reduc_perMetric_High)}}kg per {{$tech->Unit_Metric}}.<br />
 
-				<input type="range" id="embayment-percent" min="{{round($tech->Absolu_Reduc_perMetric_Low, 2)}}" max="{{round($tech->Absolu_Reduc_perMetric_High, 2)}}" v-model="embayment_percent" value='{{$treatment->Treatment_Value}}' step="5"> @{{embayment_percent}}
+				<input type="range" id="embayment-percent" min="{{round($tech->Absolu_Reduc_perMetric_Low, 2)}}" max="{{round($tech->Absolu_Reduc_perMetric_High, 2)}}" v-model="embayment_percent" value='{{$treatment->Treatment_Value}}' step=".05"> @{{embayment_percent}}
 			</p>
 			<p>
 				<button id="updatetreatment">Update</button>
