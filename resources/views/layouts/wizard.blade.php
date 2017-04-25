@@ -115,7 +115,7 @@
 
 									sub_progress = sub_progress * 100;
 								} else {
-									sub_progress = 100;
+									sub_progress 
 								}
 								$('#progress_'+value.subem_id).text(sub_progress);
 								$('#subem_'+value.subem_id + ' .sub-progress').animate({'width': sub_progress+'%'}, 500);
