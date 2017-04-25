@@ -11,7 +11,7 @@
 
 		if($percent < 1 and $percent > 0)
 		{
-			$percent * 100;
+			$percent = $percent * 100;
 		}
 		else
 		{
