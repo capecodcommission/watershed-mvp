@@ -9,7 +9,7 @@
 		$current = $subem->n_load_att - $subem->n_load_att_removed;
 		$percent = $current / $subem->n_load_target;
 
-		if($percent < 1 or $percent > 0)
+		if($percent < 1 and $percent > 0)
 		{
 			$percent * 100;
 		}
