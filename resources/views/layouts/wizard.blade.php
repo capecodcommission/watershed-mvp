@@ -97,13 +97,13 @@
 							progress = msg.embayment;
 							remaining = Math.round(msg.remaining);
 
-							$('div.progress h3').text(progress + '%');
-							$('.remaining span').text(remaining);
 							if(progress > 100)
 							{
 								progress = 100;
-							}	
+							}
 
+							$('div.progress h3').text(progress + '%');
+							$('.remaining span').text(remaining);
 							$('div.progress').animate({'height': progress+'%'}, 500);
 
 							subembayments = msg.subembayments;
