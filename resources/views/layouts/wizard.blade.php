@@ -110,10 +110,12 @@
 							$.each(subembayments, function(key, value)
 							{
 								// console.log(value);
-								var sub_progress = Math.round((value.n_load_target/value.n_load_scenario) * 100);
+								var sub_progress = Math.round(value.n_load_target / (value.n_load_att - value.n_load_att_removed));
 								$('#progress_'+value.subem_id).text(sub_progress);
-								if (sub_progress > 100) 
-								{
+								if (sub_progress < 1 and sub_progress > 0) {
+
+									sub_progress = sub_progress * 100;
+								} else {
 									sub_progress = 100;
 								}
 								$('#subem_'+value.subem_id + ' .sub-progress').animate({'width': sub_progress+'%'}, 500);
