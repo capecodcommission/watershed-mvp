@@ -24,7 +24,7 @@
 					4 => user does not enter a treatment area (Fertilizer Mgmt or Stormwater BMPs)
 			 -->
 				<p>Nitrogen removed by this treatment: {{round($treatment->Nload_Reduction)}}kg</p>
-				<p>Treatment reduction rate: {{$treatment->Treatment_Value}} per {{$treatment->Treatment_UnitMetric}} for {{$treatment->Treatment_MetricValue}} {{$treatment->Treatment_UnitMetric}} </p>
+				<p>Treatment reduction rate: {{$treatment->Treatment_Value}}kg for {{$treatment->Treatment_MetricValue}} {{$treatment->Treatment_UnitMetric}} </p>
 
 				@if($tech->Show_In_wMVP == 1)
 					<!-- <p class="select"><button id="select_area">Select a location</button> <span>@{{subembayment}}</span></p> -->
@@ -47,7 +47,7 @@
 			<p>
 				Enter a valid reduction rate between {{round($tech->Absolu_Reduc_perMetric_Low)}} and {{round($tech->Absolu_Reduc_perMetric_High)}}kg per {{$tech->Unit_Metric}}.<br />
 
-				<input type="range" id="embayment-percent" min="{{round($tech->Absolu_Reduc_perMetric_Low, 2)}}" max="{{round($tech->Absolu_Reduc_perMetric_High, 2)}}" v-model="embayment_percent" value='{{$treatment->Treatment_Value}}' step=".05"> @{{embayment_percent}}
+				<input type="range" id="embayment-percent" min="{{round($tech->Absolu_Reduc_perMetric_Low, 2)}}" max="{{round($tech->Absolu_Reduc_perMetric_High, 2)}}" v-model="embayment_percent" value='{{$treatment->Treatment_Value}}' step=".2"> @{{embayment_percent}}
 			</p>
 			<p>
 				<button id="updatetreatment">Update</button>
