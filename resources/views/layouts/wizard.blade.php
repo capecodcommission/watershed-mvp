@@ -111,13 +111,13 @@
 							{
 								// console.log(value);
 								var sub_progress = Math.round(value.n_load_target / (value.n_load_att - value.n_load_att_removed));
-								$('#progress_'+value.subem_id).text(sub_progress);
 								if (sub_progress < 1 & sub_progress > 0) {
 
 									sub_progress = sub_progress * 100;
 								} else {
 									sub_progress = 100;
 								}
+								$('#progress_'+value.subem_id).text(sub_progress);
 								$('#subem_'+value.subem_id + ' .sub-progress').animate({'width': sub_progress+'%'}, 500);
 								$('#subem_'+value.subem_id + ' .stats .stat-data.scenario-progress').text(Math.round(value.n_load_scenario)+'kg');
 							});
