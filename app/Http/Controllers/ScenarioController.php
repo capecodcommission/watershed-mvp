@@ -42,6 +42,7 @@ class ScenarioController extends Controller
 
 		$removed = 0;
 		$n_load_orig = 0;
+		$total_goal = 0;
 		// $subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
 
 		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments1 ' . $scenarioid);
