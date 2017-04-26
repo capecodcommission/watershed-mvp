@@ -965,6 +965,8 @@ require([
                                 spatialReference: sr
                         })
 
+                        console.log(pointGeom)
+
                         var pointGraphic = new Graphic(pointGeom, pointSymbol, {
                             keeper: true
                         })
