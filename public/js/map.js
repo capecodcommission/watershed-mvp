@@ -930,6 +930,9 @@ require([
 
 				var Treatment = treatments[i]
 
+                console.log(Treatment.Custom_POLY)
+                console.log(Treatment.POLY_STRING)
+
 				if (Treatment.Custom_POLY == 0 && Treatment.POLY_STRING.startsWith('POINT')) {
 
 					treatmentType1 = Treatment.TreatmentType_Name;
@@ -969,7 +972,7 @@ require([
                                 // + "<button class='save_poly' data-treatment='"+Treatment.TreatmentID+"'>Save Polygon</button></div>"
                     });
 
-                    pointGLs.add(pointGraphic.setInfoTemplate(template))
+                    pointGLs[i].add(pointGraphic.setInfoTemplate(template))
 
 
                     // map.addLayer(pointGLs[i])
