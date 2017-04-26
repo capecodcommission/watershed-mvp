@@ -988,7 +988,7 @@ require([
 				}
 			}
 
-            map.addLayer(pointGL)           
+            // map.addLayer(pointGLs)           
 
 			for (var i = treatments.length - 1; i >= 0; i--) 
 			{
