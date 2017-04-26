@@ -924,6 +924,8 @@ require([
 			var popupVal1 = ''
 			var treatmentType1 = ''
 
+            var pointGLArray = []
+
 			var sr = { wkid: 102100, latestWkid: 3857 };
 
 			for (var i = 0; i < treatments.length; i++) {
@@ -954,8 +956,6 @@ require([
                             spatialReference: sr
                         }
 
-                        console.log(pointGeo)
-
                         var pointSymbol = new PictureMarkerSymbol(imageURL1,30,30)
 
                         var pointGeom = new Point(pointGeo)
@@ -973,12 +973,18 @@ require([
                                     // + "<button class='save_poly' data-treatment='"+Treatment.TreatmentID+"'>Save Polygon</button></div>"
                         });
 
-                        pointGLs[k].add(pointGraphic.setInfoTemplate(template))
+                        pointGLArray.push(pointGraphic.setInfoTemplate(template))
 
-                        map.addLayer(pointGLs[k])
+                        
                     }
 				}
 			}
+
+            console.log(pointGLArray)
+            
+            pointGLs.addMany(pointGLArray)
+
+            map.addLayer(pointGLs)
             
 
 			for (var i = treatments.length - 1; i >= 0; i--) 
