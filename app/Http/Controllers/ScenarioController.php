@@ -56,12 +56,14 @@ class ScenarioController extends Controller
 		}
 		$current = $n_load_orig - $removed;
 		$remaining = $current - $total_goal;
+		$progress = round($total_goal/$current * 100);
+
 		if($remaining < 0)
 		{
 			$remaining = 0;
 		}
-		if ($current > 0) {
-			$progress = round($total_goal/$current * 100);
+		if ($progress > 0 & $progress <= 100) {
+			$progress;
 		}
 		else
 		{
