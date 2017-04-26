@@ -978,7 +978,7 @@ require([
 				}
 			}
 
-            console.log(pointGLArray)
+            // console.log(pointGLArray)
 
             pointGLs.addMany(pointGLArray)
 
