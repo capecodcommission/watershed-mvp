@@ -137,6 +137,8 @@
 				$("li[data-treatment='{{$treatment->TreatmentID}}']").remove();
 				
 				for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
+
+					console.log(map.graphics.graphics[i])
                 
 	                if (map.graphics.graphics[i].attributes) {
 
