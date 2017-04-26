@@ -975,10 +975,10 @@ require([
 
                         pointGLs.add(pointGraphic.setInfoTemplate(template))  
                     }
+
+                    console.log(pointGLs)
 				}
 			}
-            
-            console.log(pointGLs)
 
             map.addLayer(pointGLs)
             
