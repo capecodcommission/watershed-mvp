@@ -973,6 +973,8 @@ require([
 
 
                     map.addLayer(pointGLs[i])
+
+                    console.log(pointGLs[i])
 				}
 			}
             
