@@ -944,11 +944,11 @@ require([
 						point_string = point_string.replace(', 3857)', '');
 					var geometry1 = point_string.split(', ');
 
-					pointRings[i].push([parseFloat(geometry1[0]),parseFloat(geometry1[1])])
+					pointRings.push([parseFloat(geometry1[0]),parseFloat(geometry1[1])])
 
                     var pointGeo = {
-                        x: pointRings[i][0],
-                        y: pointRings[i][1],
+                        x: pointRings[0],
+                        y: pointRings[1],
                         spatialReference: sr
                     }
 
