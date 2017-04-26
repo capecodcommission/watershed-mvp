@@ -1641,6 +1641,9 @@ require([
 					map.graphics.add(polyGraphic);
 				}
 
+                console.log(Treatment.Custom_POLY)
+                console.log(Treatment.POLY_STRING)
+
 				if (Treatment.Custom_POLY == 0 && Treatment.POLY_STRING.startsWith('POINT')) {
 
 					// console.log(pointRings)
@@ -1676,7 +1679,7 @@ require([
 						map.addLayer(pointGLs[k])
 					}
 				}
-                console.log(pointGLs)
+                // console.log(pointGLs)
 			}
 		}
 
