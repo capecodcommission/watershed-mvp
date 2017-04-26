@@ -1672,11 +1672,11 @@ require([
 
 						pointGLs[k].add(pointGraphic.setInfoTemplate(template))
 
-                        console.log(pointGLs[k])
 
 						map.addLayer(pointGLs[k])
 					}
 				}
+                console.log(pointGLs)
 			}
 		}
 
