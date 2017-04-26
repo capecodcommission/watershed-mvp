@@ -932,9 +932,6 @@ require([
 
 				if (Treatment.Custom_POLY == 0 && Treatment.POLY_STRING.startsWith('POINT')) {
 
-                    console.log(Treatment.Custom_POLY)
-                    console.log(Treatment.POLY_STRING)
-
 					treatmentType1 = Treatment.TreatmentType_Name;
 					imageURL1 = "http://2016.watershedmvp.org/images/SVG/"+Treatment.treatment_icon;
 					treatmentArea1 = Math.round(Treatment.Treatment_Acreage);
