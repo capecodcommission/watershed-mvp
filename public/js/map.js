@@ -952,8 +952,8 @@ require([
                     for (var k = pointRings.length - 1; k >= 0; k--) {
                         
                         var pointGeo = {
-                            x: pointRings[0],
-                            y: pointRings[1],
+                            x: pointRings[k][0],
+                            y: pointRings[k][1],
                             spatialReference: sr
                         }
 
