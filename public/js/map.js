@@ -970,12 +970,11 @@ require([
                     });
 
                     pointGLs[i].add(pointGraphic.setInfoTemplate(template))  
+
+                    map.addLayer(pointGLs[i])
 				}
 			}
-
-            map.addLayer(pointGLs)
-
-            // map.addLayer(pointGLs)           
+         
 
 			for (var i = treatments.length - 1; i >= 0; i--) 
 			{
