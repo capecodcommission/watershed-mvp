@@ -952,6 +952,8 @@ require([
                         spatialReference: sr
                     }
 
+                    var pointSymbol = new PictureMarkerSymbol(imageURL1,30,30)
+
                     var pointGeom = new Point(pointGeo)
                     var pointGraphic = new Graphic(pointGeom, pointSymbol, {
                         keeper: true
