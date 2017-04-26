@@ -977,7 +977,7 @@ require([
 
                         console.log(pointGLs[k])
 
-                        map.addLayer(pointGLs[k])
+                        // map.addLayer(pointGLs[k])
                     }
 				}
 			}           
