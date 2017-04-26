@@ -969,9 +969,9 @@ require([
                                 // + "<button class='save_poly' data-treatment='"+Treatment.TreatmentID+"'>Save Polygon</button></div>"
                     });
 
-                    pointGLs[i].add(pointGraphic.setInfoTemplate(template))  
+                    pointGraphic.setInfoTemplate(template)  
 
-                    map.addLayer(pointGLs[i])
+                    map.graphics.add(pointGraphic)
 				}
 			}
          
@@ -1625,7 +1625,7 @@ require([
 				var pointSymbol = new PictureMarkerSymbol(imageURL,30,30)
 
 				
-				if (Treatment.Custom_POLY == 1 && Treatment.POLY_STRING) 
+				if (Treatment.Custom_POLY == 1 && Treatment.POLY_STRING.startsWith('POLYGON')) 
 				{
 					var nodes = [];
 					var rings = [];
