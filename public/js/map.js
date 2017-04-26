@@ -956,7 +956,8 @@ require([
                     })
 
                     var pointGraphic = new Graphic(pointGeom, pointSymbol, {
-                        keeper: true
+                        keeper: true,
+                        'treatment_id': Treatment.TreatmentID
                     })
 
                     var template = new InfoTemplate({
