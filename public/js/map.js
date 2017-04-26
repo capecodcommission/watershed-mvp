@@ -965,8 +965,6 @@ require([
                                 spatialReference: sr
                         })
 
-                        console.log(pointGeom)
-
                         var pointGraphic = new Graphic(pointGeom, pointSymbol, {
                             keeper: true
                         })
@@ -981,14 +979,16 @@ require([
                                     // + "<button class='save_poly' data-treatment='"+Treatment.TreatmentID+"'>Save Polygon</button></div>"
                         });
 
-                        map.addLayer(pointGraphic.setInfoTemplate(template))  
+                        pointGL.add(pointGraphic.setInfoTemplate(template))  
 
                         // console.log(pointGLs[i])
 
                         // map.addLayer(pointGLs[k])
                     // }
 				}
-			}           
+			}
+
+            map.addLayer(pointGL)           
 
 			for (var i = treatments.length - 1; i >= 0; i--) 
 			{
