@@ -930,10 +930,10 @@ require([
 
 				var Treatment = treatments[i]
 
-                console.log(Treatment.Custom_POLY)
-                console.log(Treatment.POLY_STRING)
-
 				if (Treatment.Custom_POLY == 0 && Treatment.POLY_STRING.startsWith('POINT')) {
+
+                    console.log(Treatment.Custom_POLY)
+                    console.log(Treatment.POLY_STRING)
 
 					treatmentType1 = Treatment.TreatmentType_Name;
 					imageURL1 = "http://2016.watershedmvp.org/images/SVG/"+Treatment.treatment_icon;
