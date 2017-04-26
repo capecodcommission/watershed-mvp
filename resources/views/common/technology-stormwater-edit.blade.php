@@ -146,7 +146,7 @@
 				// need to save the treated N values and update the subembayment progress
 				e.preventDefault();
 				// console.log('clicked');
-				var percent = $('#storm-percent').val();
+				var percent = 0
 				var units = 1;
 				if ('{{$tech->Show_In_wMVP}}' != '2' )
 				{
