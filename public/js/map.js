@@ -981,7 +981,7 @@ require([
 
                         pointGLs[i].add(pointGraphic.setInfoTemplate(template))  
 
-                        // console.log(pointGLs[k])
+                        console.log(pointGLs[i])
 
                         // map.addLayer(pointGLs[k])
                     // }
