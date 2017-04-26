@@ -944,39 +944,34 @@ require([
 						point_string = point_string.replace(', 3857)', '');
 					var geometry1 = point_string.split(', ');
 
-					pointRings.push([parseFloat(geometry1[0]),parseFloat(geometry1[1])])
+					pointRings[i].push([parseFloat(geometry1[0]),parseFloat(geometry1[1])])
+
+                    var pointGeo = {
+                        x: pointRings[i][0],
+                        y: pointRings[i][1],
+                        spatialReference: sr
+                    }
+
+                    var pointGeom = new Point(pointGeo)
+                    var pointGraphic = new Graphic(pointGeom, pointSymbol, {
+                        keeper: true
+                    })
+
+                    var template = new InfoTemplate({
+                    title: popupVal1,
+                    content: '<div align="left" class="treatment info technology"><img style="width:60pxfloat:right;margin-right:10px;" src=" '
+                                + imageURL1 + '" /><strong>Treatment Stats</strong>:<br /> ' 
+                                + treatmentArea1 + " Acres<br/>" 
+                                + parcels1 + " parcels treated<br/>" + n_removed1 + "kg (unatt) N removed.<br />"
+                                // + "<button class='edit_poly' data-treatment='"+Treatment.TreatmentID+"'>Edit Polygon</button>  "
+                                // + "<button class='save_poly' data-treatment='"+Treatment.TreatmentID+"'>Save Polygon</button></div>"
+                    });
+
+                    pointGLs[i].add(pointGraphic.setInfoTemplate(template))
+
+
+                    map.addLayer(pointGLs[i])
 				}
-
-                // for (var k = 0; k < pointRings.length; k++) {
-                        
-                //     var pointGeo = {
-                //         x: pointRings[k][0],
-                //         y: pointRings[k][1],
-                //         spatialReference: sr
-                //     }
-
-                //     // console.log(pointGeo)
-
-                //     var pointGeom = new Point(pointGeo)
-                //     var pointGraphic = new Graphic(pointGeom, pointSymbol, {
-                //         keeper: true
-                //     })
-
-                //     var template = new InfoTemplate({
-                //     title: popupVal1,
-                //     content: '<div align="left" class="treatment info technology"><img style="width:60pxfloat:right;margin-right:10px;" src=" '
-                //                 + imageURL1 + '" /><strong>Treatment Stats</strong>:<br /> ' 
-                //                 + treatmentArea1 + " Acres<br/>" 
-                //                 + parcels1 + " parcels treated<br/>" + n_removed1 + "kg (unatt) N removed.<br />"
-                //                 // + "<button class='edit_poly' data-treatment='"+Treatment.TreatmentID+"'>Edit Polygon</button>  "
-                //                 // + "<button class='save_poly' data-treatment='"+Treatment.TreatmentID+"'>Save Polygon</button></div>"
-                //     });
-
-                //     pointGLs[k].add(pointGraphic.setInfoTemplate(template))
-
-
-                //     map.addLayer(pointGLs[k])
-                // }
 			}
 
             
@@ -1674,42 +1669,41 @@ require([
 					map.graphics.add(polyGraphic);
 				}
 
-				if (Treatment.Custom_POLY == 0 && Treatment.POLY_STRING.startsWith('POINT')) {
+				// if (Treatment.Custom_POLY == 0 && Treatment.POLY_STRING.startsWith('POINT')) {
 
-					// console.log(pointRings)
+				// 	// console.log(pointRings)
 
-					for (var k = 0; k < pointRings.length; k++) {
+				// 	for (var k = 0; k < pointRings.length; k++) {
 						
-						var pointGeo = {
-							x: pointRings[k][0],
-							y: pointRings[k][1],
-							spatialReference: sr
-						}
+				// 		var pointGeo = {
+				// 			x: pointRings[k][0],
+				// 			y: pointRings[k][1],
+				// 			spatialReference: sr
+				// 		}
 
-						// console.log(pointGeo)
+				// 		// console.log(pointGeo)
 
-						var pointGeom = new Point(pointGeo)
-						var pointGraphic = new Graphic(pointGeom, pointSymbol, {
-							keeper: true
-						})
+				// 		var pointGeom = new Point(pointGeo)
+				// 		var pointGraphic = new Graphic(pointGeom, pointSymbol, {
+				// 			keeper: true
+				// 		})
 
-						var template = new InfoTemplate({
-						title: popupVal1,
-						content: '<div align="left" class="treatment info technology"><img style="width:60pxfloat:right;margin-right:10px;" src=" '
-									+ imageURL1 + '" /><strong>Treatment Stats</strong>:<br /> ' 
-									+ treatmentArea1 + " Acres<br/>" 
-									+ parcels1 + " parcels treated<br/>" + n_removed1 + "kg (unatt) N removed.<br />"
-									// + "<button class='edit_poly' data-treatment='"+Treatment.TreatmentID+"'>Edit Polygon</button>  "
-									// + "<button class='save_poly' data-treatment='"+Treatment.TreatmentID+"'>Save Polygon</button></div>"
-						});
+				// 		var template = new InfoTemplate({
+				// 		title: popupVal1,
+				// 		content: '<div align="left" class="treatment info technology"><img style="width:60pxfloat:right;margin-right:10px;" src=" '
+				// 					+ imageURL1 + '" /><strong>Treatment Stats</strong>:<br /> ' 
+				// 					+ treatmentArea1 + " Acres<br/>" 
+				// 					+ parcels1 + " parcels treated<br/>" + n_removed1 + "kg (unatt) N removed.<br />"
+				// 					// + "<button class='edit_poly' data-treatment='"+Treatment.TreatmentID+"'>Edit Polygon</button>  "
+				// 					// + "<button class='save_poly' data-treatment='"+Treatment.TreatmentID+"'>Save Polygon</button></div>"
+				// 		});
 
-						pointGLs[k].add(pointGraphic.setInfoTemplate(template))
+				// 		pointGLs[k].add(pointGraphic.setInfoTemplate(template))
 
 
-						map.addLayer(pointGLs[k])
-					}
-				}
-                // console.log(pointGLs)
+				// 		map.addLayer(pointGLs[k])
+				// 	}
+				// }
 			}
 		}
 
