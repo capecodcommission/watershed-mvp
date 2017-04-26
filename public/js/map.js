@@ -979,7 +979,7 @@ require([
                                     // + "<button class='save_poly' data-treatment='"+Treatment.TreatmentID+"'>Save Polygon</button></div>"
                         });
 
-                        pointGL.add(pointGraphic.setInfoTemplate(template))  
+                        pointGLs.add(pointGraphic.setInfoTemplate(template))  
 
                         // console.log(pointGLs[i])
 
