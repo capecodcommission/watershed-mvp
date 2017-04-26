@@ -946,45 +946,34 @@ require([
 						point_string = point_string.replace(', 3857)', '');
 					var geometry1 = point_string.split(', ');
 
-					// pointRings.push([parseFloat(geometry1[0]),parseFloat(geometry1[1])])
+                    var pointSymbol = new PictureMarkerSymbol(imageURL1,30,30)
 
-                    // for (var k = pointRings.length - 1; k >= 0; k--) {
-                        
-                        // var pointGeo = {
-                        //     x: pointRings[k][0],
-                        //     y: pointRings[k][1],
-                        //     spatialReference: sr
-                        // }
+                    var pointGeom = new Point({
 
-                        var pointSymbol = new PictureMarkerSymbol(imageURL1,30,30)
+                            x: parseFloat(geometry1[0]),
+                            y: parseFloat(geometry1[1]),
+                            spatialReference: sr
+                    })
 
-                        var pointGeom = new Point({
+                    var pointGraphic = new Graphic(pointGeom, pointSymbol, {
+                        keeper: true
+                    })
 
-                                x: parseFloat(geometry1[0]),
-                                y: parseFloat(geometry1[1]),
-                                spatialReference: sr
-                        })
+                    var template = new InfoTemplate({
+                    title: popupVal1,
+                    content: '<div align="left" class="treatment info technology"><img style="width:60pxfloat:right;margin-right:10px;" src=" '
+                                + imageURL1 + '" /><strong>Treatment Stats</strong>:<br /> ' 
+                                + treatmentArea1 + " Acres<br/>" 
+                                + parcels1 + " parcels treated<br/>" + n_removed1 + "kg (unatt) N removed.<br />"
+                                // + "<button class='edit_poly' data-treatment='"+Treatment.TreatmentID+"'>Edit Polygon</button>  "
+                                // + "<button class='save_poly' data-treatment='"+Treatment.TreatmentID+"'>Save Polygon</button></div>"
+                    });
 
-                        var pointGraphic = new Graphic(pointGeom, pointSymbol, {
-                            keeper: true
-                        })
-
-                        var template = new InfoTemplate({
-                        title: popupVal1,
-                        content: '<div align="left" class="treatment info technology"><img style="width:60pxfloat:right;margin-right:10px;" src=" '
-                                    + imageURL1 + '" /><strong>Treatment Stats</strong>:<br /> ' 
-                                    + treatmentArea1 + " Acres<br/>" 
-                                    + parcels1 + " parcels treated<br/>" + n_removed1 + "kg (unatt) N removed.<br />"
-                                    // + "<button class='edit_poly' data-treatment='"+Treatment.TreatmentID+"'>Edit Polygon</button>  "
-                                    // + "<button class='save_poly' data-treatment='"+Treatment.TreatmentID+"'>Save Polygon</button></div>"
-                        });
-
-                        pointGLs[i].add(pointGraphic.setInfoTemplate(template))  
-
-                        map.addLayer(pointGLs[i])
-                    // }
+                    pointGLs[i].add(pointGraphic.setInfoTemplate(template))  
 				}
 			}
+
+            map.addLayer(pointGLs)
 
             // map.addLayer(pointGLs)           
 
