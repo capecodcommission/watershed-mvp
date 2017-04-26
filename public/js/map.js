@@ -947,7 +947,7 @@ require([
 					pointRings.push([parseFloat(geometry1[0]),parseFloat(geometry1[1])])
 				}
 			}
-            
+
             for (var k = 0; k < pointRings.length; k++) {
                         
                 var pointGeo = {
@@ -978,6 +978,8 @@ require([
 
                 map.addLayer(pointGLs[k])
             }
+
+            console.log(pointGLs)
 
 			for (var i = treatments.length - 1; i >= 0; i--) 
 			{
