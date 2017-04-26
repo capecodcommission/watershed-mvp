@@ -964,6 +964,7 @@ require([
                                 y: parseFloat(geometry1[1]),
                                 spatialReference: sr
                         })
+
                         var pointGraphic = new Graphic(pointGeom, pointSymbol, {
                             keeper: true
                         })
@@ -978,7 +979,7 @@ require([
                                     // + "<button class='save_poly' data-treatment='"+Treatment.TreatmentID+"'>Save Polygon</button></div>"
                         });
 
-                        pointGLs.add(pointGraphic.setInfoTemplate(template))  
+                        pointGLs[i].add(pointGraphic.setInfoTemplate(template))  
 
                         // console.log(pointGLs[k])
 
