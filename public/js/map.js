@@ -973,10 +973,10 @@ require([
                                     // + "<button class='save_poly' data-treatment='"+Treatment.TreatmentID+"'>Save Polygon</button></div>"
                         });
 
-                        pointGLs.add(pointGraphic.setInfoTemplate(template))  
+                        pointGLs[k].add(pointGraphic.setInfoTemplate(template))  
                     }
 
-                    console.log(pointGLs)
+                    console.log(pointGLs[i])
 
                     map.addLayer(pointGLs[i])
 				}
