@@ -974,12 +974,14 @@ require([
 
                     pointGLs[i].add(pointGraphic.setInfoTemplate(template))
 
+                    console.log(pointGLs[i])
+
 
                     // map.addLayer(pointGLs[i])
 				}
 			}
 
-            map.addLayer(pointGLs)
+            
             
 
 			for (var i = treatments.length - 1; i >= 0; i--) 
