@@ -955,7 +955,10 @@ require([
                         spatialReference: sr
                     }
 
-                    console.log(pointGeo)
+                    for (var k = pointGeo.length - 1; k >= 0; k--) {
+                        
+                        console.log(pointGeo[k])
+                    }
 
                     var pointSymbol = new PictureMarkerSymbol(imageURL1,30,30)
 
