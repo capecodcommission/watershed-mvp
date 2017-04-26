@@ -946,19 +946,24 @@ require([
 						point_string = point_string.replace(', 3857)', '');
 					var geometry1 = point_string.split(', ');
 
-					pointRings.push([parseFloat(geometry1[0]),parseFloat(geometry1[1])])
+					// pointRings.push([parseFloat(geometry1[0]),parseFloat(geometry1[1])])
 
-                    for (var k = pointRings.length - 1; k >= 0; k--) {
+                    // for (var k = pointRings.length - 1; k >= 0; k--) {
                         
-                        var pointGeo = {
-                            x: pointRings[k][0],
-                            y: pointRings[k][1],
-                            spatialReference: sr
-                        }
+                        // var pointGeo = {
+                        //     x: pointRings[k][0],
+                        //     y: pointRings[k][1],
+                        //     spatialReference: sr
+                        // }
 
                         var pointSymbol = new PictureMarkerSymbol(imageURL1,30,30)
 
-                        var pointGeom = new Point(pointGeo)
+                        var pointGeom = new Point({
+
+                                x: parseFloat(geometry1[0]),
+                                y: parseFloat(geometry1[1]),
+                                spatialReference: sr
+                        })
                         var pointGraphic = new Graphic(pointGeom, pointSymbol, {
                             keeper: true
                         })
@@ -973,12 +978,12 @@ require([
                                     // + "<button class='save_poly' data-treatment='"+Treatment.TreatmentID+"'>Save Polygon</button></div>"
                         });
 
-                        pointGLs[k].add(pointGraphic.setInfoTemplate(template))  
+                        pointGLs.add(pointGraphic.setInfoTemplate(template))  
 
-                        console.log(pointGLs[k])
+                        // console.log(pointGLs[k])
 
                         // map.addLayer(pointGLs[k])
-                    }
+                    // }
 				}
 			}           
 
