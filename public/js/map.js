@@ -977,11 +977,10 @@ require([
                     }
 
                     console.log(pointGLs)
-				}
-			}
 
-            map.addLayer(pointGLs)
-            
+                    map.addLayer(pointGLs[i])
+				}
+			}           
 
 			for (var i = treatments.length - 1; i >= 0; i--) 
 			{
