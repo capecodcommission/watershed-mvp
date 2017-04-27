@@ -126,7 +126,7 @@
 				</tbody>
 			</table>
 			<h2>Towns Affected</h2>
-			<table>
+			<!-- <table>
 				<thead>
 					<tr>
 						<th>Town</th>
@@ -146,7 +146,7 @@
 
 					@endforeach
 				</tbody>
-			</table>
+			</table> -->
 
 			<p>Scenario Created: {{$scenario->CreateDate}}</p>
 			<p>Created by: {{$scenario->user->name}} ({{$scenario->user->email}}) </p>
