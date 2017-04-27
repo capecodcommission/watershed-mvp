@@ -71,7 +71,7 @@
 				?>
 					@foreach($scenario->treatments as $result)
 					<tr>
-						<td>{{$result->technology->Technology_Strategy}}</td>
+						<td>{{$result->Technology_Strategy}}</td>
 						<td>{{$result->TreatmentID}}</td>
 						<td>{{$result->Treatment_Parcels}}</td>
 						<td>{{round($result->Nload_Reduction)}}</td>
