@@ -177,7 +177,7 @@ class ScenarioController extends Controller
 				DB::raw('sum(CapeCodMA.parcelMaster.running_nload_removed) as wtt_unatt_n_removed')
 			)
 			->where('CapeCodMA.parcelMaster.scenario_id', '=', $scenarioid)
-			->groupBy('CapeCodMA.parcelMaster.town_id','CapeCodMA.parcelMaster.treatment_id')
+			->groupBy('CapeCodMA.MAtowns.TOWN','CapeCodMA.parcelMaster.treatment_id')
 			->get();
 		// $subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
 		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments1 ' . $scenarioid);
