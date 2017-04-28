@@ -32,7 +32,7 @@
 				<?php $row = 7; ?>
 					@foreach($scenario->treatments as $result)
 					<tr>
-						<td>{{$result->Technology_Strategy}}</td>
+						<td>{{$result->TreatmentType_Name}}</td>
 						<td>{{$result->TreatmentID}}</td>
 						<td>{{$result->Treatment_Parcels}}</td>
 						<td>{{round($result->Nload_Reduction)}}</td>
@@ -63,7 +63,7 @@
 					<tr>
 						<td></td>
 						<td></td>
-						<td></td>
+						<td><strong>Total Parcels Affected</strong></td>
 						<td><strong>Total Nitrogen Removed</strong></td>
 						<td><strong>Total Treatment Construction Cost</strong></td>
 						<td><strong>Total OM Cost</strong></td>
@@ -77,7 +77,7 @@
 					<tr class="summary">
 						<td><strong>Scenario Totals:</strong></td>
 						<td></td>
-						<td></td>
+						<td>=SUM(C8:C{{$row}})</td>
 						<td class="total_nitrogen">=SUM(D8:D{{$row}})</td>
 						<td>=SUM(E8:E{{$row}})</td>
 						<td>=SUM(F8:F{{$row}})</td>
