@@ -53,7 +53,7 @@
 					</p>
 
 
-				@elseif($tech->Show_In_wMVP == 3)
+				@elseif($tech->Show_In_wMVP == 3 || $tech->Technology_Strategy == "Phytoirrigation")
 					<p>
 						Acreage of treatment area: {{round($treatment->Treatment_Acreage,2)}}
 					</p>
