@@ -60,15 +60,6 @@
 					<p>
 						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} (for cost calculation): 
 						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;" value="{{$treatment->Treatment_MetricValue}}"></label>
-					</p>	
-
-				@else
-					<p>
-						Acreage of treatment area: {{round($treatment->Treatment_Acreage,2)}}
-					</p>
-					<p>
-						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} (for cost calculation): 
-						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;" value="{{$treatment->Treatment_MetricValue}}"></label>
 					</p>									
 				
 				@endif 
