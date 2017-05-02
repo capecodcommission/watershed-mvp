@@ -47,7 +47,7 @@
 			<p>
 				Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.<br />
 				
-				<input type="range" id="ground-percent" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" value="{{$tech->Nutri_Reduc_N_Low}}" v-model="ground_percent"> <div align = "right">@{{ground_percent}}%</div>
+				<input type="range" id="ground-percent" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" value="{{$tech->Nutri_Reduc_N_Low}}" v-model="ground_percent"> <div class = "center">@{{ground_percent}}%</div>
 			</p>
 			<p>
 				<button id="applytreatment">Apply</button>
