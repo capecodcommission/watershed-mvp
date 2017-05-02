@@ -85,7 +85,7 @@
 
 <script>
 	$(document).ready(function(){
-	 treatment = {{$treatment['TreatmentID']}};
+	 treatment = {{$treatment->TreatmentID}};
 	 typeid = {{$treatment->TreatmentType_ID}};
 		$('#select_area').on('click', function(f){
 			f.preventDefault();
