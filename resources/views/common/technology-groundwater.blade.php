@@ -4,7 +4,10 @@
 		
 
 <div class="popdown-content" id="app">
-	<header><h2>{{$tech->Technology_Strategy}}</h2></header>
+	<header>
+		<h2>{{$tech->Technology_Strategy}}</h2>
+		<i align = "right" class = 'fa fa-times'></i>
+	</header>
 	<section class="body">
 
 			<div class="technology">
@@ -42,7 +45,7 @@
 						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;"></label>
 					</p>
 				@endif
-				
+
 			<p align = "center">
 				Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.<br>
 				
