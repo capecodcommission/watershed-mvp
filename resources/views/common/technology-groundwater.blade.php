@@ -43,7 +43,7 @@
 					</p>
 				@endif
 			<br>
-
+			<br>
 			<p align = "center">
 				Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.<br>
 				
