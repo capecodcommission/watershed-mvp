@@ -5,7 +5,7 @@
 
 <div class="popdown-content" id="app">
 	<header>
-		<h2>{{$tech->Technology_Strategy}}<i class = 'fa fa-times text-right'></i></h2>
+		<h2>{{$tech->Technology_Strategy}}<i align = "right" class = 'fa fa-times'></i></h2>
 	</header>
 	<section class="body">
 
