@@ -49,13 +49,13 @@
 				@elseif($tech->Show_In_wMVP == 2)
 
 					<p>
-						Acreage of treatment area: {{$treatment->Treatment_Acreage}}
+						Acreage of treatment area: {{round($treatment->Treatment_Acreage,2)}}
 					</p>
 
 
 				@elseif($tech->Show_In_wMVP == 3)
 					<p>
-						Acreage of treatment area: {{$treatment->Treatment_Acreage}}
+						Acreage of treatment area: {{round($treatment->Treatment_Acreage,2)}}
 					</p>
 					<p>
 						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} (for cost calculation): 
