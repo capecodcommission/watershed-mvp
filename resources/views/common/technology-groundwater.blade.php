@@ -7,7 +7,7 @@
 	<header>
 		<div class = 'row'>
 			<div class = 'col'>
-				<h2>{{$tech->Technology_Strategy}}<button align = 'right' id = "closeWindow"><i class = 'fa fa-times'></i></button></h2>
+				<h2>{{$tech->Technology_Strategy}}<button style = 'text-align: right;' id = "closeWindow"><i class = 'fa fa-times'></i></button></h2>
 			</div>
 		</div>
 	</header>
