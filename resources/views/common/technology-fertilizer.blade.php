@@ -3,7 +3,13 @@
 		
 
 <div class="popdown-content" >
-	<header><h2>{{$tech->Technology_Strategy}}</h2></header>
+	<header>
+		<div class = 'row'>
+			<div class = 'col'>
+				<h2>{{$tech->Technology_Strategy}}<button style = 'position: absolute; right: 20; top: 10' id = "closeWindow"><i class = 'fa fa-times'></i></button></h2>
+			</div>
+		</div>
+	</header>
 	<section class="body">
 
 			<div class="technology">
@@ -86,6 +92,32 @@
 				});
 
 		});
+
+		$('#closeWindow').on('click', function (e) {
+
+			var url = "{{url('cancel', $treatment->TreatmentID)}}";
+
+			$.ajax({
+				method: 'GET',
+				url: url
+			})
+			.done(function(msg){
+
+				$('#popdown-opacity').hide();
+				
+				for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
+                
+	                if (map.graphics.graphics[i].attributes) {
+
+	                    if (map.graphics.graphics[i].attributes.treatment_id == treatment) {
+
+	                    	map.graphics.remove(map.graphics.graphics[i])
+	                    }
+	                }
+           		}
+           	})
+		})
+		
 		$('#canceltreatment').on('click', function(e){
 		$('#fert-percent').val(0) 
 		var url = "{{url('cancel', $treatment->TreatmentID)}}";
