@@ -9,7 +9,7 @@
 			<div class = 'col'>
 				<h2>{{$tech->Technology_Strategy}}</h2>
 			</div>
-			<div class = 'col'>
+			<div class = 'col-xs-1'>
 				<button id = "closeWindow"><i class = 'fa fa-times'></i></button>
 			</div>
 		</div>
