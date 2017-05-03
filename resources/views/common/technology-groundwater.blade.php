@@ -101,7 +101,7 @@
 			});
 		});
 
-		$('closeWindow').on('click', function (e) {
+		$('#closeWindow').on('click', function (e) {
 
 			var url = "{{url('cancel', $treatment->TreatmentID)}}";
 
