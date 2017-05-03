@@ -7,7 +7,13 @@
 
 ?>
 <div class="popdown-content" id="app">
-	<header><h2>{{$tech->Technology_Strategy}}</h2></header>
+	<header>
+		<div class = 'row'>
+			<div class = 'col'>
+				<h2>{{$tech->Technology_Strategy}}<button style = 'position: absolute; right: 20; top: 10' id = "closeWindow"><i class = 'fa fa-times'></i></button></h2>
+			</div>
+		</div>
+	</header>
 	<section class="body">
 <p>{{$treatment->Treatment_Class}}</p>
 			<div class="technology">
@@ -113,6 +119,11 @@
 
 			});
 		});
+
+		$('#closeWindow').on('click', function (e) {
+
+			$('#popdown-opacity').hide();
+		})
 
 		$('#select_polygon').on('click', function(f){
 			f.preventDefault();

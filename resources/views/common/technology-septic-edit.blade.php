@@ -4,7 +4,13 @@
 		
 
 <div class="popdown-content" id="app">
-	<header><h2>{{$treatment->TreatmentType_Name}}</h2></header>
+	<header>
+		<div class = 'row'>
+			<div class = 'col'>
+				<h2>{{$treatment->TreatmentType_Name}}<button style = 'position: absolute; right: 20; top: 10' id = "closeWindow"><i class = 'fa fa-times'></i></button></h2>
+			</div>
+		</div>
+	</header>
 	<section class="body">
 
 			<div class="technology">
@@ -72,6 +78,11 @@
 			// $('#select_destination').show();
 
 		});
+
+		$('#closeWindow').on('click', function (e) {
+
+			$('#popdown-opacity').hide();
+		})
 		
 		$('#updatetreatment').on('click', function(e)
 		{
