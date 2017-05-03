@@ -7,7 +7,7 @@
 	<header>
 		<h2>
 			<div align = "right">
-				<i id = "closeWindow" class = 'fa fa-times'></i>
+				<button id = "closeWindow"><i class = 'fa fa-times'></i></button>
 			</div>
 			{{$tech->Technology_Strategy}}
 		</h2>
@@ -102,12 +102,15 @@
 		});
 
 		$('closeWindow').on('click', function (e) {
+
 			var url = "{{url('cancel', $treatment->TreatmentID)}}";
+
 			$.ajax({
 				method: 'GET',
 				url: url
 			})
 			.done(function(msg){
+
 				$('#popdown-opacity').hide();
 				
 				for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
