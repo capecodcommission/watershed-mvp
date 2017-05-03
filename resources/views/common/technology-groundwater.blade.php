@@ -5,12 +5,14 @@
 
 <div class="popdown-content" id="app">
 	<header>
-		<h2>
-			<div align = "right">
+		<div class = 'row'>
+			<div class = 'col'>
+				<h2>{{$tech->Technology_Strategy}}</h2>
+			</div>
+			<div class = 'col'>
 				<button id = "closeWindow"><i class = 'fa fa-times'></i></button>
 			</div>
-			{{$tech->Technology_Strategy}}
-		</h2>
+		</div>
 	</header>
 	<section class="body">
 
