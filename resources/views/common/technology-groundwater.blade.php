@@ -6,7 +6,7 @@
 <div class="popdown-content" id="app">
 	<header>
 		<div class = 'row'>
-			<div class = 'col'>
+			<div class = 'col-md-1'>
 				<h2>{{$tech->Technology_Strategy}}</h2>
 			</div>
 			<div class = 'col-xs-1'>
