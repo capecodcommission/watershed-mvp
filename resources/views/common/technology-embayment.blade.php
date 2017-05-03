@@ -106,6 +106,8 @@
 
 		$('#closeWindow').on('click', function (e) {
 
+			$('#popdown-opacity').hide();
+
 			var url = "{{url('cancel', $treatment->TreatmentID)}}";
 
 			$.ajax({
@@ -113,8 +115,6 @@
 				url: url
 			})
 			.done(function(msg){
-
-				$('#popdown-opacity').hide();
 				
 				for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
                 

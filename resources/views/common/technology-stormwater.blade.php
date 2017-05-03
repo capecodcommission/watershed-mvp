@@ -152,6 +152,8 @@
 
 			$('#closeWindow').on('click', function (e) {
 
+				$('#popdown-opacity').hide();
+
 				var url = "{{url('cancel', $treatment->TreatmentID)}}";
 
 				$.ajax({
@@ -159,9 +161,7 @@
 					url: url
 				})
 				.done(function(msg){
-
-					$('#popdown-opacity').hide();
-					
+			
 					for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
 	                
 		                if (map.graphics.graphics[i].attributes) {
@@ -174,7 +174,7 @@
 	           		}
 	           	})
 			})
-			
+
 			$('#apply_treatment_'+treatment).on('click', function(e){
 				// need to save the treated N values and update the subembayment progress
 				e.preventDefault();
