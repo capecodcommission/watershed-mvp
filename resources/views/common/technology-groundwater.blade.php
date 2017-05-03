@@ -5,7 +5,12 @@
 
 <div class="popdown-content" id="app">
 	<header>
-		<h2><div align = "right"><i class = 'fa fa-times'></i></div>{{$tech->Technology_Strategy}}</h2>
+		<h2>
+			<div align = "right">
+				<i id = "closeWindow" class = 'fa fa-times'></i>
+			</div>
+			{{$tech->Technology_Strategy}}
+		</h2>
 	</header>
 	<section class="body">
 
@@ -95,6 +100,28 @@
 				}
 			});
 		});
+
+		$('closeWindow').on('click', function (e) {
+			var url = "{{url('cancel', $treatment->TreatmentID)}}";
+			$.ajax({
+				method: 'GET',
+				url: url
+			})
+			.done(function(msg){
+				$('#popdown-opacity').hide();
+				
+				for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
+                
+	                if (map.graphics.graphics[i].attributes) {
+
+	                    if (map.graphics.graphics[i].attributes.treatment_id == treatment) {
+
+	                    	map.graphics.remove(map.graphics.graphics[i])
+	                    }
+	                }
+           		}
+           	})
+		})
 
 		$('#select_polygon').on('click', function(f){
 			f.preventDefault();
