@@ -85,8 +85,12 @@ class WizardController extends Controller
 			if ($key->TreatmentType_Name == 'Fertilizer Management') {
 				Session::put('fert_applied', 1);
 			}
+			else if ($key->TreatmentType_Name == 'Stormwater Management') {
+				Session::put('storm_applied', 1);
+			}
 			else {
 				Session::put('fert_applied', 0);
+				Session::put('storm_applied', 0);
 			}
 		}
 
