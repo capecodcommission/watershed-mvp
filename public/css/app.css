@@ -6375,7 +6375,12 @@ include flash mixins
 
 div.selected-treatments button#edit_polygon {
   margin-left: 5%;
-  float: left;
+  float: left !important;
+}
+
+div.selected-treatments button#save_polygon {
+  margin-left: 5%;
+  float: left !important;
 }
 
 div.selected-treatments {
