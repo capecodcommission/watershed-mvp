@@ -4031,10 +4031,10 @@ hr {
 
 table.esriLegendLayer table {
   margin: 0;
-  font-size: .05em;
+  font-size: 1em;
 }
 
-table.esriLegendLayer svg {
+table.esriLegendLayer div {
   width: 35px;
   height: 35px;
 }
