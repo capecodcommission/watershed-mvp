@@ -4031,8 +4031,7 @@ hr {
 
 table.esriLegendLayer table {
   margin: 0;
-  font-size: 1em;
-  width: 10px;
+  font-size: .05em;
 }
 
 
