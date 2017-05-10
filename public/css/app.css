@@ -4036,7 +4036,10 @@ table.esriLegendLayer table {
 
 table.esriLegendLayer div {
   width: 10%;
-  height: 10%;
+}
+
+table.esriLegendLayer td {
+  width: 10%;
 }
 
 
