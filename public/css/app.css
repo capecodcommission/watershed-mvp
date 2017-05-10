@@ -6374,17 +6374,17 @@ include flash mixins
   border: 1px solid #999; }
 
 div.selected-treatments button#edit_polygon {
-  margin-left: 5%;
+  margin-left: 2%;
   float: left !important;
 }
 
 div.selected-treatments button#save_polygon {
-  margin-left: 5%;
+  margin-left: 1%;
   float: left !important;
 }
 
 div.selected-treatments {
-  width: 70%;
+  width: 80%;
   margin: auto;
   padding: 20px;
   background: transparent;
