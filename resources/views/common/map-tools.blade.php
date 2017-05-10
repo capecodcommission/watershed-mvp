@@ -5,7 +5,7 @@
 <label style="position:absolute; right:50px; top:20px; z-Index:100;">
 	<i id ='disable-popups' class="fa fa-eye fa-eye-white fa-2x js-menu-trigger enabled"></i>
 </label>
-    <div style="position:absolute; right:100px; top:20px; z-Index:101;">
+    <div style="position:absolute; right:95px; top:20px; z-Index:101;">
         <div data-dojo-type="dijit/TitlePane"
              data-dojo-props="title:'Switch Basemap', closable:false, open:false">
             <div data-dojo-type="dijit/layout/ContentPane" style="width:380px; height:280px; overflow:auto;">
