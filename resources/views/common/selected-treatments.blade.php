@@ -11,8 +11,8 @@
 				@endif
 			@endforeach	
 	</ul>
-<button id="edit_polygon" style="float:right;">Edit Polygon</button>
-<button id="save_polygon" style="display:none;float:right;">Save Polygon</button>
+<button id="edit_polygon" style="float:left;">Edit Polygon</button>
+<button id="save_polygon" style="display:none;float:left;">Save Polygon</button>
 				<span style="visibility:hidden;"><div id="tool_move" data-dojo-type="dijit/form/ToggleButton" data-dojo-props="checked:'true', iconClass:'dijitCheckBoxIcon'">Move</div>
       <div id="tool_vertices" data-dojo-type="dijit/form/ToggleButton" data-dojo-props="checked:'true', iconClass:'dijitCheckBoxIcon'">Edit Vertices</div>
       <div id="tool_scale" data-dojo-type="dijit/form/ToggleButton" data-dojo-props="checked:'true', iconClass:'dijitCheckBoxIcon'">Scale</div>
