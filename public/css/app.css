@@ -6373,7 +6373,7 @@ include flash mixins
   border-top-left-radius: 10px;
   border: 1px solid #999; }
 
-div.selected-treatments button {
+div.selected-treatments button#edit_polygon {
   margin-left: 5%;
   float: left;
 }
