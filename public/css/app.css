@@ -6373,8 +6373,13 @@ include flash mixins
   border-top-left-radius: 10px;
   border: 1px solid #999; }
 
+div.selected-treatments button {
+  margin-left: 5%;
+}
+
 div.selected-treatments {
   width: 70%;
+  margin: auto;
   padding: 20px;
   background: transparent;
   /*opacity: 0.90;*/
