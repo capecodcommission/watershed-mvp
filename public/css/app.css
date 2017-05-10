@@ -4032,11 +4032,9 @@ hr {
 table.esriLegendLayer table {
   margin: 0;
   font-size: 1em;
+  width: 10px;
 }
 
-table.esriLegendLayer table>tbody>tr>td {
-  width: 10px !important;
-}
 
 img,
 picture {
