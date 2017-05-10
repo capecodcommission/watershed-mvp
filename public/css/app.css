@@ -4034,6 +4034,10 @@ table.esriLegendLayer table {
   font-size: 1em;
 }
 
+table.esriLegendLayer td {
+  margin:0;
+}
+
 img,
 picture {
   margin: 0;
