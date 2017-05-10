@@ -4034,7 +4034,7 @@ table.esriLegendLayer table {
   font-size: 1em;
 }
 
-table.esriLegendLayer table, tbody, tr, td {
+table.esriLegendLayer table>tbody>tr>td {
   width: 10px !important;
 }
 
