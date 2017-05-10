@@ -4035,12 +4035,17 @@ table.esriLegendLayer table {
 }
 
 table.esriLegendLayer div {
-  width: 10%;
+  width: 35px;
+  height: 35px;
 }
 
-table.esriLegendLayer td {
-  width: 10%;
+table.esriLegendLayer svg {
+  width: 35px;
+  height: 35px;
 }
+
+table.esriLegendLayer circle {
+  transform: matrix(1.00000000,0.00000000,0.00000000,1.00000000,17.5,17.5)
 
 
 img,
