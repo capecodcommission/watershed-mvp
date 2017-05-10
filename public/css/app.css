@@ -6375,6 +6375,7 @@ include flash mixins
 
 div.selected-treatments button {
   margin-left: 5%;
+  float: left;
 }
 
 div.selected-treatments {
