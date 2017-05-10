@@ -6374,10 +6374,10 @@ include flash mixins
   border: 1px solid #999; }
 
 div.selected-treatments {
-  width: 80%;
+  width: 70%;
   padding: 20px;
-  background: #ffffff;
-  opacity: 0.90;
+  background: transparent;
+  /*opacity: 0.90;*/
   border-radius: 15px;
   height: 7em; }
   div.selected-treatments ul {
