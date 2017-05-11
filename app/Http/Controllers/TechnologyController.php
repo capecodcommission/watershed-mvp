@@ -461,7 +461,7 @@ class TechnologyController extends Controller
 					$subemid = session('subemid');
 					$n_parcels = 0;
 
-					$parcels = DB::table("dbo.wiz_treatment_towns")->where("wtt_treatment_id", "=", $treat_id)->get();
+					$parcels = DB::select("*")->from("dbo.wiz_treatment_towns")->where("wtt_treatment_id", "=", $treat_id)->get();
 
 					foreach ($parcels as $parcel) 
 					{

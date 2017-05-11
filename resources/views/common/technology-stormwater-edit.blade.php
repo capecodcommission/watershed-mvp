@@ -83,6 +83,12 @@
 							
 						</tbody>
 					</table> --}}
+
+					<p>
+						Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.<br />
+				
+						<input type="range" id="storm-percent" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="storm_percent" value="{{$treatment->Treatment_Value}}"> @{{storm_percent}}%
+					</p> 
 				@endif
 		
 
