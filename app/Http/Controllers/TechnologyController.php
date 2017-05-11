@@ -465,12 +465,11 @@ class TechnologyController extends Controller
 
 					foreach ($parcels as $parcel) 
 					{
-						$n_total += $parcel->wtt_unatt_n_removed;
 						$n_parcels += $parcel->wtt_tot_parcels;
 					}
 
 					// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $n_total . ', ' . $n_parcels);
-					$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment1] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $n_total . ', ' . $n_parcels);
+					$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment1] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $n_parcels);
 
 					break;
 				default:
