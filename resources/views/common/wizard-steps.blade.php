@@ -97,7 +97,7 @@
 				@else
 					<div id = "stormMan" class="technology">
 					<!-- href="{{url('/tech/storm/26')}}"  -->
-						<a class="popdown">
+						<a href="{{url('/tech/storm/26')}} class="popdown">
 							<img src="http://2016.watershedmvp.org/images/SVG/StormwaterManagement.svg"><br />
 							 Stormwater Management
 						</a>
@@ -415,7 +415,7 @@
 
 			e.preventDefault()
 
-			e.addClass('fa fa-spinner fa-spin')
+			this.addClass('fa fa-spinner fa-spin')
 
 			var url = "{{url('/tech/storm/26')}}"
 			$.ajax({
