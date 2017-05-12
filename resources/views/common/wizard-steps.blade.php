@@ -415,7 +415,7 @@
 
 			e.preventDefault()
 
-			$("#stormMan").add('div').addClass('fa fa-spinner fa-spin')
+			$("#stormMan").append('div').addClass('fa fa-spinner fa-spin')
 
 			var url = "{{url('/tech/storm/26')}}"
 			$.ajax({
