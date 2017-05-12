@@ -121,16 +121,13 @@
 		})
 
 		$('#canceltreatment').on('click', function(e){
-		$('#fert-percent').val(0) 
-		var url = "{{url('cancel', $treatment->TreatmentID)}}";
-		$.ajax({
-			method: 'GET',
-			url: url
-		})
-			.done(function(msg){
-				$('#popdown-opacity').hide();
-				location.reload()
-			});
+			$('#popdown-opacity').hide();
+			$('#fert-percent').val(0) 
+			var url = "{{url('cancel', $treatment->TreatmentID)}}";
+			$.ajax({
+				method: 'GET',
+				url: url
+			}).done(function(msg){});
 		});
 
 	});
