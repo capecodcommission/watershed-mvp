@@ -69,6 +69,8 @@
 
 <script>
 	$(document).ready(function(){
+
+		$('div.fa.fa-spinner.fa-spin').remove()
 		var subem_id = ''
 	 	treatment = {{$treatment->TreatmentID}};
 

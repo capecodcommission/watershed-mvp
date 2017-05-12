@@ -68,6 +68,8 @@
 <script>
 	$(document).ready(function(){
 
+		$('div.fa.fa-spinner.fa-spin').remove()
+
 		$('#applytreatment').on('click', function(e){
 			// need to save the treated N values and update the subembayment progress
 			// 

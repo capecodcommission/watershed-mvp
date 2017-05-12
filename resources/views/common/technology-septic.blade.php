@@ -59,6 +59,9 @@
 
 <script>
 	$(document).ready(function(){
+
+		$('div.fa.fa-spinner.fa-spin').remove()
+		
 	 treatment = {{$treatment->TreatmentID}};
 	 typeid = {{$treatment->TreatmentType_ID}};
 
