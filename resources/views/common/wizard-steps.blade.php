@@ -413,7 +413,9 @@
 
 		$('div.technology').on('click', function(e) {
 
-			$(this).children('a').attr('href').done(function(e) {
+			$(this).append("<div class = 'fa fa-spinner fa-spin'></div>")
+
+			$(this).children('a').ready(function (e) {
 
 				console.log('done')
 			})
