@@ -414,11 +414,7 @@
 		$('div.technology').on('click', function(e) {
 
 			$(this).append("<div class = 'fa fa-spinner fa-spin'></div>")
-
-			$(this).children('a').ready(function (e) {
-
-				console.log('done')
-			})
+			
 		})
 
 		$('.save').on('click', function(e){
