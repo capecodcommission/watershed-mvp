@@ -6383,10 +6383,6 @@ div.selected-treatments button#save_polygon {
   float: left !important;
 }
 
-ul.selected-treatments {
-  background: rgba(0,0,0,.2);
-}
-
 div.selected-treatments {
   width: 80%;
   margin: auto;

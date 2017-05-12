@@ -95,8 +95,9 @@
 						<!-- <p>Fertilizer Management Policies have already been applied to this scenario</p> -->
 						</div>
 				@else
-					<div class="technology">
-						<a href="{{url('/tech/storm/26')}}" class="popdown">
+					<div id = "stormMan" class="technology">
+					<!-- href="{{url('/tech/storm/26')}}"  -->
+						<a class="popdown">
 							<img src="http://2016.watershedmvp.org/images/SVG/StormwaterManagement.svg"><br />
 							 Stormwater Management
 						</a>
@@ -409,6 +410,22 @@
 	$(document).ready(function(){
 
 		scenario = {{session('scenarioid')}};
+
+		$("#stormMan").on('click', function (e) {
+
+			e.preventDefault()
+
+			e.addClass('fa fa-spinner fa-spin')
+
+			var url = "{{url('/tech/storm/26')}}"
+			$.ajax({
+				method: 'GET',
+				url: url
+			}).done(function(msg){
+
+				$("#stormMan").removeClass("fa fa-spinner fa-spin")
+			})
+		})
 
 		$('.save').on('click', function(e){
 
