@@ -411,20 +411,9 @@
 
 		scenario = {{session('scenarioid')}};
 
-		$("#stormMan").on('click', function (e) {
+		$('div.technology').on('click', function(e) {
 
-			e.preventDefault()
-
-			$("#stormMan").append('div').addClass('fa fa-spinner fa-spin')
-
-			var url = "{{url('/tech/storm/26')}}"
-			$.ajax({
-				method: 'GET',
-				url: url
-			}).done(function(msg){
-
-				$("#stormMan").removeClass("fa fa-spinner fa-spin")
-			})
+			console.log(window.location.href)
 		})
 
 		$('.save').on('click', function(e){
