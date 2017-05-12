@@ -8,6 +8,11 @@
 							<img src="http://2016.watershedmvp.org/images/SVG/{{$treatment->treatment_icon}}" alt="">
 						</a>
 					</li>
+					<script>
+						var rightMargin = $("div.selected-treatments").attr("margin-right")
+						console.log(rightMargin)
+						// $("div.selected-treatments").toggleClass("margin-right",rightMargin)
+					</script>
 				@endif
 			@endforeach	
 	</ul>
