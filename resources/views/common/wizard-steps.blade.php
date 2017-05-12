@@ -413,7 +413,7 @@
 
 		$('div.technology').on('click', function(e) {
 
-			console.log($(this).attr('href'))
+			console.log($(this).children('a').attr('href'))
 		})
 
 		$('.save').on('click', function(e){
