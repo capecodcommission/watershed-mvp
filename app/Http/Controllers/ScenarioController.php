@@ -125,7 +125,7 @@ class ScenarioController extends Controller
 			inner join capecodma.matowns t 
 			on t.town_id = wtt.wtt_town_id 
 
-			where wtt.wtt_scenario_id = ' . $scenarioid);
+			where wtt.wtt_unatt_n_removed is not null and wtt.wtt_scenario_id = ' . $scenarioid);
 
 		// $subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
 
