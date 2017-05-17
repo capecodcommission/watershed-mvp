@@ -200,6 +200,8 @@ require([
 		************************************/
 		function addGraphic(evt) {
 
+            $('#map').append("<div class = 'fa fa-spinner fa-spin'></div>")
+
 			var treatmentTypeId = typeid
 
 			if (treatmentTypeId == '101') { //purple heart
@@ -864,6 +866,7 @@ require([
 					// console.log(msg);
 					$('#total_nitrogen_polygon').text(msg);
 					$('#popdown-opacity').show();
+                    $('div.fa.fa-spinner.fa-spin').remove()
 					
 				}).fail(function(msg){
 					// console.log(msg);
