@@ -200,7 +200,7 @@ require([
 		************************************/
 		function addGraphic(evt) {
 
-            $('#map').append("<div class = 'fa fa-spinner fa-spin'></div>")
+            $('#progress').append("<div class = 'fa fa-spinner fa-spin'></div>")
 
 			var treatmentTypeId = typeid
 
