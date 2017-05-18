@@ -70,6 +70,8 @@
 
 <script>
 	$(document).ready(function(){
+
+		$('div.fa.fa-spinner.fa-spin').remove()
 	 treatment = {{$treatment->TreatmentID}};
 	 var subemid = '';
 		$('#select_area').on('click', function(f){

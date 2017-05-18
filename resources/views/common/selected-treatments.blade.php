@@ -21,3 +21,11 @@
 <style>
 	#edit_polygon:focus { background-color: #ff0000; }
 </style>
+
+<script>
+	$("li.technology").onClick(function (e) {
+
+		$(this).append("<div class = 'fa fa-spinner fa-spin'></div>")
+	})
+
+</script>
