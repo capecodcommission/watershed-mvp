@@ -122,6 +122,8 @@
 
 		$('#updatetreatment').on('click', function(e)
 				{
+
+					$('div.technology').append("<div class = 'fa fa-spinner fa-spin'></div>")
 					e.preventDefault();
 					var rate = $('#embayment-percent').val();
 					var units = $('#unit_metric').val();
@@ -132,6 +134,7 @@
 					})
 						.done(function(msg){
 							$('#popdown-opacity').hide();
+							$('div.fa.fa-spinner.fa-spin').remove()
 							$( "#update" ).trigger( "click" );
 						});
 
