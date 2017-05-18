@@ -23,7 +23,7 @@
 </style>
 
 <script>
-	$("li.technology").onClick(function (e) {
+	$("li.technology").on('click', function (e) {
 
 		$(this).append("<div class = 'fa fa-spinner fa-spin'></div>")
 	})
