@@ -123,7 +123,7 @@
 		$('#updatetreatment').on('click', function(e)
 				{
 
-					$('div.technology').append("<div class = 'fa fa-spinner fa-spin fa-inverse'></div>")
+					$(this).append("<div class = 'fa fa-spinner fa-spin'></div>")
 					e.preventDefault();
 					var rate = $('#embayment-percent').val();
 					var units = $('#unit_metric').val();
