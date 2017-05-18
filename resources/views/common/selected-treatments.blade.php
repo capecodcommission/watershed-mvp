@@ -25,7 +25,7 @@
 <script>
 	$("li.technology").on('click', function (e) {
 
-		$(this).append("<div style = 'color: black;' class = 'fa fa-spinner fa-spin'></div>")
+		$(this).append("<div class = 'fa fa-spinner fa-spin fa-inverse'></div>")
 	})
 
 </script>
