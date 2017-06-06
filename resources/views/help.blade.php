@@ -21,7 +21,7 @@
 					<li>Septic</li>
 					<li>Groundwater</li>
 					<li>In-Embayment</li>
-				</ul>
+				</ul><br>
 				<p>Some technologies will prompt you to select an area (polygon) to apply the treatment. You can use the Map Tools to show/hide different map layers (Wastewater, Nitrogen levels, Subembayments, Subwatersheds, etc.) as well as change the basemap layer.</p>
 				<p>Once you've applied a treatment, you can view its effect on the overall Nitrogen level by clicking on the icon in the top toolbar. You may also view the summary at any time during the scenario planning and download the detailed results. </p>
 				<p>You can edit polygons for treatments by clicking the "Edit Polygon" button and then selecting the polygon you would like to update. Once you have finished adjusting the perimeter or rotating the polygon, click the "Save Polygon" button in the top toolbar and then click "Update" when the treatment info window appears. </p>
