@@ -6516,7 +6516,7 @@ nav.toolbar {
 
 #overall_progress {
   width: 250px;
-  height: 220px;
+  height: 250px;
   position: absolute;
   bottom: 0; }
   #overall_progress .progress-container {
