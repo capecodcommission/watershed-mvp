@@ -127,11 +127,11 @@
 
 					<tr>
 						<td><strong>Subembayment Totals</strong></td>
-						<td><strong><?php echo round($n_att_total);?>kg</strong></td>
-						<td><strong><?php echo round($n_att_rem_total);?>kg</strong></td>
-						<td><strong><?php echo round($n_scen_total);?>kg</strong></td>
-						<td><strong><?php echo round($n_target_total);?>kg</strong></td>
-						<td><strong><?php echo round($n_rem_total);?>kg</strong></td>
+						<td><strong><?php echo number_format(round($n_att_total));?>kg</strong></td>
+						<td><strong><?php echo number_format(round($n_att_rem_total));?>kg</strong></td>
+						<td><strong><?php echo number_format(round($n_scen_total));?>kg</strong></td>
+						<td><strong><?php echo number_format(round($n_target_total));?>kg</strong></td>
+						<td><strong><?php echo number_format(round($n_rem_total));?>kg</strong></td>
 					</tr>
 				</tbody>
 
