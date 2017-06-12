@@ -121,7 +121,7 @@
 						<td>{{number_format(round($sub->n_load_att_removed))}}kg</td> <?php $n_att_rem_total += $sub->n_load_att_removed; ?>
 						<td>{{number_format(round($sub->n_load_scenario))}}kg</td> <?php $n_scen_total += $sub->n_load_scenario; ?>
 						<td>{{number_format(round($sub->n_load_target))}}kg</td> <?php $n_target_total += $sub->n_load_target; ?>
-						<td>{{number_format(round($sub->n_load_scenario - $sub->n_load_target))}}</td> <?php $n_rem_total += $sub->n_load_scenario - $sub->n_load_target; ?>
+						<td>{{number_format(round($sub->n_load_scenario - $sub->n_load_target))}}kg</td> <?php $n_rem_total += $sub->n_load_scenario - $sub->n_load_target; ?>
 					</tr>
 					@endforeach
 
