@@ -69,7 +69,7 @@
 						<td>Scenario Totals:</td>
 						<td></td>
 						<td></td>
-						<td><strong><?php echo round($n_removed);?>kg</strong></td>
+						<td><strong><?php echo number_format(round($n_removed));?>kg</strong></td>
 						<td><strong><?php echo '$'.number_format($scenario_cost,2,'.',',');?></strong></td>
 						<!-- money_format('%10.0n', $scenario_cost);?> -->
 						<td colspan="2"><strong><?php if ($result->Nload_Reduction > 0) {
@@ -94,7 +94,7 @@
 							<td>{{$town->town}}</td>
 							<td>{{$town->wtt_treatment_id}}</td>
 							<td>{{$town->wtt_tot_parcels}}</td>
-							<td>{{round($town->wtt_unatt_n_removed)}}kg</td>
+							<td>{{number_format(round($town->wtt_unatt_n_removed))}}kg</td>
 						</tr>
 
 					@endforeach
