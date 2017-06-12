@@ -53,11 +53,11 @@
 								<td>{{$result->technology->Technology_Strategy}} ({{$result->TreatmentID}})</td>
 								<td>{{$result->Treatment_Parcels}}</td>
 								<td>{{round($result->Nload_Reduction)}}kg</td> <?php $n_removed += $result->Nload_Reduction; ?>
-								<td><?php echo '$'.number_format($result->Cost_Total,2,'.',',');?></td>
+								<td><?php echo '$'.number_format($result->Cost_Total,0,'.',',');?></td>
 								<!-- money_format('%10.0n', $result->Cost_Total);?> -->
 									<?php $scenario_cost += $result->Cost_Total; ?>
 								<td><?php if ($result->Nload_Reduction > 0) {
-								echo '$'.number_format(($result->Cost_Total/$result->Nload_Reduction)/12.46,2,'.',',');}?></td>
+								echo '$'.number_format(($result->Cost_Total/$result->Nload_Reduction)/12.46,0,'.',',');}?></td>
 								<!-- money_format('%10.0n', ($result->Cost_Total/$result->Nload_Reduction)/12.46);}?> -->
 								<td><a data-treatment="{{$result->TreatmentID}}" class="deletetreatment button--cta"><i class="fa fa-trash-o"></i> Delete</a></td>
 
