@@ -70,10 +70,10 @@
 						<td></td>
 						<td></td>
 						<td><strong><?php echo number_format(round($n_removed));?>kg</strong></td>
-						<td><strong><?php echo '$'.number_format($scenario_cost,2,'.',',');?></strong></td>
+						<td><strong><?php echo '$'.number_format($scenario_cost,0,'.',',');?></strong></td>
 						<!-- money_format('%10.0n', $scenario_cost);?> -->
 						<td colspan="2"><strong><?php if ($result->Nload_Reduction > 0) {
-							echo '$'.number_format(($scenario_cost/$n_removed)/12.46,2,'.',',');}?></strong></td>
+							echo '$'.number_format(($scenario_cost/$n_removed)/12.46,0,'.',',');}?></strong></td>
 							<!-- money_format('%10.0n', (($scenario_cost/$n_removed)/12.46));?> -->
 					</tr>
 				</tbody>
