@@ -23,7 +23,7 @@
 		<table>
 			<thead>
 				<tr>
-					<th colspan="2">Fertilizer Nitrogen (Before Treatment)</th>
+					<th colspan="1">Fertilizer Nitrogen (Before Treatment)</th>
 					<th colspan="2">After Treatment</th>
 					<th></th>
 				</tr>
