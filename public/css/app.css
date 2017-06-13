@@ -6396,10 +6396,11 @@ div.selected-treatments {
   border-radius: 15px;
   height: 7em; }
   div.selected-treatments ul {
-    visibility: visible;
+    /*visibility: visible;*/
     /*background-color: rgba(0,0,0,0.2);*/
     list-style-type: none; }
     div.selected-treatments ul li.technology {
+      visibility: visible;
       /*background-color: rgba(0,0,0,0.2);*/
       width: 6em; }
       div.selected-treatments ul li.technology img {
