@@ -6400,10 +6400,11 @@ div.selected-treatments {
     /*background-color: rgba(0,0,0,0.2);*/
     list-style-type: none; }
     div.selected-treatments ul li.technology {
-      visibility: visible;
+      /*visibility: visible;*/
       /*background-color: rgba(0,0,0,0.2);*/
       width: 6em; }
       div.selected-treatments ul li.technology img {
+        visibility: visible;
         width: 5em;
         cursor: pointer; }
         div.selected-treatments ul li.technology img:hover {
