@@ -6408,6 +6408,7 @@ div.selected-treatments {
         width: 5em;
         cursor: pointer; }
         div.selected-treatments ul li.technology img:hover {
+          pointer-events: auto;
           background-color: #2388b6; }
 
 nav.toolbar {
