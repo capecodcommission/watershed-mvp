@@ -6425,6 +6425,8 @@ nav.toolbar {
   top: 0;
   right: 0; }
   nav.toolbar .tool {
+    visibility: visible;
+    pointer-events: auto;
     float: right; }
 
 .sliding-panel-content {
