@@ -52,7 +52,7 @@
 								</td>
 								<td>{{$result->technology->Technology_Strategy}} ({{$result->TreatmentID}})</td>
 								<td>{{$result->Treatment_Parcels}}</td>
-								<td>{{round($result->Nload_Reduction)}}kg</td> <?php $n_removed += $result->Nload_Reduction; ?>
+								<td>{{number_format(round($result->Nload_Reduction))}}kg</td> <?php $n_removed += $result->Nload_Reduction; ?>
 								<td><?php echo '$'.number_format($result->Cost_Total,0,'.',',');?></td>
 								<!-- money_format('%10.0n', $result->Cost_Total);?> -->
 									<?php $scenario_cost += $result->Cost_Total; ?>
