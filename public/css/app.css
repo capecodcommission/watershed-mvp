@@ -6385,7 +6385,7 @@ div.selected-treatments button#save_polygon {
 
 div.selected-treatments {
   pointer-events: none;
-  pointer-events: initial;
+  pointer-events: unset;
   width: 80%;
   margin: auto;
   padding: 20px;
