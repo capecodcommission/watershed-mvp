@@ -6384,7 +6384,7 @@ div.selected-treatments button#save_polygon {
 }
 
 div.selected-treatments {
-  pointer-events: none;
+  /*pointer-events: none;*/
   /*pointer-events: unset;*/
   width: 80%;
   margin: auto;
@@ -6411,6 +6411,7 @@ div.selected-treatments {
           background-color: #2388b6; }
 
 nav.toolbar {
+  pointer-events: none;
   width: 90%;
   margin: 0 auto;
   position: absolute;
