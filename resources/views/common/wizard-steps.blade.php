@@ -394,7 +394,7 @@
 		<div class="acc_cCont">
 		<p><span class="remaining"><strong>Nitrogen Remaining to Threshold:</strong> <span></span>kg</span></p>
 
-		<p>Overall Nitrogen Reduction: </p>
+		<!-- <p>Overall Nitrogen Reduction: </p> -->
 
 			<p><a href="{{url('download', session('scenarioid'))}}">Download Results (.xls)</a></p>
 			<p><a href="{{url('results', session('scenarioid'))}}" class="button" target="wmvp_results_{{session('scenarioid')}}">View detailed results</a></p>
