@@ -6406,7 +6406,7 @@ div.selected-treatments {
           background-color: #2388b6; }
 
 nav.toolbar {
-  pointer-events: none;
+  pointer-events: all;
   width: 90%;
   margin: 0 auto;
   position: absolute;
