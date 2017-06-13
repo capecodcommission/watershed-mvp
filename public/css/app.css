@@ -6387,10 +6387,10 @@ div.selected-treatments {
   width: 80%;
   margin: auto;
   padding: 20px;
-  /*background: transparent;*/
+  background: transparent;
   /*background-color: rgba(0,0,0,0.2);*/
   /*opacity: 0.90;*/
-  pointer-events: none;
+  /*pointer-events: none;*/
   border-radius: 15px;
   height: 7em; }
   div.selected-treatments ul {
@@ -6406,6 +6406,7 @@ div.selected-treatments {
           background-color: #2388b6; }
 
 nav.toolbar {
+  pointer-events: none;
   width: 90%;
   margin: 0 auto;
   position: absolute;
