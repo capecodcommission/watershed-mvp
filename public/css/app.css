@@ -6396,7 +6396,7 @@ div.selected-treatments {
   border-radius: 15px;
   height: 7em; }
   div.selected-treatments ul {
-    pointer-events: auto;
+    visibility: visible;
     /*background-color: rgba(0,0,0,0.2);*/
     list-style-type: none; }
     div.selected-treatments ul li.technology {
