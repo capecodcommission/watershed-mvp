@@ -6396,7 +6396,7 @@ div.selected-treatments {
   border-radius: 15px;
   height: 7em; }
   div.selected-treatments ul {
-    /*visibility: visible;*/
+    visibility: visible;
     /*background-color: rgba(0,0,0,0.2);*/
     list-style-type: none; }
     div.selected-treatments ul li.technology {
@@ -6408,7 +6408,7 @@ div.selected-treatments {
         width: 5em;
         cursor: pointer; }
         div.selected-treatments ul li.technology img:hover {
-          visibility: visible;
+          /*visibility: visible;*/
           background-color: #2388b6; }
 
 nav.toolbar {
