@@ -6390,13 +6390,14 @@ div.selected-treatments {
   /*background: transparent;*/
   /*background-color: rgba(0,0,0,0.2);*/
   /*opacity: 0.90;*/
+  pointer-events: none;
   border-radius: 15px;
   height: 7em; }
   div.selected-treatments ul {
     /*background-color: rgba(0,0,0,0.2);*/
     list-style-type: none; }
     div.selected-treatments ul li.technology {
-      background-color: rgba(0,0,0,0.2);
+      /*background-color: rgba(0,0,0,0.2);*/
       width: 6em; }
       div.selected-treatments ul li.technology img {
         width: 5em;
