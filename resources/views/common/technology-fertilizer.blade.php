@@ -23,26 +23,26 @@
 		<table>
 			<thead>
 				<tr>
-					<th colspan="2">Fertilizer Nitrogen</th>
+					<th colspan="2">Fertilizer Nitrogen (Before Treatment)</th>
 					<th colspan="2">After Treatment</th>
 					<th></th>
 				</tr>
 				<tr>
 					<th>Unattenuated</th>
-					<th>Attenuated</th>
+					<!-- <th>Attenuated</th> -->
 					<th>Unattenuated</th>
-					<th>Attenuated</th>
-					<th>N Removed</th>
+					<!-- <th>Attenuated</th> -->
+					<!-- <th>N Removed</th> -->
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
 				
 				 		<td>@{{fert_unatt | round}}kg</td>
-						<td>@{{fert_att | round }}kg</td>
+						<!-- <td>@{{fert_att | round }}kg</td> -->
 						<td>@{{fert_unatt_treated | round }}kg</td>
-						<td>@{{fert_treated | round }}kg <sup>1</sup></td>
-						<td>@{{fert_difference | round }}kg</td>
+						<!-- <td>@{{fert_treated | round }}kg <sup>1</sup></td> -->
+						<!-- <td>@{{fert_difference | round }}kg</td> -->
 				</tr>
 				
 			</tbody>
