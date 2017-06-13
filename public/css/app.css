@@ -6385,7 +6385,7 @@ div.selected-treatments button#save_polygon {
 
 div.selected-treatments {
   pointer-events: none;
-  pointer-events: unset;
+  /*pointer-events: unset;*/
   width: 80%;
   margin: auto;
   padding: 20px;
@@ -6396,6 +6396,7 @@ div.selected-treatments {
   border-radius: 15px;
   height: 7em; }
   div.selected-treatments ul {
+    pointer-events: auto;
     /*background-color: rgba(0,0,0,0.2);*/
     list-style-type: none; }
     div.selected-treatments ul li.technology {
