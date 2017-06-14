@@ -4048,6 +4048,10 @@ table.esriLegendLayer circle {
   transform: matrix(1.00000000,0.00000000,0.00000000,1.00000000,17.5,17.5)
 }
 
+table.esriLegendLayerlabel {
+  font-style: italic;
+}
+
 
 img,
 picture {
