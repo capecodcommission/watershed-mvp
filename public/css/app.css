@@ -4049,7 +4049,7 @@ table.esriLegendLayer circle {
 }
 
 #legendDiv_graphicsLayer5_13 table:nth-child(2) {
-  font-style: italic;
+  display: none;
 }
 
 
