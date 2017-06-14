@@ -4052,6 +4052,10 @@ table.esriLegendLayer circle {
   display: none;
 }
 
+#legendDiv_graphicsLayer6_13 table:nth-child(2) {
+  display: none;
+}
+
 
 img,
 picture {
