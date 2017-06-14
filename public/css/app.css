@@ -4048,7 +4048,7 @@ table.esriLegendLayer circle {
   transform: matrix(1.00000000,0.00000000,0.00000000,1.00000000,17.5,17.5)
 }
 
-table.esriLegendLayer:nth-child(1) {
+#legendDiv_graphicsLayer5_13 table:nth-child(2) {
   font-style: italic;
 }
 
