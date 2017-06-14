@@ -4048,7 +4048,7 @@ table.esriLegendLayer circle {
   transform: matrix(1.00000000,0.00000000,0.00000000,1.00000000,17.5,17.5)
 }
 
-table.esriLegendLayer:first-of-type {
+table.esriLegendLayer tbody:first-of-type {
   font-style: italic;
 }
 
