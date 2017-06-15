@@ -1903,7 +1903,10 @@ require([
 	        	minSize: 3,
 	        	maxSize: 20,
 	        	minDataValue: 0,
-	        	maxDataValue: 10000
+	        	maxDataValue: 10000,
+                legendOptions: {
+                    customValues: [2000,4000,6000,8000,10000]
+                }
 	        })
 
 	    WasteWater.setRenderer(wasteRenderer)
