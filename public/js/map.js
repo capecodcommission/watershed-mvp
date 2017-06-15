@@ -1868,7 +1868,10 @@ require([
 	        	minSize: 3,
 	        	maxSize: 20,
 	        	minDataValue: 0,
-	        	maxDataValue: 250
+	        	maxDataValue: 250,
+                legendOptions: {
+                    customValues: [50,100,150,200,250]
+                }
 	        })
 
 	        var query = new Query()
