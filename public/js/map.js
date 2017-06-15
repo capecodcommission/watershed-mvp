@@ -1899,8 +1899,8 @@ require([
 
 		var wasteRenderer = new SimpleRenderer(wasteSymbol)
 			wasteRenderer.setSizeInfo({
-	        	field: "WWFlowsExisting",
-	        	minSize: 5,
+	        	field: "WWFlowsExisting"
+	        	minSize: 1,
 	        	maxSize: 20,
 	        	minDataValue: 0,
 	        	maxDataValue: 10000
@@ -2000,15 +2000,52 @@ require([
 			landuseSymbol.setSize("5")
 
 		var landuseRenderer = new UniqueValueRenderer(landuseSymbol, "LandUseCatExisting")
-			landuseRenderer.addValue({value: "RESSINGLEFAM", symbol: new SimpleMarkerSymbol().setColor(new Color([122, 182, 245, 255])).setSize("5").setOutline(null), label: "Residential Single Family"})
-			landuseRenderer.addValue({value: "COMMERCIAL", symbol: new SimpleMarkerSymbol().setColor(new Color([255, 255, 0, 255])).setSize("5").setOutline(null), label: "Commercial"})
-			landuseRenderer.addValue({value: "INDUSTRIAL", symbol: new SimpleMarkerSymbol().setColor(new Color([115, 223, 255, 255])).setSize("5").setOutline(null), label: "Industrial"})
-			landuseRenderer.addValue({value: "OTHERDEV", symbol: new SimpleMarkerSymbol().setColor(new Color([107, 181, 123, 255])).setSize("5").setOutline(null), label: "Other Developable"})
-			landuseRenderer.addValue({value: "OTHERNONDEV", symbol: new SimpleMarkerSymbol().setColor(new Color([2197, 0, 255, 255])).setSize("5").setOutline(null), label: "Other Non-Developable"})
-			landuseRenderer.addValue({value: "RESCONDOAPT", symbol: new SimpleMarkerSymbol().setColor(new Color([205, 205, 102, 255])).setSize("5").setOutline(null), label: "Residential Condo/Apartments"})
-			landuseRenderer.addValue({value: "RESMULTIFAM", symbol: new SimpleMarkerSymbol().setColor(new Color([205, 46, 49, 255])).setSize("5").setOutline(null), label: "Residential Multi Family"})
-			landuseRenderer.addValue({value: "VACANTDEV", symbol: new SimpleMarkerSymbol().setColor(new Color([168, 0, 0, 255])).setSize("5").setOutline(null), label: "Vacant Developable Land"})
-			landuseRenderer.addValue({value: "VACANTNONDEV", symbol: new SimpleMarkerSymbol().setColor(new Color([76, 115, 0, 255])).setSize("5").setOutline(null), label: "Vacant Non-Developable Land"})
+
+			landuseRenderer.addValue({
+                value: "RESSINGLEFAM", 
+                symbol: new SimpleMarkerSymbol().setColor(new Color([122, 182, 245, 255])).setSize("5").setOutline(null), 
+                label: "Residential Single Family"
+            })
+			landuseRenderer.addValue({
+                value: "COMMERCIAL", 
+                symbol: new SimpleMarkerSymbol().setColor(new Color([255, 255, 0, 255])).setSize("5").setOutline(null), 
+                label: "Commercial"
+            })
+			landuseRenderer.addValue({
+                value: "INDUSTRIAL", 
+                symbol: new SimpleMarkerSymbol().setColor(new Color([115, 223, 255, 255])).setSize("5").setOutline(null), 
+                label: "Industrial"
+            })
+			landuseRenderer.addValue({
+                value: "OTHERDEV", 
+                symbol: new SimpleMarkerSymbol().setColor(new Color([107, 181, 123, 255])).setSize("5").setOutline(null), 
+                label: "Other Developable"
+            })
+			landuseRenderer.addValue({
+                value: "OTHERNONDEV", 
+                symbol: new SimpleMarkerSymbol().setColor(new Color([2197, 0, 255, 255])).setSize("5").setOutline(null), 
+                label: "Other Non-Developable"
+            })
+			landuseRenderer.addValue({
+                value: "RESCONDOAPT", 
+                symbol: new SimpleMarkerSymbol().setColor(new Color([205, 205, 102, 255])).setSize("5").setOutline(null), 
+                label: "Residential Condo/Apartments"
+            })
+			landuseRenderer.addValue({
+                value: "RESMULTIFAM", 
+                symbol: new SimpleMarkerSymbol().setColor(new Color([205, 46, 49, 255])).setSize("5").setOutline(null), 
+                label: "Residential Multi Family"
+            })
+			landuseRenderer.addValue({
+                value: "VACANTDEV", 
+                symbol: new SimpleMarkerSymbol().setColor(new Color([168, 0, 0, 255])).setSize("5").setOutline(null), 
+                label: "Vacant Developable Land"
+            })
+			landuseRenderer.addValue({
+                value: "VACANTNONDEV", 
+                symbol: new SimpleMarkerSymbol().setColor(new Color([76, 115, 0, 255])).setSize("5").setOutline(null), 
+                label: "Vacant Non-Developable Land"
+            })
 
 		LandUse.setRenderer(landuseRenderer)
 
