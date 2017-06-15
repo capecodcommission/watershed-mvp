@@ -4061,7 +4061,11 @@ table.esriLegendLayer circle {
 }
 
 #legendDiv_graphicsLayer5_13 table:nth-child(3) tr tr:after {
-  content: "kg"
+  content: "kg/yr"
+}
+
+#legendDiv_graphicsLayer6_13 table:nth-child(3) tr tr:after {
+  content: "gal/day"
 }
 
 img,
