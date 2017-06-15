@@ -2075,10 +2075,7 @@ require([
 			e.preventDefault();
 			// console.log(NitrogenLayer);
 			if ($(this).attr('data-visible') == 'off') {
-				legendDijit.refresh([{
-					layer: NitrogenLayer, 
-					title: "Nitrogen Load"
-				}])
+				// legendDijit.refresh([{layer: NitrogenLayer, title: "Nitrogen Load"}])
 				NitrogenLayer.setDefinitionExpression(queryString.toString())
 				NitrogenLayer.show()
 				// legendDijit.refresh([{layer: NitrogenLayer, title: "Nitrogen Load"}])
@@ -2122,7 +2119,7 @@ require([
 			e.preventDefault();
 
 			if ($(this).attr('data-visible') == 'off') {
-				legendDijit.refresh([{layer: WasteWater, title: "Wastewater"}])
+				// legendDijit.refresh([{layer: WasteWater, title: "Wastewater"}])
 				WasteWater.setDefinitionExpression(queryString.toString())
 				WasteWater.show();
 				$(this).attr('data-visible', 'on');
