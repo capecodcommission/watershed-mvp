@@ -2067,15 +2067,23 @@ require([
 
 		var legendDijit = new Legend({
 		            map: map,
-		            layerInfos: []
-		        }, "legendDiv");
+		            layerInfos: [
+                        {layer: NitrogenLayer, title: "Nitrogen Load"},
+                        {layer: WasteWater, title: "Wastewater"},
+                        {layer: TreatmentType, title: "Treatment Type"},
+                        {layer: EcologicalIndicators, title: "Ecological Indicators"},
+                        {layer: LandUse, title: "Land Use Category"},
+                        {layer: FlowThrough, title: "FlowThrough Coefficients"},
+                        {layer: Contours, title: "2ft Contours"}
+                    ]
+                }, "legendDiv");
 		    legendDijit.startup();
 
 		$('#nitrogen').on('click', function(e) {
 			e.preventDefault();
 			// console.log(NitrogenLayer);
 			if ($(this).attr('data-visible') == 'off') {
-				// legendDijit.refresh([{layer: NitrogenLayer, title: "Nitrogen Load"}])
+				legendDijit.refresh([{layer: NitrogenLayer, title: "Nitrogen Load"}])
 				NitrogenLayer.setDefinitionExpression(queryString.toString())
 				NitrogenLayer.show()
 				// legendDijit.refresh([{layer: NitrogenLayer, title: "Nitrogen Load"}])
@@ -2119,7 +2127,7 @@ require([
 			e.preventDefault();
 
 			if ($(this).attr('data-visible') == 'off') {
-				// legendDijit.refresh([{layer: WasteWater, title: "Wastewater"}])
+				legendDijit.refresh([{layer: WasteWater, title: "Wastewater"}])
 				WasteWater.setDefinitionExpression(queryString.toString())
 				WasteWater.show();
 				$(this).attr('data-visible', 'on');
