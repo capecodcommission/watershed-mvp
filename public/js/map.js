@@ -1867,7 +1867,7 @@ require([
 	        	field: "Nload_Full",
 	        	minSize: 3,
 	        	maxSize: 20,
-	        	minDataValue: 0,
+	        	minDataValue: 5,
 	        	maxDataValue: 250,
                 legendOptions: {
                     customValues: [50,100,150,200,250]
