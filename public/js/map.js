@@ -1905,7 +1905,7 @@ require([
 	        	field: "WWFlowsExisting",
 	        	minSize: 3,
 	        	maxSize: 20,
-	        	minDataValue: 0,
+	        	minDataValue: 50,
 	        	maxDataValue: 5000,
                 legendOptions: {
                     customValues: [50,100,500,1000,5000]
