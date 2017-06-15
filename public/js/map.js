@@ -1903,10 +1903,10 @@ require([
 		var wasteRenderer = new SimpleRenderer(wasteSymbol)
 			wasteRenderer.setSizeInfo({
 	        	field: "WWFlowsExisting",
-	        	minSize: 5,
+	        	minSize: 3,
 	        	maxSize: 20,
 	        	minDataValue: 0,
-	        	maxDataValue: 1800000,
+	        	maxDataValue: 5000,
                 legendOptions: {
                     customValues: [50,100,500,1000,5000]
                 }
