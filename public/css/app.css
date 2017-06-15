@@ -4060,7 +4060,7 @@ table.esriLegendLayer circle {
   display: none;
 }
 
-#legendDiv_graphicsLayer5_13 table:nth-child(3) tr:after {
+#legendDiv_graphicsLayer5_13 table:nth-child(3) td:nth-child(2) {
   content: "kg"
 }
 
