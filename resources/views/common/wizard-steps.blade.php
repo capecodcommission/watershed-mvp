@@ -430,6 +430,7 @@
 			// if below doesn't work, add to sam button above ----> href = "http://2016.watershedmvp.org/fim/scenario/{{session('scenarioid')}}/treatmentsDetails"
 
 			var sam = window.open("http://2016.watershedmvp.org/sam/#/home")
+			// resource: https://stackoverflow.com/questions/133925/javascript-post-request-like-a-form-submit
 			// document.getElementById('search').submit('500')
 			// sam.getElementById('search').submit(scenario)
 			// sam.onload = function () {
@@ -437,10 +438,10 @@
 			// 	sam.document.getElementById("search").action = "/action_page_post.php"
 			// 	sam.document.getElementById("search").innerHTML = scenario
 			// }
-			sam.onload = function () {
-			document.getElementById("search").value = 'scenario'
-			console.log("liftoff")
-			}
+			// sam.onload = function () {
+			// document.getElementById("search").value = 'scenario'
+			// console.log("liftoff")
+			// }
 		})
 
 		$('.save').on('click', function(e){
