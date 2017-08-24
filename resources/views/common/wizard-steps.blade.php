@@ -439,6 +439,7 @@
 			// }
 			sam.onload = function () {
 			sam.document.getElementById("search").value = 'scenario'
+			console.log("liftoff")
 			}
 		})
 
