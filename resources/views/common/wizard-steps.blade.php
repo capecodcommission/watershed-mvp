@@ -398,7 +398,8 @@
 
 			<p><a href="{{url('download', session('scenarioid'))}}">Download Results (.xls)</a></p>
 			<p><a href="{{url('results', session('scenarioid'))}}" class="button" target="wmvp_results_{{session('scenarioid')}}">View detailed results</a></p>
-			<p><a id = 'fim' class = 'button'>Open Scenario in Financial Model</a></p>
+			<p><a id = 'fim' class = 'button'>Open Scenario in Financial Impact Model (FIM)</a></p>
+			<p><a id = 'sam' class = 'button'>Open Scenario in Scenario Assessment Model (SAM)</a></p>
 			<p><a id = 'saved' class="save button">Save Changes</a></p>
 		</div>
 	</article>
@@ -414,7 +415,7 @@
 		$('div.technology').on('click', function(e) {
 
 			$(this).append("<div class = 'fa fa-spinner fa-spin'></div>")
-			
+
 		})
 
 		$('#fim').on('click', function(e) {
@@ -422,6 +423,14 @@
 			// if below doesn't work, add to fim button above ----> href = "http://2016.watershedmvp.org/fim/scenario/{{session('scenarioid')}}/treatmentsDetails"
 
 			window.open("http://2016.watershedmvp.org/fim/scenario/" + scenario + "/treatmentsDetails")
+		})
+
+		$('#sam').on('click', function(e) {
+
+			// if below doesn't work, add to sam button above ----> href = "http://2016.watershedmvp.org/fim/scenario/{{session('scenarioid')}}/treatmentsDetails"
+
+			window.open("http://2016.watershedmvp.org/sam/#/home")
+			document.getElementById('search').submit(scenario)
 		})
 
 		$('.save').on('click', function(e){
