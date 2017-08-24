@@ -437,7 +437,7 @@
 			// 	sam.document.getElementById("search").action = "/action_page_post.php"
 			// 	sam.document.getElementById("search").innerHTML = scenario
 			// }
-			sam.onload.document.getElementById("search").value = scenario
+			sam.document.getElementById("search").value = scenario
 		})
 
 		$('.save').on('click', function(e){
