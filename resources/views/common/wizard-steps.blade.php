@@ -433,7 +433,7 @@
 			// document.getElementById('search').submit('500')
 			// sam.getElementById('search').submit(scenario)
 			sam.onload = function () {
-				sam.document.getElementById("search").submit(500)
+				sam.document.getElementById("search").innerHTML = 'scenario'
 			}
 		})
 
