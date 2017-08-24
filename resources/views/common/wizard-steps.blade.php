@@ -430,7 +430,7 @@
 			// if below doesn't work, add to sam button above ----> href = "http://2016.watershedmvp.org/fim/scenario/{{session('scenarioid')}}/treatmentsDetails"
 
 			window.open("http://2016.watershedmvp.org/sam/#/home")
-			document.getElementById('search').submit('500')
+			// document.getElementById('search').submit('500')
 		})
 
 		$('.save').on('click', function(e){
