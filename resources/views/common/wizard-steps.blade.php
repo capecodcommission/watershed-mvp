@@ -431,7 +431,10 @@
 
 			var sam = window.open("http://2016.watershedmvp.org/sam/#/home")
 			// document.getElementById('search').submit('500')
-			sam.getElementById('search').submit(scenario)
+			// sam.getElementById('search').submit(scenario)
+			sam.onload = function () {
+				sam.document.getElementById("search").submit(scenario)
+			}
 		})
 
 		$('.save').on('click', function(e){
