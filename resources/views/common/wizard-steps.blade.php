@@ -432,11 +432,12 @@
 			var sam = window.open("http://2016.watershedmvp.org/sam/#/home")
 			// document.getElementById('search').submit('500')
 			// sam.getElementById('search').submit(scenario)
-			sam.onload = function () {
-				sam.document.getElementById("search").method = "post"
-				sam.document.getElementById("search").action = "/action_page_post.php"
-				sam.document.getElementById("search").innerHTML = scenario
-			}
+			// sam.onload = function () {
+			// 	sam.document.getElementById("search").method = "post"
+			// 	sam.document.getElementById("search").action = "/action_page_post.php"
+			// 	sam.document.getElementById("search").innerHTML = scenario
+			// }
+			sam.onload.document.getElementById("search").value = scenario
 		})
 
 		$('.save').on('click', function(e){
