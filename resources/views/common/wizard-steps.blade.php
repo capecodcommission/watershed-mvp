@@ -438,7 +438,7 @@
 			// 	sam.document.getElementById("search").innerHTML = scenario
 			// }
 			sam.onload = function () {
-			sam.document.getElementById("search").value = 'scenario'
+			document.getElementById("search").value = 'scenario'
 			console.log("liftoff")
 			}
 		})
