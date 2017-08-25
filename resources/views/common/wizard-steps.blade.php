@@ -429,7 +429,7 @@
 
 			// if below doesn't work, add to sam button above ----> href = "http://2016.watershedmvp.org/fim/scenario/{{session('scenarioid')}}/treatmentsDetails"
 
-			var scenario = scenario;
+			// var scenario = scenario;
 			var path = "http://2016.watershedmvp.org/sam/#/home";
 			// var samSite = window.open(path);
 			var samSite = window.open(path + "/?search=" + scenario);
