@@ -434,6 +434,7 @@
 			// var samSite = window.open(path);
 			var samSite = window.open(path + "/?scenarioID=" + scenario);
 			// resource: https://stackoverflow.com/questions/133925/javascript-post-request-like-a-form-submit
+			// resource2: https://developer.mozilla.org/en-US/docs/Web/API/Storage/LocalStorage
 
 			samSite.onload = function() {
 				var scenarioID = scenario;
@@ -469,17 +470,6 @@
 		// 	}
 		// };
 
-			// document.getElementById('search').submit('500')
-			// sam.getElementById('search').submit(scenario)
-			// sam.onload = function () {
-			// 	sam.document.getElementById("search").method = "post"
-			// 	sam.document.getElementById("search").action = "/action_page_post.php"
-			// 	sam.document.getElementById("search").innerHTML = scenario
-			// }
-			// sam.onload = function () {
-			// document.getElementById("search").value = 'scenario'
-			// console.log("writing to the console")
-			// }
 		})
 
 		$('.save').on('click', function(e){
