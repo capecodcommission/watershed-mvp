@@ -435,7 +435,7 @@
 			var samSite = window.open(path + "/?scenarioID=" + scenario);
 			// resource: https://stackoverflow.com/questions/133925/javascript-post-request-like-a-form-submit
 
-			window.onload = function() {
+			samSite.onload = function() {
 				var scenarioID = scenario;
 				localStorage.setItem("scenarioID",scenarioID);
 			};
