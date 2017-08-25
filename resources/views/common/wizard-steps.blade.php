@@ -432,7 +432,7 @@
 			// var scenario = scenario;
 			var path = "http://2016.watershedmvp.org/sam/#/home";
 			// var samSite = window.open(path);
-			var samSite = window.open(path + "/scenarioID=" + scenario);
+			var samSite = window.open(path + "/?scenarioID=" + scenario);
 			// resource: https://stackoverflow.com/questions/133925/javascript-post-request-like-a-form-submit
 
 			// samSite.onload = function () {
