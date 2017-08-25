@@ -433,29 +433,30 @@
 			var sam = window.open(path)
 			// resource: https://stackoverflow.com/questions/133925/javascript-post-request-like-a-form-submit
 
-			// function post(path, scenario, method) {
-			// 	method = method || "post"; // Set method to post by default if not specified.
+			function post(path, scenario, method) {
+				method = method || "post"; // Set method to post by default if not specified.
 
 				// The rest of this code assumes you are not using a library.
 				// It can be made less wordy if you use one.
-			// 	var form = document.createElement("form");
-			// 	form.setAttribute("method", method);
-			// 	form.setAttribute("action", path);
-			//
-			// 	for (var key in scenario) {
-			// 		if (scenario.hasOwnProperty(key)) {
-			// 			var hiddenField = document.createElement("input");
-      //       hiddenField.setAttribute("type", "hidden");
-      //       hiddenField.setAttribute("scenariID", key);
-      //       hiddenField.setAttribute("value", scenario[key]);
-			//
-			// 			form.appendChild(hiddenField);
-			// 		}
-			// 	}
-			//
-			// 	document.body.appendChild(form);
-			// 	form.submit();
-			// }
+				var form = document.createElement("form");
+				form.setAttribute("method", method);
+				form.setAttribute("action", path);
+
+				for (var key in scenario) {
+					if (scenario.hasOwnProperty(key)) {
+						var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("scenariID", key);
+            hiddenField.setAttribute("value", scenario[key]);
+
+						form.appendChild(hiddenField);
+					}
+				}
+
+				document.body.appendChild(form);
+				form.submit();
+				console.log("writing to the console")
+			}
 
 			// document.getElementById('search').submit('500')
 			// sam.getElementById('search').submit(scenario)
@@ -466,7 +467,7 @@
 			// }
 			// sam.onload = function () {
 			// document.getElementById("search").value = 'scenario'
-			// console.log("liftoff")
+			// console.log("writing to the console")
 			// }
 		})
 
