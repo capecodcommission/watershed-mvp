@@ -429,8 +429,8 @@
 
 			// if below doesn't work, add to sam button above ----> href = "http://2016.watershedmvp.org/fim/scenario/{{session('scenarioid')}}/treatmentsDetails"
 
-			var path = http://2016.watershedmvp.org/sam/#/home
-			var sam = window.open("path")
+			var path = "http://2016.watershedmvp.org/sam/#/home"
+			var sam = window.open(path)
 			// resource: https://stackoverflow.com/questions/133925/javascript-post-request-like-a-form-submit
 
 			// function post(path, scenario, method) {
