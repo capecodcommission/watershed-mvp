@@ -439,7 +439,7 @@
 				var scenarioID = scenario;
 				localStorage.setItem("scenarioID",scenarioID);
 			};
-			console.log(scenarioID);
+			console.log(scenario);
 
 			// samSite.onload = function () {
 			// 	function post(path, scenario, method) {
