@@ -457,8 +457,8 @@
 
 				document.body.appendChild(form);
 				form.submit();
-				getElementById("search").submit(form);
-				console.log("writing to the console");
+				samSite.getElementById("search").submit(form);
+				samSite.console.log("writing to the console");
 			}
 		}
 
