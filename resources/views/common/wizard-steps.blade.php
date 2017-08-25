@@ -434,7 +434,8 @@
 			var samSite = window.open(path)
 			// resource: https://stackoverflow.com/questions/133925/javascript-post-request-like-a-form-submit
 
-			function post(samSite, scenario, method) {
+			sam.onload = function () {
+				function post(samSite, scenario, method) {
 				method = method || "post"; // Set method to post by default if not specified.
 
 				// The rest of this code assumes you are not using a library.
@@ -458,6 +459,7 @@
 				form.submit();
 				console.log("writing to the console")
 			}
+		}
 
 			// document.getElementById('search').submit('500')
 			// sam.getElementById('search').submit(scenario)
