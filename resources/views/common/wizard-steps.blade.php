@@ -429,18 +429,19 @@
 
 			// if below doesn't work, add to sam button above ----> href = "http://2016.watershedmvp.org/fim/scenario/{{session('scenarioid')}}/treatmentsDetails"
 
+			var scenario = scenario
 			var path = "http://2016.watershedmvp.org/sam/#/home"
-			var sam = window.open(path)
+			var samSite = window.open(path)
 			// resource: https://stackoverflow.com/questions/133925/javascript-post-request-like-a-form-submit
 
-			function post(path, scenario, method) {
+			function post(samSite, scenario, method) {
 				method = method || "post"; // Set method to post by default if not specified.
 
 				// The rest of this code assumes you are not using a library.
 				// It can be made less wordy if you use one.
 				var form = document.createElement("form");
 				form.setAttribute("method", method);
-				form.setAttribute("action", path);
+				form.setAttribute("action", samSite);
 
 				for (var key in scenario) {
 					if (scenario.hasOwnProperty(key)) {
