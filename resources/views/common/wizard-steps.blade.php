@@ -98,39 +98,39 @@
 					<div id = "stormMan" class="technology">
 					<!-- href="{{url('/tech/storm/26')}}"  -->
 						<a href="{{url('/tech/storm/26')}}" class="popdown">
-							<img src="http://2016.watershedmvp.org/images/SVG/StormwaterManagement.svg"><br />
+							<img src="http://www.watershedmvp.org/images/SVG/StormwaterManagement.svg"><br />
 							 Stormwater Management
 						</a>
 					</div>
 				@endif
 					<div class="technology">
 						<a href="{{url('/tech/storm/8')}}" class="popdown">
-							<img src="http://2016.watershedmvp.org/images/SVG/StormwaterGravelWetland.svg"><br />
+							<img src="http://www.watershedmvp.org/images/SVG/StormwaterGravelWetland.svg"><br />
 							 Gravel Wetland
 						</a>
 					</div>
 					<div class="technology">
 						<a href="{{url('/tech/storm/9')}}"  class="popdown">
-							<img src="http://2016.watershedmvp.org/images/SVG/StormwaterBioretentionSoilMediaFilters.svg"><br />
+							<img src="http://www.watershedmvp.org/images/SVG/StormwaterBioretentionSoilMediaFilters.svg"><br />
 							 Bioretention/Soil Media Filters
 						</a>
 					</div>
 
 					<div class="technology">
 						<a href="{{url('/tech/storm/6')}}"  class="popdown">
-							<img src="http://2016.watershedmvp.org/images/SVG/StormwaterBMPs.svg"><br />
+							<img src="http://www.watershedmvp.org/images/SVG/StormwaterBMPs.svg"><br />
 							Phytobuffers
 						</a>
 					</div>
 					<div class="technology">
 						<a href="{{url('/tech/storm/7')}}"  class="popdown">
-							<img src="http://2016.watershedmvp.org/images/SVG/StormwaterBMPs.svg"><br />
+							<img src="http://www.watershedmvp.org/images/SVG/StormwaterBMPs.svg"><br />
 							Vegetated Swale
 						</a>
 					</div>
 					<div class="technology">
 						<a href="{{url('/tech/storm/10')}}"  class="popdown">
-							<img src="http://2016.watershedmvp.org/images/SVG/StormwaterBMPs.svg"><br />
+							<img src="http://www.watershedmvp.org/images/SVG/StormwaterBMPs.svg"><br />
 							Constructed Wetlands
 						</a>
 					</div>
