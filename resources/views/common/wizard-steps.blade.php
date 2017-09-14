@@ -44,7 +44,7 @@
 	<article class="acc_cBox">
 		<div class="acc_cImg">
 		<header>
-			<h3>Fertilizer</h3><img src="http://www.cch2o.org/Matrix/icons/reduction.svg" alt="" width="60" style="display: inline;">
+			<h3>Fertilizer</h3><img src="http://www.watershedmvp.org/images/reduction.svg" alt="" width="60" style="display: inline;">
 		</header>
 		</div>
 		<div class="acc_cCont">
@@ -54,13 +54,13 @@
 			<hr>
 			@if(session('fert_applied')==1)
 			<div class="technology disabled">
-				<a title="Fertilizer Management Policies have already been applied to this scenario"><img src="http://2016.watershedmvp.org/images/SVG/FertilizerManagement.svg"></a><br />
+				<a title="Fertilizer Management Policies have already been applied to this scenario"><img src="http://watershedmvp.org/images/SVG/FertilizerManagement.svg"></a><br />
 						Fertilizer Management
 				<!-- <p>Fertilizer Management Policies have already been applied to this scenario</p> -->
 				</div>
 			@else
 				<div class="technology">
-					<a href="/tech/fert/25" class="popdown"><img src="http://2016.watershedmvp.org/images/SVG/FertilizerManagement.svg"></a><br />
+					<a href="/tech/fert/25" class="popdown"><img src="http://watershedmvp.org/images/SVG/FertilizerManagement.svg"></a><br />
 						Fertilizer Management
 				</div>
 
@@ -77,7 +77,7 @@
 		<article class="acc_cBox">
 			<div class="acc_cImg">
 				<header>
-					<h3>Stormwater</h3><img src="http://www.cch2o.org/Matrix/icons/remediation.svg" alt="">
+					<h3>Stormwater</h3><img src="http://www.watershedmvp.org/images/remediation.svg" alt="">
 				</header>
 			</div>
 			<div class="acc_cCont">
