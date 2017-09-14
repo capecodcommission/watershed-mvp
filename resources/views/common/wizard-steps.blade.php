@@ -54,13 +54,13 @@
 			<hr>
 			@if(session('fert_applied')==1)
 			<div class="technology disabled">
-				<a title="Fertilizer Management Policies have already been applied to this scenario"><img src="http://watershedmvp.org/images/SVG/FertilizerManagement.svg"></a><br />
+				<a title="Fertilizer Management Policies have already been applied to this scenario"><img src="http://www.watershedmvp.org/images/SVG/FertilizerManagement.svg"></a><br />
 						Fertilizer Management
 				<!-- <p>Fertilizer Management Policies have already been applied to this scenario</p> -->
 				</div>
 			@else
 				<div class="technology">
-					<a href="/tech/fert/25" class="popdown"><img src="http://watershedmvp.org/images/SVG/FertilizerManagement.svg"></a><br />
+					<a href="/tech/fert/25" class="popdown"><img src="http://www.watershedmvp.org/images/SVG/FertilizerManagement.svg"></a><br />
 						Fertilizer Management
 				</div>
 
@@ -90,7 +90,7 @@
 				<div class="technology_list">
 				@if(session('storm_applied')==1)
 					<div class="technology disabled">
-						<a title="Stormwater Management Policies have already been applied to this scenario"><img src="http://2016.watershedmvp.org/images/SVG/StormwaterManagement.svg"></a><br />
+						<a title="Stormwater Management Policies have already been applied to this scenario"><img src="http://www.watershedmvp.org/images/SVG/StormwaterManagement.svg"></a><br />
 								Stormwater Management
 						<!-- <p>Fertilizer Management Policies have already been applied to this scenario</p> -->
 						</div>
