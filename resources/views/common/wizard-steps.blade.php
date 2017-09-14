@@ -160,63 +160,63 @@
 			<hr>
 			<div class="technology">
 				<a href="{{url('/tech/collect/40')}}" class="popdown">
-					<img src="http://2016.watershedmvp.org/images/SVG/SingleStageCluster.svg" alt="" ><br />
+					<img src="http://www.watershedmvp.org/images/SVG/SingleStageCluster.svg" alt="" ><br />
 					Single-Stage Cluster</a>
 			</div>
 			<div class="technology">
 				<a href="{{url('/tech/collect/41')}}" class="popdown">
-					<img src="http://2016.watershedmvp.org/images/SVG/TwoStageCluster.svg" alt="" ><br />
+					<img src="http://www.watershedmvp.org/images/SVG/TwoStageCluster.svg" alt="" ><br />
 					Two-Stage Cluster</a>
 			</div>
 			<div class="technology">
 				<a href="{{url('/tech/collect/42')}}" class="popdown">
-					<img src="http://2016.watershedmvp.org/images/SVG/ConventionalTreatment.svg" alt="" ><br />
+					<img src="http://www.watershedmvp.org/images/SVG/ConventionalTreatment.svg" alt="" ><br />
 					Conventional Treatment</a>
 			</div>
 			<div class="technology">
 				<a href="{{url('/tech/collect/43')}}" class="popdown">
-					<img src="http://2016.watershedmvp.org/images/SVG/AdvancedTreatment.svg" alt="" ><br />
+					<img src="http://www.watershedmvp.org/images/SVG/AdvancedTreatment.svg" alt="" ><br />
 					Advanced Treatment</a>
 			</div>
 			<div class="technology">
 				<a href="{{url('/tech/collect/44')}}" class="popdown">
-					<img src="http://2016.watershedmvp.org/images/SVG/SatelliteTreatment.svg" alt="" ><br />
+					<img src="http://www.watershedmvp.org/images/SVG/SatelliteTreatment.svg" alt="" ><br />
 					Satellite Treatment</a>
 			</div>
 			<div class="technology">
 				<a href="{{url('/tech/collect/45')}}" class="popdown">
-					<img src="http://2016.watershedmvp.org/images/SVG/SatelliteTreatmentEnhanced.svg" alt="" ><br />
+					<img src="http://www.watershedmvp.org/images/SVG/SatelliteTreatmentEnhanced.svg" alt="" ><br />
 					Satellite Treatment - Enahnced</a>
 			</div>
 			<div class="technology">
 				<a href="{{url('/tech/septic/21')}}" class="popdown">
-					<img src="http://2016.watershedmvp.org/images/SVG/CompostingToilet.svg" alt="" ><br />
+					<img src="http://www.watershedmvp.org/images/SVG/CompostingToilet.svg" alt="" ><br />
 					Composting Toilets</a>
 			</div>
 			<div class="technology">
 				<a href="{{url('/tech/septic/22')}}" class="popdown">
-					<img src="http://2016.watershedmvp.org/images/SVG/IncineratingToilet.svg" alt="" ><br />
+					<img src="http://www.watershedmvp.org/images/SVG/IncineratingToilet.svg" alt="" ><br />
 					Incinerating Toilets</a>
 			</div>
 
 			<div class="technology">
 				<a href="{{url('/tech/septic/23')}}" class="popdown">
-					<img src="http://2016.watershedmvp.org/images/SVG/PackagingToilet.svg" alt="" ><br />
+					<img src="http://www.watershedmvp.org/images/SVG/PackagingToilet.svg" alt="" ><br />
 					Packaging Toilets</a>
 			</div>
 			<div class="technology">
 				<a href="{{url('/tech/septic/24')}}" class="popdown">
-					<img src="http://2016.watershedmvp.org/images/SVG/UrineDivertingToilet.svg" alt="" ><br />
+					<img src="http://www.watershedmvp.org/images/SVG/UrineDivertingToilet.svg" alt="" ><br />
 					Urine Diverting Toilets</a>
 			</div>
 			<div class="technology">
 				<a href="{{url('/tech/septic/38')}}" class="popdown">
-					<img src="http://2016.watershedmvp.org/images/SVG/IA.svg" alt="" ><br />
+					<img src="http://www.watershedmvp.org/images/SVG/IA.svg" alt="" ><br />
 					I/A Systems</a>
 			</div>
 			<div class="technology">
 				<a href="{{url('/tech/septic/39')}}" class="popdown">
-					<img src="http://2016.watershedmvp.org/images/SVG/EnhancedIA.svg" alt="" ><br />
+					<img src="http://www.watershedmvp.org/images/SVG/EnhancedIA.svg" alt="" ><br />
 					Enhanced I/A Systems</a>
 			</div>
 			<!-- <div class="technology">
@@ -246,73 +246,73 @@
 			<div class="technology_list">
 				<div class="technology">
 					<a href="{{url('/tech/groundwater/1')}}"  class="popdown">
-						<img src="http://2016.watershedmvp.org/images/SVG/ConstructedWetlandsSurface.svg" alt=""><br />
+						<img src="http://www.watershedmvp.org/images/SVG/ConstructedWetlandsSurface.svg" alt=""><br />
 						Constructed Wetlands - Surface
 					</a>
 				</div>
 				<div class="technology">
 					<a href="{{url('/tech/groundwater/3')}}"  class="popdown">
-						<img src="http://2016.watershedmvp.org/images/SVG/ConstructedWetlandsGroundwater.svg" alt=""><br />
+						<img src="http://www.watershedmvp.org/images/SVG/ConstructedWetlandsGroundwater.svg" alt=""><br />
 						Constructed Wetlands - Groundwater Flow
 					</a>
 				</div>
 				<div class="technology">
 					<a href="{{url('/tech/groundwater/2')}}"  class="popdown">
-						<img src="http://2016.watershedmvp.org/images/SVG/ConstructedWetlands.svg" alt=""><br />
+						<img src="http://www.watershedmvp.org/images/SVG/ConstructedWetlands.svg" alt=""><br />
 						Constructed Wetlands - Subsurface Flow
 					</a>
 				</div>
 				<div class="technology">
 					<a href="{{url('/tech/groundwater/5')}}"  class="popdown">
-						<img src="http://2016.watershedmvp.org/images/SVG/Phytoremediation.svg" alt=""><br />
+						<img src="http://www.watershedmvp.org/images/SVG/Phytoremediation.svg" alt=""><br />
 						Phytoirrigation
 					</a>
 				</div>
 				<div class="technology">
 					<a href="{{url('/tech/groundwater/4')}}"  class="popdown">
-						<img src="http://2016.watershedmvp.org/images/SVG/HydroponicTreatment.svg" alt=""><br />
+						<img src="http://www.watershedmvp.org/images/SVG/HydroponicTreatment.svg" alt=""><br />
 						Hydroponic Treatment
 					</a>
 				</div>
 				<div class="technology">
 					<a href="{{url('/tech/groundwater/14')}}"  class="popdown">
-						<img src="http://2016.watershedmvp.org/images/SVG/Phytoremediation.svg" alt=""><br />
+						<img src="http://www.watershedmvp.org/images/SVG/Phytoremediation.svg" alt=""><br />
 						Phytoremediation
 					</a>
 				</div>
 				<div class="technology">
 					<a href="{{url('/tech/groundwater/15')}}"  class="popdown">
-						<img src="http://2016.watershedmvp.org/images/SVG/PRBTrench.svg" alt=""><br />
+						<img src="http://www.watershedmvp.org/images/SVG/PRBTrench.svg" alt=""><br />
 						PRB - Trench
 					</a>
 				</div>
 				<div class="technology">
 					<a href="{{url('/tech/groundwater/16')}}"  class="popdown">
-						<img src="http://2016.watershedmvp.org/images/SVG/PRBInjectionWell30.svg" alt=""><br />
+						<img src="http://www.watershedmvp.org/images/SVG/PRBInjectionWell30.svg" alt=""><br />
 						PRB - Injection Well (30')
 					</a>
 				</div>
 				<div class="technology">
 					<a href="{{url('/tech/groundwater/17')}}"  class="popdown">
-						<img src="http://2016.watershedmvp.org/images/SVG/PRBInjectionWell45.svg" alt=""><br />
+						<img src="http://www.watershedmvp.org/images/SVG/PRBInjectionWell45.svg" alt=""><br />
 						PRB - Injection Well (45')
 					</a>
 				</div>
 				<div class="technology">
 					<a href="{{url('/tech/groundwater/18')}}"  class="popdown">
-						<img src="http://2016.watershedmvp.org/images/SVG/PRBInjectionWell60.svg" alt=""><br />
+						<img src="http://www.watershedmvp.org/images/SVG/PRBInjectionWell60.svg" alt=""><br />
 						PRB - Injection Well (60')
 					</a>
 				</div>
 				<div class="technology">
 					<a href="{{url('/tech/groundwater/19')}}"  class="popdown">
-						<img src="http://2016.watershedmvp.org/images/SVG/FertigationWellsTurf.svg" alt=""><br />
+						<img src="http://www.watershedmvp.org/images/SVG/FertigationWellsTurf.svg" alt=""><br />
 						Fertigation Wells (Turf)
 					</a>
 				</div>
 				<div class="technology">
 					<a href="{{url('/tech/groundwater/20')}}"  class="popdown">
-						<img src="http://2016.watershedmvp.org/images/SVG/FertigationWellsCranberryBogs.svg" alt=""><br />
+						<img src="http://www.watershedmvp.org/images/SVG/FertigationWellsCranberryBogs.svg" alt=""><br />
 						Fertigation Wells (Cranberry bogs)
 					</a>
 				</div>
@@ -336,43 +336,43 @@
 			<hr>
 			<div class="technology">
 				<a href="{{url('/tech/embayment/11')}}"  class="popdown">
-					<img src="http://2016.watershedmvp.org/images/SVG/AquacultureEstuaryBed.svg" alt=""><br />
+					<img src="http://www.watershedmvp.org/images/SVG/AquacultureEstuaryBed.svg" alt=""><br />
 					Aquaculture in Estuary Bed
 				</a>
 			</div>
 			<div class="technology">
 				<a href="{{url('/tech/embayment/12')}}"  class="popdown">
-					<img src="http://2016.watershedmvp.org/images/SVG/AquacultureAboveEstuaryBed.svg" alt=""><br />
+					<img src="http://www.watershedmvp.org/images/SVG/AquacultureAboveEstuaryBed.svg" alt=""><br />
 					Aquaculture Above Estuary Bed
 				</a>
 			</div>
 			<div class="technology">
 				<a href="{{url('/tech/embayment/13')}}"  class="popdown">
-					<img src="http://2016.watershedmvp.org/images/SVG/AquacultureMariculture.svg" alt=""><br />
+					<img src="http://www.watershedmvp.org/images/SVG/AquacultureMariculture.svg" alt=""><br />
 					Aquaculture - Mariculture
 				</a>
 			</div>
 			<div class="technology">
 				<a href="{{url('/tech/embayment/30')}}"  class="popdown">
-					<img src="http://2016.watershedmvp.org/images/SVG/InletCulvertWidening.svg" alt=""><br />
+					<img src="http://www.watershedmvp.org/images/SVG/InletCulvertWidening.svg" alt=""><br />
 					Inlet/Culvert Widening
 				</a>
 			</div>
 			<div class="technology">
 				<a href="{{url('/tech/embayment/31')}}"  class="popdown">
-					<img src="http://2016.watershedmvp.org/images/SVG/CoastalHabitatRestoration.svg" alt=""><br />
+					<img src="http://www.watershedmvp.org/images/SVG/CoastalHabitatRestoration.svg" alt=""><br />
 					Coastal Habitat Restoration
 				</a>
 			</div>
 			<div class="technology">
 				<a href="{{url('/tech/embayment/32')}}"  class="popdown">
-					<img src="http://2016.watershedmvp.org/images/SVG/FloatingConstructedWetlands.svg" alt=""><br />
+					<img src="http://www.watershedmvp.org/images/SVG/FloatingConstructedWetlands.svg" alt=""><br />
 					Floating Constructed Wetlands
 				</a>
 			</div>
 			<div class="technology">
 				<a href="{{url('/tech/groundwater/34')}}"  class="popdown">
-					<img src="http://2016.watershedmvp.org/images/SVG/SurfaceWaterRemediationWetlands.svg" alt=""><br />
+					<img src="http://www.watershedmvp.org/images/SVG/SurfaceWaterRemediationWetlands.svg" alt=""><br />
 					Surface Water Remediation Wetlands
 				</a>
 			</div>
@@ -422,12 +422,12 @@
 
 			// if below doesn't work, add to fim button above ----> href = "http://2016.watershedmvp.org/fim/scenario/{{session('scenarioid')}}/treatmentsDetails"
 
-			window.open("http://2016.watershedmvp.org/fim/scenario/" + scenario + "/treatmentsDetails")
+			window.open("http://www.watershedmvp.org/fim/scenario/" + scenario + "/treatmentsDetails")
 		})
 
 		$('#sam').on('click', function(e) {
 
-			var path = "http://2016.watershedmvp.org/sam/#/home";
+			var path = "http://www.watershedmvp.org/sam/#/home";
 			var samSite = window.open(path + "/" + scenario);
 
 			samSite.onload = function() {
