@@ -5,7 +5,7 @@
 				@if(!$treatment->Parent_TreatmentId)
 					<li class="technology" data-treatment="{{$treatment->TreatmentID}}">
 						<a href="{{url('/edit', $treatment->TreatmentID)}}" class="popdown">
-							<img src="http://2016.watershedmvp.org/images/SVG/{{$treatment->treatment_icon}}" alt="">
+							<img src="http://www.watershedmvp.org/images/SVG/{{$treatment->treatment_icon}}" alt="">
 						</a>
 					</li>
 				@endif

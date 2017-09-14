@@ -938,7 +938,7 @@ require([
 				if (Treatment.Custom_POLY == 0 && Treatment.POLY_STRING.startsWith('POINT')) {
 
 					treatmentType1 = Treatment.TreatmentType_Name;
-					imageURL1 = "http://2016.watershedmvp.org/images/SVG/"+Treatment.treatment_icon;
+					imageURL1 = "http://www.watershedmvp.org/images/SVG/"+Treatment.treatment_icon;
 					treatmentArea1 = Math.round(Treatment.Treatment_Acreage);
 					parcels1 = Treatment.Treatment_Parcels;
 					n_removed1 = Math.round(Treatment.Nload_Reduction);
@@ -1625,7 +1625,7 @@ require([
                     
                 }
 
-				var imageURL = "http://2016.watershedmvp.org/images/SVG/"+Treatment.treatment_icon;
+				var imageURL = "http://www.watershedmvp.org/images/SVG/"+Treatment.treatment_icon;
 				var pointSymbol = new PictureMarkerSymbol(imageURL,30,30)
 
 				

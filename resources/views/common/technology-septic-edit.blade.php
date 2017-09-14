@@ -15,7 +15,7 @@
 
 			<div class="technology">
 				<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$treatment->TreatmentType_ID}}" target="_blank">
-					<img src="http://2016.watershedmvp.org/images/SVG/{{$treatment->treatment_icon}}" width="75">
+					<img src="http://www.watershedmvp.org/images/SVG/{{$treatment->treatment_icon}}" width="75">
 				<br />{{$treatment->TreatmentType_Name}}&nbsp;<i class="fa fa-question-circle"></i>
 				</a>			
 			</div>
