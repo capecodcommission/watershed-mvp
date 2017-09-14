@@ -1,6 +1,6 @@
 
 <div id="progress"><br />
-<img src="http://www.watershedmvp.org/Images/mvplogo.png" alt="WatershedMVP 3.0 by Cape Cod Commission"><br /><br />
+<img src="http://www.watershedmvp.org/images/mvplogo.png" alt="WatershedMVP 3.0 by Cape Cod Commission"><br /><br />
 	<h2>Subembayments for {{$embayment->EMBAY_DISP}}</h2>
 	
 	@foreach($subembayments as $subem)

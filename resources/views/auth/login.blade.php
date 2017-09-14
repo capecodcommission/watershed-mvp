@@ -32,7 +32,7 @@
                 <p>
                     <button type="submit" class="button round"><i class="fa fa-check"></i> Login</button> <span>&nbsp;<a href="{{ url('/password/reset') }}">Forgot Password?</a></span>
                 </p>
-            </form>
+            </form><br><br>
             <p>If you are looking for the old watershedMVP, it can still be found <a href="http://2014.watershedmvp.org" target="_blank">here.</a></p>
         </div>  
     </div>

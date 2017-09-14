@@ -59,7 +59,7 @@
 <body class="start">
     <div id="map" class="map"></div>
         <div class="secondary start">
-        <img src="http://www.watershedmvp.org/Images/mvplogo.png" alt="WatershedMVP 3.0 by Cape Cod Commission">
+        <img src="http://www.watershedmvp.org/images/mvplogo.png" alt="WatershedMVP 3.0 by Cape Cod Commission">
         
 
 
