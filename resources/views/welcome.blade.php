@@ -52,7 +52,7 @@
                 outFields: ["EMBAY_DISP", "EMBAY_ID"]
             });
             embayLayer.show();
-            map.addLayer(embayLayer);
+            map.addLayer(embayLayer);//
         });
     </script>
 </head>
@@ -85,14 +85,40 @@
 
             
         </div>
-         
-    <!--    <script src="{{url('/js/app.js')}}"></script> -->
+
+        <div class="js-menu sliding-panel-content is-visible" style = "z-Index: 100;">
+            <div class="info"  data-dojo-type="dijit/layout/ContentPane"> 
+            <h4>Layers</h4>
+                <ul id="layers">
+                    <li>
+                        <a id="embayments" data-visible="off"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Embayments</a>
+                    </li>      
+                </ul>
+            </div>
+        </div>
+
         <script src="https://code.jquery.com/jquery-3.0.0.min.js"   integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0="   crossorigin="anonymous"></script>
         <script>
             $(document).ready(function(){
+
                 $('#embayment').on('change', function(){
+
                     var watershed = $(this).val();
                     $('#startwizard').attr('href', "{{url('/map')}}/"+watershed);
+                });
+
+                $('#embayments').on('click', function(e) {
+
+                    e.preventDefault();
+                    if ($(this).attr('data-visible') == 'off') {
+
+                        embayLayer.show()
+                        $(this).attr('data-visible', 'on');
+                    } else {
+
+                        embayLayer.hide();
+                        $(this).attr('data-visible', 'off');
+                    }
                 });
             });
         </script>

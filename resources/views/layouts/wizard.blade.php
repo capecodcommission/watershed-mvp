@@ -70,6 +70,8 @@
 							$('#getNitrogen').text(nitrogen + 'kg');
 						})
 			});
+
+
 		});
 	</script>
 	<script>
