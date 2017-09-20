@@ -18,6 +18,7 @@
         "esri/layers/FeatureLayer",
         "dojo/dom-construct",
         "esri/toolbars/draw",
+        "esri/symbols/SimpleFillSymbol",
         "dojo/domReady!"
         ],
         function (Map,
@@ -27,7 +28,8 @@
           // Extent,
     
           domConstruct,
-          Draw
+          Draw,
+          SimpleFillSymbol
          ) {
  var spatialReference = new esri.SpatialReference({ wkid: 102100 });
                 var extent = new esri.geometry.Extent(-7893678, 5069311, -7769404, 5192999, spatialReference);
