@@ -4,13 +4,13 @@
 <head>
     <title>WatershedMVP 3.0</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" id="token" content="{{ csrf_token() }}">
     <link href="{{url('css/app.css')}}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://js.arcgis.com/3.16/esri/css/esri.css">
     <style>
         #map    { z-index: -10; }
     </style>
     <script src="https://js.arcgis.com/3.16/"></script>
-    <meta name="csrf-token" id="token" content="{{ csrf_token() }}">
     <script>
         var map;
         require([
@@ -179,7 +179,6 @@
         </div>
 
         <script src="https://code.jquery.com/jquery-3.0.0.min.js"   integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0="   crossorigin="anonymous"></script>
-        <script src="{{url('/js/main.js')}}"></script>
         <script>
             $(document).ready(function(){
 
