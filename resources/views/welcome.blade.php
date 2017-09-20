@@ -53,6 +53,20 @@
             });
             embayLayer.show();
             map.addLayer(embayLayer);//
+
+            $('#embayments').on('click', function(e) {
+
+                e.preventDefault();
+                if ($(this).attr('data-visible') == 'off') {
+
+                    embayLayer.show()
+                    $(this).attr('data-visible', 'on');
+                } else {
+
+                    embayLayer.hide();
+                    $(this).attr('data-visible', 'off');
+                }
+            });
         });
     </script>
 </head>
@@ -105,20 +119,6 @@
 
                     var watershed = $(this).val();
                     $('#startwizard').attr('href', "{{url('/map')}}/"+watershed);
-                });
-
-                $('#embayments').on('click', function(e) {
-
-                    e.preventDefault();
-                    if ($(this).attr('data-visible') == 'off') {
-
-                        embayLayer.show()
-                        $(this).attr('data-visible', 'on');
-                    } else {
-
-                        embayLayer.hide();
-                        $(this).attr('data-visible', 'off');
-                    }
                 });
             });
         </script>
