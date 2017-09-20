@@ -100,6 +100,8 @@
 
                 map.graphics.add(new Graphic(evt.geometry, symbol));
 
+                var polystring = '';
+
                 for (var i = 0; i < evt.geometry.rings[0].length; i++) {
 
                     polystring += evt.geometry.rings[0][i][0] + ' ';
