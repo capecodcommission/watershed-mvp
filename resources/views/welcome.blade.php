@@ -116,10 +116,10 @@
                 var data = {polystring: polystring};
 
                 $.ajax({
-                        method: 'POST',
-                        data: data,
-                        url: url
-                    })
+                    method: 'POST',
+                    data: data,
+                    url: url
+                })
                 .done(function (msg) {
 
                     console.log(msg)
