@@ -112,7 +112,7 @@
                 var len = polystring.length;
                 polystring = polystring.substring(0, len - 2);
 
-                var url = '/poly';
+                var url = '/poly2';
                         
                 var data = {polystring: polystring};
 

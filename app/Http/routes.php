@@ -18,8 +18,6 @@ Route::get('/start', 'StartController@index');
 
 Route::get('/map/{embayment}/{scenarioid?}', 'WizardController@start');
 
-// Route::post('/poly2', 'WizardController@getPolygon3');
-
 Route::post('/poly', 'WizardController@getPolygon2');
 
 Route::post('/poly2', 'WizardController@getPolygon3');
