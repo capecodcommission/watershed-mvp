@@ -17,6 +17,7 @@
         "esri/InfoTemplate",
         "esri/layers/FeatureLayer",
         "dojo/dom-construct",
+        "esri/toolbars/draw",
         "dojo/domReady!"
         ],
         function (Map,
@@ -25,7 +26,8 @@
           FeatureLayer,
           // Extent,
     
-          domConstruct
+          domConstruct,
+          Draw
          ) {
  var spatialReference = new esri.SpatialReference({ wkid: 102100 });
                 var extent = new esri.geometry.Extent(-7893678, 5069311, -7769404, 5192999, spatialReference);
