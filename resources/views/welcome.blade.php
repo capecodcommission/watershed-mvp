@@ -80,6 +80,7 @@
 
             $('#select_polygon').on('click', function(f){
 
+                f.preventDefault()
                 tb = new Draw(map);
                 tb.on("draw-end", addGraphic);
 
