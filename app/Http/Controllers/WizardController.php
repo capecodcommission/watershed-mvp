@@ -260,7 +260,7 @@ class WizardController extends Controller
 		$data = $data->all();
 		$poly = $data['polystring'];
 
-		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon2 ' . $poly);
+		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon2 ' . '\'' . $poly . '\'');
 
 		return $parcels;
 	}
