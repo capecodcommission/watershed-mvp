@@ -252,33 +252,17 @@ class WizardController extends Controller
 				'poly_nitrogen' => $parcels
 			]);
 
-
-		/**********************************************
-		*	We need to get the total Nitrogen for the custom polygon that this technology will treat 
-		*	(fertilizer, stormwater, septic, groundwater, etc.)
-		*	and report that back to the technology pop-up. After the user adjusts the treatment settings
-		*	we need to save that as "treated_nitrogen" and be able to attenuate it 
-		*	If this is a collection & treat (sewer) then we will need to 
-		*	create a new treatment record with a parent_treatment_id so we 
-		*	can store the N load and the destination point where it will be treated.
-		*
-		**********************************************/
-
-		// $treatment = Treatment::find($treatment_id);
-		// $treatment->POLY_STRING = $poly;
-		// $treatment->Custom_POLY = 1;
-		// $treatment->save();
-		// dd($treatment);
-		// $total_septic_nitrogen = $parcels;
-		// foreach ($parcels as $parcel) 
-		// {
-		// 	$total_septic_nitrogen += $parcel->wtp_nload_septic;
-		// }
-
 		return $parcels;
-		// return view ('layouts/test_septic', ['parcels'=>$parcels, 'poly_nitrogen'=>$poly_nitrogen]);
 	}
 
-	
+	public function getPolygon3(Request $data)
+	{
+		$data = $data->all();
+		$poly = $data['polystring'];
+
+		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon2 ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
+
+		return $parcels;
+	}
 	
 }

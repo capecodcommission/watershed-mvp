@@ -99,9 +99,9 @@
                 var len = polystring.length;
                 polystring = polystring.substring(0, len - 2);
 
-                var url = '/poly';
+                var url = '/poly2';
                         
-                var data = {treatment: treatment, polystring: polystring};
+                var data = {polystring: polystring};
 
                 $.ajax({
                         method: 'POST',
@@ -110,9 +110,7 @@
                     })
                 .done(function (msg) {
 
-                    $('#total_nitrogen_polygon').text(msg);
-                    $('#popdown-opacity').show();
-                    $('div.fa.fa-spinner.fa-spin').remove()
+                    console.log(msg)
                 })
                 .fail(function(msg){
 
