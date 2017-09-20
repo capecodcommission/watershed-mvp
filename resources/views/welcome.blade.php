@@ -70,8 +70,57 @@
 
             $('#select_polygon').on('click', function(f){
 
+                tb = new Draw(map);
+                tb.on("draw-end", addGraphic);
+
                 tb.activate('polygon');
             });
+
+            function addGraphic(evt) {
+
+                tb.deactivate();
+
+                var symbol = new esri.symbol.SimpleFillSymbol(
+                    SimpleFillSymbol.STYLE_SOLID,
+                    new SimpleLineSymbol(
+                        SimpleLineSymbol.STYLE_SOLID,
+                        new Color([43, 171, 227, 1.0]), 4),
+                    new Color([0, 0, 0, 0.0])
+                    );
+
+                map.graphics.add(new Graphic(evt.geometry, symbol));
+
+                for (var i = 0; i < evt.geometry.rings[0].length; i++) {
+
+                    polystring += evt.geometry.rings[0][i][0] + ' ';
+                    polystring += evt.geometry.rings[0][i][1] + ', ';
+                }
+
+                var len = polystring.length;
+                polystring = polystring.substring(0, len - 2);
+
+                var url = '/poly';
+                        
+                var data = {treatment: treatment, polystring: polystring};
+
+                $.ajax({
+                        method: 'POST',
+                        data: data,
+                        url: url
+                    })
+                .done(function (msg) {
+
+                    $('#total_nitrogen_polygon').text(msg);
+                    $('#popdown-opacity').show();
+                    $('div.fa.fa-spinner.fa-spin').remove()
+                })
+                .fail(function(msg){
+
+                    alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg.status + ' ' + msg.statusText );
+                });
+
+                evt.geometry.getExtent();
+            }
         });
     </script>
 </head>
