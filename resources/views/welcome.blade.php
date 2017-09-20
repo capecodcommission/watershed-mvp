@@ -19,6 +19,7 @@
         "dojo/dom-construct",
         "esri/toolbars/draw",
         "esri/symbols/SimpleFillSymbol",
+        "esri/symbols/SimpleLineSymbol",
         "dojo/domReady!"
         ],
         function (Map,
@@ -29,7 +30,8 @@
     
           domConstruct,
           Draw,
-          SimpleFillSymbol
+          SimpleFillSymbol,
+          SimpleLineSymbol
          ) {
  var spatialReference = new esri.SpatialReference({ wkid: 102100 });
                 var extent = new esri.geometry.Extent(-7893678, 5069311, -7769404, 5192999, spatialReference);
