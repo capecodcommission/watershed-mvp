@@ -135,7 +135,6 @@
         });
     </script>
 </head>
-<meta name="csrf-token" id="token" content="{{ csrf_token() }}">
 <body class="start">
     <div id="map" class="map"></div>
         <div class="secondary start">
@@ -161,7 +160,6 @@
             <p>
                 <a href="{{url('/map')}}" id="startwizard" class="button">Get Started</a>
                 <a id="select_polygon" class="button pull-right">Draw polygon</a>
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
             </p>
 
 
@@ -190,6 +188,7 @@
                 });
             });
         </script>
+<script src="{{url('/js/main.js')}}"></script>
         
 </body>
 </html>
