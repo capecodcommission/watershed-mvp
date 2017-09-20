@@ -20,7 +20,7 @@ Route::get('/map/{embayment}/{scenarioid?}', 'WizardController@start');
 
 Route::post('/poly', 'WizardController@getPolygon2');
 
-Route::post('/poly2', 'WizardController@getPolygon3');
+Route::get('/poly2', 'WizardController@getPolygon3');
 
 Route::post('/update_polygon', 'TechnologyController@updatePolygon');
 
