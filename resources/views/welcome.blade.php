@@ -4,7 +4,6 @@
 <head>
     <title>WatershedMVP 3.0</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="csrf-token" id="token" content="{{ csrf_token() }}">
     <link href="{{url('css/app.css')}}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://js.arcgis.com/3.16/esri/css/esri.css">
     <style>
@@ -136,6 +135,7 @@
         });
     </script>
 </head>
+<meta name="csrf-token" id="token" content="{{ csrf_token() }}">
 <body class="start">
     <div id="map" class="map"></div>
         <div class="secondary start">
