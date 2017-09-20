@@ -159,7 +159,7 @@
 
             <p>
                 <a href="{{url('/map')}}" id="startwizard" class="button">Get Started</a>
-                <a id="select_polygon" class="button pull-right">Draw polygon</a>
+                <!-- <a id="select_polygon" class="button pull-right">Draw polygon</a> -->
             </p>
 
 
