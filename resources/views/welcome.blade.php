@@ -10,6 +10,7 @@
         #map    { z-index: -10; }
     </style>
     <script src="https://js.arcgis.com/3.16/"></script>
+    <meta name="csrf-token" id="token" content="{{ csrf_token() }}">
     <script>
         var map;
         require([
