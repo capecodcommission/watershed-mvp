@@ -21,6 +21,7 @@
         "esri/symbols/SimpleFillSymbol",
         "esri/symbols/SimpleLineSymbol",
         "esri/Color",
+        "esri/graphic",
         "dojo/domReady!"
         ],
         function (Map,
@@ -33,7 +34,8 @@
           Draw,
           SimpleFillSymbol,
           SimpleLineSymbol,
-          Color
+          Color,
+          Graphic
          ) {
  var spatialReference = new esri.SpatialReference({ wkid: 102100 });
                 var extent = new esri.geometry.Extent(-7893678, 5069311, -7769404, 5192999, spatialReference);
