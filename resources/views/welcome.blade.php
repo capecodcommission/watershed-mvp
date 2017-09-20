@@ -113,13 +113,13 @@
                 var len = polystring.length;
                 polystring = polystring.substring(0, len - 2);
 
-                var url = '/poly2';
+                var url = '/poly2' + '/' + polystring;
                         
                 var data = {polystring: polystring};
 
                 $.ajax({
                     method: 'POST',
-                    data: data,
+                    // data: data,
                     url: url
                 })
                 .done(function (msg) {
