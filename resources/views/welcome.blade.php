@@ -20,6 +20,7 @@
         "esri/toolbars/draw",
         "esri/symbols/SimpleFillSymbol",
         "esri/symbols/SimpleLineSymbol",
+        "esri/Color",
         "dojo/domReady!"
         ],
         function (Map,
@@ -31,7 +32,8 @@
           domConstruct,
           Draw,
           SimpleFillSymbol,
-          SimpleLineSymbol
+          SimpleLineSymbol,
+          Color
          ) {
  var spatialReference = new esri.SpatialReference({ wkid: 102100 });
                 var extent = new esri.geometry.Extent(-7893678, 5069311, -7769404, 5192999, spatialReference);
@@ -164,7 +166,7 @@
             <h4>Layers</h4>
                 <ul id="layers">
                     <li>
-                        <a id="embayments" data-visible="off"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Embayments</a>
+                        <a id="embayments" data-visible="on"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Embayments</a>
                     </li>      
                 </ul>
             </div>
