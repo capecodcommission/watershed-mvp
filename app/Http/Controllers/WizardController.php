@@ -257,6 +257,7 @@ class WizardController extends Controller
 
 	public function getPolygon3(Request $data)
 	{
+		$user = Auth::user();
 		$data = $data->all();
 		$poly = $data['polystring'];
 
