@@ -161,6 +161,7 @@
             <p>
                 <a href="{{url('/map')}}" id="startwizard" class="button">Get Started</a>
                 <a id="select_polygon" class="button pull-right">Draw polygon</a>
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
             </p>
 
 
