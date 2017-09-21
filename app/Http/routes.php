@@ -13,8 +13,6 @@
 
 
 Route::group(['middleware' => 'auth'], function () {
-
-	Route::post('/poly2', 'MarioController@getPolygon3');
    
 Route::get('/start', 'StartController@index');
 
@@ -22,7 +20,7 @@ Route::get('/map/{embayment}/{scenarioid?}', 'WizardController@start');
 
 Route::post('/poly', 'WizardController@getPolygon2');
 
-// Route::post('/poly2', 'MarioController@getPolygon3');
+Route::post('/poly2', 'MarioController@getPolygon3');
 
 Route::post('/update_polygon', 'TechnologyController@updatePolygon');
 

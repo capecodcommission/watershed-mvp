@@ -12,6 +12,12 @@
     </style>
     <script src="https://js.arcgis.com/3.16/"></script>
     <script>
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
         var map;
         require([
         "esri/map", 
