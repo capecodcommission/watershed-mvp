@@ -131,6 +131,8 @@
                 })
                 .done(function (msg) {
 
+                    console.log(map.graphics.graphics)
+
                     $('#parcelcount').text('Parcels: ' + msg[0]['parcelCount'])
                     $('#nitrogenload').text('Nitrogen Load: ' + Math.round(msg[0]['nitrogenLoad']) + ' kg')
                     $('#wwload').text('Wastewater Load: ' + Math.round(msg[0]['wwLoad']) + ' gal')
