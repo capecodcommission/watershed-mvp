@@ -133,9 +133,9 @@
                 })
                 .done(function (msg) {
 
-                    $('#parcelcount').html('<b>Parcels</b>: ' + msg[0]['parcelCount'])
-                    $('#nitrogenload').html('<b>Nitrogen Load</b>: ' + Math.round(msg[0]['nitrogenLoad']) + ' kg')
-                    $('#wwload').html('<b>Wastewater Load</b>: ' + Math.round(msg[0]['wwLoad']) + ' gal')
+                    $('#parcelcount').html('<b>Parcels</b>: ' + msg[0]['parcelCount'].toLocaleString())
+                    $('#nitrogenload').html('<b>Nitrogen Load</b>: ' + Math.round(msg[0]['nitrogenLoad']).toLocaleString() + ' kg')
+                    $('#wwload').html('<b>Wastewater Load</b>: ' + Math.round(msg[0]['wwLoad']).toLocaleString() + ' gal')
                 })
                 .fail(function(msg){
 
