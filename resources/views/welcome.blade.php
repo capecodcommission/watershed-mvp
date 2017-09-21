@@ -132,7 +132,7 @@
                 .done(function (msg) {
 
                     console.log(msg[0]['parcelCount'])
-                    // $('#parcelcount').text(msg[0]['parcelCount'])
+                    $('#parcelcount').text(msg[0]['parcelCount'])
                 })
                 .fail(function(msg){
 
