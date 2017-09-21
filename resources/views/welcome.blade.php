@@ -131,10 +131,9 @@
                 })
                 .done(function (msg) {
 
-                    console.log(msg[0])
                     $('#parcelcount').text('Parcels: ' + msg[0]['parcelCount'])
-                    $('#nitrogenload').text('Nitrogen Load: ' + Math.round(msg[0]['nitrogenLoad']))
-                    $('#wwload').text('Wastewater Load: ' + Math.round(msg[0]['wwLoad']))
+                    $('#nitrogenload').text('Nitrogen Load: ' + Math.round(msg[0]['nitrogenLoad']) + ' kg')
+                    $('#wwload').text('Wastewater Load: ' + Math.round(msg[0]['wwLoad']) + ' gal')
                 })
                 .fail(function(msg){
 
