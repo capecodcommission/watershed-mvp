@@ -131,18 +131,18 @@
                 })
                 .done(function (msg) {
 
-                    console.log(map.graphics.graphics)
+                    console.log(map.graphics.graphics[-1])
 
                     $('#parcelcount').text('Parcels: ' + msg[0]['parcelCount'])
                     $('#nitrogenload').text('Nitrogen Load: ' + Math.round(msg[0]['nitrogenLoad']) + ' kg')
                     $('#wwload').text('Wastewater Load: ' + Math.round(msg[0]['wwLoad']) + ' gal')
+
+                    map.graphics.remove(map.graphics.graphics[-1])
                 })
                 .fail(function(msg){
 
                     alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg.status + ' ' + msg.statusText );
                 });
-
-                evt.geometry.getExtent();
             }
         });
     </script>
