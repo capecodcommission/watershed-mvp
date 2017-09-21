@@ -133,8 +133,8 @@
 
                     console.log(msg[0])
                     $('#parcelcount').text('Parcels: ' + msg[0]['parcelCount'])
-                    $('#nitrogenload').text('Nitrogen Load: ' + msg[0]['nitrogenLoad'])
-                    $('#wwload').text('Wastewater Load: ' + msg[0]['wwLoad'])
+                    $('#nitrogenload').text('Nitrogen Load: ' + Math.round(msg[0]['nitrogenLoad']))
+                    $('#wwload').text('Wastewater Load: ' + Math.round(msg[0]['wwLoad']))
                 })
                 .fail(function(msg){
 
