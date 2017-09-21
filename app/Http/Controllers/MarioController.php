@@ -16,7 +16,7 @@ use JavaScript;
 use Session;
 use Excel;
 
-class WizardController extends Controller
+class MarioController extends Controller
 {
 
 	public function getPolygon3(Request $data)
