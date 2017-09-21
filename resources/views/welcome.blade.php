@@ -88,6 +88,8 @@
 
             $('#select_polygon').on('click', function(f){
 
+                map.graphics.remove(map.graphics.graphics[1])
+
                 f.preventDefault()
                 tb = new Draw(map);
                 tb.on("draw-end", addGraphic);
@@ -131,13 +133,9 @@
                 })
                 .done(function (msg) {
 
-                    console.log(map.graphics.graphics[-1])
-
                     $('#parcelcount').text('Parcels: ' + msg[0]['parcelCount'])
                     $('#nitrogenload').text('Nitrogen Load: ' + Math.round(msg[0]['nitrogenLoad']) + ' kg')
                     $('#wwload').text('Wastewater Load: ' + Math.round(msg[0]['wwLoad']) + ' gal')
-
-                    map.graphics.remove(map.graphics.graphics[-1])
                 })
                 .fail(function(msg){
 
