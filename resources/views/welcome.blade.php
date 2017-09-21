@@ -11,6 +11,7 @@
         #map    { z-index: -10; }
     </style>
     <script src="https://js.arcgis.com/3.16/"></script>
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"   integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0="   crossorigin="anonymous"></script>
     <script>
 
         $.ajaxSetup({
@@ -183,8 +184,6 @@
                 </ul>
             </div>
         </div>
-
-        <script src="https://code.jquery.com/jquery-3.0.0.min.js"   integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0="   crossorigin="anonymous"></script>
         <script>
             $(document).ready(function(){
 
