@@ -132,7 +132,7 @@
                 .done(function (msg) {
 
                     console.log(msg)
-                    $('#parcelcount').text(msg[1])
+                    // $('#parcelcount').text(msg[1])
                 })
                 .fail(function(msg){
 
@@ -172,7 +172,7 @@
             </p>
 
             <p>
-                <div id = 'parcelcount'></div>
+                <div id = 'parcelcount'>{{$parcels[1]}}</div>
             </p>
 
 
