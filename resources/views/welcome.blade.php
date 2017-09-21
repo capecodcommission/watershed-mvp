@@ -131,8 +131,10 @@
                 })
                 .done(function (msg) {
 
-                    console.log(msg[0]['parcelCount'])
-                    $('#parcelcount').text(msg[0]['parcelCount'])
+                    console.log(msg[0])
+                    $('#parcelcount').text('Parcels: ' + msg[0]['parcelCount'])
+                    $('#nitrogenload').text('Nitrogen Load: ' + msg[0]['nitrogenLoad'])
+                    $('#wwload').text('Wastewater Load: ' + msg[0]['wwLoad'])
                 })
                 .fail(function(msg){
 
@@ -173,6 +175,8 @@
 
             <p>
                 <div id = 'parcelcount'></div>
+                <div id = 'nitrogenload'></div>
+                <div id = 'wwload'></div>
             </p>
 
 
