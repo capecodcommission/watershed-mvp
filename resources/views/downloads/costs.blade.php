@@ -17,7 +17,7 @@
 						<th>Technology</th>
 						<th>ID</th>
 						<th>Parcels Affected</th>
-						<th>Nitrogen Removed (kg)</th>
+						<th>Unattenuated Nitrogen Removed (kg)</th>
 						<th>Treatment Construction Cost</th>
 						<th>OM Cost</th>
 						<th>Collection Cost</th>
@@ -64,7 +64,7 @@
 						<td></td>
 						<td></td>
 						<td><strong>Total Parcels Affected</strong></td>
-						<td><strong>Total Nitrogen Removed</strong></td>
+						<td><strong>Unattenuated Total Nitrogen Removed</strong></td>
 						<td><strong>Total Treatment Construction Cost</strong></td>
 						<td><strong>Total OM Cost</strong></td>
 						<td><strong>Total Collection Cost</strong></td>

@@ -30,7 +30,7 @@
 					<tr>
 						<th>Subembayment</th>
 						<th>Original N *</th>
-						<th>N Removed (Attenuated) **</th>
+						<th>Attenuated N Removed **</th>
 						<th>Scenario N</th>
 						<th>Threshold N</th>
 						<th>N Remaining to Threshold ***</th>

@@ -30,19 +30,19 @@
 					<td>{{$scenario->Total_WaterFlow}}</td>
 				</tr>
 				<tr>
-					<td>Existing Total Nitrogen (kg)</td>
+					<td>Unattenuated Existing Total Nitrogen (kg)</td>
 					<td>{{$scenario->Nload_Existing}}</td>
 				</tr>
 				<tr>
-					<td>Existing Nitrogen - Fertilizer</td>
+					<td>Unattenuated Existing Nitrogen - Fertilizer</td>
 					<td>{{$scenario->Nload_Fert}}</td>
 				</tr>
 				<tr>
-					<td>Existing Nitrogen - Septic</td>
+					<td>Unattenuated Existing Nitrogen - Septic</td>
 					<td>{{$scenario->Nload_Sept}}</td>
 				</tr>
 				<tr>
-					<td>Existing Nitrogen - Stormwater</td>
+					<td>Unattenuated Existing Nitrogen - Stormwater</td>
 					<td>{{$scenario->Nload_Storm}}</td>
 				</tr>
 			</table>
@@ -54,7 +54,7 @@
 						<th>Technology</th>
 						<th>ID</th>
 						<th>Parcels Affected</th>
-						<th>Nitrogen Removed (kg)</th>
+						<th>Unattenuated Nitrogen Removed (kg)</th>
 						<th>Total Present Worth</th>
 						<th>Cost per kg Nitrogen Removed</th>
 						<th>Unit Metric</th>
