@@ -1932,7 +1932,7 @@ require([
 		map.addLayer(Towns);
 
 
-		var TreatmentType = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13', {
+		var TreatmentType = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/10', {
 				mode: FeatureLayer.MODE_ONDEMAND,
 				outFields: ["*"],
 				opacity: 1,
