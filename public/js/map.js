@@ -1847,7 +1847,7 @@ require([
 						"</tbody></table>"
 		});
 
-		// http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/0
+		// Layer 13 is now used for all point layers
 		var NitrogenLayer = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13', {
 				mode: FeatureLayer.MODE_ONDEMAND,
 				outFields: ["*"],
@@ -1884,7 +1884,7 @@ require([
 	        NitrogenLayer.hide()
 			map.addLayer(NitrogenLayer);
 
-
+        // Layer 13 is now used for all point layers
 		var WasteWater = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13', {
 				mode: FeatureLayer.MODE_ONDEMAND,
 				outFields: ["*"],
@@ -1931,7 +1931,7 @@ require([
 		Towns.hide();
 		map.addLayer(Towns);
 
-
+        // Layer 13 is now used for all point layers
 		var TreatmentType = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13', {
 				mode: FeatureLayer.MODE_ONDEMAND,
 				outFields: ["*"],
@@ -1989,7 +1989,7 @@ require([
 		ShallowGroundwater.hide();
 		map.addLayer(ShallowGroundwater);
 
-
+        // Layer 13 is now used for all point layers
 		var LandUse = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13', {
 				mode: FeatureLayer.MODE_ONDEMAND,
 				outFields: ["*"],
