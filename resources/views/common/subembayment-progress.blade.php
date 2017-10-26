@@ -6,7 +6,7 @@
 	@foreach($subembayments as $subem)
 	<?php 
 
-		if ($subem->n_load_target === 0 || $subem->n_load_att === 0) 
+		if ($subem->n_load_target == 0 and $subem->n_load_att == 0) 
 		{
 			$percent = 100;
 		}
