@@ -107,7 +107,15 @@ class WizardController extends Controller
 			$total_goal += $key->n_load_target;
 		}
 		$current = $n_load_orig - $removed;
-		$progress = round($total_goal/$current * 100);
+
+		if ($total_goal == 0 || $n_load_orig == 0) 
+		{
+			$progress = 100;
+		}
+		else
+		{
+			$progress = round($total_goal/$current * 100);
+		}
 
 		if ($progress > 0 && $progress <= 100) {
 
