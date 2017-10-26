@@ -8,7 +8,7 @@
 
 		if ($subem->n_load_target === 0 || $subem->n_load_att === 0) 
 		{
-			$percent = 100
+			$percent = 100;
 		}
 		else
 		{
