@@ -6,16 +6,7 @@
 	@foreach($subembayments as $subem)
 	<?php 
 
-		if ($subem->n_load_target === 0 || $subem->n_load_att === 0) 
-		{
-			$percent = 100;
-		}
-		else
-		{
-			$percent = $subem->n_load_target / ($subem->n_load_att - $subem->n_load_att_removed);
-		}
-
-		// $percent = $subem->n_load_target / ($subem->n_load_att - $subem->n_load_att_removed);
+		$percent = $subem->n_load_target / ($subem->n_load_att - $subem->n_load_att_removed);
 
 		if($percent < 1 and $percent > 0)
 		{
