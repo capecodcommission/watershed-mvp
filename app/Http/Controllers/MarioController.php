@@ -25,7 +25,8 @@ class MarioController extends Controller
 		$data = $data->all();
 		$poly = $data['polystring'];
 
-		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon2 ' . '\'' . $poly . '\'');
+		// Obtain parcel count, nitrogen and wastewater loads within user-drawn polygon
+		$parcels = DB::select('exec CapeCodMA.sumTotalsWithinPoly ' . '\'' . $poly . '\'');
 
 		return $parcels;
 	}

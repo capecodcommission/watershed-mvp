@@ -17,3 +17,4 @@ Homestead.json
 /www/bootstrap/autoload.php
 /public/.DS_Store
 /database/queries
+npm-debug.log
