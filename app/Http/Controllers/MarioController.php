@@ -19,7 +19,7 @@ use Excel;
 class MarioController extends Controller
 {
 
-	public function getPolygon3(Request $data)
+	public function sumTotalsWithinPoly(Request $data)
 	{
 		$user = Auth::user();
 		$data = $data->all();
