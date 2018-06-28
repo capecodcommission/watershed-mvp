@@ -109,6 +109,7 @@
 	 {
 		 var location1;
 			$('#select_area_'+treatment).on('click', function(f) {
+				console.log(f)
 				f.preventDefault();
 			destination_active = 1;
 			console.log('destination_active set to 1')
@@ -117,7 +118,6 @@
 
 			map.on('click', function(e)
 			{
-				console.log(e)
 				if (destination_active > 0) 
 				{
 						// console.log('map clicked');
