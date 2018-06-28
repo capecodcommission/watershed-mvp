@@ -111,6 +111,8 @@
 			$('#select_area_'+treatment).on('click', function(f) {
 				f.preventDefault();
 			destination_active = 1;
+			console.log('destination_active set to 1')
+			console.log(destination_active)
 			$('#popdown-opacity').hide();
 
 			map.on('click', function(e)
@@ -137,6 +139,9 @@
 								$('.select > span').show();
 								$('#select_area_'+treatment).hide();
 								destination_active = 0;
+
+								console.log('destination_active set to 0')
+								console.log(destination_active)
 							})
 				}
 
