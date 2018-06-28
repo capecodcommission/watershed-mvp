@@ -292,18 +292,18 @@
 						PRB - Injection Well (30')
 					</a>
 				</div>
-				<div class="technology">
+				<!-- <div class="technology">
 					<a href="{{url('/tech/groundwater/17')}}"  class="popdown">
 						<img src="http://www.watershedmvp.org/images/SVG/PRBInjectionWell45.svg" alt=""><br />
 						PRB - Injection Well (45')
 					</a>
-				</div>
-				<div class="technology">
+				</div> -->
+				<!-- <div class="technology">
 					<a href="{{url('/tech/groundwater/18')}}"  class="popdown">
 						<img src="http://www.watershedmvp.org/images/SVG/PRBInjectionWell60.svg" alt=""><br />
 						PRB - Injection Well (60')
 					</a>
-				</div>
+				</div> -->
 				<div class="technology">
 					<a href="{{url('/tech/groundwater/19')}}"  class="popdown">
 						<img src="http://www.watershedmvp.org/images/SVG/FertigationWellsTurf.svg" alt=""><br />
@@ -334,12 +334,12 @@
 			<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="wmvp_results_{{session('scenarioid')}}">View Scenario Summary</a>
 			</p>
 			<hr>
-			<div class="technology">
+			<!-- <div class="technology">
 				<a href="{{url('/tech/embayment/11')}}"  class="popdown">
 					<img src="http://www.watershedmvp.org/images/SVG/AquacultureEstuaryBed.svg" alt=""><br />
 					Aquaculture in Estuary Bed
 				</a>
-			</div>
+			</div> -->
 			<div class="technology">
 				<a href="{{url('/tech/embayment/12')}}"  class="popdown">
 					<img src="http://www.watershedmvp.org/images/SVG/AquacultureAboveEstuaryBed.svg" alt=""><br />
