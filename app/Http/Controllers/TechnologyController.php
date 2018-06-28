@@ -29,7 +29,7 @@ class TechnologyController extends Controller
 		$scenarioid = session('scenarioid');
 		$treatment = Treatment::create(['ScenarioID' => $scenarioid, 'TreatmentType_ID'=>$tech->Technology_ID, 'TreatmentType_Name'=>substr($tech->Technology_Strategy, 0, 50), 'Treatment_UnitMetric'=>$tech->Unit_Metric, 'Treatment_Class'=>$tech->Technology_Sys_Type]);
 		// dd($tech, $treatment);
-		if ($tech->Show_In_wMVP == 4) 
+		if ($tech->Show_In_wMVP == 4) // Fert Management Good
 		{
 			$scenario = Scenario::find($scenarioid);
 			$embay_id = $scenario->AreaID;

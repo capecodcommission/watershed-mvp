@@ -105,9 +105,10 @@
 		$('div.fa.fa-spinner.fa-spin').remove()
 
 	 treatment = {{$treatment->TreatmentID}};
-	 @if($tech->Show_In_wMVP < 4)
+	 @if($tech->Show_In_wMVP < 4) 
+	 {
 		 var location1;
-			$('#select_area_'+treatment).on('click', function(f){
+			$('#select_area_'+treatment).on('click', function(f) {
 				f.preventDefault();
 			destination_active = 1;
 			$('#popdown-opacity').hide();
@@ -214,7 +215,9 @@
 						$('ul.selected-treatments li[data-treatment="{{$treatment->TreatmentID}}"] a').popdown();
 					});
 			});
+		}
 			@else
+			{
 				$('#apply_treatment_'+treatment).on('click', function(e){
 				// need to save the treated N values and update the subembayment progress
 				e.preventDefault();
@@ -238,6 +241,7 @@
 						$('ul.selected-treatments li[data-treatment="{{$treatment->TreatmentID}}"] a').popdown();	
 					});
 			});
+			}
 
 			@endif
 
