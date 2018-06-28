@@ -116,7 +116,8 @@
 			$('#popdown-opacity').hide();
 
 			map.on('click', function(e)
-			{		
+			{
+				console.log(e)
 				if (destination_active > 0) 
 				{
 						// console.log('map clicked');
