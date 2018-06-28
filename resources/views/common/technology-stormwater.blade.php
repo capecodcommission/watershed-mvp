@@ -139,15 +139,14 @@
 								$('.select > span').text('Selected: '+msg.SUBEM_DISP);
 								$('.select > span').show();
 								$('#select_area_'+treatment).hide();
-								// destination_active = 0;
+								destination_active = 0;
 
-								// console.log('destination_active set to 0')
-								// console.log(destination_active)
+								console.log('destination_active set to 0')
+								console.log(destination_active)
 							})
 				}
 
 				});
-				destination_active = 0;
 			});
 
 			$('#select_polygon_'+treatment).on('click', function(f){
