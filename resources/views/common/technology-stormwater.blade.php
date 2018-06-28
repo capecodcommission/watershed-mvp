@@ -109,7 +109,6 @@
 	 {
 		 var location1;
 			$('#select_area_'+treatment).on('click', function(f) {
-				console.log(f)
 				f.preventDefault();
 			destination_active = 1;
 			console.log('destination_active set to 1')
@@ -145,6 +144,7 @@
 								console.log(destination_active)
 							})
 				}
+				destination_active = 0;
 
 				});
 			});
