@@ -128,7 +128,7 @@
 							method: 'GET',
 							url: url
 						})
-							.then(function(msg){
+							.done(function(msg){
 								msg = $.parseJSON(msg);
 								// console.log(msg.SUBEM_DISP);
 								// console.log(msg);
