@@ -139,10 +139,14 @@
 								$('.select > span').text('Selected: '+msg.SUBEM_DISP);
 								$('.select > span').show();
 								$('#select_area_'+treatment).hide();
+								// destination_active = 0;
+								//
+								// console.log('destination_active set to 0')
+								// console.log(destination_active)
+							})
+							.complete(function() {
 								destination_active = 0;
-
-								console.log('destination_active set to 0')
-								console.log(destination_active)
+								constole.log('destination_active complete -->', destination_active)
 							})
 				}
 
