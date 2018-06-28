@@ -143,6 +143,8 @@
 
 								console.log('destination_active set to 0')
 								console.log(destination_active)
+							}).then(function(){
+								destination_active = 0;
 							})
 				}
 
