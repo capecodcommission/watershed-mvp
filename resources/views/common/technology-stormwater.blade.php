@@ -102,10 +102,11 @@
 <script>
 
 function stormwaterSelectLocationTech () {
-	let destination_active = 1;
+	// let destination_active = 1;
 	// let location1 = 0;
 	map.on('click', function(e)
 	{
+		let destination_active = 1;
 		console.log('destination_active is --> ',destination_active)
 		if (destination_active > 0) {
 			var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y + '/' + treatment;
@@ -145,6 +146,7 @@ function stormwaterSelectLocationTech () {
 				let location1 = 0;
 				let destination_active = 0;
 				stormwaterSelectLocationTech();
+				let destination_active = 0;
 
 			// destination_active = 1;
 			// console.log('destination_active set to 1')
