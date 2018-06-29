@@ -143,9 +143,8 @@ function stormwaterSelectLocationTech () {
 				f.preventDefault();
 				$('#popdown-opacity').hide();
 				let location1 = 0;
-
-				stormwaterSelectLocationTech();
 				let destination_active = 0;
+				stormwaterSelectLocationTech();
 
 			// destination_active = 1;
 			// console.log('destination_active set to 1')
