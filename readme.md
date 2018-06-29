@@ -25,3 +25,21 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+
+---
+
+## FUTURE US
+
+#### APP-WIDE
+1. Switch 'GET_PointsFromPolygon1' from using '@embay_area = ea.polygon' --> 'COMPOSITE @subembays_area' for that embayment.
+2. Where polygonal technologies are using the slider to set a percentage ('ground_percent'), there is currently a vue warning.
+3. Need to explicitly define 'Show_In_wMVP' numbers in README.
+4. During clicking for placement or population of technologies, disable reference layer ID-ing.
+
+#### N ENTRANCE POINT SPECIFIC
+1. Stormwater point technologies: parcels affected become additive, along with GET requests.
+2. Stormwater point technologies: not displayed at the click location on the map after applied, but are removed from map after deleted.
+3. Stormwater point technologies: For all sw point techs, on the 8th-10th instance added = 500 Internal Server Error.
+
+#### EMBAYMENT-SPECIFIC
+1. Pleasant Bay: Many subemebayments aren't selectable, masked by PB subembayment geometry.
