@@ -121,10 +121,11 @@ function stormwaterSelectLocationTech () {
 				$('.select > span').text('Selected: '+msg.SUBEM_DISP);
 				$('.select > span').show();
 				$('#select_area_'+treatment).hide();
-			}).then(function() {
-				let destination_active = 0;
-				console.log('destination_active set to 0 --> ', destination_active)
-			});
+			})
+			// .then(function() {
+			// 	let destination_active = 0;
+			// 	console.log('destination_active set to 0 --> ', destination_active)
+			// });
 		}
 	});
 };
@@ -144,6 +145,7 @@ function stormwaterSelectLocationTech () {
 				let location1 = 0;
 
 				stormwaterSelectLocationTech();
+				let destination_active = 0;
 
 			// destination_active = 1;
 			// console.log('destination_active set to 1')
