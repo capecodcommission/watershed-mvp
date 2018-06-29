@@ -36,6 +36,11 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 3. Need to explicitly define 'Show_In_wMVP' numbers in README.
 4. During clicking for placement or population of technologies, disable reference layer ID-ing.
 
+#### Treatment Technology Stack
+1. Any updated or deleted tech should reapply downstream techs.
+    Example 1: User applies 5 techs, then updates tech #2. Techs 3-5 should reapply based on tech 2's updated nload totals.
+    Example 2: User applies 8 techs, then deletes tech #1. Remaining 7 should reapply.
+
 #### N ENTRANCE POINT SPECIFIC
 1. Stormwater point technologies: parcels affected become additive, along with GET requests.
 2. Stormwater point technologies: not displayed at the click location on the map after applied, but are removed from map after deleted.
