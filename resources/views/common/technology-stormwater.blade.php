@@ -100,10 +100,9 @@
 
 
 <script>
-
+// NEW - Shawn 6/29/18 - New f(x) run outside of 'select_area_' button click f(x)
 function stormwaterSelectLocationTech () {
 	let destination_active = 1;
-	// let location1 = 0;
 	map.on('click', function(e)
 	{
 		console.log('destination_active is --> ',destination_active)
@@ -122,10 +121,6 @@ function stormwaterSelectLocationTech () {
 				$('.select > span').show();
 				$('#select_area_'+treatment).hide();
 			})
-			// .then(function() {
-			// 	let destination_active = 0;
-			// 	console.log('destination_active set to 0 --> ', destination_active)
-			// });
 		}
 	});
 };
@@ -143,9 +138,11 @@ function stormwaterSelectLocationTech () {
 				f.preventDefault();
 				$('#popdown-opacity').hide();
 				let location1 = 0;
-				stormwaterSelectLocationTech();
-				let destination_active = 0;
+				stormwaterSelectLocationTech(); // NEw - Shawn 6/29/18
+				let destination_active = 0; // NEW - Shawn 6/29/18
+				console.log('destination_active post stormwaterSelectLocationTech f(x) --> ', destination_active)
 
+			// PREVIOUS 'select_area_' LOGIC PRIOR TO 6/29/18
 			// destination_active = 1;
 			// console.log('destination_active set to 1')
 			// console.log(destination_active)
