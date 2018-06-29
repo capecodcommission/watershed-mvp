@@ -102,7 +102,7 @@
 <script>
 
 function stormwaterSelectLocationTech () {
-	destination_active = 1;
+	let destination_active = 1;
 	// let location1 = 0;
 	map.on('click', function(e)
 	{
@@ -143,9 +143,9 @@ function stormwaterSelectLocationTech () {
 				f.preventDefault();
 				$('#popdown-opacity').hide();
 				let location1 = 0;
-				let destination_active = 0;
+				// let destination_active = 0;
 				stormwaterSelectLocationTech();
-				let destination_active = 0;
+				destination_active = 0;
 
 			// destination_active = 1;
 			// console.log('destination_active set to 1')
