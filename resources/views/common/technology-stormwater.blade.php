@@ -103,7 +103,7 @@
 
 function stormwaterSelectLocationTech () {
 	let destination_active = 1;
-	let location1 = 0;
+	// let location1 = 0;
 	map.on('click', function(e)
 	{
 		console.log('destination_active is --> ',destination_active)
@@ -141,6 +141,7 @@ function stormwaterSelectLocationTech () {
 				console.log('this is f --> ',f)
 				f.preventDefault();
 				$('#popdown-opacity').hide();
+				let location1 = 0;
 
 				stormwaterSelectLocationTech();
 
