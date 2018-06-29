@@ -102,7 +102,7 @@
 <script>
 
 function stormwaterSelectLocationTech () {
-	let destination_active = 1;
+	destination_active = 1;
 	// let location1 = 0;
 	map.on('click', function(e)
 	{
