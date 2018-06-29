@@ -100,6 +100,35 @@
 
 
 <script>
+
+function stormwaterSelectLocationTech () {
+	let destination_active = 1;
+	let location1 = 0;
+	map.on('click', function(e)
+	{
+		console.log('destination_active is --> ',destination_active)
+		if (destination_active > 0) {
+			var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y + '/' + treatment;
+			$.ajax({
+				method: 'GET',
+				url: url
+			})
+			.done(function(msg) {
+				msg = $.parseJSON(msg);
+				location1 = msg.SUBEM_ID;
+				$('#'+msg.SUBEM_NAME+'> .stats').show();
+				$('#popdown-opacity').show();
+				$('.select > span').text('Selected: '+msg.SUBEM_DISP);
+				$('.select > span').show();
+				$('#select_area_'+treatment).hide();
+			}).then(function() {
+				let destination_active = 0;
+				console.log('destination_active set to 0 --> ', destination_active)
+			});
+		}
+	});
+};
+
 	$(document).ready(function(){
 
 		$('div.fa.fa-spinner.fa-spin').remove()
@@ -107,49 +136,53 @@
 	 treatment = {{$treatment->TreatmentID}};
 	 @if($tech->Show_In_wMVP < 4)
 	 {
-		 var location1;
+		 // var location1;
 			$('#select_area_'+treatment).on('click', function(f) {
-				console.log(f)
+				console.log('this is f --> ',f)
 				f.preventDefault();
-			destination_active = 1;
-			console.log('destination_active set to 1')
-			console.log(destination_active)
-			$('#popdown-opacity').hide();
+				$('#popdown-opacity').hide();
 
-			map.on('click', function(e)
-			{
-				if (destination_active > 0)
-				{
-						// console.log('map clicked');
-						// console.log(e.mapPoint.x, e.mapPoint.y);
+				stormwaterSelectLocationTech();
 
-						var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y + '/' + treatment;
-						$.ajax({
-							method: 'GET',
-							url: url
-						})
-							.done(function(msg){
-								msg = $.parseJSON(msg);
-								// console.log(msg.SUBEM_DISP);
-								// console.log(msg);
-								location1 = msg.SUBEM_ID;
-								$('#'+msg.SUBEM_NAME+'> .stats').show();
-								// $('.notification_count').remove();
-								$('#popdown-opacity').show();
-								$('.select > span').text('Selected: '+msg.SUBEM_DISP);
-								$('.select > span').show();
-								$('#select_area_'+treatment).hide();
-								// destination_active = 0;
-								//
-								// console.log('destination_active set to 0')
-								// console.log(destination_active)
-							}).then(function() {
-								destination_active = 0;
-								console.log('destination_active set to 0 --> ', destination_active)
-							})
-				}
-
-				});
+			// destination_active = 1;
+			// console.log('destination_active set to 1')
+			// console.log(destination_active)
+			// $('#popdown-opacity').hide();
+			//
+			// map.on('click', function(e)
+			// {
+			// 	if (destination_active > 0)
+			// 	{
+			// 			// console.log('map clicked');
+			// 			// console.log(e.mapPoint.x, e.mapPoint.y);
+			//
+			// 			var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y + '/' + treatment;
+			// 			$.ajax({
+			// 				method: 'GET',
+			// 				url: url
+			// 			})
+			// 				.done(function(msg){
+			// 					msg = $.parseJSON(msg);
+			// 					// console.log(msg.SUBEM_DISP);
+			// 					// console.log(msg);
+			// 					location1 = msg.SUBEM_ID;
+			// 					$('#'+msg.SUBEM_NAME+'> .stats').show();
+			// 					// $('.notification_count').remove();
+			// 					$('#popdown-opacity').show();
+			// 					$('.select > span').text('Selected: '+msg.SUBEM_DISP);
+			// 					$('.select > span').show();
+			// 					$('#select_area_'+treatment).hide();
+			// 					// destination_active = 0;
+			// 					//
+			// 					// console.log('destination_active set to 0')
+			// 					// console.log(destination_active)
+			// 				}).then(function() {
+			// 					destination_active = 0;
+			// 					console.log('destination_active set to 0 --> ', destination_active)
+			// 				})
+			// 	}
+			//
+			// 	});
 			});
 
 			$('#select_polygon_'+treatment).on('click', function(f){
