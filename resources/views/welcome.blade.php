@@ -120,6 +120,9 @@
               })
 
               NitrogenLayer.setRenderer(renderer)
+              NitrogenLayer.hide()
+
+              map.addLayer(NitrogenLayer)
 
             $('#embayments').on('click', function(e) {
 
