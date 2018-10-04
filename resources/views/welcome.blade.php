@@ -196,8 +196,11 @@
               NitrogenLayer.hide()
               // NitrogenLayer.setDefinitionExpression('')
 
-              if (Subwatersheds.infoTemplate == null) {Subwatersheds.setInfoTemplate(subwater_template)}
-              if (embayLayer.infoTemplate == null) {embayLayer.setInfoTemplate(subwater_template)}
+              console.log(Subwatersheds.infoTemplate)
+              console.log(embayLayer.infoTemplate)
+
+              // if (Subwatersheds.infoTemplate == null) {Subwatersheds.setInfoTemplate(subwater_template)}
+              // if (embayLayer.infoTemplate == null) {embayLayer.setInfoTemplate(subwater_template)}
 
               var symbol = new esri.symbol.SimpleFillSymbol(
                   SimpleFillSymbol.STYLE_SOLID,
