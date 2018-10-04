@@ -194,13 +194,6 @@
 
               tb.deactivate();
               NitrogenLayer.hide()
-              // NitrogenLayer.setDefinitionExpression('')
-
-              console.log(Subwatersheds.infoTemplate)
-              console.log(embayLayer.infoTemplate)
-
-              // if (Subwatersheds.infoTemplate == null) {Subwatersheds.setInfoTemplate(subwater_template)}
-              // if (embayLayer.infoTemplate == null) {embayLayer.setInfoTemplate(subwater_template)}
 
               var symbol = new esri.symbol.SimpleFillSymbol(
                   SimpleFillSymbol.STYLE_SOLID,
@@ -251,13 +244,8 @@
                     NitrogenLayer.setDefinitionExpression('Other_ID IN (' + queryTypeString + ')')
                     NitrogenLayer.show()
 
-                    var layers = [subwatersheds, embayLayer]
-
-                    layers.map((i) => {
-                      if (i.visible) {
-                        i[0].setInfoTemplate(subwater_template)
-                      }
-                    })
+                    if (Subwatersheds.infoTemplate == null) {Subwatersheds.setInfoTemplate(subwater_template)}
+                    if (embayLayer.infoTemplate == null) {embayLayer.setInfoTemplate(template)}
                   })
                   .fail(function (response) {
 
