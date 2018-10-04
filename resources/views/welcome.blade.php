@@ -233,10 +233,8 @@
                   .done(function(response) {
 
                     var queryTypeString = response.map(i => {return "'" + i.otherID + "'"}).join(',')
-
-                    NitrogenLayer.show()
                     NitrogenLayer.setDefinitionExpression('Other_ID IN (' + queryTypeString + ')')
-                    
+                    NitrogenLayer.show()
                   })
                   .fail(function (response) {
 
