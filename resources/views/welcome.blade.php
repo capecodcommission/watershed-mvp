@@ -202,10 +202,9 @@
 
                     var queryTypeString = response.map(i => {return "'" + i.objectID + "'"}).join(',')
 
-                    console.log(queryTypeString)
-
-                    // NitrogenLayer.setDefinitionExpression('OBJECTID IN (' + queryTypeString + ')')
-                    // NitrogenLayer.show()
+                    NitrogenLayer.show()
+                    NitrogenLayer.setDefinitionExpression('OBJECTID IN (' + queryTypeString + ')')
+                    
                   })
                   .fail(function (response) {
 
