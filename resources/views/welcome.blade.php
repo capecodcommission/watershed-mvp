@@ -148,6 +148,13 @@
                 e.preventDefault();
                 if ($(this).attr('data-visible') == 'off') {
 
+                    if (tb._points) {
+                      if (tb._points.length > 1) {
+                        embayLayer.setInfoTemplate(null)
+                      } else {
+                        embayLayer.setInfoTemplate(template)
+                      }
+                    }
                     embayLayer.show()
                     $(this).attr('data-visible', 'on');
                 } else {
@@ -162,7 +169,13 @@
                 e.preventDefault();
                 if ($(this).attr('data-visible') == 'off') {
 
-                    console.log(tb._points.length)
+                    if (tb._points) {
+                      if (tb._points.length > 1) {
+                        Subwatersheds.setInfoTemplate(null)
+                      } else {
+                        subwatersheds.setInfoTemplate(subwater_template)
+                      }
+                    }
                     Subwatersheds.show()
                     $(this).attr('data-visible', 'on');
                 } else {
