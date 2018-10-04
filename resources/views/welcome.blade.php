@@ -149,6 +149,8 @@
             function addGraphic(evt) {
 
               tb.deactivate();
+              NitrogenLayer.hide()
+              NitrogenLayer.setDefinitionExpression('')
 
               var symbol = new esri.symbol.SimpleFillSymbol(
                   SimpleFillSymbol.STYLE_SOLID,
@@ -194,6 +196,7 @@
               });
 
               NitrogenLayer.setDefinitionExpression('Shape.STContains(' + evt.geometry + ', 3857')
+              NitrogenLayer.show()
             }
         });
     </script>
