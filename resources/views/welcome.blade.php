@@ -104,7 +104,7 @@
               var symbol = new SimpleMarkerSymbol()
               symbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE)
               symbol.setOutline(null)
-              symbol.setColor(new Color([255,153,0]))
+              symbol.setColor(new Color([34, 209, 219]))
               symbol.setSize("8")
 
               var renderer = new SimpleRenderer(symbol)
