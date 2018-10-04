@@ -173,7 +173,7 @@
                       if (tb._points.length > 1) {
                         Subwatersheds.setInfoTemplate(null)
                       } else {
-                        subwatersheds.setInfoTemplate(subwater_template)
+                        Subwatersheds.setInfoTemplate(subwater_template)
                       }
                     }
                     Subwatersheds.show()
