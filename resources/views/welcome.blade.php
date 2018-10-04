@@ -198,7 +198,7 @@
                   alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg.status + ' ' + msg.statusText );
               });
 
-              NitrogenLayer.setDefinitionExpression(evt.geometry'.STContains(SHAPE,3857)')
+              NitrogenLayer.setDefinitionExpression(evt.geometry + '.STContains(SHAPE,3857)')
               NitrogenLayer.show()
             }
         });
