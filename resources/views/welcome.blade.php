@@ -148,7 +148,7 @@
                 e.preventDefault();
                 if ($(this).attr('data-visible') == 'off') {
 
-                    if (tb) {
+                    if (typeof tb != 'undefined') {
                       if (tb._points.length > 1) {
                         embayLayer.setInfoTemplate(null)
                       } else {
@@ -169,7 +169,7 @@
                 e.preventDefault();
                 if ($(this).attr('data-visible') == 'off') {
 
-                    if (tb) {
+                    if (typeof tb != 'undefined') {
                       if (tb._points.length > 1) {
                         Subwatersheds.setInfoTemplate(null)
                       } else {
