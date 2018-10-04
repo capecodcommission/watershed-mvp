@@ -72,6 +72,51 @@
             embayLayer.show();
             map.addLayer(embayLayer);//
 
+            var nitro_template = new InfoTemplate({
+
+              title: "Info",
+              content: "<table class = 'table'><tbody>" +
+                    "<tr style = 'height: 2px'>" + "<td style = 'padding: 0px; margin: 0px;'>" + "Water Use (Gal/Day): " + "</td>" + "<td style = 'padding: 0px; margin: 0px;'>" + "${WaterUseExisting:NumberFormat(places:2)}" + "</td>" + "</tr>" +
+                    "<tr style = 'height: 2px'>" + "<td style = 'padding: 0px; margin: 0px;'>" + "Waste Water Treatment: " + "</td>" + "<td style = 'padding: 0px; margin: 0px;'>" + "${WWTreatmentExisting}" + "</td>" + "</tr>" +
+                    "<tr style = 'height: 2px'>" + "<td style = 'padding: 0px; margin: 0px;'>" + "Land Use Category: " + "</td>" + "<td style = 'padding: 0px; margin: 0px;'>" + "${LandUseCatExisting}" + "</td>" + "</tr>" +
+                    "<tr style = 'height: 2px'>" + "<td style = 'padding: 0px; margin: 0px;'>" + "Water Use Source: " + "</td>" + "<td style = 'padding: 0px; margin: 0px;'>" + "${WaterUseSource}" + "</td>" + "</tr>" +
+                    "<tr style = 'height: 2px'>" + "<td style = 'padding: 0px; margin: 0px;'>" + "Unattn Nitrogen Load (Septic) (Kg/Yr): " + "</td>" + "<td style = 'padding: 0px; margin: 0px;'>" + "${NLoad_Septic_Existing:NumberFormat(places:2)}" + "</td>" + "</tr>" +
+                    "<tr style = 'height: 2px'>" + "<td style = 'padding: 0px; margin: 0px;'>" + "Unattn Nitrogen Load (Fertilization) (Kg/Yr): " + "</td>" + "<td style = 'padding: 0px; margin: 0px;'>" + "${Nload_Fert:NumberFormat(places:2)}" + "</td>" + "</tr>" +
+                    "<tr style = 'height: 2px'>" + "<td style = 'padding: 0px; margin: 0px;'>" + "Unattn Nitrogen Load (Stormwater) (Kg/Yr): " + "</td>" + "<td style = 'padding: 0px; margin: 0px;'>" + "${Nload_Stormwater:NumberFormat(places:2)}" + "</td>" + "</tr>" +
+                    "<tr style = 'height: 2px'>" + "<td style = 'padding: 0px; margin: 0px;'>" + "Unattn Nitrogen Load (Atmosphere) (Kg/Yr): " + "</td>" + "<td style = 'padding: 0px; margin: 0px;'>" + "${Nload_Atmosphere:NumberFormat(places:2)}" + "</td>" + "</tr>" +
+                    "<tr style = 'height: 2px'>" + "<td style = 'padding: 0px; margin: 0px;'>" + "Unattn Nitrogen Load (Full) (Kg/Yr): " + "</td>" + "<td style = 'padding: 0px; margin: 0px;'>" + "${Nload_Full:NumberFormat(places:2)}" + "</td>" + "</tr>" +
+                    "</tbody></table>"
+              });
+
+              // Layer 13 is now used for all point layers
+              var NitrogenLayer = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13', {
+                  mode: FeatureLayer.MODE_ONDEMAND,
+                  outFields: ["*"],
+                  opacity: 1,
+                  infoTemplate: nitro_template
+                }
+              );
+
+              var symbol = new SimpleMarkerSymbol()
+              symbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE)
+              symbol.setOutline(null)
+              symbol.setColor(new Color([255,153,0]))
+              symbol.setSize("8")
+
+              var renderer = new SimpleRenderer(symbol)
+              renderer.setSizeInfo({
+                field: "Nload_Full",
+                minSize: 3,
+                maxSize: 20,
+                minDataValue: 5,
+                maxDataValue: 250,
+                legendOptions: {
+                    customValues: [50,100,150,200,250]
+                }
+              })
+
+              NitrogenLayer.setRenderer(renderer)
+
             $('#embayments').on('click', function(e) {
 
                 e.preventDefault();
@@ -99,48 +144,52 @@
 
             function addGraphic(evt) {
 
-                tb.deactivate();
+              tb.deactivate();
 
-                var symbol = new esri.symbol.SimpleFillSymbol(
-                    SimpleFillSymbol.STYLE_SOLID,
-                    new SimpleLineSymbol(
-                        SimpleLineSymbol.STYLE_SOLID,
-                        new Color([43, 171, 227, 1.0]), 4),
-                    new Color([0, 0, 0, 0.0])
-                    );
+              var symbol = new esri.symbol.SimpleFillSymbol(
+                  SimpleFillSymbol.STYLE_SOLID,
+                  new SimpleLineSymbol(
+                      SimpleLineSymbol.STYLE_SOLID,
+                      new Color([43, 171, 227, 1.0]), 4),
+                  new Color([0, 0, 0, 0.0])
+                  );
 
-                map.graphics.add(new Graphic(evt.geometry, symbol));
+              map.graphics.add(new Graphic(evt.geometry, symbol));
 
-                var polystring = '';
+              var polystring = '';
 
-                for (var i = 0; i < evt.geometry.rings[0].length; i++) {
+              for (var i = 0; i < evt.geometry.rings[0].length; i++) {
 
-                    polystring += evt.geometry.rings[0][i][0] + ' ';
-                    polystring += evt.geometry.rings[0][i][1] + ', ';
-                }
+                  polystring += evt.geometry.rings[0][i][0] + ' ';
+                  polystring += evt.geometry.rings[0][i][1] + ', ';
+              }
 
-                var len = polystring.length;
-                polystring = polystring.substring(0, len - 2);
+              var len = polystring.length;
+              polystring = polystring.substring(0, len - 2);
 
-                var url = '/poly2';
-                        
-                var data = {polystring: polystring};
+              var url = '/poly2';
+                      
+              var data = {polystring: polystring};
 
-                $.ajax({
-                    method: 'POST',
-                    data: data,
-                    url: url
-                })
-                .done(function (msg) {
+              $.ajax({
+                  method: 'POST',
+                  data: data,
+                  url: url
+              })
+              .done(function (msg) {
 
-                    $('#parcelcount').html('<b>Parcels</b>: ' + msg[0]['parcelCount'].toLocaleString())
-                    $('#nitrogenload').html('<b>Nitrogen Load</b>: ' + Math.round(msg[0]['nitrogenLoad']).toLocaleString() + ' kg')
-                    $('#wwload').html('<b>Wastewater Load</b>: ' + Math.round(msg[0]['wwLoad']).toLocaleString() + ' gal')
-                })
-                .fail(function(msg){
+                  $('#parcelcount').html('<b>Parcels</b>: ' + msg[0]['parcelCount'].toLocaleString())
+                  $('#nitrogenload').html('<b>Nitrogen Load</b>: ' + Math.round(msg[0]['nitrogenLoad']).toLocaleString() + ' kg/year')
+                  $('#wwload').html('<b>Wastewater Load</b>: ' + Math.round(msg[0]['wwLoad']).toLocaleString() + ' gal/day')
 
-                    alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg.status + ' ' + msg.statusText );
-                });
+
+              })
+              .fail(function(msg){
+
+                  alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg.status + ' ' + msg.statusText );
+              });
+
+              NitrogenLayer.setDefinitionExpression('Shape.STContains(' + evt.geometry + ', 3857')
             }
         });
     </script>
