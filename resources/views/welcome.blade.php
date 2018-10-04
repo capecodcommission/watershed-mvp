@@ -200,10 +200,10 @@
 
                   .done(function(response) {
 
-                    var queryTypeString = response.map(i => {return "'" + i.objectID + "'"}).join(',')
+                    var queryTypeString = response.map(i => {return "'" + i.otherID + "'"}).join(',')
 
                     NitrogenLayer.show()
-                    NitrogenLayer.setDefinitionExpression('OBJECTID IN (' + queryTypeString + ')')
+                    NitrogenLayer.setDefinitionExpression('Other_ID IN (' + queryTypeString + ')')
                     
                   })
                   .fail(function (response) {
