@@ -124,6 +124,23 @@
 
               map.addLayer(NitrogenLayer)
 
+              var subwater_template = new InfoTemplate({
+
+                title: "<b>Subwatershed</b>",
+                content: "${SUBWATER_D}"
+              });
+
+
+              var Subwatersheds = new FeatureLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/6", {
+                mode: FeatureLayer.MODE_ONDEMAND,
+                outFields: ["*"],
+                infoTemplate: subwater_template,
+                opacity: 1
+              });
+
+              Subwatersheds.hide()
+              map.addLayer(Subwatersheds)
+
             $('#embayments').on('click', function(e) {
 
                 e.preventDefault();
@@ -138,16 +155,16 @@
                 }
             });
 
-            $('#parcels').on('click', function(e) {
+            $('#subwatersheds').on('click', function(e) {
 
                 e.preventDefault();
                 if ($(this).attr('data-visible') == 'off') {
 
-                    NitrogenLayer.show()
+                    Subwatersheds.show()
                     $(this).attr('data-visible', 'on');
                 } else {
 
-                    NitrogenLayer.hide();
+                    Subwatersheds.hide();
                     $(this).attr('data-visible', 'off');
                 }
             });
@@ -280,7 +297,7 @@
                 <ul id="layers">
                     <li>
                         <a id="embayments" data-visible="on"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Embayments</a>
-                        <a id="parcels" data-visible="on"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Parcels</a>
+                        <a id="subwatersheds" data-visible="off"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Subwatersheds</a>
                     </li>      
                 </ul>
             </div>
