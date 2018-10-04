@@ -141,6 +141,8 @@
               Subwatersheds.hide()
               map.addLayer(Subwatersheds)
 
+              var layers = [Subembayments, embayLayer]
+
             $('#embayments').on('click', function(e) {
 
                 e.preventDefault();
@@ -169,10 +171,17 @@
                 }
             });
 
+
             $('#select_polygon').on('click', function(f){
 
                 map.graphics.remove(map.graphics.graphics[1])
                 NitrogenLayer.hide()
+
+                layers.map((i) => {
+                  if (i.visible) {
+                    i.setInfoTemplate(null)
+                  }
+                })
 
                 f.preventDefault()
                 tb = new Draw(map);
@@ -186,6 +195,9 @@
               tb.deactivate();
               NitrogenLayer.hide()
               // NitrogenLayer.setDefinitionExpression('')
+
+              if (subwatersheds.infoTemplate == null) {subwatersheds.setInfoTemplate(subwater_template)}
+              if (embayLayer.infoTemplate == null) {embayLayer.setInfoTemplate(subwater_template)}
 
               var symbol = new esri.symbol.SimpleFillSymbol(
                   SimpleFillSymbol.STYLE_SOLID,
@@ -235,6 +247,14 @@
                     var queryTypeString = response.map(i => {return "'" + i.otherID + "'"}).join(',')
                     NitrogenLayer.setDefinitionExpression('Other_ID IN (' + queryTypeString + ')')
                     NitrogenLayer.show()
+
+                    var layers = [subwatersheds, embayLayer]
+
+                    layers.map((i) => {
+                      if (i.visible) {
+                        i[0].setInfoTemplate(subwater_template)
+                      }
+                    })
                   })
                   .fail(function (response) {
 
