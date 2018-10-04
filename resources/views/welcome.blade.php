@@ -141,7 +141,7 @@
               Subwatersheds.hide()
               map.addLayer(Subwatersheds)
 
-              var layers = [Subembayments, embayLayer]
+              var layers = [Subwatersheds, embayLayer]
 
             $('#embayments').on('click', function(e) {
 
@@ -196,7 +196,7 @@
               NitrogenLayer.hide()
               // NitrogenLayer.setDefinitionExpression('')
 
-              if (subwatersheds.infoTemplate == null) {subwatersheds.setInfoTemplate(subwater_template)}
+              if (Subwatersheds.infoTemplate == null) {Subwatersheds.setInfoTemplate(subwater_template)}
               if (embayLayer.infoTemplate == null) {embayLayer.setInfoTemplate(subwater_template)}
 
               var symbol = new esri.symbol.SimpleFillSymbol(
