@@ -21,6 +21,7 @@ Route::get('/map/{embayment}/{scenarioid?}', 'WizardController@start');
 Route::post('/poly', 'WizardController@getPolygon2');
 
 Route::post('/poly2', 'MarioController@sumTotalsWithinPoly');
+Route::post('/poly3', 'MarioController@getIDArrayWithinPoly');
 
 Route::post('/update_polygon', 'TechnologyController@updatePolygon');
 

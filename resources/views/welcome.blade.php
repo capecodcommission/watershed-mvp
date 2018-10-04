@@ -191,7 +191,21 @@
                   $('#nitrogenload').html('<b>Nitrogen Load</b>: ' + Math.round(msg[0]['nitrogenLoad']).toLocaleString() + ' kg/year')
                   $('#wwload').html('<b>Wastewater Load</b>: ' + Math.round(msg[0]['wwLoad']).toLocaleString() + ' gal/day')
 
-                  console.log(msg[0]['objectIDArray'])
+                  var poly3URL = '/poly3'
+                  $.ajax({
+                    method: 'POST',
+                    data: data,
+                    url: poly3URL
+                  })
+
+                  .done(function(response) {
+
+                    console.log(response)
+                  })
+                  .fail(function (response) {
+
+                    console.log(response.statusText)
+                  })
               })
               .fail(function(msg){
 

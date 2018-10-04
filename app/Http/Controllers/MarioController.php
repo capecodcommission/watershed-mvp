@@ -30,5 +30,17 @@ class MarioController extends Controller
 
 		return $parcels;
 	}
+
+	public function getIDArrayWithinPoly(Request $data)
+	{
+		$user = Auth::user();
+		$data = $data->all();
+		$poly = $data['polystring'];
+
+		// Obtain parcel count, nitrogen and wastewater loads within user-drawn polygon
+		$parcels = DB::select('exec CapeCodMA.getIDArrayWithinPoly ' . '\'' . $poly . '\'');
+
+		return $parcels;
+	}
 	
 }
