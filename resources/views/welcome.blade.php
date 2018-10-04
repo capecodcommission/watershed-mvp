@@ -191,15 +191,15 @@
                   $('#nitrogenload').html('<b>Nitrogen Load</b>: ' + Math.round(msg[0]['nitrogenLoad']).toLocaleString() + ' kg/year')
                   $('#wwload').html('<b>Wastewater Load</b>: ' + Math.round(msg[0]['wwLoad']).toLocaleString() + ' gal/day')
 
-
+                  console.log(msg[0]['objectIDArray'])
               })
               .fail(function(msg){
 
                   alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg.status + ' ' + msg.statusText );
               });
 
-              NitrogenLayer.setDefinitionExpression(evt.geometry + '.STContains(SHAPE,3857)')
-              NitrogenLayer.show()
+              // NitrogenLayer.setDefinitionExpression(evt.geometry + '.STContains(SHAPE,3857)')
+              // NitrogenLayer.show()
             }
         });
     </script>
