@@ -138,9 +138,24 @@
                 }
             });
 
+            $('#parcels').on('click', function(e) {
+
+                e.preventDefault();
+                if ($(this).attr('data-visible') == 'off') {
+
+                    NitrogenLayer.show()
+                    $(this).attr('data-visible', 'on');
+                } else {
+
+                    NitrogenLayer.hide();
+                    $(this).attr('data-visible', 'off');
+                }
+            });
+
             $('#select_polygon').on('click', function(f){
 
                 map.graphics.remove(map.graphics.graphics[1])
+                NitrogenLayer.hide()
 
                 f.preventDefault()
                 tb = new Draw(map);
@@ -153,7 +168,7 @@
 
               tb.deactivate();
               NitrogenLayer.hide()
-              NitrogenLayer.setDefinitionExpression('')
+              // NitrogenLayer.setDefinitionExpression('')
 
               var symbol = new esri.symbol.SimpleFillSymbol(
                   SimpleFillSymbol.STYLE_SOLID,
@@ -265,6 +280,7 @@
                 <ul id="layers">
                     <li>
                         <a id="embayments" data-visible="on"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Embayments</a>
+                        <a id="parcels" data-visible="on"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Parcels</a>
                     </li>      
                 </ul>
             </div>
