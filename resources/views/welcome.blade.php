@@ -162,7 +162,7 @@
                 e.preventDefault();
                 if ($(this).attr('data-visible') == 'off') {
 
-                    console.log(tb._points)
+                    console.log(tb._points.length)
                     Subwatersheds.show()
                     $(this).attr('data-visible', 'on');
                 } else {
