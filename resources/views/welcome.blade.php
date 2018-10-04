@@ -162,6 +162,7 @@
                 e.preventDefault();
                 if ($(this).attr('data-visible') == 'off') {
 
+                    console.log(tb)
                     Subwatersheds.show()
                     $(this).attr('data-visible', 'on');
                 } else {
@@ -237,7 +238,6 @@
                     data: data,
                     url: poly3URL
                   })
-
                   .done(function(response) {
 
                     var queryTypeString = response.map(i => {return "'" + i.otherID + "'"}).join(',')
