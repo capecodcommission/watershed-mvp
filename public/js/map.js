@@ -1889,8 +1889,8 @@ require([
                 //         {value: 100, size: 4}
                 //     ]
                 // },
-	        	// minDataValue: 1,
-	        	// maxDataValue: 50,
+	        	minDataValue: 5,
+	        	maxDataValue: 100,
                 legendOptions: {
                     customValues: [5,10,20,50,100]
                 }
