@@ -1877,7 +1877,7 @@ require([
                 //         {value: 100, size: 4}
                 //     ]
                 // },
-	        	maxSize: 40,
+	        	maxSize: 25,
                 // {
                 //     type: 'sizeInfo',
                 //     expression: 'view.scale',
