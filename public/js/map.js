@@ -1860,7 +1860,7 @@ require([
 			symbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE)
 			symbol.setOutline(null)
 			symbol.setColor(new Color([255,153,0]))
-			symbol.setSize("8")
+			// symbol.setSize("8")
 
 		var renderer = new SimpleRenderer(symbol)
 			renderer.setSizeInfo({
@@ -1869,22 +1869,22 @@ require([
                     type: 'sizeInfo',
                     expression: 'view.scale',
                     stops: [
-                        {value: 5, size: 4},
-                        {value: 10, size: 4},
-                        {value: 20, size: 4},
-                        {value: 50, size: 4},
-                        {value: 100, size: 20}
+                        {value: 5, size: 20},
+                        {value: 10, size: 15},
+                        {value: 20, size: 10},
+                        {value: 50, size: 5},
+                        {value: 100, size: 4}
                     ]
                 },
 	        	maxSize: {
                     type: 'sizeInfo',
                     expression: 'view.scale',
                     stops: [
-                        {value: 5, size: 4},
-                        {value: 10, size: 4},
-                        {value: 20, size: 4},
-                        {value: 50, size: 4},
-                        {value: 100, size: 20}
+                        {value: 5, size: 20},
+                        {value: 10, size: 15},
+                        {value: 20, size: 10},
+                        {value: 50, size: 5},
+                        {value: 100, size: 4}
                     ]
                 },
 	        	minDataValue: 5,
