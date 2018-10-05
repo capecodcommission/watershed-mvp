@@ -1865,28 +1865,30 @@ require([
 		var renderer = new SimpleRenderer(symbol)
 			renderer.setSizeInfo({
 	        	field: "Nload_Full",
-	        	minSize: {
-                    type: 'sizeInfo',
-                    expression: 'view.scale',
-                    stops: [
-                        {value: 5, size: 20},
-                        {value: 10, size: 15},
-                        {value: 20, size: 10},
-                        {value: 50, size: 5},
-                        {value: 100, size: 4}
-                    ]
-                },
-	        	maxSize: {
-                    type: 'sizeInfo',
-                    expression: 'view.scale',
-                    stops: [
-                        {value: 5, size: 20},
-                        {value: 10, size: 15},
-                        {value: 20, size: 10},
-                        {value: 50, size: 5},
-                        {value: 100, size: 4}
-                    ]
-                },
+	        	minSize: 20,
+                // {
+                //     type: 'sizeInfo',
+                //     expression: 'view.scale',
+                //     stops: [
+                //         {value: 5, size: 20},
+                //         {value: 10, size: 15},
+                //         {value: 20, size: 10},
+                //         {value: 50, size: 5},
+                //         {value: 100, size: 4}
+                //     ]
+                // },
+	        	maxSize: 4,
+                // {
+                //     type: 'sizeInfo',
+                //     expression: 'view.scale',
+                //     stops: [
+                //         {value: 5, size: 20},
+                //         {value: 10, size: 15},
+                //         {value: 20, size: 10},
+                //         {value: 50, size: 5},
+                //         {value: 100, size: 4}
+                //     ]
+                // },
 	        	minDataValue: 5,
 	        	maxDataValue: 250,
                 legendOptions: {
