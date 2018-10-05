@@ -1877,7 +1877,7 @@ require([
                 //         {value: 100, size: 4}
                 //     ]
                 // },
-	        	maxSize: 100,
+	        	maxSize: 20,
                 // {
                 //     type: 'sizeInfo',
                 //     expression: 'view.scale',
@@ -1890,7 +1890,7 @@ require([
                 //     ]
                 // },
 	        	minDataValue: 1,
-	        	maxDataValue: 1000,
+	        	maxDataValue: 25,
                 legendOptions: {
                     customValues: [5,10,20,50,100]
                 }
