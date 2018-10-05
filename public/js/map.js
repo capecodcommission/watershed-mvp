@@ -1865,8 +1865,28 @@ require([
 		var renderer = new SimpleRenderer(symbol)
 			renderer.setSizeInfo({
 	        	field: "Nload_Full",
-	        	minSize: 3,
-	        	maxSize: 20,
+	        	minSize: {
+                    type: 'sizeInfo',
+                    expression: 'view.scale',
+                    stops: [
+                        {value: 5, size: 3}
+                        {value: 10, size: 4}
+                        {value: 20, size: 5}
+                        {value: 50, size: 6}
+                        {value: 100, size: 7}
+                    ]
+                },
+	        	maxSize: {
+                    type: 'sizeInfo',
+                    expression: 'view.scale',
+                    stops: [
+                        {value: 5, size: 3}
+                        {value: 10, size: 4}
+                        {value: 20, size: 5}
+                        {value: 50, size: 6}
+                        {value: 100, size: 7}
+                    ]
+                },
 	        	minDataValue: 5,
 	        	maxDataValue: 250,
                 legendOptions: {
