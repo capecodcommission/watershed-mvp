@@ -1865,7 +1865,7 @@ require([
 		var renderer = new SimpleRenderer(symbol)
 			renderer.setSizeInfo({
 	        	field: "Nload_Full",
-	        	minSize: 2,
+	        	minSize: 5,
                 // {
                 //     type: 'sizeInfo',
                 //     expression: 'view.scale',
@@ -1890,7 +1890,7 @@ require([
                 //     ]
                 // },
 	        	minDataValue: 1,
-	        	maxDataValue: 50,
+	        	maxDataValue: 250,
                 legendOptions: {
                     customValues: [5,10,20,50,100]
                 }
