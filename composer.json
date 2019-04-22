@@ -42,16 +42,15 @@
             "php artisan key:generate"
         ],
         "post-install-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postInstall"
+            "Illuminate\\Foundation\\ComposerScripts::postInstall",
+            "php artisan optimize"
         ],
         "post-update-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postUpdate"
+            "Illuminate\\Foundation\\ComposerScripts::postUpdate",
+            "php artisan optimize"
         ]
     },
     "config": {
-        "preferred-install": "dist",
-        "platform": {
-            "php": "5.5.9"
-        }
+        "preferred-install": "dist"
     }
 }
