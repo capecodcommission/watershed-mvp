@@ -6,3 +6,6 @@ services:
     build: '.'
     ports:
       - "8080:80"
+    volumes:
+      - ./resources:/var/www/resources:rw
+      - ./app:/var/www/app:rw
