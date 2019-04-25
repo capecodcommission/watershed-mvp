@@ -13,4 +13,4 @@ RUN php composer.phar install
 RUN php composer.phar update && php composer.phar dumpautoload
 ADD freetds.conf /etc/freetds
 EXPOSE 80
-CMD ["php","artisan","serve", "--port=80","--host=localhost"]
+CMD ["php","artisan","serve", "--port=80"]
