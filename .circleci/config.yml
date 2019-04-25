@@ -9,7 +9,24 @@ jobs:
       - run:
           name: Build and Push to ACR
           command: |
-            echo ${env} >> .env
+            echo APP_ENV=${APP_ENV} >> .env
+            echo APP_DEBUG=${APP_DEBUG} >> .env
+            echo APP_KEY=${APP_KEY} >> .env
+            echo APP_URL=${APP_URL} >> .env
+            echo DEV_SQLSRV_HOST=${DEV_SQLSRV_HOST} >> .env
+            echo DEV_SQLSRV_DATABASE=${DEV_SQLSRV_DATABASE} >> .env
+            echo DEV_SQLSRV_USERNAME=${DEV_SQLSRV_USERNAME} >> .env
+            echo DEV_SQLSRV_PASSWORD=${DEV_SQLSRV_PASSWORD} >> .env
+            echo SQLSRV_HOST=${SQLSRV_HOST} >> .env
+            echo SQLSRV_DATABASE=${SQLSRV_DATABASE} >> .env
+            echo SQLSRV_USERNAME=${SQLSRV_USERNAME} >> .env
+            echo SQLSRV_PASSWORD=${SQLSRV_PASSWORD} >> .env
+            echo CACHE_DRIVER="file" >> .env
+            echo SESSION_DRIVER="file" >> .env
+            echo QUEUE_DRIVER="sync" >> .env
+            echo MAIL_DRIVER="mandrill" >> .env
+            echo MAIL_HOST=${MAIL_HOST} >> .env
+            echo MAIL_PORT=${MAIL_PORT} >> .env
             docker build . -t ${registryName}.azurecr.io/${frontImageLatest}
             docker login ${registryName}.azurecr.io -u ${registryName} -p ${registryPassword}
             docker push ${registryName}.azurecr.io/${frontImageLatest}
