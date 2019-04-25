@@ -46,7 +46,7 @@ items:
           imagePullPolicy: Always
           name: wmvpdev
           ports:
-          - containerPort: 3000
+          - containerPort: 80
           resources: {}
         restartPolicy: Always
   status: {}
