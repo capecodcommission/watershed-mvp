@@ -4,12 +4,18 @@
 		
 
 <div class="popdown-content" id="app">
-	<header><h2>{{$tech->Technology_Strategy}}</h2></header>
+	<header>
+		<div class = 'row'>
+			<div class = 'col'>
+				<h2>{{$tech->Technology_Strategy}}<button style = 'position: absolute; right: 20; top: 10' id = "closeWindow"><i class = 'fa fa-times'></i></button></h2>
+			</div>
+		</div>
+	</header>
 	<section class="body">
 
 			<div class="technology">
 				<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
-					<img src="http://www.cch2o.org/Matrix/icons/{{$tech->Icon}}" width="75">
+					<img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" width="75">
 				 {{$tech->Technology_Strategy}}&nbsp;<i class="fa fa-question-circle"></i>
 				</a>			
 			</div>
@@ -42,12 +48,11 @@
 						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;"></label>
 					</p>
 				@endif
-			
 
-			<p>
-				Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.<br />
+			<p align = "center">
+				Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.<br>
 				
-				<input type="range" id="ground-percent" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" value="{{$tech->Nutri_Reduc_N_Low}}" v-model="ground_percent"> @{{ground_percent}}%
+				<input type="range" id="ground-percent" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" value="{{$tech->Nutri_Reduc_N_Low}}" v-model="ground_percent">@{{ground_percent}}%
 			</p>
 			<p>
 				<button id="applytreatment">Apply</button>
@@ -65,7 +70,10 @@
 
 <script>
 	$(document).ready(function(){
+
+		$('div.fa.fa-spinner.fa-spin').remove()
 	 treatment = {{$treatment['TreatmentID']}};
+	 typeid = {{$treatment->TreatmentType_ID}};
 		$('#select_area').on('click', function(f){
 
 			f.preventDefault();
@@ -93,6 +101,31 @@
 				}
 			});
 		});
+
+		$('#closeWindow').on('click', function (e) {
+
+			$('#popdown-opacity').hide();
+
+			var url = "{{url('cancel', $treatment->TreatmentID)}}";
+
+			$.ajax({
+				method: 'GET',
+				url: url
+			})
+			.done(function(msg){
+				
+				for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
+                
+	                if (map.graphics.graphics[i].attributes) {
+
+	                    if (map.graphics.graphics[i].attributes.treatment_id == treatment) {
+
+	                    	map.graphics.remove(map.graphics.graphics[i])
+	                    }
+	                }
+           		}
+           	})
+		})
 
 		$('#select_polygon').on('click', function(f){
 			f.preventDefault();
@@ -136,10 +169,13 @@
 					$('#n_removed').text(msg);
 					$('#popdown-opacity').hide();
 					$( "#update" ).trigger( "click" );
-					var newtreatment = '<li class="technology" data-treatment="{{$treatment->TreatmentID}}"><a href="{{url('/edit', $treatment->TreatmentID)}}" class="popdown"><img src="http://www.cch2o.org/Matrix/icons/{{$tech->Icon}}" alt=""></a></li>';
+					var newtreatment = '<li class="technology" data-treatment="{{$treatment->TreatmentID}}"><a href="{{url('/edit', $treatment->TreatmentID)}}" class="popdown"><img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" alt=""></a></li>';
 					$('ul.selected-treatments').append(newtreatment);
 					$('ul.selected-treatments li[data-treatment="{{$treatment->TreatmentID}}"] a').popdown();	
 				});
+
+			
+			
 		});
 
 		$('#canceltreatment').on('click', function(e){
@@ -150,6 +186,17 @@
 		})
 			.done(function(msg){
 				$('#popdown-opacity').hide();
+				
+				for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
+                
+	                if (map.graphics.graphics[i].attributes) {
+
+	                    if (map.graphics.graphics[i].attributes.treatment_id == treatment) {
+
+	                    	map.graphics.remove(map.graphics.graphics[i])
+	                    }
+	                }
+           		}
 			});
 		});
 	});

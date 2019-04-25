@@ -8,13 +8,13 @@ Homestead.json
 /public/208viewer
 /public/images
 /public/fim
+/public/cc
+/public/samOld
+/public/viewer208
 /public/wq
 /public/sam
 /public/backup
 /www/bootstrap/autoload.php
 /public/.DS_Store
 /database/queries
-
-# OS generated files #
-######################
-.DS_Store
+npm-debug.log

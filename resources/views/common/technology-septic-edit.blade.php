@@ -4,12 +4,18 @@
 		
 
 <div class="popdown-content" id="app">
-	<header><h2>{{$treatment->TreatmentType_Name}}</h2></header>
+	<header>
+		<div class = 'row'>
+			<div class = 'col'>
+				<h2>{{$treatment->TreatmentType_Name}}<button style = 'position: absolute; right: 20; top: 10' id = "closeWindow"><i class = 'fa fa-times'></i></button></h2>
+			</div>
+		</div>
+	</header>
 	<section class="body">
 
 			<div class="technology">
 				<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$treatment->TreatmentType_ID}}" target="_blank">
-					<img src="http://www.cch2o.org/Matrix/icons/{{$treatment->treatment_icon}}" width="75">
+					<img src="http://www.watershedmvp.org/images/SVG/{{$treatment->treatment_icon}}" width="75">
 				<br />{{$treatment->TreatmentType_Name}}&nbsp;<i class="fa fa-question-circle"></i>
 				</a>			
 			</div>
@@ -59,6 +65,8 @@
 
 <script>
 	$(document).ready(function(){
+
+		$('div.fa.fa-spinner.fa-spin').remove()
 	 treatment = {{$treatment->TreatmentID}};
 
 
@@ -66,12 +74,17 @@
 			f.preventDefault();
 			$('#popdown-opacity').hide();
 			func = 'septic';
-			map.disableMapNavigation();
+			// map.disableMapNavigation();
 			tb.activate('polygon');
 			$('#select_polygon').hide();
 			// $('#select_destination').show();
 
 		});
+
+		$('#closeWindow').on('click', function (e) {
+
+			$('#popdown-opacity').hide();
+		})
 		
 		$('#updatetreatment').on('click', function(e)
 		{
@@ -117,7 +130,21 @@
 			.done(function(msg){
 				$('#popdown-opacity').hide();
 				$("li[data-treatment='{{$treatment->TreatmentID}}']").remove();
+				
+				for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
+                
+	                if (map.graphics.graphics[i].attributes) {
+
+	                    if (map.graphics.graphics[i].attributes.treatment_id == treatment) {
+
+	                    	map.graphics.remove(map.graphics.graphics[i])
+	                    }
+	                }
+           		}
+
+           		$( "#update" ).trigger( "click" );
 			});
+
 		});
 
 

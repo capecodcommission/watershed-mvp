@@ -1,13 +1,23 @@
 
 <div id="progress"><br />
-<img src="http://www.watershedmvp.org/Images/mvplogo.png" alt="WatershedMVP 3.0 by Cape Cod Commission"><br /><br />
+<img src="http://www.watershedmvp.org/images/mvplogo.png" alt="WatershedMVP 3.0 by Cape Cod Commission"><br /><br />
 	<h2>Subembayments for {{$embayment->EMBAY_DISP}}</h2>
 	
 	@foreach($subembayments as $subem)
 	<?php 
-		if($subem->n_load_att > 0)
+
+		if ($subem->n_load_target == 0 and $subem->n_load_att == 0) 
 		{
-			$percent = (($subem->n_load_target/($subem->n_load_att-$subem->n_load_att_removed))*100);
+			$percent = 100;
+		}
+		else
+		{
+			$percent = $subem->n_load_target / ($subem->n_load_att - $subem->n_load_att_removed);
+		}
+
+		if($percent < 1 and $percent > 0)
+		{
+			$percent = $percent * 100;
 		}
 		else
 		{

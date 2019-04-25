@@ -10,12 +10,18 @@
 		<div class="content full-width">
 			@include('common.navigation')
 
+			<h1>Scenario ID: {{$scenario->ScenarioID}}</h1>
 	      	<h1>Embayment: {{$scenario->AreaName}}</h1>
 			<h2 class="author">Created by: {{$scenario->user->name}} on {{date('Y-m-d', strtotime($scenario->CreateDate))}}</h2>
 			<div id="app">
 			<?php
 				$scenario_cost = 0;
 				$n_removed = 0;
+				$n_att_total = 0;
+				$n_att_rem_total = 0;
+				$n_scen_total = 0;
+				$n_target_total = 0;
+				$n_rem_total = 0;
 				setlocale(LC_MONETARY, 'en_US');
 			?>
 
@@ -41,16 +47,18 @@
 							@if(!$result->Parent_TreatmentId)
 								<td>
 									<div class="technology">
-										<img src="http://www.cch2o.org/Matrix/icons/{{$result->technology->Icon}}" alt="">
+										<img src="http://www.watershedmvp.org/images/SVG/{{$result->technology->Icon}}" alt="">
 									</div>
 								</td>
 								<td>{{$result->technology->Technology_Strategy}} ({{$result->TreatmentID}})</td>
 								<td>{{$result->Treatment_Parcels}}</td>
-								<td>{{round($result->Nload_Reduction)}}kg</td> <?php $n_removed += $result->Nload_Reduction; ?>
-								<td><?php echo money_format('%10.0n', $result->Cost_Total);?></td>
+								<td>{{number_format(round($result->Nload_Reduction))}}kg</td> <?php $n_removed += $result->Nload_Reduction; ?>
+								<td><?php echo '$'.number_format($result->Cost_Total,0,'.',',');?></td>
+								<!-- money_format('%10.0n', $result->Cost_Total);?> -->
 									<?php $scenario_cost += $result->Cost_Total; ?>
 								<td><?php if ($result->Nload_Reduction > 0) {
-								echo money_format('%10.0n', ($result->Cost_Total/$result->Nload_Reduction)/12.46);}?></td>
+								echo '$'.number_format(($result->Cost_Total/$result->Nload_Reduction)/12.46,0,'.',',');}?></td>
+								<!-- money_format('%10.0n', ($result->Cost_Total/$result->Nload_Reduction)/12.46);}?> -->
 								<td><a data-treatment="{{$result->TreatmentID}}" class="deletetreatment button--cta"><i class="fa fa-trash-o"></i> Delete</a></td>
 
 							@endif
@@ -61,10 +69,12 @@
 						<td>Scenario Totals:</td>
 						<td></td>
 						<td></td>
-						<td><strong><?php echo round($n_removed);?>kg</strong></td>
-						<td><strong><?php echo money_format('%10.0n', $scenario_cost);?></strong></td>
-						<td colspan="2"><strong><?php if ($result->Nload_Reduction > 0) {echo money_format('%10.0n', (($scenario_cost/$n_removed)/12.46));}?></strong></td>
-
+						<td><strong><?php echo number_format(round($n_removed));?>kg</strong></td>
+						<td><strong><?php echo '$'.number_format($scenario_cost,0,'.',',');?></strong></td>
+						<!-- money_format('%10.0n', $scenario_cost);?> -->
+						<td colspan="2"><strong><?php if ($result->Nload_Reduction > 0) {
+							echo '$'.number_format(($scenario_cost/$n_removed)/12.46,0,'.',',');}?></strong></td>
+							<!-- money_format('%10.0n', (($scenario_cost/$n_removed)/12.46));?> -->
 					</tr>
 				</tbody>
 			</table>
@@ -84,7 +94,7 @@
 							<td>{{$town->town}}</td>
 							<td>{{$town->wtt_treatment_id}}</td>
 							<td>{{$town->wtt_tot_parcels}}</td>
-							<td>{{round($town->wtt_unatt_n_removed)}}kg</td>
+							<td>{{number_format(round($town->wtt_unatt_n_removed))}}kg</td>
 						</tr>
 
 					@endforeach
@@ -103,17 +113,26 @@
 					</tr>
 				</thead>
 				<tbody>
+
 					@foreach($subembayments as $sub)
 					<tr>
 						<td>{{$sub->subem_disp}}</td>
-						<td>{{round($sub->n_load_att)}}kg</td>
-						<td>{{round($sub->n_load_att_removed)}}kg</td>
-						<td>{{round($sub->n_load_scenario)}}kg</td>
-						<td>{{round($sub->n_load_target)}}kg</td>
-						<td>{{round($sub->n_load_scenario - $sub->n_load_target)}}</td>
+						<td>{{number_format(round($sub->n_load_att))}}kg</td> <?php $n_att_total += $sub->n_load_att; ?>
+						<td>{{number_format(round($sub->n_load_att_removed))}}kg</td> <?php $n_att_rem_total += $sub->n_load_att_removed; ?>
+						<td>{{number_format(round($sub->n_load_scenario))}}kg</td> <?php $n_scen_total += $sub->n_load_scenario; ?>
+						<td>{{number_format(round($sub->n_load_target))}}kg</td> <?php $n_target_total += $sub->n_load_target; ?>
+						<td>{{number_format(round($sub->n_load_scenario - $sub->n_load_target))}}kg</td> <?php $n_rem_total += $sub->n_load_scenario - $sub->n_load_target; ?>
 					</tr>
-
 					@endforeach
+
+					<tr>
+						<td><strong>Subembayment Totals</strong></td>
+						<td><strong><?php echo number_format(round($n_att_total));?>kg</strong></td>
+						<td><strong><?php echo number_format(round($n_att_rem_total));?>kg</strong></td>
+						<td><strong><?php echo number_format(round($n_scen_total));?>kg</strong></td>
+						<td><strong><?php echo number_format(round($n_target_total));?>kg</strong></td>
+						<td><strong><?php echo number_format(round($n_rem_total));?>kg</strong></td>
+					</tr>
 				</tbody>
 
 			</table>
@@ -121,7 +140,16 @@
 			<p><sup>2</sup>A negative number in this column represents Nitrogen added to a subembayment as part of a collection treatment.</p>
 			<p><sup>3</sup>A negative number in this column means the user has exceeded the threshold for this subembayment.</p>
 
-			<p><a href="{{url('map', [$scenario->AreaID, $scenario->ScenarioID])}}" class="button" target="wmvp_scenario_{{$scenario->ScenarioID}}">back to map</a> <a href="{{url('download', $scenario->ScenarioID)}}" class="button--cta right" target="_blank"><i class="fa fa-download"></i> Download Results (.xls)</a></p>
+			<p>
+				<a href="{{url('map', [$scenario->AreaID, $scenario->ScenarioID])}}" class="button" target="wmvp_scenario_{{$scenario->ScenarioID}}">back to map</a> 
+				<a href="{{url('download', $scenario->ScenarioID)}}" class="button--cta right" target="_blank"><i class="fa fa-download"></i> Download Results (.xls)</a>
+				<a id = 'saved' class="save button">Save Changes</a> 
+			</p>
+
+		@else
+		<p>No treatments have been applied to this scenario yet.</p>
+		<p><a href="{{url('map', [$scenario->AreaID, $scenario->ScenarioID])}}" class="button" target="wmvp_scenario_{{$scenario->ScenarioID}}">Return to map</a> </p>
+		@endif
 
 		@else
 		<p>No treatments have been applied to this scenario yet.</p>
@@ -134,6 +162,7 @@
 
 	<script>
 	$(document).ready(function(){
+		scenario = {{$scenario->ScenarioID}};
 		$('.deletetreatment').on('click', function(e){
 
 			e.preventDefault();
@@ -145,6 +174,20 @@
 			})
 				.done(function(msg){
 					$('#treat_'+treat).remove();
+				});
+			});
+
+		// href="{{url('save', $scenario->ScenarioID)}}"
+		$('.save').on('click', function(e){
+
+			e.preventDefault();
+			var url = "{{url('save')}}" + '/' + scenario;
+			$.ajax({
+				method: 'GET',
+				url: url
+			})
+				.done(function(msg){
+					$('#saved').addClass('button--cta')
 				});
 			});
 	});

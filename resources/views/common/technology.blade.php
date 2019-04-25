@@ -9,7 +9,7 @@
 
 			<div class="technology">
 				<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
-					<img src="http://www.cch2o.org/Matrix/icons/{{$tech->Icon}}" width="75">
+					<img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" width="75">
 				 {{$tech->Technology_Strategy}}&nbsp;<i class="fa fa-question-circle"></i>
 				</a>			
 			</div>
@@ -114,7 +114,7 @@
 				$('#popdown-opacity').hide();
 				map.on('click', function(e){
 
-					console.log(e.mapPoint.x, e.mapPoint.y);
+					// console.log(e.mapPoint.x, e.mapPoint.y);
 				
 					var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y;
 					$.ajax({
@@ -123,7 +123,7 @@
 					})
 						.done(function(msg){
 							msg = $.parseJSON(msg);
-							console.log(msg.SUBEM_DISP);
+							// console.log(msg.SUBEM_DISP);
 							// console.log(msg);
 							$('#'+msg.SUBEM_NAME+'> .stats').show();
 							// $('.notification_count').remove();

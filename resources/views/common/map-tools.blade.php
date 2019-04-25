@@ -1,28 +1,27 @@
 <div class="tool" style="padding: .8em 1em;">		
-<label><i class="fa fa-globe fa-2x js-menu-trigger sliding-panel-button"></i>
+<label>
+	<i class="fa fa-globe fa-globe-white fa-2x js-menu-trigger sliding-panel-button"></i>
 </label>
-    <div style="position:absolute; right:80px; top:20px; z-Index:100;">
+<label style="position:absolute; right:50px; top:20px; z-Index:100;">
+	<i id ='disable-popups' class="fa fa-eye fa-eye-white fa-2x js-menu-trigger enabled"></i>
+</label>
+    <div style="position:absolute; right:95px; top:20px; z-Index:101;">
         <div data-dojo-type="dijit/TitlePane"
              data-dojo-props="title:'Switch Basemap', closable:false, open:false">
             <div data-dojo-type="dijit/layout/ContentPane" style="width:380px; height:280px; overflow:auto;">
                 <div id="basemapGallery"></div>
             </div>
         </div>
-
-        <div id="basemaps-wrapper" class="leaflet-bar">
- <!--  <select name="basemaps" id="basemaps" onChange="changeBasemap(basemaps)">
-    <option value="Topographic">Topographic<options>
-    <option value="Streets">Streets</option>
-    <option value="NationalGeographic">National Geographic<options>
-    <option value="Oceans">Oceans<options>
-    <option value="Gray">Gray<options>
-    <option value="DarkGray">Dark Gray<options>
-    <option value="Imagery">Imagery<options>
-    <option value="ShadedRelief">Shaded Relief<options>
-  </select> -->
-</div>
+        <div id="basemaps-wrapper" class="leaflet-bar"></div>
     </div>
-		<div class="js-menu sliding-panel-content is-visible">
+    <div style="position:absolute; right:250px; top:20px; z-Index:100;">
+        <div data-dojo-type="dijit/TitlePane" data-dojo-props="title:'Legend', closable:false, open:false">
+            <div data-dojo-type="dijit/layout/ContentPane" style="width:200px; height:420px; overflow:auto; ">
+                <div id="legendDiv"></div>
+            </div>
+        </div>
+    </div>
+		<div class="js-menu sliding-panel-content is-visible" style = "z-Index: 100;">
 <!-- 		<div id="info">
 			<button id="Polygon">Draw Polygon</button>
 		</div> -->
@@ -66,6 +65,9 @@
 					</li>
 					<li>
 						<a href="" id="flowthrough" data-visible="off"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> FlowThrough Co-efficient</a>
+					</li>
+					<li>
+						<a href="" id="contours" data-visible="off"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Water Table 2ft Contours</a>
 					</li>					
 
 				</ul>

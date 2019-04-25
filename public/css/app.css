@@ -3975,8 +3975,8 @@ dl {
 
 table {
   border-collapse: collapse;
-  margin: 0.75em 0;
-  table-layout: fixed;
+  margin: 0;
+  table-layout: auto;
   width: 100%; }
 
 th {
@@ -3987,7 +3987,8 @@ th {
 
 td {
   border-bottom: 1px solid #ddd;
-  padding: 0.75em 0; }
+  /*padding: 0.75em 0; */
+}
 
 tr,
 td,
@@ -4027,6 +4028,45 @@ hr {
   border-right: 0;
   border-top: 0;
   margin: 1.5em 0; }
+
+table.esriLegendLayer table {
+  margin: 0;
+  font-size: 1em;
+}
+
+table.esriLegendLayer div {
+  width: 35px !important;
+  height: 35px !important;
+}
+
+table.esriLegendLayer svg {
+  width: 35px;
+  height: 35px;
+}
+
+table.esriLegendLayer circle {
+  transform: matrix(1.00000000,0.00000000,0.00000000,1.00000000,17.5,17.5)
+}
+
+#legendDiv_graphicsLayer5_13 table:nth-child(2) {
+  display: none;
+}
+
+#legendDiv_graphicsLayer6_13 table:nth-child(2) {
+  display: none;
+}
+
+#legendDiv_graphicsLayer13_12 table:nth-child(2) {
+  display: none;
+}
+
+#legendDiv_graphicsLayer5_13 table:nth-child(3) tr tr:after {
+  content: "kg/yr"
+}
+
+#legendDiv_graphicsLayer6_13 table:nth-child(3) tr tr:after {
+  content: "gal/day"
+}
 
 img,
 picture {
@@ -4534,6 +4574,11 @@ html {
 .fa-eye:before {
   content: ""; }
 
+.fa-eye-white {
+
+  color: white;
+}
+
 .fa-eye-slash:before {
   content: ""; }
 
@@ -4712,6 +4757,9 @@ html {
 
 .fa-globe:before {
   content: ""; }
+
+.fa-globe-white {
+  color: white; }
 
 .fa-wrench:before {
   content: ""; }
@@ -6344,30 +6392,60 @@ include flash mixins
   border-top-left-radius: 10px;
   border: 1px solid #999; }
 
+div.selected-treatments button#edit_polygon {
+  margin-left: 2%;
+  float: left !important;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+div.selected-treatments button#save_polygon {
+  margin-left: 1%;
+  float: left !important;
+  visibility: visible;
+  pointer-events: auto;
+}
+
 div.selected-treatments {
+  /*visibility: visible;*/
+  /*pointer-events: none;*/
+  /*pointer-events: unset;*/
   width: 80%;
+  margin: auto;
   padding: 20px;
-  background: #ffffff;
-  opacity: 0.90;
+  background: transparent;
+  /*background-color: rgba(0,0,0,0.2);*/
+  /*opacity: 0.90;*/
+  /*pointer-events: none;*/
   border-radius: 15px;
   height: 7em; }
   div.selected-treatments ul {
+    visibility: visible;
+    pointer-events: auto;
+    /*background-color: rgba(0,0,0,0.2);*/
     list-style-type: none; }
     div.selected-treatments ul li.technology {
+      /*visibility: visible;*/
+      /*background-color: rgba(0,0,0,0.2);*/
       width: 6em; }
       div.selected-treatments ul li.technology img {
+        /*visibility: visible;*/
         width: 5em;
         cursor: pointer; }
         div.selected-treatments ul li.technology img:hover {
+          /*visibility: visible;*/
           background-color: #2388b6; }
 
 nav.toolbar {
+  pointer-events: none;
   width: 90%;
   margin: 0 auto;
   position: absolute;
   top: 0;
   right: 0; }
   nav.toolbar .tool {
+    visibility: visible;
+    pointer-events: auto;
     float: right; }
 
 .sliding-panel-content {
@@ -6631,10 +6709,10 @@ nav.toolbar {
   float: left;
   text-align: center; }
   .technology img {
-    background: #2caae4;
+    /*background: #2caae4;*/
     border-radius: 50%;
-    padding: 1em;
-    width: 3em; }
+    /*padding: 1em;*/
+    width: 5.5em; }
   .technology.disabled img {
     background-color: #ddd; }
   .technology.treatment.info {

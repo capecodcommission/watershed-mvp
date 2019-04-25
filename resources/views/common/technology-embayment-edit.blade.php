@@ -4,12 +4,18 @@
 
 
 <div class="popdown-content" id="app">
-	<header><h2>{{$tech->Technology_Strategy}}</h2></header>
+	<header>
+		<div class = 'row'>
+			<div class = 'col'>
+				<h2>{{$tech->Technology_Strategy}}<button style = 'position: absolute; right: 20; top: 10' id = "closeWindow"><i class = 'fa fa-times'></i></button></h2>
+			</div>
+		</div>
+	</header>
 	<section class="body">
 
 			<div class="technology">
 				<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
-					<img src="http://www.cch2o.org/Matrix/icons/{{$tech->Icon}}" width="75">
+					<img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" width="75">
 				 {{$tech->Technology_Strategy}}&nbsp;<i class="fa fa-question-circle"></i>
 				</a>
 			</div>
@@ -24,7 +30,7 @@
 					4 => user does not enter a treatment area (Fertilizer Mgmt or Stormwater BMPs)
 			 -->
 				<p>Nitrogen removed by this treatment: {{round($treatment->Nload_Reduction)}}kg</p>
-				<p>Treatment reduction rate: {{$treatment->Treatment_Value}} per {{$treatment->Treatment_UnitMetric}} for {{$treatment->Treatment_MetricValue}} {{$treatment->Treatment_UnitMetric}} </p>
+				<p>Treatment reduction rate: {{$treatment->Treatment_Value}}kg for {{$treatment->Treatment_MetricValue}} {{$treatment->Treatment_UnitMetric}} </p>
 
 				@if($tech->Show_In_wMVP == 1)
 					<!-- <p class="select"><button id="select_area">Select a location</button> <span>@{{subembayment}}</span></p> -->
@@ -47,7 +53,7 @@
 			<p>
 				Enter a valid reduction rate between {{round($tech->Absolu_Reduc_perMetric_Low)}} and {{round($tech->Absolu_Reduc_perMetric_High)}}kg per {{$tech->Unit_Metric}}.<br />
 
-				<input type="range" id="embayment-percent" min="{{round($tech->Absolu_Reduc_perMetric_Low, 2)}}" max="{{round($tech->Absolu_Reduc_perMetric_High, 2)}}" v-model="embayment_percent" value='{{$treatment->Treatment_Value}}' step="0.1"> @{{embayment_percent}}
+				<input type="range" id="embayment-percent" min="{{round($tech->Absolu_Reduc_perMetric_Low, 2)}}" max="{{round($tech->Absolu_Reduc_perMetric_High, 2)}}" v-model="embayment_percent" value='{{$treatment->Treatment_Value}}' step=".2"> @{{embayment_percent}}
 			</p>
 			<p>
 				<button id="updatetreatment">Update</button>
@@ -64,7 +70,10 @@
 
 <script>
 	$(document).ready(function(){
+
+		$('div.fa.fa-spinner.fa-spin').remove()
 	 treatment = {{$treatment->TreatmentID}};
+	 var subemid = '';
 		$('#select_area').on('click', function(f){
 			f.preventDefault();
 			// console.log('button clicked');
@@ -81,6 +90,7 @@
 						.done(function(msg){
 							msg = $.parseJSON(msg);
 							console.log(msg.SUBEM_DISP);
+							subemid = msg.SUBEM_ID;
 							// console.log(msg);
 							$('#'+msg.SUBEM_NAME+'> .stats').show();
 							// $('.notification_count').remove();
@@ -91,6 +101,11 @@
 
 			});
 		});
+
+		$('#closeWindow').on('click', function (e) {
+
+			$('#popdown-opacity').hide();
+		})
 
 		$('#select_polygon').on('click', function(f){
 			f.preventDefault();
@@ -107,16 +122,19 @@
 
 		$('#updatetreatment').on('click', function(e)
 				{
+
+					$(this).append("<div class = 'fa fa-spinner fa-spin'></div>")
 					e.preventDefault();
 					var rate = $('#embayment-percent').val();
 					var units = $('#unit_metric').val();
-					var url = "{{url('/update/embay', $treatment->TreatmentID)}}"  + '/' + rate + '/' + units;
+					var url = "{{url('/update/embay', $treatment->TreatmentID)}}"  + '/' + rate + '/' + units
 					$.ajax({
 						method: 'GET',
 						url: url
 					})
 						.done(function(msg){
 							$('#popdown-opacity').hide();
+							$('div.fa.fa-spinner.fa-spin').remove()
 							$( "#update" ).trigger( "click" );
 						});
 
@@ -133,6 +151,19 @@
 			.done(function(msg){
 				$('#popdown-opacity').hide();
 				$("li[data-treatment='{{$treatment->TreatmentID}}']").remove();
+				
+				for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
+                
+	                if (map.graphics.graphics[i].attributes) {
+
+	                    if (map.graphics.graphics[i].attributes.treatment_id == treatment) {
+
+	                    	map.graphics.remove(map.graphics.graphics[i])
+	                    }
+	                }
+           		}
+
+           		$( "#update" ).trigger( "click" );
 			});
 		});
 

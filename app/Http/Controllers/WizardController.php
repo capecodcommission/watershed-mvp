@@ -81,9 +81,23 @@ class WizardController extends Controller
 		$scenario = Scenario::find($scenarioid);
 		$treatments = $scenario->treatments;
 
+		foreach ($treatments as $key) {
+			if ($key->TreatmentType_Name == 'Fertilizer Management') {
+				Session::put('fert_applied', 1);
+			}
+			else if ($key->TreatmentType_Name == 'Stormwater Management') {
+				Session::put('storm_applied', 1);
+			}
+			else {
+				Session::put('fert_applied', 0);
+				Session::put('storm_applied', 0);
+			}
+		}
+
 		$removed = 0;
 		$n_load_orig = 0;
-		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
+		// $subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
+		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments1 ' . $scenarioid);
 		$total_goal = 0;
 
 		foreach ($subembayments as $key) 
@@ -93,11 +107,23 @@ class WizardController extends Controller
 			$total_goal += $key->n_load_target;
 		}
 		$current = $n_load_orig - $removed;
-		if ($current > 0) {
-			$progress = round($total_goal/$current * 100);
+
+		if ($total_goal == 0 || $n_load_orig == 0) 
+		{
+			$progress = 100;
 		}
 		else
 		{
+			$progress = round($total_goal/$current * 100);
+		}
+
+		if ($progress > 0 && $progress <= 100) {
+
+			$progress;
+		}
+		else
+		{
+			
 			$progress = 100;
 		}
 		$remaining = $current - $total_goal;
@@ -172,7 +198,9 @@ class WizardController extends Controller
 		$embay_id = $scenario->AreaID;
 
 
-		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
+		// $parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
+
+		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon1 ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
 
 		if ($parcels) {
 			$poly_nitrogen = $parcels[0]->Septic;
@@ -211,9 +239,12 @@ class WizardController extends Controller
 		$scenario = Scenario::find($scenarioid);
 		$embay_id = $scenario->AreaID;
 
-		$query = 'exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'';
-		Log::info($query);
-		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
+		// $query = 'exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'';
+		// Log::info($query);
+		// $parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
+
+
+		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon1 ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');	
 
 		if ($parcels) {
 			$poly_nitrogen = $parcels[0]->Septic;
@@ -229,33 +260,18 @@ class WizardController extends Controller
 				'poly_nitrogen' => $parcels
 			]);
 
-
-		/**********************************************
-		*	We need to get the total Nitrogen for the custom polygon that this technology will treat 
-		*	(fertilizer, stormwater, septic, groundwater, etc.)
-		*	and report that back to the technology pop-up. After the user adjusts the treatment settings
-		*	we need to save that as "treated_nitrogen" and be able to attenuate it 
-		*	If this is a collection & treat (sewer) then we will need to 
-		*	create a new treatment record with a parent_treatment_id so we 
-		*	can store the N load and the destination point where it will be treated.
-		*
-		**********************************************/
-
-		// $treatment = Treatment::find($treatment_id);
-		// $treatment->POLY_STRING = $poly;
-		// $treatment->Custom_POLY = 1;
-		// $treatment->save();
-		// dd($treatment);
-		// $total_septic_nitrogen = $parcels;
-		// foreach ($parcels as $parcel) 
-		// {
-		// 	$total_septic_nitrogen += $parcel->wtp_nload_septic;
-		// }
-
 		return $parcels;
-		// return view ('layouts/test_septic', ['parcels'=>$parcels, 'poly_nitrogen'=>$poly_nitrogen]);
 	}
 
-	
+	public function getPolygon3(Request $data)
+	{
+		$user = Auth::user();
+		$data = $data->all();
+		$poly = $data['polystring'];
+
+		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon2 ' . '\'' . $poly . '\'');
+
+		return $parcels;
+	}
 	
 }

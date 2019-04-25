@@ -3,12 +3,18 @@
 		
 
 <div class="popdown-content" >
-	<header><h2>{{$tech->Technology_Strategy}}</h2></header>
+	<header>
+		<div class = 'row'>
+			<div class = 'col'>
+				<h2>{{$tech->Technology_Strategy}}<button style = 'position: absolute; right: 20; top: 10' id = "closeWindow"><i class = 'fa fa-times'></i></button></h2>
+			</div>
+		</div>
+	</header>
 	<section class="body">
 
 			<div class="technology">
 				<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
-					<img src="http://www.cch2o.org/Matrix/icons/{{$tech->Icon}}" width="75">
+					<img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" width="75">
 				 <i class="fa fa-question-circle"></i>
 				</a>			
 			</div>
@@ -22,7 +28,7 @@
 			</p>
 			<p>
 				<button id="updatetreatment">Update</button>
-				<button id="deletetreatment" class='button--cta right'><i class="fa fa-trash-o"></i> Delete</button>
+				<button data-treatment = "{{$treatment->TreatmentID}}" id="deletetreatment" class='button--cta right'><i class="fa fa-trash-o"></i> Delete</button>
 			</p>
 
 	</section>
@@ -35,6 +41,10 @@
 
 <script>
 	$(document).ready(function(){
+
+		$('div.fa.fa-spinner.fa-spin').remove()
+
+		treatment = {{$treatment->TreatmentID}};
 
 		$('#updatetreatment').on('click', function(e){
 			e.preventDefault();
@@ -50,8 +60,16 @@
 				});
 
 		});
+
+		$('#closeWindow').on('click', function (e) {
+
+			$('#popdown-opacity').hide();
+		})
+		
 		$('#deletetreatment').on('click', function(e){
-		var url = "{{url('delete_treatment', $treatment->TreatmentID)}}";
+		// var url = "{{url('delete_treatment', $treatment->TreatmentID, 'fert')}}";
+		var treat = $(this).data('treatment');
+		var url = "{{url('delete_treatment')}}" + '/' + treat + '/' + 'fert'
 		$.ajax({
 			method: 'GET',
 			url: url
@@ -59,7 +77,19 @@
 			.done(function(msg){
 				$('#popdown-opacity').hide();
 				$("li[data-treatment='{{$treatment->TreatmentID}}']").remove();
-				// console.log('removed');
+				
+				for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
+                
+	                if (map.graphics.graphics[i].attributes) {
+
+	                    if (map.graphics.graphics[i].attributes.treatment_id == treatment) {
+
+	                    	map.graphics.remove(map.graphics.graphics[i])
+	                    }
+	                }
+           		}
+
+           		$( "#update" ).trigger( "click" );
 			});
 		});
 

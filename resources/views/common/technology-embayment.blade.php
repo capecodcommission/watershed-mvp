@@ -4,12 +4,18 @@
 
 
 <div class="popdown-content" id="app">
-	<header><h2>{{$tech->Technology_Strategy}}</h2></header>
+	<header>
+		<div class = 'row'>
+			<div class = 'col'>
+				<h2>{{$tech->Technology_Strategy}}<button style = 'position: absolute; right: 20; top: 10' id = "closeWindow"><i class = 'fa fa-times'></i></button></h2>
+			</div>
+		</div>
+	</header>
 	<section class="body">
 
 			<div class="technology">
 				<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
-					<img src="http://www.cch2o.org/Matrix/icons/{{$tech->Icon}}" width="75">
+					<img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" width="75">
 				 {{$tech->Technology_Strategy}}&nbsp;<i class="fa fa-question-circle"></i>
 				</a>
 			</div>
@@ -46,7 +52,7 @@
 			<p>
 				Enter a valid reduction rate between {{round($tech->Absolu_Reduc_perMetric_Low)}} and {{round($tech->Absolu_Reduc_perMetric_High)}}kg per {{$tech->Unit_Metric}}.<br />
 
-				<input type="range" id="embayment_percent" min="{{round($tech->Absolu_Reduc_perMetric_Low, 2)}}" max="{{round($tech->Absolu_Reduc_perMetric_High, 2)}}" v-model="embayment_percent" value='{{$tech->Nutri_Reduc_N_Low}}' step="0.1"> @{{embayment_percent}}
+				<input type="range" id="embayment_percent" min="{{round($tech->Absolu_Reduc_perMetric_Low, 2)}}" max="{{round($tech->Absolu_Reduc_perMetric_High, 2)}}" v-model="embayment_percent" value='{{$tech->Nutri_Reduc_N_Low}}' step=".01"> @{{embayment_percent}}
 			</p>
 			<p>
 				<button id="applytreatment">Apply</button>
@@ -63,7 +69,11 @@
 
 <script>
 	$(document).ready(function(){
-	 treatment = {{$treatment->TreatmentID}};
+
+		$('div.fa.fa-spinner.fa-spin').remove()
+		var subem_id = ''
+	 	treatment = {{$treatment->TreatmentID}};
+
 		$('#select_area').on('click', function(f){
 			f.preventDefault();
 			destination_active = 1;
@@ -84,6 +94,7 @@
 							// console.log(msg.SUBEM_DISP);
 							// console.log(msg);
 							$('#'+msg.SUBEM_NAME+'> .stats').show();
+							subem_id = msg.SUBEM_ID
 							// $('.notification_count').remove();
 							$('#select_area').hide();
 							$('#popdown-opacity').show();
@@ -95,13 +106,38 @@
 			});
 		});
 
+		$('#closeWindow').on('click', function (e) {
+
+			$('#popdown-opacity').hide();
+
+			var url = "{{url('cancel', $treatment->TreatmentID)}}";
+
+			$.ajax({
+				method: 'GET',
+				url: url
+			})
+			.done(function(msg){
+				
+				for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
+                
+	                if (map.graphics.graphics[i].attributes) {
+
+	                    if (map.graphics.graphics[i].attributes.treatment_id == treatment) {
+
+	                    	map.graphics.remove(map.graphics.graphics[i])
+	                    }
+	                }
+           		}
+           	})
+		})
+
 		$('#applytreatment').on('click', function(e){
 			// need to save the treated N values and update the subembayment progress
 			e.preventDefault();
 			var percent = $('#embayment_percent').val();
 			var units = $('#unit_metric').val();
 			// need a new route to handle embayment (absolute metrics)
-			var url = "{{url('apply_embayment')}}" + '/' +  treatment + '/' + percent + '/' + units;
+			var url = "{{url('apply_embayment')}}" + '/' +  treatment + '/' + percent + '/' + units + '/' + subem_id
 			// console.log(url);
 			$.ajax({
 				method: 'GET',
@@ -113,12 +149,23 @@
 					$('#n_removed').text(msg);
 					$('#popdown-opacity').hide();
 					$( "#update" ).trigger( "click" );
-					var newtreatment = '<li class="technology" data-treatment="{{$treatment->TreatmentID}}"><a href="{{url('/edit', $treatment->TreatmentID)}}" class="popdown"><img src="http://www.cch2o.org/Matrix/icons/{{$tech->Icon}}" alt=""></a></li>';
+					var newtreatment = '<li class="technology" data-treatment="{{$treatment->TreatmentID}}"><a href="{{url('/edit', $treatment->TreatmentID)}}" class="popdown"><img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" alt=""></a></li>';
 					$('ul.selected-treatments').append(newtreatment);
 					$('ul.selected-treatments li[data-treatment="{{$treatment->TreatmentID}}"] a').popdown();
+					// location.reload()
 				});
 		});
 
+		$('#canceltreatment').on('click', function(e){
+		var url = "{{url('cancel', $treatment->TreatmentID)}}";
+		$.ajax({
+			method: 'GET',
+			url: url
+		})
+			.done(function(msg){
+				$('#popdown-opacity').hide();
+			});
+		});
 
 	});
 </script>

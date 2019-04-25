@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'sue@bluegear.io', 'name' => 'WatershedMVP'],
+    'from' => ['address' => 'mario.carloni@capecodcommission.org', 'name' => 'WatershedMVP'],
 
     /*
     |--------------------------------------------------------------------------

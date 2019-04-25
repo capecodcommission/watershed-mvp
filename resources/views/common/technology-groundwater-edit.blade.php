@@ -7,12 +7,18 @@
 
 ?>
 <div class="popdown-content" id="app">
-	<header><h2>{{$tech->Technology_Strategy}}</h2></header>
+	<header>
+		<div class = 'row'>
+			<div class = 'col'>
+				<h2>{{$tech->Technology_Strategy}}<button style = 'position: absolute; right: 20; top: 10' id = "closeWindow"><i class = 'fa fa-times'></i></button></h2>
+			</div>
+		</div>
+	</header>
 	<section class="body">
 <p>{{$treatment->Treatment_Class}}</p>
 			<div class="technology">
 				<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
-					<img src="http://www.cch2o.org/Matrix/icons/{{$tech->Icon}}" width="75">
+					<img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" width="75">
 				 {{$tech->Technology_Strategy}}&nbsp;<i class="fa fa-question-circle"></i>
 				</a>			
 			</div>
@@ -49,18 +55,18 @@
 				@elseif($tech->Show_In_wMVP == 2)
 
 					<p>
-						Acreage of treatment area: {{$treatment->Treatment_Acreage}}
+						Acreage of treatment area: {{round($treatment->Treatment_Acreage,2)}}
 					</p>
 
 
 				@elseif($tech->Show_In_wMVP == 3)
 					<p>
-						Acreage of treatment area: {{$treatment->Treatment_Acreage}}
+						Acreage of treatment area: {{round($treatment->Treatment_Acreage,2)}}
 					</p>
 					<p>
 						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} (for cost calculation): 
 						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;" value="{{$treatment->Treatment_MetricValue}}"></label>
-					</p>										
+					</p>									
 				
 				@endif 
 			
@@ -85,7 +91,10 @@
 
 <script>
 	$(document).ready(function(){
-	 treatment = {{$treatment['TreatmentID']}};
+
+		$('div.fa.fa-spinner.fa-spin').remove()
+	 treatment = {{$treatment->TreatmentID}};
+	 typeid = {{$treatment->TreatmentType_ID}};
 		$('#select_area').on('click', function(f){
 			f.preventDefault();
 			// console.log('button clicked');
@@ -101,7 +110,7 @@
 					})
 						.done(function(msg){
 							msg = $.parseJSON(msg);
-							console.log(msg.SUBEM_DISP);
+							// console.log(msg.SUBEM_DISP);
 							// console.log(msg);
 							$('#'+msg.SUBEM_NAME+'> .stats').show();
 							// $('.notification_count').remove();
@@ -112,6 +121,11 @@
 
 			});
 		});
+
+		$('#closeWindow').on('click', function (e) {
+
+			$('#popdown-opacity').hide();
+		})
 
 		$('#select_polygon').on('click', function(f){
 			f.preventDefault();
@@ -161,6 +175,19 @@
 			.done(function(msg){
 				$('#popdown-opacity').hide();
 				$("li[data-treatment='{{$treatment->TreatmentID}}']").remove();
+				
+				for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
+                
+	                if (map.graphics.graphics[i].attributes) {
+
+	                    if (map.graphics.graphics[i].attributes.treatment_id == treatment) {
+
+	                    	map.graphics.remove(map.graphics.graphics[i])
+	                    }
+	                }
+           		}
+
+           		$( "#update" ).trigger( "click" );
 			});
 		});
 

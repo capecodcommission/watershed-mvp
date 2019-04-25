@@ -1,6 +1,6 @@
 <?php
-
-if (strpos(url()->full(), 'devdb') > 0 || env('APP_ENV')== 'local')
+//if (strpos(url()->full(), 'devdb') > 0 || env('APP_ENV')== 'local')
+if (env('APP_ENV')== 'local')
 	{
 		$which = 'dev_sqlsrv';
 	}

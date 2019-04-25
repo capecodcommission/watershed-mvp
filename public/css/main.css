@@ -768,6 +768,9 @@ html {
 .fa-eye:before {
   content: ""; }
 
+.fa-eye-white {
+  color: white; }
+
 .fa-eye-slash:before {
   content: ""; }
 
@@ -946,6 +949,9 @@ html {
 
 .fa-globe:before {
   content: ""; }
+
+.fa-globe-white {
+  color: white; }
 
 .fa-wrench:before {
   content: ""; }
@@ -2890,3 +2896,10 @@ nav.toolbar {
 
 .results_download tr.summary .avg_cost_per_kg {
   background-color: #ffff00; }
+
+.legendPane {
+  border: solid #97DCF2 1px;
+  width: 100%;
+  height: 100%;
+  margin: 1%;
+}

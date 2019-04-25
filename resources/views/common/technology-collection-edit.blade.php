@@ -4,11 +4,17 @@
 		
 
 <div class="popdown-content" id="app">
-	<header><h2>{{$tech->Technology_Strategy}}</h2></header>
+	<header>
+		<div class = 'row'>
+			<div class = 'col'>
+				<h2>{{$tech->Technology_Strategy}}<button style = 'position: absolute; right: 20; top: 10' id = "closeWindow"><i class = 'fa fa-times'></i></button></h2>
+			</div>
+		</div>
+	</header>
 	<section class="body">
 			<div class="technology">
 				<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
-					<img src="http://www.cch2o.org/Matrix/icons/{{$tech->Icon}}" width="75">
+					<img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" width="75">
 				<br />{{$tech->Technology_Strategy}}&nbsp;<i class="fa fa-question-circle"></i>
 				</a>			
 			</div>
@@ -59,7 +65,10 @@
 
 <script>
 	$(document).ready(function(){
+
+		$('div.fa.fa-spinner.fa-spin').remove()
 	 treatment = {{$treatment->TreatmentID}};
+	 typeid = {{$treatment->TreatmentType_ID}};
 	 func = 'collect';
 
 		$('#select_polygon').on('click', function(f){
@@ -77,7 +86,7 @@
 			// console.log('button clicked');
 				$('#popdown-opacity').hide();
 				map.on('click', function(e){
-					console.log(e);
+					// console.log(e);
 				
 					var url = "{{url('/map/move/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y +'/' + treatment;
 					$.ajax({
@@ -98,6 +107,11 @@
 
 			});
 		});
+
+		$('#closeWindow').on('click', function (e) {
+
+			$('#popdown-opacity').hide();
+		})
 
 		$('#updatetreatment').on('click', function(e)
 				{
@@ -126,9 +140,22 @@
 			.done(function(msg){
 				$('#popdown-opacity').hide();
 				$("li[data-treatment='{{$treatment->TreatmentID}}']").remove();
+
+				for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
+                
+	                if (map.graphics.graphics[i].attributes) {
+
+	                    if (map.graphics.graphics[i].attributes.treatment_id == treatment) {
+
+	                    	map.graphics.remove(map.graphics.graphics[i])
+	                    }
+	                }
+           		}
+
+           		$('#update').trigger('click')
 			});
-		});
-
-
 	});
+
+
+});
 </script>

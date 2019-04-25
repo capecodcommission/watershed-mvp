@@ -4,12 +4,18 @@
 		
 
 <div class="popdown-content" id="app">
-	<header><h2>{{$tech->Technology_Strategy}}</h2></header>
+	<header>
+		<div class = 'row'>
+			<div class = 'col'>
+				<h2>{{$tech->Technology_Strategy}}<button style = 'position: absolute; right: 20; top: 10' id = "closeWindow"><i class = 'fa fa-times'></i></button></h2>
+			</div>
+		</div>
+	</header>
 	<section class="body">
 
 			<div class="technology">
 				<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
-					<img src="http://www.cch2o.org/Matrix/icons/{{$tech->Icon}}" width="75">
+					<img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" width="75">
 				 {{$tech->Technology_Strategy}}&nbsp;<i class="fa fa-question-circle"></i>
 				</a>			
 			</div>
@@ -77,17 +83,23 @@
 							
 						</tbody>
 					</table> --}}
+
+					<p>
+						Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.<br />
+				
+						<input type="range" id="storm-percent" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="storm_percent" value="{{$treatment->Treatment_Value}}"> @{{storm_percent}}%
+					</p> 
 				@endif
 		
 
-			<p>
+			<!-- <p>
 				Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.<br />
 				
 				<input type="range" id="storm-percent" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="storm_percent" value="{{$treatment->Treatment_Value}}"> @{{storm_percent}}%
-			</p>
+			</p> -->
 			<p>
 				<button id="updatetreatment">Update</button>
-				<button id="deletetreatment" class='button--cta right'><i class="fa fa-trash-o"></i> Delete</button>
+				<button id="deletetreatment" data-treatment = "{{$treatment->TreatmentID}}" class='button--cta right'><i class="fa fa-trash-o"></i> Delete</button>
 			</p>
 
 
@@ -101,16 +113,18 @@
 
 <script>
 	$(document).ready(function(){
+
+		$('div.fa.fa-spinner.fa-spin').remove()
 	 treatment = {{$treatment->TreatmentID}};
 	 @if($tech->Show_In_wMVP < 4)
-		 var location;
+		 // var location;
 			$('#select_area').on('click', function(f){
 				f.preventDefault();
 				// console.log('button clicked');
 					$('#popdown-opacity').hide();
 					map.on('click', function(e){
-						console.log('map clicked');
-						console.log(e.mapPoint.x, e.mapPoint.y);
+						// console.log('map clicked');
+						// console.log(e.mapPoint.x, e.mapPoint.y);
 					
 						var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y + '/' + treatment;
 						$.ajax({
@@ -119,9 +133,9 @@
 						})
 							.done(function(msg){
 								msg = $.parseJSON(msg);
-								console.log(msg.SUBEM_DISP);
+								// console.log(msg.SUBEM_DISP);
 								// console.log(msg);
-								location = msg.SUBEM_ID;
+								// location = msg.SUBEM_ID;
 								$('#'+msg.SUBEM_NAME+'> .stats').show();
 								// $('.notification_count').remove();
 								$('#popdown-opacity').show();
@@ -131,6 +145,11 @@
 
 				});
 			});
+
+			$('#closeWindow').on('click', function (e) {
+
+				$('#popdown-opacity').hide();
+			})
 
 			$('#select_polygon').on('click', function(f){
 				f.preventDefault();
@@ -146,7 +165,7 @@
 				// need to save the treated N values and update the subembayment progress
 				e.preventDefault();
 				// console.log('clicked');
-				var percent = $('#storm-percent').val();
+				var percent = 0
 				var units = 1;
 				if ('{{$tech->Show_In_wMVP}}' != '2' )
 				{
@@ -196,7 +215,9 @@
 
 
 		$('#deletetreatment').on('click', function(e){
-		var url = "{{url('delete_treatment', $treatment->TreatmentID)}}";
+		var treat = $(this).data('treatment');
+		// var url = "{{url('delete_treatment', $treatment->TreatmentID)}}";
+		var url = "{{url('delete_treatment')}}" + '/' + treat + '/' + 'storm'
 		$.ajax({
 			method: 'GET',
 			url: url
@@ -204,6 +225,19 @@
 			.done(function(msg){
 				$('#popdown-opacity').hide();
 				$("li[data-treatment='{{$treatment->TreatmentID}}']").remove();
+				
+				for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
+                
+	                if (map.graphics.graphics[i].attributes) {
+
+	                    if (map.graphics.graphics[i].attributes.treatment_id == treatment) {
+
+	                    	map.graphics.remove(map.graphics.graphics[i])
+	                    }
+	                }
+           		}
+
+           		$( "#update" ).trigger( "click" );
 			});
 		});
 

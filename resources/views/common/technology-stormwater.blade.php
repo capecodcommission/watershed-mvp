@@ -1,20 +1,26 @@
 		<title>{{$tech->Technology_Strategy}}</title>
 		<link rel="stylesheet" href="{{url('/css/jquery.popdown.css')}}">
 <meta name="csrf-token" id="token" content="{{ csrf_token() }}">
-		
+
 
 <div class="popdown-content" id="app">
-	<header><h2>{{$tech->Technology_Strategy}}</h2></header>
+	<header>
+		<div class = 'row'>
+			<div class = 'col'>
+				<h2>{{$tech->Technology_Strategy}}<button style = 'position: absolute; right: 20; top: 10' id = "closeWindow"><i class = 'fa fa-times'></i></button></h2>
+			</div>
+		</div>
+	</header>
 	<section class="body">
 
 			<div class="technology">
 				<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
-					<img src="http://www.cch2o.org/Matrix/icons/{{$tech->Icon}}" width="75">
+					<img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" width="75">
 				 {{$tech->Technology_Strategy}}&nbsp;<i class="fa fa-question-circle"></i>
-				</a>			
+				</a>
 			</div>
 
-			<!-- 
+			<!--
 					This needs to be a case/switch based on the show_in_wmvp field
 					0 => (this shouldn't ever appear because this technology shouldn't have been listed)
 					1 => user will enter a unit metric to use for calculations (acres, linear feet, etc)
@@ -28,7 +34,7 @@
 					<!-- <p class="select"><button id="select_area">Select a location</button> <span>@{{subembayment}}</span></p> -->
 					<p class="select"><button id="select_area_{{$treatment->TreatmentID}}">Select a location</button> <span>@{{subembayment}}</span></p>
 					<p>
-						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated: 
+						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated:
 						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;"></label>
 					</p>
 				@elseif($tech->Show_In_wMVP == 2)
@@ -39,7 +45,7 @@
 				@elseif($tech->Show_In_wMVP == 3)
 					<p class="select"><button id="select_polygon_{{$treatment->TreatmentID}}">Select a polygon</button> <span>@{{subembayment}}</span></p>
 					<p>
-						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated: 
+						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated:
 						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;"></label>
 					</p>
 
@@ -61,22 +67,22 @@
 						</thead>
 						<tbody>
 							<tr>
-							
+
 							 		<td>@{{storm_unatt | round}}kg</td>
 									<td>@{{storm_att | round }}kg</td>
 									<td>@{{storm_unatt_treated | round }}kg</td>
 									<td>@{{storm_att_treated | round }}kg</td>
 									<td>@{{storm_difference | round }}kg</td>
 							</tr>
-							
+
 						</tbody>
 					</table>
 				@endif
-		
+
 
 			<p>
 				Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.<br />
-				
+
 				<input type="range" id="storm-percent" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="storm_percent" value="{{$tech->Nutri_Reduc_N_Low}}"> @{{storm_percent}}%
 			</p>
 			<p>
@@ -94,43 +100,88 @@
 
 
 <script>
+// NEW - Shawn 6/29/18 - New f(x) run outside of 'select_area_' button click f(x)
+function stormwaterSelectLocationTech () {
+	let destination_active = 1;
+	map.on('click', function(e)
+	{
+		console.log('destination_active is --> ',destination_active)
+		if (destination_active > 0) {
+			var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y + '/' + treatment;
+			$.ajax({
+				method: 'GET',
+				url: url
+			})
+			.done(function(msg) {
+				msg = $.parseJSON(msg);
+				location1 = msg.SUBEM_ID;
+				$('#'+msg.SUBEM_NAME+'> .stats').show();
+				$('#popdown-opacity').show();
+				$('.select > span').text('Selected: '+msg.SUBEM_DISP);
+				$('.select > span').show();
+				$('#select_area_'+treatment).hide();
+			})
+		}
+	});
+};
+
 	$(document).ready(function(){
+
+		$('div.fa.fa-spinner.fa-spin').remove()
+
 	 treatment = {{$treatment->TreatmentID}};
 	 @if($tech->Show_In_wMVP < 4)
-		 var location;
-			$('#select_area_'+treatment).on('click', function(f){
+	 {
+		 // var location1;
+			$('#select_area_'+treatment).on('click', function(f) {
+				console.log('this is f --> ',f)
 				f.preventDefault();
-			destination_active = 1;
-			$('#popdown-opacity').hide();
+				$('#popdown-opacity').hide();
+				let location1 = 0;
+				stormwaterSelectLocationTech(); // NEw - Shawn 6/29/18
+				let destination_active = 0; // NEW - Shawn 6/29/18
+				console.log('destination_active post stormwaterSelectLocationTech f(x) --> ', destination_active)
 
-			map.on('click', function(e)
-			{		
-				if (destination_active > 0) 
-				{
-						// console.log('map clicked');
-						// console.log(e.mapPoint.x, e.mapPoint.y);
-					
-						var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y + '/' + treatment;
-						$.ajax({
-							method: 'GET',
-							url: url
-						})
-							.done(function(msg){
-								msg = $.parseJSON(msg);
-								// console.log(msg.SUBEM_DISP);
-								// console.log(msg);
-								location = msg.SUBEM_ID;
-								$('#'+msg.SUBEM_NAME+'> .stats').show();
-								// $('.notification_count').remove();
-								$('#popdown-opacity').show();
-								$('.select > span').text('Selected: '+msg.SUBEM_DISP);
-								$('.select > span').show();
-								$('#select_area_'+treatment).hide();
-								destination_active = 0;
-							})
-				}
-
-				});
+			// PREVIOUS 'select_area_' LOGIC PRIOR TO 6/29/18
+			// destination_active = 1;
+			// console.log('destination_active set to 1')
+			// console.log(destination_active)
+			// $('#popdown-opacity').hide();
+			//
+			// map.on('click', function(e)
+			// {
+			// 	if (destination_active > 0)
+			// 	{
+			// 			// console.log('map clicked');
+			// 			// console.log(e.mapPoint.x, e.mapPoint.y);
+			//
+			// 			var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y + '/' + treatment;
+			// 			$.ajax({
+			// 				method: 'GET',
+			// 				url: url
+			// 			})
+			// 				.done(function(msg){
+			// 					msg = $.parseJSON(msg);
+			// 					// console.log(msg.SUBEM_DISP);
+			// 					// console.log(msg);
+			// 					location1 = msg.SUBEM_ID;
+			// 					$('#'+msg.SUBEM_NAME+'> .stats').show();
+			// 					// $('.notification_count').remove();
+			// 					$('#popdown-opacity').show();
+			// 					$('.select > span').text('Selected: '+msg.SUBEM_DISP);
+			// 					$('.select > span').show();
+			// 					$('#select_area_'+treatment).hide();
+			// 					// destination_active = 0;
+			// 					//
+			// 					// console.log('destination_active set to 0')
+			// 					// console.log(destination_active)
+			// 				}).then(function() {
+			// 					destination_active = 0;
+			// 					console.log('destination_active set to 0 --> ', destination_active)
+			// 				})
+			// 	}
+			//
+			// 	});
 			});
 
 			$('#select_polygon_'+treatment).on('click', function(f){
@@ -143,11 +194,37 @@
 				tb.activate('polygon');
 
 			});
+
+			$('#closeWindow').on('click', function (e) {
+
+				$('#popdown-opacity').hide();
+
+				var url = "{{url('cancel', $treatment->TreatmentID)}}";
+
+				$.ajax({
+					method: 'GET',
+					url: url
+				})
+				.done(function(msg){
+
+					for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
+
+		                if (map.graphics.graphics[i].attributes) {
+
+		                    if (map.graphics.graphics[i].attributes.treatment_id == treatment) {
+
+		                    	map.graphics.remove(map.graphics.graphics[i])
+		                    }
+		                }
+	           		}
+	           	})
+			})
+
 			$('#apply_treatment_'+treatment).on('click', function(e){
 				// need to save the treated N values and update the subembayment progress
 				e.preventDefault();
 				// console.log('clicked');
-				var percent = $('#storm-percent').val();
+				var percent = 0
 				var units = 1;
 				if ('{{$tech->Show_In_wMVP}}' == '1' || '{{$tech->Show_In_wMVP}}' == '3' )
 				{
@@ -162,7 +239,7 @@
 					units = 0.00000000;
 				}
 
-				var url = "{{url('/apply_storm')}}" + '/' +  treatment + '/' + percent + '/' + units + '/' + location;
+				var url = "{{url('/apply_storm')}}" + '/' +  treatment + '/' + percent + '/' + units + '/' + location1;
 				// console.log(url);
 				$.ajax({
 					method: 'GET',
@@ -174,12 +251,14 @@
 						$('#n_removed').text(msg);
 						$('#popdown-opacity').hide();
 						$( "#update" ).trigger( "click" );
-						var newtreatment = '<li class="technology" data-treatment="{{$treatment->TreatmentID}}"><a href="{{url('/edit', $treatment->TreatmentID)}}" class="popdown"><img src="http://www.cch2o.org/Matrix/icons/{{$tech->Icon}}" alt=""></a></li>';
+						var newtreatment = '<li class="technology" data-treatment="{{$treatment->TreatmentID}}"><a href="{{url('/edit', $treatment->TreatmentID)}}" class="popdown"><img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" alt=""></a></li>';
 						$('ul.selected-treatments').append(newtreatment);
-						$('ul.selected-treatments li[data-treatment="{{$treatment->TreatmentID}}"] a').popdown();	
+						$('ul.selected-treatments li[data-treatment="{{$treatment->TreatmentID}}"] a').popdown();
 					});
 			});
+		}
 			@else
+			{
 				$('#apply_treatment_'+treatment).on('click', function(e){
 				// need to save the treated N values and update the subembayment progress
 				e.preventDefault();
@@ -198,11 +277,12 @@
 						$('#n_removed').text(msg);
 						$('#popdown-opacity').hide();
 						$( "#update" ).trigger( "click" );
-						var newtreatment = '<li class="technology" data-treatment="{{$treatment->TreatmentID}}"><a href="{{url('/edit', $treatment->TreatmentID)}}" class="popdown"><img src="http://www.cch2o.org/Matrix/icons/{{$tech->Icon}}" alt=""></a></li>';
+						var newtreatment = '<li class="technology" data-treatment="{{$treatment->TreatmentID}}"><a href="{{url('/edit', $treatment->TreatmentID)}}" class="popdown"><img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" alt=""></a></li>';
 						$('ul.selected-treatments').append(newtreatment);
-						$('ul.selected-treatments li[data-treatment="{{$treatment->TreatmentID}}"] a').popdown();	
+						$('ul.selected-treatments li[data-treatment="{{$treatment->TreatmentID}}"] a').popdown();
 					});
 			});
+			}
 
 			@endif
 

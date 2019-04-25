@@ -19,7 +19,14 @@ Route::get('/start', 'StartController@index');
 Route::get('/map/{embayment}/{scenarioid?}', 'WizardController@start');
 
 Route::post('/poly', 'WizardController@getPolygon2');
+
+Route::post('/poly2', 'MarioController@sumTotalsWithinPoly');
+Route::post('/poly3', 'MarioController@getIDArrayWithinPoly');
+
 Route::post('/update_polygon', 'TechnologyController@updatePolygon');
+
+Route::get('/save/{id}', 'ScenarioController@saveScenario');
+
 // Route::get('/update_polygon/{treatment}/{new_poly}', 'TechnologyController@updatePolygon');
 // Route::post('/poly/', 'WizardController@getPolygon2');
 // Route::get('/poly/{params}', 'WizardController@getPolygon2')->where('params', '.*');
@@ -31,8 +38,8 @@ Route::get('/testmap/Nitrogen/{treatment}/{poly}', 'WizardController@getPolygon'
 
 Route::get('/tech/{type}/{tech}', 'TechnologyController@get');
 Route::get('/edit/{treatment}', 'TechnologyController@edit');
-Route::get('/update/{type}/{treatment}/{rate}/{units?}', 'TechnologyController@update');
-Route::get('/delete_treatment/{treatment}', 'TechnologyController@delete');
+Route::get('/update/{type}/{treatment}/{rate}/{units?}/{subemid?}', 'TechnologyController@update');
+Route::get('/delete_treatment/{treatment}/{type?}', 'TechnologyController@delete');
 Route::get('/cancel/{treatment}', 'TechnologyController@cancel');
 
 
@@ -41,7 +48,7 @@ Route::get('/delete_scenario/{scenarioid}', 'ScenarioController@deleteScenario')
 Route::get('/apply_percent/{treatment}/{rate}/{type}/{units?}', 'TechnologyController@ApplyTreatment_Percent');
 Route::get('/apply_storm/{treatment}/{rate}/{units}/{location}', 'TechnologyController@ApplyTreatment_Storm');
 Route::get('/apply_septic/{treatment}/{rate}', 'TechnologyController@ApplyTreatment_Septic');
-Route::get('/apply_embayment/{treatment}/{rate}/{units}', 'TechnologyController@ApplyTreatment_Embayment');
+Route::get('/apply_embayment/{treatment}/{rate}/{units}/{subemid?}', 'TechnologyController@ApplyTreatment_Embayment');
 Route::get('/apply_groundwater/{treatment}/{rate}/{units}', 'TechnologyController@ApplyTreatment_Groundwater');
 
 Route::get('/tech-collect/{tech}', 'TechnologyController@getCollection');
