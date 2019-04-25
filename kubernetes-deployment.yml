@@ -1,164 +1,54 @@
-# watershed-mvp/kubernetes-deployment.yaml 
-
-apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+apiVersion: v1
 items:
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: slrvdeploy
-#   namespace: slrv
-# spec:
-#   selector:
-#     matchLabels:
-#       app: seal-level-rise-viewer
-#   replicas: 2 # tells deployment to run 2 pods matching the template
-#   template:
-#     metadata:
-#       labels:
-#         app: seal-level-rise-viewer
-#     spec:
-#       containers:
-#       - name: sea-level-rise-viewer
-#         image: ccccontainers.azurecr.io/slr-front:latest
-#         imagePullPolicy: Always
-#         ports:
-#         - name: "deploy-3000"
-#           containerPort: 3000
-# ---
-# apiVersion: v1 # for versions before 1.9.0 use apps/v1beta2
-# kind: Service
-# metadata:
-#     name: slrvsvc
-#     namespace: slrv
-# spec:
-#   selector:
-#       app: sealeverriseviewer
-#   ports:
-#     - name: "3000"
-#       port: 3000
-#       targetPort: 80
-#       protocol: TCP
-# ---
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: slrvuatdeploy
-#   namespace: slrv
-# spec:
-#   selector:
-#     matchLabels:
-#       app: seal-level-rise-viewer-uat
-#   replicas: 2 # tells deployment to run 2 pods matching the template
-#   template:
-#     metadata:
-#       labels:
-#         app: seal-level-rise-viewer-uat
-#     spec:
-#       containers:
-#       - name: sea-level-rise-viewer-uat
-#         image: ccccontainers.azurecr.io/slr-front:uat
-#         imagePullPolicy: Always
-#         ports:
-#         - name: "deploy-uat-3000"
-#           containerPort: 3000
-#         TODO:
-#         - name: "deploy-3002"
-#           containerPort: 3002
-# ---
-# apiVersion: v1 # for versions before 1.9.0 use apps/v1beta2
-# kind: Service
-# metadata:
-#     name: slrvuatsvc
-#     namespace: slrv
-# spec:
-#   selector:
-#       app: sealeverrisevieweruat
-#   ports:
-#     - name: "uat-3000"
-#       port: 3000
-#     TODO:
-#     - name: "3002"
-#       port: 3002
-#       targetPort: 80
-#       protocol: TCP
-# ---
-- apiVersion: apps/v1
-  kind: Deployment
+- apiVersion: v1
+  kind: Service
   metadata:
-    name: wmvpdevdeploy
+    labels:
+      io.kompose.service: wmvpdev
+    name: wmvpdev
     namespace: wmvp
   spec:
+    type: LoadBalancer
+    ports:
+    - name: "3000"
+      port: 3000
+      targetPort: 80
+    selector:
+      io.kompose.service: wmvpdev
+  status:
+    loadBalancer: {}
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    labels:
+      io.kompose.service: wmvpdev
+      keel.sh/policy: force
+      keel.sh/match-tag: "true"
+    name: wmvpdev
+    namespace: wmvp
+  spec:
+    replicas: 1
+    revisionHistoryLimit: 5
     selector:
       matchLabels:
         app: wmvpdev
-    replicas: 2 # tells deployment to run 2 pods matching the template
+    strategy: {}
     template:
       metadata:
+        name: wmvpdev
+        creationTimestamp: null
         labels:
+          io.kompose.service: wmvpdev
           app: wmvpdev
       spec:
         containers:
-        - name: wmvpdev
-          image: ccccontainers.azurecr.io/wmvp:dev
+        - image: ccccontainers.azurecr.io/wmvp:dev
           imagePullPolicy: Always
+          name: wmvpdev
           ports:
-          - name: "deploy-dev-3000"
-            containerPort: 3000
-# ---
-- apiVersion: v1 # for versions before 1.9.0 use apps/v1beta2
-  kind: Service
-  metadata:
-      name: wmvpdevsvc
-      namespace: wmvp
-  spec:
-    selector:
-        app: wmvpdev
-    ports:
-      - name: "service-dev-3000"
-        port: 3000
-        targetPort: 80
-# ---
-# - apiVersion: extensions/apps/v1beta1
-#   kind: Ingress
-#   metadata:
-#     name: slrv-ingress
-#     namespace: slrv
-#     annotations:
-#       kubernetes.io/ingress.class: nginx
-#       certmanager.k8s.io/cluster-issuer: letsencrypt-prod
-#       nginx.ingress.kubernetes.io/rewrite-target: /
-#   spec:
-#     tls:
-#     - hosts:
-#       - www.apps.capecodcommission.org/slrv
-#       secretName: slrv-tls-secret
-#     - hosts:
-#       - apps.capecodcommission.org/slrv/uat
-#       secretName: slrvuat-tls-secret
-#     - hosts:
-#       - apps.capecodcommission.org/slrv/dev
-#       secretName: slrvdev-tls-secret
-#     rules:
-#     - host: www.apps.capecodcommission.org/slrv
-#       http:
-#         paths:
-#         - path: /
-#           backend:
-#             serviceName: slrv-svc
-#             servicePort: 3000
-#     - host: apps.capecodcommission.org/slrv/uat
-#       http:
-#         paths:
-#         - path: /
-#           backend:
-#             serviceName: slrv-uat-svc
-#             servicePort: 3002
-#     - host: apps.capecodcommission.org/slrv/dev
-#       http:
-#         paths:
-#         - path: /
-#           backend:
-#             serviceName: slrv-dev-svc
-#             servicePort: 3030
+          - containerPort: 3000
+          resources: {}
+        restartPolicy: Always
+  status: {}
 kind: List
 metadata: {}
