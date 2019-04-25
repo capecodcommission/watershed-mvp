@@ -151,11 +151,6 @@
 		<p><a href="{{url('map', [$scenario->AreaID, $scenario->ScenarioID])}}" class="button" target="wmvp_scenario_{{$scenario->ScenarioID}}">Return to map</a> </p>
 		@endif
 
-		@else
-		<p>No treatments have been applied to this scenario yet.</p>
-		<p><a href="{{url('map', [$scenario->AreaID, $scenario->ScenarioID])}}" class="button" target="wmvp_scenario_{{$scenario->ScenarioID}}">Return to map</a> </p>
-		@endif
-
 		</div>
 		</div>
 	</div>
