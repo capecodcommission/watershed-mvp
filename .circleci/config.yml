@@ -21,10 +21,10 @@ jobs:
             echo SQLSRV_DATABASE=${SQLSRV_DATABASE} >> .env
             echo SQLSRV_USERNAME=${SQLSRV_USERNAME} >> .env
             echo SQLSRV_PASSWORD=${SQLSRV_PASSWORD} >> .env
-            echo CACHE_DRIVER="file" >> .env
-            echo SESSION_DRIVER="file" >> .env
-            echo QUEUE_DRIVER="sync" >> .env
-            echo MAIL_DRIVER="mandrill" >> .env
+            echo CACHE_DRIVER=${CACHE_DRIVER} >> .env
+            echo SESSION_DRIVER=${SESSION_DRIVER} >> .env
+            echo QUEUE_DRIVER=${QUEUE_DRIVER} >> .env
+            echo MAIL_DRIVER=${MAIL_DRIVER} >> .env
             echo MAIL_HOST=${MAIL_HOST} >> .env
             echo MAIL_PORT=${MAIL_PORT} >> .env
             docker build . -t ${registryName}.azurecr.io/${frontImageLatest}
@@ -51,10 +51,10 @@ jobs:
             echo SQLSRV_DATABASE=${SQLSRV_DATABASE} >> .env
             echo SQLSRV_USERNAME=${SQLSRV_USERNAME} >> .env
             echo SQLSRV_PASSWORD=${SQLSRV_PASSWORD} >> .env
-            echo CACHE_DRIVER="file" >> .env
-            echo SESSION_DRIVER="file" >> .env
-            echo QUEUE_DRIVER="sync" >> .env
-            echo MAIL_DRIVER="mandrill" >> .env
+            echo CACHE_DRIVER=${CACHE_DRIVER} >> .env
+            echo SESSION_DRIVER=${SESSION_DRIVER} >> .env
+            echo QUEUE_DRIVER=${QUEUE_DRIVER} >> .env
+            echo MAIL_DRIVER=${MAIL_DRIVER} >> .env
             echo MAIL_HOST=${MAIL_HOST} >> .env
             echo MAIL_PORT=${MAIL_PORT} >> .env
             docker build . -t ${registryName}.azurecr.io/${frontImageUat}
@@ -81,10 +81,10 @@ jobs:
             echo SQLSRV_DATABASE=${SQLSRV_DATABASE} >> .env
             echo SQLSRV_USERNAME=${SQLSRV_USERNAME} >> .env
             echo SQLSRV_PASSWORD=${SQLSRV_PASSWORD} >> .env
-            echo CACHE_DRIVER="file" >> .env
-            echo SESSION_DRIVER="file" >> .env
-            echo QUEUE_DRIVER="sync" >> .env
-            echo MAIL_DRIVER="mandrill" >> .env
+            echo CACHE_DRIVER=${CACHE_DRIVER} >> .env
+            echo SESSION_DRIVER=${SESSION_DRIVER} >> .env
+            echo QUEUE_DRIVER=${QUEUE_DRIVER} >> .env
+            echo MAIL_DRIVER=${MAIL_DRIVER} >> .env
             echo MAIL_HOST=${MAIL_HOST} >> .env
             echo MAIL_PORT=${MAIL_PORT} >> .env
             docker build . -t ${registryName}.azurecr.io/${frontImageDev}
