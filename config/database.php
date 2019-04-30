@@ -6,7 +6,9 @@ if (env('APP_ENV')== 'local')
 	}
 	else
 	{
-		$which = 'sqlsrv';
+		// Use pgsql when connecting to wmvpdb container, sqlsrv when connecting to legacy SQL Server locally
+		$which = 'pgsql';
+		// $which = 'sqlsrv';
 	}
 // $which = 'dev_sqlsrv';
 return [

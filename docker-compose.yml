@@ -2,10 +2,25 @@ version: '3'
 
 services:
 
-  webphp:
+  wmvpdev:
+    container_name: wmvpdev
     build: '.'
     ports:
       - "8080:80"
     volumes:
       - ./resources:/var/www/resources:rw
       - ./app:/var/www/app:rw
+
+  wmvpdb:
+    container_name: wmvpdb
+    image: postgres
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+
+volumes:
+  pgdata:

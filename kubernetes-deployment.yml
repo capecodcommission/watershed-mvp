@@ -10,8 +10,8 @@ items:
   spec:
     type: LoadBalancer
     ports:
-    - name: "8080"
-      port: 8080
+    - name: "3000"
+      port: 3000
       targetPort: 80
     selector:
       io.kompose.service: wmvpdev
@@ -46,9 +46,125 @@ items:
           imagePullPolicy: Always
           name: wmvpdev
           ports:
+          - containerPort: 3000
+          resources: {}
+        restartPolicy: Always
+  status: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      io.kompose.service: wmvp
+    name: wmvp
+    namespace: wmvp
+  spec:
+    type: LoadBalancer
+    ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 80
+    selector:
+      io.kompose.service: wmvp
+  status:
+    loadBalancer: {}
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    labels:
+      io.kompose.service: wmvp
+      keel.sh/policy: force
+      keel.sh/match-tag: "true"
+    name: wmvp
+    namespace: wmvp
+  spec:
+    replicas: 1
+    revisionHistoryLimit: 5
+    selector:
+      matchLabels:
+        app: wmvp
+    strategy: {}
+    template:
+      metadata:
+        name: wmvp
+        creationTimestamp: null
+        labels:
+          io.kompose.service: wmvp
+          app: wmvp
+      spec:
+        containers:
+        - image: ccccontainers.azurecr.io/wmvp:latest
+          imagePullPolicy: Always
+          name: wmvp
+          ports:
           - containerPort: 8080
           resources: {}
         restartPolicy: Always
+  status: {}
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: wmvpdb
+    namespace: wmvp
+    labels:
+      name: wmvpdb
+      type: local
+  spec:
+    capacity:
+      storage: 100Mi
+    accessModes:
+      - ReadWriteOnce
+    hostPath:
+      path: "/var/lib/postgresql/data"
+  status: {}
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    name: wmvpdb-claim
+    namespace: wmvp
+    labels:
+      name: wmvpdb-claim
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    volumeMode: Filesystem
+    resources:
+      requests:
+        storage: 100Mi
+  status: {}
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    creationTimestamp: null
+    labels:
+      io.kompose.service: wmvpdb
+    name: wmvpdb
+    namespace: wmvp
+  spec:
+    replicas: 1
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          io.kompose.service: wmvpdb
+      spec:
+        containers:
+        - env:
+          - name: POSTGRES_PASSWORD
+            value: ${DB_PASSWORD}
+          image: postgres
+          name: wmvpdb
+          resources: {}
+          volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: wmvpdb
+            subPath: postgres
+        restartPolicy: Always
+        volumes:
+        - name: wmvpdb
+          persistentVolumeClaim:
+            claimName: wmvpdb-claim
   status: {}
 kind: List
 metadata: {}
