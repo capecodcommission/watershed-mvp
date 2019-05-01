@@ -1,16 +1,15 @@
 <?php
 //if (strpos(url()->full(), 'devdb') > 0 || env('APP_ENV')== 'local')
 if (env('APP_ENV')== 'local')
+	// Use pgsql when connecting to wmvpdb container, sqlsrv when connecting to legacy SQL Server locally
 	{
-		$which = 'dev_sqlsrv';
+		$which = 'sqlsrv';
 	}
 	else
 	{
-		// Use pgsql when connecting to wmvpdb container, sqlsrv when connecting to legacy SQL Server locally
 		$which = 'pgsql';
-		// $which = 'sqlsrv';
 	}
-// $which = 'dev_sqlsrv';
+	
 return [
 
 	/*

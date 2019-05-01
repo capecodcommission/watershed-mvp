@@ -9,17 +9,19 @@
 * [jquery](https://jquery.com/)
 * [D3js](https://d3js.org/)
 
-## Docker Build Setup
+## Docker Build 
 ```bash
 # Change working directory to project path
 cd /path/to/project
 
 # Run docker-compose to start apache/php container
 sudo docker-compose up
+
+# To remove local images and build cache
+docker system prune -a
 ```
 
-
-## Manual Build Setup
+## Manual Build 
 ```bash
 # SSH into Apache server
 sudo ssh user@host
@@ -31,37 +33,21 @@ cd /var/www/html
 git pull https://github.com/capecodcommission/watershed-mvp.git
 ```
 
-## Contributing
+## Kubernetes
+```bash
+# Deploy new Kubernetes config to AKS Cluster
+# Please note: Run only when kubernetes-compose.yml file changes
+kubectl apply -f kubernetes-compose.yml
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+# Enter an interactive terminal into a pod id
+kubectl exec -it wmvpdev-1234567 -- /bin/bash --namespace wmvp
 
-## Security Vulnerabilities
+# To delete all services, deployments, pods, replicasets, volumes
+kubectl delete daemonsets,replicasets,services,deployments,pods,rc --all --namespace wmvp
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+# To delete a persistent volume and claim
+kubectl delete pvc wmvpdb-claim --namespace wmvp
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
-
----
-
-## FUTURE US
-
-#### APP-WIDE
-1. Switch 'GET_PointsFromPolygon1' from using '@embay_area = ea.polygon' --> 'COMPOSITE @subembays_area' for that embayment.
-2. Where polygonal technologies are using the slider to set a percentage ('ground_percent'), there is currently a vue warning.
-3. Need to explicitly define 'Show_In_wMVP' numbers in README.
-4. During clicking for placement or population of technologies, disable reference layer ID-ing.
-
-#### Treatment Technology Stack
-1. Any updated or deleted tech should reapply downstream techs.
-    Example 1: User applies 5 techs, then updates tech #2. Techs 3-5 should reapply based on tech 2's updated nload totals.
-    Example 2: User applies 8 techs, then deletes tech #1. Remaining 7 should reapply.
-
-#### N ENTRANCE POINT SPECIFIC
-1. Stormwater point technologies: parcels affected become additive, along with GET requests.
-2. Stormwater point technologies: not displayed at the click location on the map after applied, but are removed from map after deleted.
-3. Stormwater point technologies: For all sw point techs, on the 8th-10th instance added = 500 Internal Server Error.
-
-#### EMBAYMENT-SPECIFIC
-1. Pleasant Bay: Many subemebayments aren't selectable, masked by PB subembayment geometry.
+# Start cluster admin dashboard 
+az aks browse --resource-group CCC-AKSGroup --name CCC-AKS-01
+```
