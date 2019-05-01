@@ -153,6 +153,10 @@ items:
         - env:
           - name: POSTGRES_PASSWORD
             value: ${DB_PASSWORD}
+          - name: POSTGRES_USER
+            value: ${DB_USERNAME}
+          - name: POSTGRES_DB
+            value: ${DB_DATABASE}
           image: postgres
           name: wmvpdb
           resources: {}
