@@ -170,5 +170,21 @@ items:
           persistentVolumeClaim:
             claimName: wmvpdb-claim
   status: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      io.kompose.service: wmvpdb
+    name: wmvpdb
+    namespace: wmvp
+  spec:
+    ports:
+    - name: "5432"
+      port: 5432
+      targetPort: 5432
+    selector:
+      io.kompose.service: wmvpdb
+  status:
+    loadBalancer: {}
 kind: List
 metadata: {}
