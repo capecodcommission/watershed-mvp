@@ -23,11 +23,12 @@
 	
 			<p>
 				Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.<br />
-				
+				<!-- TODO: Decide whether to keep or remove Vue, no major math used -->
 				<input type="range" id="fert-percent" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="fert_percent" value="{{$treatment->Treatment_Value}}"> @{{fert_percent}}%
 			</p>
 			<p>
 				<button id="updatetreatment">Update</button>
+				<!-- TODO: Is data-treatment real? -->
 				<button data-treatment = "{{$treatment->TreatmentID}}" id="deletetreatment" class='button--cta right'><i class="fa fa-trash-o"></i> Delete</button>
 			</p>
 

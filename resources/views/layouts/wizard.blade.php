@@ -57,6 +57,8 @@
 				$('.sliding-panel-content').toggleClass('is-visible');
 				// console.log('button clicked');
 			});
+
+			// TODO: Is this real?
 			$('#getNitrogen').on('click', function(e){
 				e.preventDefault();
 				var url = "{{url('/getScenarioNitrogen')}}";

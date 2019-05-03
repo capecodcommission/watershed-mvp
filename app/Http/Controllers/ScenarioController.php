@@ -69,20 +69,7 @@ class ScenarioController extends Controller
 		{
 			$progress = 100;
 		}
-
-
-		/* This is the old code that calculated the **UNattenuated** N removed, which isn't accurate for the target goal/progress
-
-		// $removed = DB::select('exec CapeCodMA.CALC_ScenarioNitrogen ' . $scenarioid);
-		// $removed = $removed[0]->N_Removed;
-		// $current = $scenario->Nload_Existing - $removed;
-		// $progress = round($scenario->Nload_Total_Target/$current * 100);
-
-		// Need to get the progress for each subembayment.
-		$sub_removed = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
-		// dd($sub_removed);
-
-		*/
+		
 		$data['remaining'] = $remaining;
 		$data['embayment'] = $progress;
 		$data['subembayments'] = $subembayments;

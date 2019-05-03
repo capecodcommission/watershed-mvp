@@ -88,6 +88,9 @@ class TechnologyController extends Controller
 	 * @return void
 	 * @author 
 	 **/
+
+	//  TODO: Fert/Storm Management should use CALC_ApplyTreatment_Percent1 stored proc
+	// All other storm techs should use CALC_ApplyTreatment_Storm1
 	public function ApplyTreatment_Percent($treat_id, $rate, $type, $units = null)
 	{
 		
@@ -128,10 +131,6 @@ class TechnologyController extends Controller
 				Session::put('n_removed', $n_removed);			
 				return $n_removed;
 				break;
-			
-			case 'groundwater':
-
-				break;
 
 
 			default:
@@ -151,6 +150,8 @@ class TechnologyController extends Controller
 	 * @return void
 	 * @author 
 	 **/
+
+	//  TODO: Is this real?
 	public function ApplyTreatment_Storm($treat_id, $rate, $units = null, $location = null)
 	{
 		
@@ -488,22 +489,20 @@ class TechnologyController extends Controller
 	 **/
 	public function delete($treat_id, $type = NULL)
 	{
-		// DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
-		// Need to remove all records in wiz_treatment_parcels and wiz_treatment_towns for this treatment_id
+	
 		$del = DB::select('exec CapeCodMA.DEL_Treatment '. $treat_id);
 
+		// Reset global variables to handle fert/storm clickability
 		if ($type == 'fert') {
-
+			
 			Session::put('fert_applied',0);
 		} 
 		else if ($type == 'storm') {
 			
 			Session::put('storm_applied',0);
 		}
-		// Treatment::destroy($treat_id);
+		
 		return 1;
-		// return view('common/technology-septic-edit', ['treatment'=>$treatment]);
-
 	}
 
 

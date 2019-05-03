@@ -10,6 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+// TODO: Apply standard Laravel naming convention to routes
 
 
 Route::group(['middleware' => 'auth'], function () {
@@ -20,6 +21,7 @@ Route::get('/map/{embayment}/{scenarioid?}', 'WizardController@start');
 
 Route::post('/poly', 'WizardController@getPolygon2');
 
+// TODO: Check if these are still in use
 Route::post('/poly2', 'MarioController@sumTotalsWithinPoly');
 Route::post('/poly3', 'MarioController@getIDArrayWithinPoly');
 
@@ -27,15 +29,11 @@ Route::post('/update_polygon', 'TechnologyController@updatePolygon');
 
 Route::get('/save/{id}', 'ScenarioController@saveScenario');
 
-// Route::get('/update_polygon/{treatment}/{new_poly}', 'TechnologyController@updatePolygon');
-// Route::post('/poly/', 'WizardController@getPolygon2');
-// Route::get('/poly/{params}', 'WizardController@getPolygon2')->where('params', '.*');
-
-// Route::get('/poly/{treatment}/{poly}/{part2?}', 'WizardController@getPolygon');
-
+// TODO: Is this route real?
 // Just leaving this here in case it is referenced somewhere in the code
 Route::get('/testmap/Nitrogen/{treatment}/{poly}', 'WizardController@getPolygon');
 
+// TODO: Fix 'delete_treatment' to delete/{treatment}/{type?}
 Route::get('/tech/{type}/{tech}', 'TechnologyController@get');
 Route::get('/edit/{treatment}', 'TechnologyController@edit');
 Route::get('/update/{type}/{treatment}/{rate}/{units?}/{subemid?}', 'TechnologyController@update');
@@ -46,7 +44,10 @@ Route::get('/cancel/{treatment}', 'TechnologyController@cancel');
 Route::get('/delete_scenario/{scenarioid}', 'ScenarioController@deleteScenario');
 
 Route::get('/apply_percent/{treatment}/{rate}/{type}/{units?}', 'TechnologyController@ApplyTreatment_Percent');
+
+// TODO: Is location optional for Stormwater Management?
 Route::get('/apply_storm/{treatment}/{rate}/{units}/{location}', 'TechnologyController@ApplyTreatment_Storm');
+
 Route::get('/apply_septic/{treatment}/{rate}', 'TechnologyController@ApplyTreatment_Septic');
 Route::get('/apply_embayment/{treatment}/{rate}/{units}/{subemid?}', 'TechnologyController@ApplyTreatment_Embayment');
 Route::get('/apply_groundwater/{treatment}/{rate}/{units}', 'TechnologyController@ApplyTreatment_Groundwater');

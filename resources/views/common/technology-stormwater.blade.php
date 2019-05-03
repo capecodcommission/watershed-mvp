@@ -29,6 +29,7 @@
 						unit metric is used to calculate cost
 					4 => user does not enter a treatment area (Fertilizer Mgmt or Stormwater BMPs)
 			 -->
+			 <!-- TODO: Replace ifelse with case/switch -->
 
 				@if($tech->Show_In_wMVP == 1)
 					<!-- <p class="select"><button id="select_area">Select a location</button> <span>@{{subembayment}}</span></p> -->
@@ -236,6 +237,7 @@ function stormwaterSelectLocationTech () {
 				}
 				else
 				{
+					// TODO: Are 8 decimas necessary?
 					units = 0.00000000;
 				}
 

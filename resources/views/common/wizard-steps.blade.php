@@ -95,6 +95,7 @@
 						<!-- <p>Fertilizer Management Policies have already been applied to this scenario</p> -->
 						</div>
 				@else
+					<!-- TODO: Set all technologies with respective name id -->
 					<div id = "stormMan" class="technology">
 					<!-- href="{{url('/tech/storm/26')}}"  -->
 						<a href="{{url('/tech/storm/26')}}" class="popdown">

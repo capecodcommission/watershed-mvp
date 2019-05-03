@@ -1,6 +1,7 @@
 		<div id="overall_progress">
 			
-		
+			<!-- TODO: Rename update div to 'update scenario progrses' -->
+			<!-- TODO: Change all references from '#update' to new div id -->
 			<h4 id="update" style = "color:white">Scenario Progress</h4>
 
 			<div class="progress-container">
