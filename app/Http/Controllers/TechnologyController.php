@@ -151,7 +151,7 @@ class TechnologyController extends Controller
 	 * @author 
 	 **/
 
-	//  TODO: Is this real?
+	//  Used for stormwater point technologies
 	public function ApplyTreatment_Storm($treat_id, $rate, $units = null, $location = null)
 	{
 		

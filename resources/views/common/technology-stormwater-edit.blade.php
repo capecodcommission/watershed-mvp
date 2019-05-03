@@ -29,6 +29,7 @@
 						unit metric is used to calculate cost
 					4 => user does not enter a treatment area (Fertilizer Mgmt or Stormwater BMPs)
 			 -->
+			 <!-- TODO: Switch if/else to case/switch -->
 					<p>Nitrogen removed by this treatment: {{round($treatment->Nload_Reduction)}}kg</p>
 					<p>Treatment reduction rate: {{$treatment->Treatment_Value}}%</p>
 					<p>Total Treatment Cost: ${{money_format('%10.0n', $treatment->Cost_Total)}}</p>
@@ -55,6 +56,7 @@
 						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;" value="{{$treatment->Treatment_MetricValue}}"></label>
 					</p>
 
+				<!-- TODO: Remove table -->
 				@elseif($tech->Show_In_wMVP == 4)
 {{-- 					<table>
 						<thead>
@@ -91,12 +93,6 @@
 					</p> 
 				@endif
 		
-
-			<!-- <p>
-				Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.<br />
-				
-				<input type="range" id="storm-percent" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="storm_percent" value="{{$treatment->Treatment_Value}}"> @{{storm_percent}}%
-			</p> -->
 			<p>
 				<button id="updatetreatment">Update</button>
 				<button id="deletetreatment" data-treatment = "{{$treatment->TreatmentID}}" class='button--cta right'><i class="fa fa-trash-o"></i> Delete</button>

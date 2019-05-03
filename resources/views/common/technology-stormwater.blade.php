@@ -115,7 +115,7 @@ function stormwaterSelectLocationTech () {
 			})
 			.done(function(msg) {
 				msg = $.parseJSON(msg);
-				location1 = msg.SUBEM_ID;
+				location1 = msg.SUBEM_ID; // TODO: Rename to subembayment id
 				$('#'+msg.SUBEM_NAME+'> .stats').show();
 				$('#popdown-opacity').show();
 				$('.select > span').text('Selected: '+msg.SUBEM_DISP);
@@ -135,7 +135,6 @@ function stormwaterSelectLocationTech () {
 	 {
 		 // var location1;
 			$('#select_area_'+treatment).on('click', function(f) {
-				console.log('this is f --> ',f)
 				f.preventDefault();
 				$('#popdown-opacity').hide();
 				let location1 = 0;
@@ -224,7 +223,6 @@ function stormwaterSelectLocationTech () {
 			$('#apply_treatment_'+treatment).on('click', function(e){
 				// need to save the treated N values and update the subembayment progress
 				e.preventDefault();
-				// console.log('clicked');
 				var percent = 0
 				var units = 1;
 				if ('{{$tech->Show_In_wMVP}}' == '1' || '{{$tech->Show_In_wMVP}}' == '3' )
@@ -242,7 +240,6 @@ function stormwaterSelectLocationTech () {
 				}
 
 				var url = "{{url('/apply_storm')}}" + '/' +  treatment + '/' + percent + '/' + units + '/' + location1;
-				// console.log(url);
 				$.ajax({
 					method: 'GET',
 					url: url
