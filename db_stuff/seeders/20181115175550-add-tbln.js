@@ -1,0 +1,26 @@
+var sql = require("mssql");
+const Sequelize = require('sequelize')
+const config = require('../config/config.json')
+
+var wmvpConnect = new sql.ConnectionPool(config.wmvpConfig)
+var sequelize = new Sequelize(config.development);
+
+module.exports = {
+  up: (queryInterface, Sequelize) => {
+    return Promise.all([
+      wmvpConnect.connect(),
+      sequelize.authenticate()
+    ]).then(([]) => {
+      var request = new sql.Request(wmvpConnect)
+      return request.query('select * from [TBL_Dev].[dbo].[TBL_NConversion_SQL]')
+      .then((result) => {
+        return queryInterface.bulkInsert('TBL_NConversion_SQL', result.recordset)
+      })
+    })
+  },
+
+  down: (queryInterface, Sequelize) => {
+
+    return queryInterface.bulkDelete('TBL_NConversion_SQL', null, {});
+  }
+};

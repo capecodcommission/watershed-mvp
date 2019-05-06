@@ -1,0 +1,40 @@
+{
+  "development": {
+    "username": "CapeCodMA",
+    "password": "CapeCodMA",
+    "database": "wMVP3_CapeCodMA",
+    "host": "wmvpdb",
+    "dialect": "postgresql"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "wmvpConfig": {
+    "user": "DBAccess",
+    "password": "Acce$$DB",
+    "server": "10.10.1.174",
+    "port": "65335",
+    "database": "wMVP3_CapeCodMA",
+    "stream": true,
+    "requestTimeout": 3000000,
+    "connectionTimeout": 3000000,
+    "pool": {
+      "max": 1000000,
+      "min": 1,
+      "idleTimeoutMillis": 3000000,
+      "evictionRunIntervalMillis": 5,
+      "softIdleTimeoutMillis": 5
+    }
+  }
+}
