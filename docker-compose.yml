@@ -42,9 +42,9 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: "CapeCodMA"
-      POSTGRES_PASSWORD: "CapeCodMA"
-      POSTGRES_DB: "wMVP3_CapeCodMA"
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
 
 volumes:
   pgdata:
