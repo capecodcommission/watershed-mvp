@@ -1,9 +1,11 @@
+require('dotenv').config()
+module.exports = 
 {
   "development": {
-    "username": "CapeCodMA",
-    "password": "CapeCodMA",
-    "database": "wMVP3_CapeCodMA",
-    "host": "wmvpdb",
+    "username": process.env.DB_USERNAME,
+    "password": process.env.DB_PASSWORD,
+    "database": process.env.DB_DATABASE,
+    "host": process.env.DB_HOST,
     "dialect": "postgresql"
   },
   "test": {
@@ -21,11 +23,11 @@
     "dialect": "mysql"
   },
   "wmvpConfig": {
-    "user": "DBAccess",
-    "password": "Acce$$DB",
-    "server": "10.10.1.174",
-    "port": "65335",
-    "database": "wMVP3_CapeCodMA",
+    "user": process.env.LEGACY_USER,
+    "password": process.env.LEGACY_PW,
+    "server": process.env.LEGACY_HOST,
+    "port": process.env.LEGACY_PORT,
+    "database": process.env.DB_DATABASE,
     "stream": true,
     "requestTimeout": 3000000,
     "connectionTimeout": 3000000,

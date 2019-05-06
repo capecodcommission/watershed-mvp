@@ -33,9 +33,13 @@ jobs:
             echo DB_USERNAME=${DB_USERNAME} >> .env
             echo DB_PASSWORD=${DB_PASSWORD} >> .env
             echo -e "text\n" >> .env
-            echo PG_HOST=${PG_HOST} >> ./db_stuff/.env
-            echo PG_USER=${PG_USER} >> ./db_stuff/.env
-            echo PG_DB=${PG_DB} >> ./db_stuff/.env
+            echo DB_DATABASE=${DB_DATABASE} >> ./db_stuff/.env
+            echo DB_USERNAME=${DB_USERNAME} >> ./db_stuff/.env
+            echo DB_PASSWORD=${DB_PASSWORD} >> ./db_stuff/.env
+            echo LEGACY_USER=${LEGACY_USER} >> ./db_stuff/.env
+            echo LEGACY_PW=${LEGACY_PW} >> ./db_stuff/.env
+            echo LEGACY_HOST=${LEGACY_HOST} >> ./db_stuff/.env
+            echo LEGACY_PORT=${LEGACY_PORT} >> ./db_stuff/.env
             echo -e "text\n" >> ./db_stuff/.env
             docker build . -t ${registryName}.azurecr.io/${frontImageLatest}
             docker build ./db_stuff -t ${registryName}.azurecr.io/${seedsImageLatest}
@@ -78,6 +82,10 @@ jobs:
             echo DB_DATABASE=${DB_DATABASE} >> ./db_stuff/.env
             echo DB_USERNAME=${DB_USERNAME} >> ./db_stuff/.env
             echo DB_PASSWORD=${DB_PASSWORD} >> ./db_stuff/.env
+            echo LEGACY_USER=${LEGACY_USER} >> ./db_stuff/.env
+            echo LEGACY_PW=${LEGACY_PW} >> ./db_stuff/.env
+            echo LEGACY_HOST=${LEGACY_HOST} >> ./db_stuff/.env
+            echo LEGACY_PORT=${LEGACY_PORT} >> ./db_stuff/.env
             echo -e "text\n" >> ./db_stuff/.env
             docker build . -t ${registryName}.azurecr.io/${frontImageUat}
             docker build ./db_stuff -t ${registryName}.azurecr.io/${seedsImageUat}
@@ -120,6 +128,10 @@ jobs:
             echo DB_DATABASE=${DB_DATABASE} >> ./db_stuff/.env
             echo DB_USERNAME=${DB_USERNAME} >> ./db_stuff/.env
             echo DB_PASSWORD=${DB_PASSWORD} >> ./db_stuff/.env
+            echo LEGACY_USER=${LEGACY_USER} >> ./db_stuff/.env
+            echo LEGACY_PW=${LEGACY_PW} >> ./db_stuff/.env
+            echo LEGACY_HOST=${LEGACY_HOST} >> ./db_stuff/.env
+            echo LEGACY_PORT=${LEGACY_PORT} >> ./db_stuff/.env
             echo -e "text\n" >> ./db_stuff/.env
             docker build . -t ${registryName}.azurecr.io/${frontImageDev}
             docker build ./db_stuff -t ${registryName}.azurecr.io/${seedsImageDev}

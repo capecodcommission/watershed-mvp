@@ -1,6 +1,6 @@
 var sql = require("mssql");
 const Sequelize = require('sequelize')
-const config = require('../config/config.json')
+const config = require('../config/config.js')
 
 var wmvpConnect = new sql.ConnectionPool(config.wmvpConfig)
 var sequelize = new Sequelize(config.development);
