@@ -32,9 +32,16 @@ jobs:
             echo DB_DATABASE=${DB_DATABASE} >> .env
             echo DB_USERNAME=${DB_USERNAME} >> .env
             echo DB_PASSWORD=${DB_PASSWORD} >> .env
+            echo -e "text\n" >> .env
+            echo PG_HOST=${PG_HOST} >> ./db_stuff/.env
+            echo PG_USER=${PG_USER} >> ./db_stuff/.env
+            echo PG_DB=${PG_DB} >> ./db_stuff/.env
+            echo -e "text\n" >> ./db_stuff/.env
             docker build . -t ${registryName}.azurecr.io/${frontImageLatest}
+            docker build ./db_stuff -t ${registryName}.azurecr.io/${seedsImageLatest}
             docker login ${registryName}.azurecr.io -u ${registryName} -p ${registryPassword}
             docker push ${registryName}.azurecr.io/${frontImageLatest}
+            docker push ${registryName}.azurecr.io/${seedsImageLatest}
   BuildPushUAT:
     docker:
       - image: circleci/node
@@ -67,9 +74,16 @@ jobs:
             echo DB_DATABASE=${DB_DATABASE} >> .env
             echo DB_USERNAME=${DB_USERNAME} >> .env
             echo DB_PASSWORD=${DB_PASSWORD} >> .env
+            echo -e "text\n" >> .env
+            echo DB_DATABASE=${DB_DATABASE} >> ./db_stuff/.env
+            echo DB_USERNAME=${DB_USERNAME} >> ./db_stuff/.env
+            echo DB_PASSWORD=${DB_PASSWORD} >> ./db_stuff/.env
+            echo -e "text\n" >> ./db_stuff/.env
             docker build . -t ${registryName}.azurecr.io/${frontImageUat}
+            docker build ./db_stuff -t ${registryName}.azurecr.io/${seedsImageUat}
             docker login ${registryName}.azurecr.io -u ${registryName} -p ${registryPassword}
             docker push ${registryName}.azurecr.io/${frontImageUat}
+            docker push ${registryName}.azurecr.io/${seedsImageUat}
   BuildPushDev:
     docker:
       - image: circleci/node
@@ -103,9 +117,15 @@ jobs:
             echo DB_USERNAME=${DB_USERNAME} >> .env
             echo DB_PASSWORD=${DB_PASSWORD} >> .env
             echo -e "text\n" >> .env
+            echo DB_DATABASE=${DB_DATABASE} >> ./db_stuff/.env
+            echo DB_USERNAME=${DB_USERNAME} >> ./db_stuff/.env
+            echo DB_PASSWORD=${DB_PASSWORD} >> ./db_stuff/.env
+            echo -e "text\n" >> ./db_stuff/.env
             docker build . -t ${registryName}.azurecr.io/${frontImageDev}
+            docker build ./db_stuff -t ${registryName}.azurecr.io/${seedsImageDev}
             docker login ${registryName}.azurecr.io -u ${registryName} -p ${registryPassword}
             docker push ${registryName}.azurecr.io/${frontImageDev}
+            docker push ${registryName}.azurecr.io/${seedsImageDev}
 workflows:
   version: 2
   WMVP_Workflow:

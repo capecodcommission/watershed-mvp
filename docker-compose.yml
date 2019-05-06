@@ -10,17 +10,41 @@ services:
     volumes:
       - ./resources:/var/www/resources:rw
       - ./app:/var/www/app:rw
+    depends_on:
+      - wmvpdb
+      - wmvpseeds
+
+  wmvpseeds:
+    container_name: wmvpseeds
+    build: './db_stuff'
+    ports:
+      - "8081:80"
+    volumes:
+      - ./db_stuff/migrations:/app/migrations:rw
+      - ./db_stuff/models:/app/models:rw
+      - ./db_stuff/seeders:/app/seeders:rw
+    depends_on:
+      - wmvpdb
+
+  admin:
+    container_name: admin
+    image: adminer
+    restart: always
+    depends_on:
+      - wmvpdb
+    ports:
+      - "8082:8080"
 
   wmvpdb:
     container_name: wmvpdb
-    image: postgres
+    image: mdillon/postgis
     restart: always
     volumes:
       - pgdata:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: "CapeCodMA"
+      POSTGRES_PASSWORD: "CapeCodMA"
+      POSTGRES_DB: "wMVP3_CapeCodMA"
 
 volumes:
   pgdata:
