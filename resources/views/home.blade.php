@@ -24,6 +24,7 @@
 						<tr id="scenario_{{$scenario->ScenarioID}}">
 							<td>{{$scenario->AreaName}}</td>
 							<td>{{$scenario->ScenarioID}}</td> 
+							<!-- TODO: Format date from postgres. Causes "trailing data" error when parsing from postgres container -->
 							<td>{{date('Y-m-d', strtotime($scenario->CreateDate))}}</td>
 							<td><a href="{{url('map', [$scenario->AreaID, $scenario->ScenarioID])}}" ><i class="fa fa-globe"></i> Wizard</a>
 							</td> 

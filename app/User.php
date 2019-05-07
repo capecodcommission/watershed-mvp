@@ -6,7 +6,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-
+	// TODO: remove CapeCodMa from table name when using postgres container
 	protected $table = 'CapeCodMa.Scenario_Users';
 	protected $primaryKey = 'user_id';
 
