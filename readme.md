@@ -8,8 +8,10 @@
 * [ArcGIS Javascript API](https://developers.arcgis.com/javascript/)
 * [jquery](https://jquery.com/)
 * [D3js](https://d3js.org/)
+* [Sequelize](http://docs.sequelizejs.com/)
 
 ## Docker Build 
+In `docker-compose.yml`, under the `wmvpdb` service, replace any `:environment` variables marked `${DB_...}` to actual values 
 ```bash
 # Change working directory to project path
 cd /path/to/project
@@ -50,4 +52,11 @@ kubectl delete pvc wmvpdb-claim --namespace wmvp
 
 # Start cluster admin dashboard 
 az aks browse --resource-group CCC-AKSGroup --name CCC-AKS-01
+```
+
+## Seeding
+In the `/db_stuff/.env` file, change the `DB_HOST` variable to either `wmvpdb` (local) or wmvpdb load balancer IP on Kubernetes (production)
+```bash
+# In root project directory
+sudo docker-compose up --build wmvpseeds
 ```

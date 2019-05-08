@@ -110,7 +110,7 @@ items:
       type: local
   spec:
     capacity:
-      storage: 100Mi
+      storage: 1Gi
     accessModes:
       - ReadWriteOnce
     hostPath:
@@ -129,7 +129,7 @@ items:
     volumeMode: Filesystem
     resources:
       requests:
-        storage: 100Mi
+        storage: 1Gi
   status: {}
 - apiVersion: extensions/v1beta1
   kind: Deployment
@@ -157,7 +157,7 @@ items:
             value: ${DB_USERNAME}
           - name: POSTGRES_DB
             value: ${DB_DATABASE}
-          image: postgres
+          image: mdillon/postgis
           name: wmvpdb
           resources: {}
           volumeMounts:
@@ -178,12 +178,63 @@ items:
     name: wmvpdb
     namespace: wmvp
   spec:
+    type: LoadBalancer
     ports:
     - name: "5432"
       port: 5432
       targetPort: 5432
     selector:
       io.kompose.service: wmvpdb
+  status:
+    loadBalancer: {}
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    labels:
+      io.kompose.service: wmvpadmin
+      keel.sh/policy: force
+      keel.sh/match-tag: "true"
+    name: wmvpadmin
+    namespace: wmvp
+  spec:
+    replicas: 1
+    revisionHistoryLimit: 5
+    selector:
+      matchLabels:
+        app: wmvpadmin
+    strategy: {}
+    template:
+      metadata:
+        name: wmvpadmin
+        creationTimestamp: null
+        labels:
+          io.kompose.service: wmvpadmin
+          app: wmvpadmin
+      spec:
+        containers:
+        - image: adminer
+          imagePullPolicy: Always
+          name: wmvpadmin
+          ports:
+          - containerPort: 8080
+          resources: {}
+        restartPolicy: Always
+  status: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      io.kompose.service: wmvpadmin
+    name: wmvpadmin
+    namespace: wmvp
+  spec:
+    type: LoadBalancer
+    ports:
+    - name: "8082"
+      port: 8082
+      targetPort: 8080
+    selector:
+      io.kompose.service: wmvpadmin
   status:
     loadBalancer: {}
 kind: List

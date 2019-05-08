@@ -186,6 +186,7 @@ class TechnologyController extends Controller
 	 * @return void
 	 * @author 
 	 **/
+	// TODO: Rename to ApplyTreatment_Subembayment
 	public function ApplyTreatment_Embayment($treat_id, $rate, $units, $subemid = null)
 	{
 		$scenarioid = session('scenarioid');
@@ -415,17 +416,19 @@ class TechnologyController extends Controller
 			switch ($type) 
 			{
 				case 'fert':
-					// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Fert] ' . $treat_id . ', ' . $rate );
+					// TODO: Change reference to CALC_ApplyTreatment_Percent1, modify CALC_ApplyTreatment_Percent1 stored procedure to take in 'fert' param similar to storm-percent switch below
 					$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Fert1] ' . $treat_id . ', ' . $rate );
 					return $updated;	
 					break;
 
+				// Stormwater Management
 				case 'storm-percent':
 					// $updated = DB::select('exec CapeCodMA.CALC_ApplyTreatment_Percent ' . $treat_id . ', ' . $rate . ', storm' );
 					$updated = DB::select('exec CapeCodMA.CALC_ApplyTreatment_Percent1 ' . $treat_id . ', ' . $rate . ', storm' );
 					return $updated;
 					break;
 
+				// Stormwater treatments
 				case 'storm':
 					// $updated = DB::select('exec [CapeCodMA].[CALC_UpdateTreatment_Storm] ' . $treat_id . ', ' . $rate . ', ' . $units );
 					$updated = DB::select('exec [CapeCodMA].[CALC_UpdateTreatment_Storm1] ' . $treat_id . ', ' . $rate . ', ' . $units );
@@ -461,7 +464,8 @@ class TechnologyController extends Controller
 					$scenarioid = session('scenarioid');
 					$subemid = session('subemid');
 					$n_parcels = 0;
-
+				
+					// TODO: Can we pass in # of parcels from either session or treatment id?
 					$parcels = DB::table("dbo.wiz_treatment_towns")->select("*")->where("wtt_treatment_id", "=", $treat_id)->get();
 
 					foreach ($parcels as $parcel) 

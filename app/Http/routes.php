@@ -46,6 +46,7 @@ Route::get('/delete_scenario/{scenarioid}', 'ScenarioController@deleteScenario')
 Route::get('/apply_percent/{treatment}/{rate}/{type}/{units?}', 'TechnologyController@ApplyTreatment_Percent');
 
 // TODO: Is location optional for Stormwater Management?
+// NO: It applies to SW treatments and not Management
 Route::get('/apply_storm/{treatment}/{rate}/{units}/{location}', 'TechnologyController@ApplyTreatment_Storm');
 
 Route::get('/apply_septic/{treatment}/{rate}', 'TechnologyController@ApplyTreatment_Septic');

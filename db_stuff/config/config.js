@@ -6,21 +6,24 @@ module.exports =
     "password": process.env.DB_PASSWORD,
     "database": process.env.DB_DATABASE,
     "host": process.env.DB_HOST,
-    "dialect": "postgresql"
+    "dialect": "postgresql",
+    "seederStorage": 'sequelize'
   },
   "test": {
     "username": "root",
     "password": null,
     "database": "database_test",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "seederStorage": 'sequelize'
   },
   "production": {
     "username": "root",
     "password": null,
     "database": "database_production",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "seederStorage": 'sequelize'
   },
   "wmvpConfig": {
     "user": process.env.LEGACY_USER,

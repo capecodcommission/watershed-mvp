@@ -333,6 +333,8 @@
 		</div>
 		<div class="acc_cCont">
 			<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="wmvp_results_{{session('scenarioid')}}">View Scenario Summary</a>
+			<!-- TODO: Uncomment and check on local wmvp -->
+			<!-- <span class="remaining"><strong>Nitrogen Remaining to Threshold:</strong> <span></span>kg</span> -->
 			</p>
 			<hr>
 			<!-- <div class="technology">

@@ -80,6 +80,10 @@
 			// console.log('button clicked');
 				$('#popdown-opacity').hide();
 				map.on('click', function(e){
+				// TODO: Check if preventDefault function will take care of saved map clicks referencing #applytreatment issue
+				// e.preventDefault();
+
+				// TODO: Is destination_active always 1? If so, remove it
 				if (destination_active > 0)
 				{
 					// console.log(e.mapPoint.x, e.mapPoint.y);
@@ -136,7 +140,7 @@
 			e.preventDefault();
 			var percent = $('#embayment_percent').val();
 			var units = $('#unit_metric').val();
-			// need a new route to handle embayment (absolute metrics)
+			// TODO: Session duplicating map clicks which insert x point rows into parcelmaster. Check session workflow pertaining to /map/point route
 			var url = "{{url('apply_embayment')}}" + '/' +  treatment + '/' + percent + '/' + units + '/' + subem_id
 			// console.log(url);
 			$.ajax({
@@ -146,6 +150,7 @@
 				.done(function(msg){
 					// console.log(msg);
 					msg = Math.round(msg);
+					// TODO: Is #n_removed real? If not, remove all references
 					$('#n_removed').text(msg);
 					$('#popdown-opacity').hide();
 					$( "#update" ).trigger( "click" );
