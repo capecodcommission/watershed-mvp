@@ -12,6 +12,7 @@ services:
       - ./app:/var/www/app:rw
     depends_on:
       - wmvpdb
+      - wmvpadmin
       - wmvpseeds
 
   wmvpseeds:
@@ -25,6 +26,7 @@ services:
       - ./db_stuff/seeders:/app/seeders:rw
     depends_on:
       - wmvpdb
+      - wmvpadmin
 
   wmvpadmin:
     container_name: wmvpadmin
