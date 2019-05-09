@@ -41,13 +41,13 @@ jobs:
             echo LEGACY_HOST=${LEGACY_HOST} >> ./db_stuff/.env
             echo LEGACY_PORT=${LEGACY_PORT} >> ./db_stuff/.env
             echo -e "text\n" >> ./db_stuff/.env
-            docker build . -t ${registryName}.azurecr.io/${frontImageLatest}
-            docker build ./db_stuff -t ${registryName}.azurecr.io/${seedsImageLatest}
-            docker build ./admin -t ${registryName}.azurecr.io/${adminImage}
+            docker build . -t ${registryName}.azurecr.io/wmvp:latest
+            docker build ./db_stuff -t ${registryName}.azurecr.io/wmvpseeds:latest
+            docker build ./admin -t ${registryName}.azurecr.io/wmvpadmin:latest
             docker login ${registryName}.azurecr.io -u ${registryName} -p ${registryPassword}
-            docker push ${registryName}.azurecr.io/${frontImageLatest}
-            docker push ${registryName}.azurecr.io/${seedsImageLatest}
-            docker push ${registryName}.azurecr.io/${adminImage}
+            docker push ${registryName}.azurecr.io/wmvp:latest
+            docker push ${registryName}.azurecr.io/wmvpseeds:latest
+            docker push ${registryName}.azurecr.io/wmvpadmin:latest
   BuildPushDev:
     docker:
       - image: circleci/node
@@ -89,13 +89,13 @@ jobs:
             echo LEGACY_HOST=${LEGACY_HOST} >> ./db_stuff/.env
             echo LEGACY_PORT=${LEGACY_PORT} >> ./db_stuff/.env
             echo -e "text\n" >> ./db_stuff/.env
-            docker build . -t ${registryName}.azurecr.io/${frontImageDev}
-            docker build ./db_stuff -t ${registryName}.azurecr.io/${seedsImageDev}
-            docker build ./admin -t ${registryName}.azurecr.io/${adminImage}
+            docker build . -t ${registryName}.azurecr.io/wmvp:dev
+            docker build ./db_stuff -t ${registryName}.azurecr.io/wmvpseeds:dev
+            docker build ./admin -t ${registryName}.azurecr.io/wmvpadmin:latest
             docker login ${registryName}.azurecr.io -u ${registryName} -p ${registryPassword}
-            docker push ${registryName}.azurecr.io/${frontImageDev}
-            docker push ${registryName}.azurecr.io/${seedsImageDev}
-            docker push ${registryName}.azurecr.io/${adminImage}
+            docker push ${registryName}.azurecr.io/wmvp:dev
+            docker push ${registryName}.azurecr.io/wmvpseeds:dev
+            docker push ${registryName}.azurecr.io/wmvpadmin:latest
 workflows:
   version: 2
   WMVP_Workflow:
