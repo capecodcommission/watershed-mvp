@@ -212,7 +212,7 @@ items:
           app: wmvpadmin
       spec:
         containers:
-        - image: adminer
+        - image: ccccontainers.azurecr.io/wmvpadmin:latest
           imagePullPolicy: Always
           name: wmvpadmin
           ports:

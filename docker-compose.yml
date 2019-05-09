@@ -28,7 +28,7 @@ services:
 
   wmvpadmin:
     container_name: wmvpadmin
-    image: adminer
+    build: './admin'
     restart: always
     depends_on:
       - wmvpdb
