@@ -10,10 +10,6 @@ services:
     volumes:
       - ./resources:/var/www/resources:rw
       - ./app:/var/www/app:rw
-    depends_on:
-      - wmvpdb
-      - wmvpadmin
-      - wmvpseeds
 
   wmvpseeds:
     container_name: wmvpseeds
