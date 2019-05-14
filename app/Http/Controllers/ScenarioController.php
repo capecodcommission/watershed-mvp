@@ -87,7 +87,7 @@ class ScenarioController extends Controller
 	 **/
 	public function getScenarioResults($scenarioid)
 	{	
-	
+		// TODO: Can we get/set from global variable? If so, use that, else findorfail()
 		$scenario = Scenario::findOrFail($scenarioid);
 		
 		// $towns = DB::table('CapeCodMA.parcelMaster')
@@ -102,6 +102,7 @@ class ScenarioController extends Controller
 		// 	->groupBy('CapeCodMA.MAtowns.TOWN','CapeCodMA.parcelMaster.treatment_id')
 		// 	->get();
 
+		// TODO: Can $towns be set and gotten globally? If so, use that, else query
 		$towns = DB::select('
 			select 
 				wtt.*, 
@@ -116,8 +117,10 @@ class ScenarioController extends Controller
 
 		// $subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
 
+		// TODO: Check if we can remove stored proc and get $subembayments global variable to pass into view
 		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments1 ' . $scenarioid);
 
+		//  'subembayments' => session('subembayments')
 		return view('layouts/results', ['scenario'=>$scenario, 'towns'=>$towns, 'subembayments'=>$subembayments]);
 		
 		

@@ -15,6 +15,7 @@
 			<h2 class="author">Created by: {{$scenario->user->name}} on {{date('Y-m-d', strtotime($scenario->CreateDate))}}</h2>
 			<div id="app">
 			<?php
+				// TODO: Can we get/set from global variables?
 				$scenario_cost = 0;
 				$n_removed = 0;
 				$n_att_total = 0;

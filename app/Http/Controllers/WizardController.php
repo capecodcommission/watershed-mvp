@@ -93,7 +93,8 @@ class WizardController extends Controller
 				Session::put('storm_applied', 0);
 			}
 		}
-
+		// TODO: Determine if global values can be initially set and updated without initializing additoinal variables
+		// Can we use existing global values? If so, use those, else init
 		$removed = 0;
 		$n_load_orig = 0;
 		// $subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
@@ -226,6 +227,8 @@ class WizardController extends Controller
 	 * @return void
 	 * @author 
 	 **/
+
+	//  TODO: Rename to acount for custom polygon creation
 	public function getPolygon2(Request $data)
 	{
 		// dd($data);

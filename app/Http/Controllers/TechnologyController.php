@@ -505,6 +505,9 @@ class TechnologyController extends Controller
 			
 			Session::put('storm_applied',0);
 		}
+
+		// TODO: Check if deleted treatment can be removed from global treatments array
+		// Can we go Back to Map without page refresh?
 		
 		return 1;
 	}

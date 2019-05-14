@@ -204,6 +204,7 @@ require([
 
 			var treatmentTypeId = typeid
 
+            // TODO: Pump in from elsewhere instead of programmatically setting here
 			if (treatmentTypeId == '101') { //purple heart
 					var polySymbol = new esri.symbol.SimpleFillSymbol(
                         SimpleFillSymbol.STYLE_SOLID,
