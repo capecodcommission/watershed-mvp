@@ -40,6 +40,7 @@
 				<button id="apply_treatment_{{$treatment->TreatmentID}}">Apply</button>
 				<button id="cancel_treatment_{{$treatment->TreatmentID}}" class='button--cta right'><i class="fa fa-ban"></i> Cancel</button>
 			</p>
+			<!-- TODO: Add warning that sewered parcels will not be affected -->
 	</section>
 </div>
 
@@ -60,8 +61,12 @@
 <script>
 	$(document).ready(function(){
 
+		// TODO: See if we can log $tech to the conosole
+		// console.log({{$tech}}) ?
+
 		$('div.fa.fa-spinner.fa-spin').remove()
 		
+		// TOOD: Rename variables to what they actually represent
 	 treatment = {{$treatment->TreatmentID}};
 	 typeid = {{$treatment->TreatmentType_ID}};
 

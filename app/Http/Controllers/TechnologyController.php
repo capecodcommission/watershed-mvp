@@ -321,9 +321,15 @@ class TechnologyController extends Controller
 	 * @return void
 	 * @author 
 	 **/
+	// TODO: Apply proper 'apply_treatment' stored proc and pass in type, eg. 'septic' or 'groundwater'
+	// public function updatePolygon(Request $data, $type)
 	public function updatePolygon(Request $data)
 	{
 		$data = $data->all();
+
+		// TODO: Create switch to use proper stored proc based on $type
+		
+
 		// DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
 		// stored procedure needs to update the parcels in wiz_treatment_parcel to match the new polygon
 		// then update the polygon and parcel data/N total for this treatment in Treatment_Wiz
