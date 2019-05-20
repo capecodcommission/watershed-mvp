@@ -18,16 +18,17 @@ cd /path/to/project
 
 # Run docker-compose to start apache/php container
 # Once the container is running, navigate to localhost:8080 in your web browser
-sudo docker-compose up
+docker-compose up
 
 # To remove local images and build cache
+docker-compose down -v
 docker system prune -a
 ```
 
 ## Manual Build 
 ```bash
 # SSH into Apache server
-sudo ssh user@host
+ssh user@host
 
 # CD to exposed directory
 cd /var/www/html
@@ -59,5 +60,5 @@ az aks browse --resource-group CCC-AKSGroup --name CCC-AKS-01
 In the `/db_stuff/.env` file, change the `DB_HOST` variable to either `wmvpdb` (local) or wmvpdb load balancer IP on Kubernetes (production)
 ```bash
 # In root project directory
-sudo docker-compose up --build wmvpseeds
+docker-compose up --build wmvpseeds
 ```
