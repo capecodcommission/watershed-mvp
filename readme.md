@@ -11,7 +11,7 @@
 * [Sequelize](http://docs.sequelizejs.com/)
 
 ## Docker Build 
-In `docker-compose.yml`, under the `wmvpdb` service, replace any `:environment` variables marked `${DB_...}` to actual values 
+Place your `.env` file in the project root
 ```bash
 # Change working directory to project path
 cd /path/to/project
