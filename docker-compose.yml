@@ -11,38 +11,38 @@ services:
       - ./resources:/var/www/resources:rw
       - ./app:/var/www/app:rw
 
-  wmvpseeds:
-    container_name: wmvpseeds
-    build: './db_stuff'
-    ports:
-      - "8081:80"
-    volumes:
-      - ./db_stuff/migrations:/app/migrations:rw
-      - ./db_stuff/models:/app/models:rw
-      - ./db_stuff/seeders:/app/seeders:rw
-    depends_on:
-      - wmvpdb
-      - wmvpadmin
+#   wmvpseeds:
+#     container_name: wmvpseeds
+#     build: './db_stuff'
+#     ports:
+#       - "8081:80"
+#     volumes:
+#       - ./db_stuff/migrations:/app/migrations:rw
+#       - ./db_stuff/models:/app/models:rw
+#       - ./db_stuff/seeders:/app/seeders:rw
+#     depends_on:
+#       - wmvpdb
+#       - wmvpadmin
 
-  wmvpadmin:
-    container_name: wmvpadmin
-    build: './admin'
-    restart: always
-    depends_on:
-      - wmvpdb
-    ports:
-      - "8082:8080"
+#   wmvpadmin:
+#     container_name: wmvpadmin
+#     build: './admin'
+#     restart: always
+#     depends_on:
+#       - wmvpdb
+#     ports:
+#       - "8082:8080"
 
-  wmvpdb:
-    container_name: wmvpdb
-    image: mdillon/postgis
-    restart: always
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: "${DB_USERNAME}"
-      POSTGRES_PASSWORD: "${DB_PASSWORD}"
-      POSTGRES_DB: "${DB_DATABASE}"
+#   wmvpdb:
+#     container_name: wmvpdb
+#     image: mdillon/postgis
+#     restart: always
+#     volumes:
+#       - pgdata:/var/lib/postgresql/data
+#     environment:
+#       POSTGRES_USER: "${DB_USERNAME}"
+#       POSTGRES_PASSWORD: "${DB_PASSWORD}"
+#       POSTGRES_DB: "${DB_DATABASE}"
 
-volumes:
-  pgdata:
+# volumes:
+#   pgdata:
