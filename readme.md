@@ -17,6 +17,7 @@ Place your `.env` file in the project root
 cd /path/to/project
 
 # Run docker-compose to start apache/php container
+# Once the container is running, navigate to localhost:8080 in your web browser
 sudo docker-compose up
 
 # To remove local images and build cache
