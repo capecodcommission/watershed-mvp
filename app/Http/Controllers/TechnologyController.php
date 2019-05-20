@@ -333,6 +333,9 @@ class TechnologyController extends Controller
 		// DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
 		// stored procedure needs to update the parcels in wiz_treatment_parcel to match the new polygon
 		// then update the polygon and parcel data/N total for this treatment in Treatment_Wiz
+
+		// TODO: Modify update_treatment stored proc to delete/fill parcelmaster instead of wiz_treatment_parcels
+		// TODO: Once update_treatment stored proc working, modify get_pointsfrompolygon to incorporate delete portion from update_treatment
 		$query = 'exec CapeCodMA.UPD_TreatmentPolygon ' . $data['treatment'] . ', \'' . $data['polystring'] . '\'';
 		Log::info($query);
 		$upd = DB::select('exec CapeCodMA.UPD_TreatmentPolygon ' . $data['treatment'] . ', \'' . $data['polystring'] . '\'');

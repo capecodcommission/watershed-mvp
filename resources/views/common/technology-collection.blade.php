@@ -40,7 +40,7 @@
 	</section>
 </div>
 
-
+		<!-- TODO: Check collection/septic blades. Is this shown? -->
 	<template id="treatment-template">
 		<div class="treatment" id="@{{TreatmentID}}">
 			<p>Total Unattenuated Nitrogen: <span id="total_nitrogen_polygon">@{{Total_Orig_Nitrogen}}</span>; Nitrogen Removed by Treatment: 
