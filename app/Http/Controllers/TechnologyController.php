@@ -336,9 +336,9 @@ class TechnologyController extends Controller
 
 		// TODO: Modify update_treatment stored proc to delete/fill parcelmaster instead of wiz_treatment_parcels
 		// TODO: Once update_treatment stored proc working, modify get_pointsfrompolygon to incorporate delete portion from update_treatment
-		$query = 'exec CapeCodMA.UPD_TreatmentPolygon ' . $data['treatment'] . ', \'' . $data['polystring'] . '\'';
+		$query = 'exec CapeCodMA.UPD_TreatmentPolygon_TEST ' . $data['treatment'] . ', \'' . $data['polystring'] . '\'';
 		Log::info($query);
-		$upd = DB::select('exec CapeCodMA.UPD_TreatmentPolygon ' . $data['treatment'] . ', \'' . $data['polystring'] . '\'');
+		$upd = DB::select('exec CapeCodMA.UPD_TreatmentPolygon_TEST ' . $data['treatment'] . ', \'' . $data['polystring'] . '\'');
 		return $upd;
 
 
