@@ -24,7 +24,7 @@ class MapController extends Controller
 		// DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
 
 		// $subembayment = DB::select("exec [CapeCodMA].[UPD_Credit_Subembayment] @x='$x', @y='$y', @treatment=$treatment");
-		$subembayment = DB::select("exec [CapeCodMA].[UPD_Credit_Subembayment1] @x='$x', @y='$y', @treatment=$treatment");
+		$subembayment = DB::select("exec [dbo].[UPD_Credit_Subembayment1] @x='$x', @y='$y', @treatment=$treatment");
   		
 		// need to update the record in the treatment_wiz table with the location of the treatment
 		// use point as the polygon value; 

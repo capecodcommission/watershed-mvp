@@ -16,7 +16,7 @@ use JavaScript;
 use Session;
 use Excel;
 
-class MarioController extends Controller
+class WelcomeController extends Controller
 {
 
 	public function sumTotalsWithinPoly(Request $data)

@@ -45,7 +45,7 @@ class ScenarioController extends Controller
 		$total_goal = 0;
 		// $subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
 
-		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments1 ' . $scenarioid);
+		$subembayments = DB::select('exec dbo.Calc_ScenarioNitrogen_Subembayments1 ' . $scenarioid);
 		// $subembayments = DB::select('exec CapeCodMA.GET_SubembaymentNitrogen ' . $id);
 		$total_goal = 0;
 		foreach ($subembayments as $key) 
@@ -88,7 +88,7 @@ class ScenarioController extends Controller
 	public function getScenarioResults($scenarioid)
 	{	
 		// TODO: Can we get/set from global variable? If so, use that, else findorfail()
-		$scenario = Scenario::findOrFail($scenarioid);
+		$scenario = Scenario::find($scenarioid);
 		
 		// $towns = DB::table('CapeCodMA.parcelMaster')
 		// 	->join('CapeCodMA.MAtowns','CapeCodMA.MAtowns.TOWN_ID', '=', 'CapeCodMA.parcelMaster.town_id')
@@ -110,7 +110,7 @@ class ScenarioController extends Controller
 
 			from dbo.wiz_treatment_towns wtt 
 			
-			inner join capecodma.matowns t 
+			inner join dbo.MATowns t 
 			on t.town_id = wtt.wtt_town_id 
 
 			where wtt.wtt_unatt_n_removed is not null and wtt.wtt_scenario_id = ' . $scenarioid);
@@ -118,7 +118,7 @@ class ScenarioController extends Controller
 		// $subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
 
 		// TODO: Check if we can remove stored proc and get $subembayments global variable to pass into view
-		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments1 ' . $scenarioid);
+		$subembayments = DB::select('exec dbo.Calc_ScenarioNitrogen_Subembayments1 ' . $scenarioid);
 
 		//  'subembayments' => session('subembayments')
 		return view('layouts/results', ['scenario'=>$scenario, 'towns'=>$towns, 'subembayments'=>$subembayments]);
@@ -136,7 +136,7 @@ class ScenarioController extends Controller
 	function GetScenarioNitrogen()
 	{
 		$scenarioid = session('scenarioid');
-		$Nitrogen = DB::select('exec capecodma.calc_scenarioNitrogen ' . $scenarioid);
+		$Nitrogen = DB::select('exec dbo.calc_scenarioNitrogen ' . $scenarioid);
 		return $Nitrogen;
 	}
 
@@ -156,7 +156,7 @@ class ScenarioController extends Controller
 		// $embay_id = $scenario->AreaID;
 		Log::info($scenario->treatments);
 		// $results = DB::select('exec CapeCodMA.Get_ScenarioResults '. $scenarioid);
-		$towns = DB::select('select wtt.*, t.town from dbo.wiz_treatment_towns wtt inner join capecodma.matowns t on t.town_id = wtt.wtt_town_id where wtt.wtt_scenario_id = ' . $scenarioid);
+		$towns = DB::select('select wtt.*, t.town from dbo.wiz_treatment_towns wtt inner join dbo.matowns t on t.town_id = wtt.wtt_town_id where wtt.wtt_scenario_id = ' . $scenarioid);
 
 		// $towns = DB::table('CapeCodMA.parcelMaster')
 		// 	->join('CapeCodMA.MAtowns','CapeCodMA.MAtowns.TOWN_ID', '=', 'CapeCodMA.parcelMaster.town_id')
@@ -170,7 +170,7 @@ class ScenarioController extends Controller
 		// 	->groupBy('CapeCodMA.MAtowns.TOWN','CapeCodMA.parcelMaster.treatment_id')
 		// 	->get();
 		// $subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
-		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments1 ' . $scenarioid);
+		$subembayments = DB::select('exec dbo.Calc_ScenarioNitrogen_Subembayments1 ' . $scenarioid);
 		$filename = 'scenario_' . $scenarioid;
 		Excel::create($filename, function($excel) use($scenario, $towns, $subembayments) 
 		{
@@ -206,13 +206,13 @@ class ScenarioController extends Controller
 		$user = Auth::user();
 		$scenario = Scenario::find($id);
 		
-		$result = DB::select('exec CapeCodMA.DeleteScenario ' . $id);
+		$result = DB::select('exec dbo.DeleteScenario ' . $id);
 
 		return 1;
 	}
 
 	public function saveScenario($id) 
 	{
-		$result = DB::select('exec CapeCodMA.SAVE_Scenario ' . $id);
+		$result = DB::select('exec dbo.SAVE_Scenario ' . $id);
 	}
 }

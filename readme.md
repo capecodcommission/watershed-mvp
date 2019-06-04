@@ -11,7 +11,8 @@
 * [Sequelize](http://docs.sequelizejs.com/)
 
 ## Docker Build 
-Place your `.env` file in the project root
+Place `legacy.env` or `azure.env` from CCC Dev Team Sharepoint in the project root
+Remove `legacy` or `azure` from `.env` filename
 ```bash
 # Change working directory to project path
 cd /path/to/project

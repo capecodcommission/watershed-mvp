@@ -230,7 +230,7 @@
               var len = polystring.length;
               polystring = polystring.substring(0, len - 2);
 
-              var url = '/poly2';
+              var url = '/sumTotalsWithinPolygon';
                       
               var data = {polystring: polystring};
 
@@ -245,7 +245,7 @@
                   $('#nitrogenload').html('<b>Nitrogen Load</b>: ' + Math.round(msg[0]['nitrogenLoad']).toLocaleString() + ' kg/year')
                   $('#wwload').html('<b>Wastewater Load</b>: ' + Math.round(msg[0]['wwLoad']).toLocaleString() + ' gal/day')
 
-                  var poly3URL = '/poly3'
+                  var poly3URL = '/getIDArrayWithinPolygon'
                   $.ajax({
                     method: 'POST',
                     data: data,
