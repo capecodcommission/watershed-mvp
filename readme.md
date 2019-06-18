@@ -32,7 +32,7 @@ sudo ssh user@host
 cd /var/www/html
 
 # Pull project code into directory
-git pull https://github.com/capecodcommission/watershed-mvp.git
+git pull 
 ```
 
 ## Kubernetes
