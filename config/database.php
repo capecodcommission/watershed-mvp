@@ -1,5 +1,4 @@
 <?php
-//if (strpos(url()->full(), 'devdb') > 0 || env('APP_ENV')== 'local')
 	
 return [
 
