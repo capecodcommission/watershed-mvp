@@ -34,7 +34,6 @@ jobs:
             echo DB_PASSWORD=${DB_PASSWORD} >> .env
             echo -e "text\n" >> .env
             docker build . -t ${registryName}.azurecr.io/wmvp:latest
-            docker build ./admin -t ${registryName}.azurecr.io/wmvpadmin:latest
             docker login ${registryName}.azurecr.io -u ${registryName} -p ${registryPassword}
             docker push ${registryName}.azurecr.io/wmvp:latest
             docker push ${registryName}.azurecr.io/wmvpadmin:latest
@@ -72,7 +71,6 @@ jobs:
             echo DB_PASSWORD=${DB_PASSWORD} >> .env
             echo -e "text\n" >> .env
             docker build . -t ${registryName}.azurecr.io/wmvp:dev
-            docker build ./admin -t ${registryName}.azurecr.io/wmvpadmin:latest
             docker login ${registryName}.azurecr.io -u ${registryName} -p ${registryPassword}
             docker push ${registryName}.azurecr.io/wmvp:dev
             docker push ${registryName}.azurecr.io/wmvpadmin:latest

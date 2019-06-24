@@ -4,7 +4,7 @@
 <head>
     <title>WatershedMVP 3.0</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="{{url('css/app.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{secure_url('css/app.css')}}" rel="stylesheet" type="text/css">
     <meta name="csrf-token" id="token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://js.arcgis.com/3.16/esri/css/esri.css">
     <style>

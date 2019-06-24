@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>  
     <title>WatershedMVP 3.0</title>
-    <link rel="stylesheet" href="{{url('css/app.css')}}">
+    <link rel="stylesheet" href="{{secure_url('css/app.css')}}">
 </head>
 <body id="app-layout">
 <div class="wrapper">

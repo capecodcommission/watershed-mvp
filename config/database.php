@@ -1,14 +1,5 @@
 <?php
 //if (strpos(url()->full(), 'devdb') > 0 || env('APP_ENV')== 'local')
-if (env('APP_ENV')== 'local')
-	// Use pgsql when connecting to wmvpdb container, sqlsrv when connecting to legacy SQL Server locally
-	{
-		$which = 'sqlsrv';
-	}
-	else
-	{
-		$which = 'pgsql';
-	}
 	
 return [
 
@@ -38,7 +29,7 @@ return [
 
 	
 
-	'default' => $which,
+	'default' => 'sqlsrv',
 	/*
 	|--------------------------------------------------------------------------
 	| Database Connections
