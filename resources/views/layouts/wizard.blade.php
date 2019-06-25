@@ -4,7 +4,12 @@
 <head>
 	<title>WatershedMVP 3.0 Wizard</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link href="{{secure_url('/css/app.css')}}" rel="stylesheet" type="text/css">
+	<?php if( env('APP_ENV') == 'production' ) : ?>
+		<link rel="stylesheet" href="{{secure_url('/css/app.css')}}">
+	<?php else :?>
+		<link rel="stylesheet" href="{{url('/css/app.css')}}">
+	<?php endif; ?>
+	<!-- <link href="{{secure_url('/css/app.css')}}" rel="stylesheet" type="text/css"> -->
 	<link rel="stylesheet" href="https://js.arcgis.com/3.16/esri/css/esri.css">
 	<script src="https://js.arcgis.com/3.16/"></script>
   	<link rel="stylesheet" href="https://js.arcgis.com/3.16/dijit/themes/claro/claro.css">  

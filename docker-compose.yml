@@ -10,6 +10,7 @@ services:
     volumes:
       - ./resources:/var/www/resources:rw
       - ./app:/var/www/app:rw
+      - .env:/var/www/.env:rw
 
 #   wmvpseeds:
 #     container_name: wmvpseeds
