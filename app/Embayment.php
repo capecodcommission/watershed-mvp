@@ -9,7 +9,7 @@ class Embayment extends Model
 {
 		//
 	// protected $connection = 'sqlsrv';
-	protected $table = 'CapeCodMa.Embayments';
+	protected $table = 'CapeCodMA.Embayments';
 	protected $primaryKey = 'EMBAY_ID';
 
 	/**

@@ -238,7 +238,7 @@ class TechnologyController extends Controller
 		//$scenarioid = session('scenarioid');
 		
 		// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Septic] ' . $treat_id . ', ' . $rate );
-		$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Septic1] ' . $treat_id . ', ' . $rate );
+		$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Septic1] ' . $treat_id . ', ' . $rate );
 		
 		$n_removed = session('n_removed');
 		$n_removed += $updated[0]->removed;
@@ -446,16 +446,16 @@ class TechnologyController extends Controller
 
 				case 'toilets':
 					// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Septic] '. $treat_id . ', '. $rate);
-					$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Septic1] '. $treat_id . ', '. $rate);
+					$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Septic1] '. $treat_id . ', '. $rate);
 					return $updated;
 					break;
 
 				case 'collect':
 				// $query = 'exec [CapeCodMA].[CALC_ApplyTreatment_Septic] '. $treat_id . ', '. $rate;
-				$query = 'exec [CapeCodMA].[CALC_ApplyTreatment_Septic1] '. $treat_id . ', '. $rate;
+				$query = 'exec [dbo].[CALC_ApplyTreatment_Septic1] '. $treat_id . ', '. $rate;
 				Log::info($query);
 					// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Septic] '. $treat_id . ', '. $rate);
-					$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Septic1] '. $treat_id . ', '. $rate);
+					$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Septic1] '. $treat_id . ', '. $rate);
 					return $updated;
 					break;	
 				case 'septic':
