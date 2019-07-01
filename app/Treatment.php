@@ -34,7 +34,8 @@ class Treatment extends Model
 		'Cost_Total',
 		'Nload_Reduction',
 		'Cost20yr_OM',
-		'Cost20yr_Cap'
+		'Cost20yr_Cap',
+		'treatment_icon'
 	];
 	
 	
