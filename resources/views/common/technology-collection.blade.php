@@ -1,7 +1,6 @@
-		<title>{{$tech->Technology_Strategy}}</title>
-		<link rel="stylesheet" href="{{url('/css/jquery.popdown.css')}}">
+<title>{{$tech->Technology_Strategy}}</title>
+<link rel="stylesheet" href="{{url('/css/jquery.popdown.css')}}">
 <meta name="csrf-token" id="token" content="{{ csrf_token() }}">
-		
 
 <div class="popdown-content" id="app">
 	<header>
@@ -12,41 +11,39 @@
 		</div>
 	</header>
 	<section class="body">
-			<div class="technology">
-				<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
-					<img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" width="75">
+		<div class="technology">
+			<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
+				<img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" width="75">
 				<br />{{$tech->Technology_Strategy}}&nbsp;<i class="fa fa-question-circle"></i>
-				</a>			
-			</div>
-					<p class="select"><button id="select_polygon_{{$treatment->TreatmentID}}">Draw a polygon</button> </p>
+			</a>			
+		</div>
+		<p class="select"><button id="select_polygon_{{$treatment->TreatmentID}}">Draw a polygon</button> </p>
 
-					<p class="select_point">
-						<button id="select_destination_{{$treatment->TreatmentID}}" style="display:none;">
-							Select a destination
-						</button> 
-						<span>@{{subembayment}}</span>
-					</p>
-					
-			</div>
+		<p class="select_point">
+			<button id="select_destination_{{$treatment->TreatmentID}}" style="display:none;">
+				Select a destination
+			</button> 
+			<span>@{{subembayment}}</span>
+		</p>
 
-			<p>
-				Enter a valid reduction rate between {{round($tech->Nutri_Reduc_N_Low_ppm)}} and {{round($tech->Nutri_Reduc_N_High_ppm)}} ppm.<br />
-				<input type="range" id="septic-rate" min="{{$tech->Nutri_Reduc_N_Low_ppm}}" max="{{$tech->Nutri_Reduc_N_High_ppm}}" v-model="septic_rate" value="{{$tech->Nutri_Reduc_N_Low_ppm}}">@{{septic_rate}}
-			</p>
-			<p>
-				<button id="apply_treatment_{{$treatment->TreatmentID}}">Apply</button>
-				<button id="cancel_treatment_{{$treatment->TreatmentID}}" class='button--cta right'>Cancel</button>
-			</p>
+		<p>
+			Enter a valid reduction rate between {{round($tech->Nutri_Reduc_N_Low_ppm)}} and {{round($tech->Nutri_Reduc_N_High_ppm)}} ppm.<br />
+			<input type="range" id="septic-rate" min="{{$tech->Nutri_Reduc_N_Low_ppm}}" max="{{$tech->Nutri_Reduc_N_High_ppm}}" v-model="septic_rate" value="{{$tech->Nutri_Reduc_N_Low_ppm}}">@{{septic_rate}}
+		</p>
+		<p>
+			<button id="apply_treatment_{{$treatment->TreatmentID}}">Apply</button>
+			<button id="cancel_treatment_{{$treatment->TreatmentID}}" class='button--cta right'>Cancel</button>
+		</p>
 	</section>
 </div>
 
 		<!-- TODO: Check collection/septic blades. Is this shown? -->
-	<template id="treatment-template">
-		<div class="treatment" id="@{{TreatmentID}}">
-			<p>Total Unattenuated Nitrogen: <span id="total_nitrogen_polygon">@{{Total_Orig_Nitrogen}}</span>; Nitrogen Removed by Treatment: 
-			<span id="Nitrogen_Removed">@{{Nitrogen_Removed}}</span></p>
-		</div>
-	</template>
+<template id="treatment-template">
+	<div class="treatment" id="@{{TreatmentID}}">
+		<p>Total Unattenuated Nitrogen: <span id="total_nitrogen_polygon">@{{Total_Orig_Nitrogen}}</span>; Nitrogen Removed by Treatment: 
+		<span id="Nitrogen_Removed">@{{Nitrogen_Removed}}</span></p>
+	</div>
+</template>
 
 
 
@@ -59,9 +56,9 @@
 	$(document).ready(function(){
 
 		$('div.fa.fa-spinner.fa-spin').remove()
-	 treatment = {{$treatment->TreatmentID}};
-	 typeid = {{$treatment->TreatmentType_ID}};
-	 func = 'collect';
+		treatment = {{$treatment->TreatmentID}};
+		typeid = {{$treatment->TreatmentType_ID}};
+		func = 'collect';
 
 		$('#select_polygon_'+treatment).on('click', function(f){
 			f.preventDefault();
@@ -115,18 +112,18 @@
 						url: url
 					})
 						.done(function(msg){
-								msg = $.parseJSON(msg);
-								// console.log(msg.SUBEM_DISP);
-								// console.log(msg);
-								$('#'+msg.SUBEM_NAME+'> .stats').show();
-								// $('.notification_count').remove();
-								$('#popdown-opacity').show();
-								$('.select > span').text('Selected: '+msg.SUBEM_DISP);
-								$('.select > span').show();
-								$('#select_destination_'+treatment).hide();
-								destination_active = 0;
-								
-							})
+							msg = $.parseJSON(msg);
+							// console.log(msg.SUBEM_DISP);
+							// console.log(msg);
+							$('#'+msg.SUBEM_NAME+'> .stats').show();
+							// $('.notification_count').remove();
+							$('#popdown-opacity').show();
+							$('.select > span').text('Selected: '+msg.SUBEM_DISP);
+							$('.select > span').show();
+							$('#select_destination_'+treatment).hide();
+							destination_active = 0;
+							
+						})
 					}
 			});
 				// console.log(map);
@@ -134,7 +131,7 @@
 				// console.log('unbound');
 
 		});
-	$('#apply_treatment_'+treatment).on('click', function(e){
+		$('#apply_treatment_'+treatment).on('click', function(e){
 			e.preventDefault();
 			var rate = $('#septic-rate').val();
 			var url = "{{url('/apply_septic')}}" + '/' +  treatment + '/' + rate;

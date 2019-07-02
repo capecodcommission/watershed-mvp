@@ -25,10 +25,12 @@ class TechnologyController extends Controller
 	public function get($type, $id)
 	{
 
-		$tech = DB::table('dbo.v_Technology_Matrix')->select('*')->where('TM_ID', $id)->first();
+		$tech = DB::table('dbo.v_Technology_Matrix')->select('Technology_ID','Unit_Metric','Technology_Sys_Type','Show_In_wMVP','Technology_Strategy','id','Icon','Nutri_Reduc_N_High_ppm','Nutri_Reduc_N_Low_ppm','Nutri_Reduc_N_Low')->where('TM_ID', $id)->first();
 		$scenarioid = session('scenarioid');
 		$treatment = Treatment::create(['ScenarioID' => $scenarioid, 'TreatmentType_ID'=>$tech->Technology_ID, 'TreatmentType_Name'=>substr($tech->Technology_Strategy, 0, 50), 'Treatment_UnitMetric'=>$tech->Unit_Metric, 'Treatment_Class'=>$tech->Technology_Sys_Type, 'treatment_icon'=>$tech->Icon]);
-		// dd($tech, $treatment);
+		
+		// dump($tech, $treatment);
+
 		if ($tech->Show_In_wMVP == 4) // Fert Management Good
 		{
 			$scenario = Scenario::find($scenarioid);

@@ -26,7 +26,7 @@ class WelcomeController extends Controller
 		$poly = $data['polystring'];
 
 		// Obtain parcel count, nitrogen and wastewater loads within user-drawn polygon
-		$parcels = DB::select('exec CapeCodMA.sumTotalsWithinPoly ' . '\'' . $poly . '\'');
+		$parcels = DB::select('exec dbo.sumTotalsWithinPoly ' . '\'' . $poly . '\'');
 
 		return $parcels;
 	}
@@ -38,7 +38,7 @@ class WelcomeController extends Controller
 		$poly = $data['polystring'];
 
 		// Obtain parcel count, nitrogen and wastewater loads within user-drawn polygon
-		$parcels = DB::select('exec CapeCodMA.getIDArrayWithinPoly ' . '\'' . $poly . '\'');
+		$parcels = DB::select('exec dbo.getIDArrayWithinPoly ' . '\'' . $poly . '\'');
 
 		return $parcels;
 	}
