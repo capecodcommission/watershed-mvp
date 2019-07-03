@@ -83,7 +83,7 @@
 				// TODO: Check if preventDefault function will take care of saved map clicks referencing #applytreatment issue
 				// e.preventDefault();
 
-				// TODO: Is destination_active always 1? If so, remove it
+				// TODO: Handle second click which closes modal FOR ALL tech blades
 				if (destination_active > 0)
 				{
 					// console.log(e.mapPoint.x, e.mapPoint.y);

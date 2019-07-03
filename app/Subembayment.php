@@ -10,7 +10,7 @@ class Subembayment extends Model
 {
     //
 
-    protected $table = 'CapeCodMa.SubEmbayments';
+    protected $table = 'CapeCodMA.SubEmbayments';
 	protected $primaryKey = 'SUBEM_ID';
 
 	protected $fillable = [

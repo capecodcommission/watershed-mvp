@@ -204,6 +204,7 @@ require([
 
 			var treatmentTypeId = typeid
 
+            // TODO: Pump in from elsewhere instead of programmatically setting here
 			if (treatmentTypeId == '101') { //purple heart
 					var polySymbol = new esri.symbol.SimpleFillSymbol(
                         SimpleFillSymbol.STYLE_SOLID,
@@ -863,14 +864,15 @@ require([
 					url: url
 				})
 				.done(function(msg) {
-					// console.log(msg);
+                    // console.log(msg);
+                    // TODO: Check if necessary. Remove if not working
 					$('#total_nitrogen_polygon').text(msg);
 					$('#popdown-opacity').show();
                     $('div.fa.fa-spinner.fa-spin').remove()
 
 				}).fail(function(msg){
 					// console.log(msg);
-					alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg.status + ' ' + msg.statusText );
+					alert('There was a problem saving the polygon. Please send this error message info@capecodcommission.org: <br />Response: ' + msg.status + ' ' + msg.statusText );
 				});
 
 			var area = evt.geometry.getExtent();

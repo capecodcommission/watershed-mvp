@@ -9,9 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Scenario extends Model
 {
-    //
-		// TODO: remove CapeCodMa from table name when using postgres container
-    protected $table = 'CapeCodMa.Scenario_Wiz';
+  protected $table = 'dbo.Scenario_Wiz';
 	protected $primaryKey = 'ScenarioID';
 	use SoftDeletes;
 

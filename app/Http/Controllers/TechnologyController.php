@@ -25,10 +25,38 @@ class TechnologyController extends Controller
 	public function get($type, $id)
 	{
 
-		$tech = DB::table('dbo.v_Technology_Matrix')->select('*')->where('TM_ID', $id)->first();
+		$tech = DB::table('dbo.v_Technology_Matrix')
+			->select(
+				'Technology_ID',
+				'Unit_Metric',
+				'Technology_Sys_Type',
+				'Show_In_wMVP',
+				'Technology_Strategy',
+				'id',
+				'Icon',
+				'Nutri_Reduc_N_High_ppm',
+				'Nutri_Reduc_N_Low_ppm',
+				'Nutri_Reduc_N_Low',
+				'Nutri_Reduc_N_High',
+				'Absolu_Reduc_perMetric_Low',
+				'Absolu_Reduc_perMetric_High'
+			)
+			->where('TM_ID', $id)
+			->first();
+
 		$scenarioid = session('scenarioid');
-		$treatment = Treatment::create(['ScenarioID' => $scenarioid, 'TreatmentType_ID'=>$tech->Technology_ID, 'TreatmentType_Name'=>substr($tech->Technology_Strategy, 0, 50), 'Treatment_UnitMetric'=>$tech->Unit_Metric, 'Treatment_Class'=>$tech->Technology_Sys_Type]);
-		// dd($tech, $treatment);
+
+		$treatment = Treatment::create([
+			'ScenarioID' => $scenarioid, 
+			'TreatmentType_ID'=>$tech->Technology_ID, 
+			'TreatmentType_Name'=>substr($tech->Technology_Strategy, 0, 50), 
+			'Treatment_UnitMetric'=>$tech->Unit_Metric, 
+			'Treatment_Class'=>$tech->Technology_Sys_Type, 
+			'treatment_icon'=>$tech->Icon
+		]);
+		
+		// dump($tech, $treatment);
+
 		if ($tech->Show_In_wMVP == 4) // Fert Management Good
 		{
 			$scenario = Scenario::find($scenarioid);
@@ -37,7 +65,7 @@ class TechnologyController extends Controller
 			// $embay_id = session('embay_id');
 			// $parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment->TreatmentID . ', \'embayment\'');
 
-			$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon1 ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment->TreatmentID . ', \'embayment\'');
+			$parcels = DB::select('exec dbo.GET_PointsFromPolygon1 ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment->TreatmentID . ', \'embayment\'');
 		}
 		// create a new record in the treatment_wiz table for this scenario & technology
 		// get the treatmentID back and use that for the treatment_parcels table
@@ -103,7 +131,7 @@ class TechnologyController extends Controller
 		{
 			case 'fert':
 				// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Fert] ' . $treat_id . ', ' . $rate );
-				$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Fert1] ' . $treat_id . ', ' . $rate );
+				$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Fert1] ' . $treat_id . ', ' . $rate );
 				Session::put('fert_applied', 1);
 				$n_removed = session('n_removed');
 				$n_removed += $updated[0]->removed;
@@ -117,12 +145,12 @@ class TechnologyController extends Controller
 					// Storm treatments with a unit metric (acres) need a different calculation
 					// Also need to store the point where the user indicated the treatment would be located
 					// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Storm] ' . $treat_id . ', ' . $rate . ', ' . $units );
-					$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Storm1] ' . $treat_id . ', ' . $rate . ', ' . $units );
+					$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Storm1] ' . $treat_id . ', ' . $rate . ', ' . $units );
 				}
 				else
 				{
 					// $updated = DB::select('exec CapeCodMA.CALC_ApplyTreatment_Percent ' . $treat_id . ', ' . $rate . ', storm' );
-					$updated = DB::select('exec CapeCodMA.CALC_ApplyTreatment_Percent1 ' . $treat_id . ', ' . $rate . ', storm' );
+					$updated = DB::select('exec dbo.CALC_ApplyTreatment_Percent1 ' . $treat_id . ', ' . $rate . ', storm' );
 					Session::put('storm_applied', 1);
 				}
 
@@ -162,14 +190,14 @@ class TechnologyController extends Controller
 	 if ( $units > 0) 
 		{
 			// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Storm] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $location );
-			$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Storm1] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $location );
+			$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Storm1] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $location );
 		}
 
 		// this is probably stormwater management policies, flat percent
 		else 	
 		{
 			// $updated = DB::select('exec CapeCodMA.CALC_ApplyTreatment_Percent ' . $treat_id . ', ' . $rate);
-			$updated = DB::select('exec CapeCodMA.CALC_ApplyTreatment_Percent1 ' . $treat_id . ', ' . $rate);
+			$updated = DB::select('exec dbo.CALC_ApplyTreatment_Percent1 ' . $treat_id . ', ' . $rate);
 		}
 
 		$n_removed = session('n_removed');
@@ -197,7 +225,7 @@ class TechnologyController extends Controller
 		if ($subemid) 
 		{
 			// $parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $subemid . ', ' . $scenarioid . ', ' . $treat_id . ', \'subembayment\'');
-			$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon1 ' . $subemid . ', ' . $scenarioid . ', ' . $treat_id . ', \'subembayment\'');
+			$parcels = DB::select('exec dbo.GET_PointsFromPolygon1 ' . $subemid . ', ' . $scenarioid . ', ' . $treat_id . ', \'subembayment\'');
 			Session::put('subemid', $subemid);
 		} 
 
@@ -207,7 +235,7 @@ class TechnologyController extends Controller
 		}
 
 		// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $n_parcels);
-		$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment1] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $n_parcels);
+		$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Embayment1] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $n_parcels);
 	}
 
 
@@ -220,9 +248,7 @@ class TechnologyController extends Controller
 	public function ApplyTreatment_Groundwater($treat_id, $rate, $units)
 	{
 
-		// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Groundwater] ' . $treat_id . ', ' . $rate . ', ' . $units);
-
-		$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Groundwater1] ' . $treat_id . ', ' . $rate . ', ' . $units);
+		$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Groundwater1] ' . $treat_id . ', ' . $rate . ', ' . $units);
 
 	}
 
@@ -238,7 +264,7 @@ class TechnologyController extends Controller
 		//$scenarioid = session('scenarioid');
 		
 		// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Septic] ' . $treat_id . ', ' . $rate );
-		$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Septic1] ' . $treat_id . ', ' . $rate );
+		$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Septic1] ' . $treat_id . ', ' . $rate );
 		
 		$n_removed = session('n_removed');
 		$n_removed += $updated[0]->removed;
@@ -321,15 +347,24 @@ class TechnologyController extends Controller
 	 * @return void
 	 * @author 
 	 **/
+	// TODO: Apply proper 'apply_treatment' stored proc and pass in type, eg. 'septic' or 'groundwater'
+	// public function updatePolygon(Request $data, $type)
 	public function updatePolygon(Request $data)
 	{
 		$data = $data->all();
+
+		// TODO: Create switch to use proper stored proc based on $type
+		
+
 		// DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
 		// stored procedure needs to update the parcels in wiz_treatment_parcel to match the new polygon
 		// then update the polygon and parcel data/N total for this treatment in Treatment_Wiz
-		$query = 'exec CapeCodMA.UPD_TreatmentPolygon ' . $data['treatment'] . ', \'' . $data['polystring'] . '\'';
+
+		// TODO: Modify update_treatment stored proc to delete/fill parcelmaster instead of wiz_treatment_parcels
+		// TODO: Once update_treatment stored proc working, modify get_pointsfrompolygon to incorporate delete portion from update_treatment
+		$query = 'exec dbo.UPD_TreatmentPolygon ' . $data['treatment'] . ', \'' . $data['polystring'] . '\'';
 		Log::info($query);
-		$upd = DB::select('exec CapeCodMA.UPD_TreatmentPolygon ' . $data['treatment'] . ', \'' . $data['polystring'] . '\'');
+		$upd = DB::select('exec dbo.UPD_TreatmentPolygon ' . $data['treatment'] . ', \'' . $data['polystring'] . '\'');
 		return $upd;
 
 
@@ -346,7 +381,7 @@ class TechnologyController extends Controller
 	{
 
 		// DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
-		$del = DB::select('exec CapeCodMA.DEL_Treatment '. $treat_id);
+		$del = DB::select('exec dbo.DEL_Treatment '. $treat_id);
 
 		return 1;
 	}
@@ -417,45 +452,43 @@ class TechnologyController extends Controller
 			{
 				case 'fert':
 					// TODO: Change reference to CALC_ApplyTreatment_Percent1, modify CALC_ApplyTreatment_Percent1 stored procedure to take in 'fert' param similar to storm-percent switch below
-					$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Fert1] ' . $treat_id . ', ' . $rate );
+					$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Fert1] ' . $treat_id . ', ' . $rate );
 					return $updated;	
 					break;
 
 				// Stormwater Management
 				case 'storm-percent':
 					// $updated = DB::select('exec CapeCodMA.CALC_ApplyTreatment_Percent ' . $treat_id . ', ' . $rate . ', storm' );
-					$updated = DB::select('exec CapeCodMA.CALC_ApplyTreatment_Percent1 ' . $treat_id . ', ' . $rate . ', storm' );
+					$updated = DB::select('exec dbo.CALC_ApplyTreatment_Percent1 ' . $treat_id . ', ' . $rate . ', storm' );
 					return $updated;
 					break;
 
 				// Stormwater treatments
 				case 'storm':
 					// $updated = DB::select('exec [CapeCodMA].[CALC_UpdateTreatment_Storm] ' . $treat_id . ', ' . $rate . ', ' . $units );
-					$updated = DB::select('exec [CapeCodMA].[CALC_UpdateTreatment_Storm1] ' . $treat_id . ', ' . $rate . ', ' . $units );
+					$updated = DB::select('exec [dbo].[CALC_UpdateTreatment_Storm] ' . $treat_id . ', ' . $rate . ', ' . $units );
 					return $updated;
 					break;
 
 				case 'toilets':
 					// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Septic] '. $treat_id . ', '. $rate);
-					$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Septic1] '. $treat_id . ', '. $rate);
+					$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Septic1] '. $treat_id . ', '. $rate);
 					return $updated;
 					break;
 
 				case 'collect':
 				// $query = 'exec [CapeCodMA].[CALC_ApplyTreatment_Septic] '. $treat_id . ', '. $rate;
-				$query = 'exec [CapeCodMA].[CALC_ApplyTreatment_Septic1] '. $treat_id . ', '. $rate;
+				$query = 'exec [dbo].[CALC_ApplyTreatment_Septic1] '. $treat_id . ', '. $rate;
 				Log::info($query);
 					// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Septic] '. $treat_id . ', '. $rate);
-					$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Septic1] '. $treat_id . ', '. $rate);
+					$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Septic1] '. $treat_id . ', '. $rate);
 					return $updated;
 					break;	
 				case 'septic':
 					
 					break;
 				case 'groundwater':
-					// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Groundwater] '. $treat_id . ', '. $rate . ', ' . $units);
-					// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Groundwater] '. $treat_id . ', '. $rate . ', ' . $units);
-					$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Groundwater1] '. $treat_id . ', '. $rate . ', ' . $units);
+					$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Groundwater1] '. $treat_id . ', '. $rate . ', ' . $units);
 					return $updated;
 					break;	
 					
@@ -474,7 +507,7 @@ class TechnologyController extends Controller
 					}
 
 					// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $n_total . ', ' . $n_parcels);
-					$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment1] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $n_parcels);
+					$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Embayment1] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $n_parcels);
 
 					break;
 				default:
@@ -494,7 +527,7 @@ class TechnologyController extends Controller
 	public function delete($treat_id, $type = NULL)
 	{
 	
-		$del = DB::select('exec CapeCodMA.DEL_Treatment '. $treat_id);
+		$del = DB::select('exec dbo.DEL_Treatment '. $treat_id);
 
 		// Reset global variables to handle fert/storm clickability
 		if ($type == 'fert') {
@@ -505,6 +538,9 @@ class TechnologyController extends Controller
 			
 			Session::put('storm_applied',0);
 		}
+
+		// TODO: Check if deleted treatment can be removed from global treatments array
+		// Can we go Back to Map without page refresh?
 		
 		return 1;
 	}

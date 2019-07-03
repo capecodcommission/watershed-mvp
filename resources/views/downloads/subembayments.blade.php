@@ -42,7 +42,7 @@
 
 					@foreach($subembayments as $sub)
 					<tr>
-						<td>{{$sub->subem_disp}}</td>
+						<td>{{$sub->SUBEM_DISP}}</td>
 						<td>{{round($sub->n_load_att)}}</td> <?php $n_att_total += $sub->n_load_att; ?>
 						<td>{{round($sub->n_load_att_removed)}}</td> <?php $n_att_rem_total += $sub->n_load_att_removed; ?>
 						<td>{{round($sub->n_load_scenario)}}</td> <?php $n_scen_total += $sub->n_load_scenario; ?>

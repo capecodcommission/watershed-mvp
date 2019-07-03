@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Treatment extends Model
 {
 	//
-	protected $table = 'CapeCodMa.Treatment_Wiz';
+	protected $table = 'dbo.Treatment_Wiz';
 	protected $primaryKey = 'TreatmentID';
 
 	protected $fillable = [
@@ -34,7 +34,8 @@ class Treatment extends Model
 		'Cost_Total',
 		'Nload_Reduction',
 		'Cost20yr_OM',
-		'Cost20yr_Cap'
+		'Cost20yr_Cap',
+		'treatment_icon'
 	];
 	
 	
@@ -56,6 +57,6 @@ class Treatment extends Model
     public function technology()
     {
     	return $this->hasOne('App\Technology', 'Technology_ID', 'TreatmentType_ID');
-    }
+		}
  
 }

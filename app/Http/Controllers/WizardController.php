@@ -39,7 +39,7 @@ class WizardController extends Controller
 				else
 				{
 					$scenario = $user->scenarios()->create([
-						'AreaID'=>$id, 'ScenarioPeriod'=>'Existing'
+						'AreaID'=>$id, 'ScenarioPeriod'=>'Existing', 'AreaName'=>$embayment->EMBAY_DISP
 					]);
 					// user selected a different embayment, need to create a new scenario 
 					$scenarioid = $scenario->ScenarioID;
@@ -56,7 +56,7 @@ class WizardController extends Controller
 					//  need to create a new scenario 
 					// $scenarioid = DB::select('exec CapeCodMA.CreateScenario ' . $id);
 				$scenario = $user->scenarios()->create([
-						'AreaID'=>$id, 'ScenarioPeriod'=>'Existing'
+						'AreaID'=>$id, 'ScenarioPeriod'=>'Existing', 'AreaName'=>$embayment->EMBAY_DISP
 					]);
 
 					$scenarioid = $scenario->ScenarioID;
@@ -93,11 +93,12 @@ class WizardController extends Controller
 				Session::put('storm_applied', 0);
 			}
 		}
-
+		// TODO: Determine if global values can be initially set and updated without initializing additoinal variables
+		// Can we use existing global values? If so, use those, else init
 		$removed = 0;
 		$n_load_orig = 0;
 		// $subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
-		$subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments1 ' . $scenarioid);
+		$subembayments = DB::select('exec dbo.Calc_ScenarioNitrogen_Subembayments1 ' . $scenarioid);
 		$total_goal = 0;
 
 		foreach ($subembayments as $key) 
@@ -131,9 +132,9 @@ class WizardController extends Controller
 		{
 			$remaining = 0;
 		}
-		$nitrogen = DB::select('exec CapeCodMA.GET_AreaNitrogen_Unattenuated ' . $id);
+		$nitrogen = DB::select('exec dbo.GET_AreaNitrogen_Unattenuated ' . $id);
 
-		$nitrogen_att = DB::select('exec CapeCodMA.GET_AreaNitrogen_attenuated ' . $id);
+		$nitrogen_att = DB::select('exec dbo.GET_AreaNitrogen_attenuated ' . $id);
 		$nitrogen_att = [
 			'Total_Att' => $n_load_orig
 		];
@@ -168,8 +169,8 @@ class WizardController extends Controller
 		// $subembayments = DB::table('CapeCodMA.SubEmbayments')
 		// 	->select('SUBEM_NAME', 'SUBEM_DISP', 'Nload_Total', 'Total_Tar_Kg', 'MEP_Total_Tar_Kg')
 		// 	->where('EMBAY_ID', $embayment->EMBAY_ID)->get();
-		$subembayments = DB::select('exec CapeCodMA.GET_SubembaymentNitrogen ' . $id);
-		$nitrogen = DB::select('exec CapeCodMA.GET_EmbaymentNitrogen ' . $id);
+		$subembayments = DB::select('exec dbo.GET_SubembaymentNitrogen ' . $id);
+		$nitrogen = DB::select('exec dbo.GET_EmbaymentNitrogen ' . $id);
 
 		 JavaScript::put([
 				'nitrogen' => $nitrogen[0]
@@ -226,6 +227,8 @@ class WizardController extends Controller
 	 * @return void
 	 * @author 
 	 **/
+
+	//  TODO: Rename to acount for custom polygon creation
 	public function getPolygon2(Request $data)
 	{
 		// dd($data);
@@ -244,7 +247,7 @@ class WizardController extends Controller
 		// $parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
 
 
-		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon1 ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');	
+		$parcels = DB::select('exec dbo.GET_PointsFromPolygon1 ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');	
 
 		if ($parcels) {
 			$poly_nitrogen = $parcels[0]->Septic;

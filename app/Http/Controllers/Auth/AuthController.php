@@ -53,7 +53,7 @@ class AuthController extends Controller
         Validator::extend('unique_email', function($attribute, $value, $parameters)
         {
             // check the users table to make sure the email address is unique
-            $email_exists = DB::select('select count(user_id) as user_count from CapeCodMA.Scenario_Users where email = \'' . $value . '\'');
+            $email_exists = DB::select('select count(user_id) as user_count from dbo.Scenario_Users where email = \'' . $value . '\'');
 
             if ($email_exists[0]->user_count > 0) 
             {

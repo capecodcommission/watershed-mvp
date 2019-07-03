@@ -13,6 +13,7 @@ RUN curl --silent --show-error https://getcomposer.org/installer | php
 RUN php composer.phar install 
 RUN php composer.phar update && php composer.phar dumpautoload
 ADD freetds.conf /etc/freetds
+ADD locales.conf /etc/freetds
 RUN chgrp -R www-data /var/www/storage && \
   chgrp -R www-data /var/www/bootstrap/cache && \
   chmod -R 777 /var/www/storage

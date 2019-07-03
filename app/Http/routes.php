@@ -21,9 +21,10 @@ Route::get('/map/{embayment}/{scenarioid?}', 'WizardController@start');
 
 Route::post('/poly', 'WizardController@getPolygon2');
 
-// TODO: Check if these are still in use
-Route::post('/poly2', 'MarioController@sumTotalsWithinPoly');
-Route::post('/poly3', 'MarioController@getIDArrayWithinPoly');
+// TODO: Rename MarioConroller to represent Welcome blade, eg. WelcomeController
+// TODO: Rename /poly# routes to represent actual function
+Route::post('/sumTotalsWithinPolygon', 'WelcomeController@sumTotalsWithinPoly');
+Route::post('/getIDArrayWithinPolygon', 'WelcomeController@getIDArrayWithinPoly');
 
 Route::post('/update_polygon', 'TechnologyController@updatePolygon');
 

@@ -25,7 +25,7 @@
 		}
 
 	?>
-		<div class="subembayment" id="subem_{{$subem->subem_id}}" data-layer="{{$subem->subem_id}}">
+		<div class="subembayment" id="subem_{{$subem->SUBEM_ID}}" data-layer="{{$subem->SUBEM_ID}}">
 			<div class="sub-progress-container">
 				<div class="sub-target">
 					
@@ -33,7 +33,7 @@
 				<div class="sub-progress" style="width: {{$percent}}%">
 					
 				</div>
-				<h3>{{$subem->subem_disp}} (<span id="progress_{{$subem->subem_id}}">{{round($percent)}}</span>%)</h3>
+				<h3>{{$subem->SUBEM_DISP}} (<span id="progress_{{$subem->SUBEM_ID}}">{{round($percent)}}</span>%)</h3>
 			</div>
 			<div class="stats">
 				<div class="stat-group">

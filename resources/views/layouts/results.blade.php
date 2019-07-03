@@ -1,9 +1,14 @@
 <html>
 	<head>
 		<title>WatershedMVP Scenario Results</title>
+		<?php if( env('APP_ENV') == 'production' ) : ?>
+			<link rel="stylesheet" href="{{secure_url('/css/app.css')}}">
+		<?php else :?>
 			<link rel="stylesheet" href="{{url('/css/app.css')}}">
-  			<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
-  			<script>window.name = 'wmvp_results_{{$scenario->ScenarioID}}';</script>
+		<?php endif; ?>
+		<!-- <link rel="stylesheet" href="{{secure_url('/css/app.css')}}"> -->
+		<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+		<script>window.name = 'wmvp_results_{{$scenario->ScenarioID}}';</script>
 	</head>
 	<body>
 		<div class="wrapper">
@@ -15,6 +20,7 @@
 			<h2 class="author">Created by: {{$scenario->user->name}} on {{date('Y-m-d', strtotime($scenario->CreateDate))}}</h2>
 			<div id="app">
 			<?php
+				// TODO: Can we get/set from global variables?
 				$scenario_cost = 0;
 				$n_removed = 0;
 				$n_att_total = 0;
@@ -116,7 +122,7 @@
 
 					@foreach($subembayments as $sub)
 					<tr>
-						<td>{{$sub->subem_disp}}</td>
+						<td>{{$sub->SUBEM_DISP}}</td>
 						<td>{{number_format(round($sub->n_load_att))}}kg</td> <?php $n_att_total += $sub->n_load_att; ?>
 						<td>{{number_format(round($sub->n_load_att_removed))}}kg</td> <?php $n_att_rem_total += $sub->n_load_att_removed; ?>
 						<td>{{number_format(round($sub->n_load_scenario))}}kg</td> <?php $n_scen_total += $sub->n_load_scenario; ?>
