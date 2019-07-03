@@ -126,9 +126,9 @@
 								} else {
 									sub_progress = 100;
 								}
-								$('#progress_'+value.subem_id).text(Math.round(sub_progress));
-								$('#subem_'+value.subem_id + ' .sub-progress').animate({'width': sub_progress+'%'}, 500);
-								$('#subem_'+value.subem_id + ' .stats .stat-data.scenario-progress').text(Math.round(value.n_load_scenario)+'kg');
+								$('#progress_'+value.SUBEM_ID).text(Math.round(sub_progress));
+								$('#subem_'+value.SUBEM_ID + ' .sub-progress').animate({'width': sub_progress+'%'}, 500);
+								$('#subem_'+value.SUBEM_ID + ' .stats .stat-data.scenario-progress').text(Math.round(value.n_load_scenario)+'kg');
 							});
 							
 						})

@@ -25,9 +25,35 @@ class TechnologyController extends Controller
 	public function get($type, $id)
 	{
 
-		$tech = DB::table('dbo.v_Technology_Matrix')->select('Technology_ID','Unit_Metric','Technology_Sys_Type','Show_In_wMVP','Technology_Strategy','id','Icon','Nutri_Reduc_N_High_ppm','Nutri_Reduc_N_Low_ppm','Nutri_Reduc_N_Low','Nutri_Reduc_N_High')->where('TM_ID', $id)->first();
+		$tech = DB::table('dbo.v_Technology_Matrix')
+			->select(
+				'Technology_ID',
+				'Unit_Metric',
+				'Technology_Sys_Type',
+				'Show_In_wMVP',
+				'Technology_Strategy',
+				'id',
+				'Icon',
+				'Nutri_Reduc_N_High_ppm',
+				'Nutri_Reduc_N_Low_ppm',
+				'Nutri_Reduc_N_Low',
+				'Nutri_Reduc_N_High',
+				'Absolu_Reduc_perMetric_Low',
+				'Absolu_Reduc_perMetric_High'
+			)
+			->where('TM_ID', $id)
+			->first();
+
 		$scenarioid = session('scenarioid');
-		$treatment = Treatment::create(['ScenarioID' => $scenarioid, 'TreatmentType_ID'=>$tech->Technology_ID, 'TreatmentType_Name'=>substr($tech->Technology_Strategy, 0, 50), 'Treatment_UnitMetric'=>$tech->Unit_Metric, 'Treatment_Class'=>$tech->Technology_Sys_Type, 'treatment_icon'=>$tech->Icon]);
+
+		$treatment = Treatment::create([
+			'ScenarioID' => $scenarioid, 
+			'TreatmentType_ID'=>$tech->Technology_ID, 
+			'TreatmentType_Name'=>substr($tech->Technology_Strategy, 0, 50), 
+			'Treatment_UnitMetric'=>$tech->Unit_Metric, 
+			'Treatment_Class'=>$tech->Technology_Sys_Type, 
+			'treatment_icon'=>$tech->Icon
+		]);
 		
 		// dump($tech, $treatment);
 
@@ -199,7 +225,7 @@ class TechnologyController extends Controller
 		if ($subemid) 
 		{
 			// $parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $subemid . ', ' . $scenarioid . ', ' . $treat_id . ', \'subembayment\'');
-			$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon1 ' . $subemid . ', ' . $scenarioid . ', ' . $treat_id . ', \'subembayment\'');
+			$parcels = DB::select('exec dbo.GET_PointsFromPolygon1 ' . $subemid . ', ' . $scenarioid . ', ' . $treat_id . ', \'subembayment\'');
 			Session::put('subemid', $subemid);
 		} 
 
@@ -209,7 +235,7 @@ class TechnologyController extends Controller
 		}
 
 		// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $n_parcels);
-		$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment1] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $n_parcels);
+		$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Embayment1] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $n_parcels);
 	}
 
 
@@ -224,7 +250,7 @@ class TechnologyController extends Controller
 
 		// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Groundwater] ' . $treat_id . ', ' . $rate . ', ' . $units);
 
-		$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Groundwater1] ' . $treat_id . ', ' . $rate . ', ' . $units);
+		$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Groundwater1] ' . $treat_id . ', ' . $rate . ', ' . $units);
 
 	}
 
@@ -466,7 +492,7 @@ class TechnologyController extends Controller
 				case 'groundwater':
 					// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Groundwater] '. $treat_id . ', '. $rate . ', ' . $units);
 					// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Groundwater] '. $treat_id . ', '. $rate . ', ' . $units);
-					$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Groundwater1] '. $treat_id . ', '. $rate . ', ' . $units);
+					$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Groundwater1] '. $treat_id . ', '. $rate . ', ' . $units);
 					return $updated;
 					break;	
 					
@@ -485,7 +511,7 @@ class TechnologyController extends Controller
 					}
 
 					// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $n_total . ', ' . $n_parcels);
-					$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment1] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $n_parcels);
+					$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Embayment1] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $n_parcels);
 
 					break;
 				default:
