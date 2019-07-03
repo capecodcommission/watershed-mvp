@@ -428,21 +428,21 @@ class TechnologyController extends Controller
 			{
 				case 'fert':
 					// TODO: Change reference to CALC_ApplyTreatment_Percent1, modify CALC_ApplyTreatment_Percent1 stored procedure to take in 'fert' param similar to storm-percent switch below
-					$updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Fert1] ' . $treat_id . ', ' . $rate );
+					$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Fert1] ' . $treat_id . ', ' . $rate );
 					return $updated;	
 					break;
 
 				// Stormwater Management
 				case 'storm-percent':
 					// $updated = DB::select('exec CapeCodMA.CALC_ApplyTreatment_Percent ' . $treat_id . ', ' . $rate . ', storm' );
-					$updated = DB::select('exec CapeCodMA.CALC_ApplyTreatment_Percent1 ' . $treat_id . ', ' . $rate . ', storm' );
+					$updated = DB::select('exec dbo.CALC_ApplyTreatment_Percent1 ' . $treat_id . ', ' . $rate . ', storm' );
 					return $updated;
 					break;
 
 				// Stormwater treatments
 				case 'storm':
 					// $updated = DB::select('exec [CapeCodMA].[CALC_UpdateTreatment_Storm] ' . $treat_id . ', ' . $rate . ', ' . $units );
-					$updated = DB::select('exec [CapeCodMA].[CALC_UpdateTreatment_Storm1] ' . $treat_id . ', ' . $rate . ', ' . $units );
+					$updated = DB::select('exec [dbo].[CALC_UpdateTreatment_Storm] ' . $treat_id . ', ' . $rate . ', ' . $units );
 					return $updated;
 					break;
 
