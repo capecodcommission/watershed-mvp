@@ -39,7 +39,7 @@ class WizardController extends Controller
 				else
 				{
 					$scenario = $user->scenarios()->create([
-						'AreaID'=>$id, 'ScenarioPeriod'=>'Existing'
+						'AreaID'=>$id, 'ScenarioPeriod'=>'Existing', 'AreaName'=>$embayment->EMBAY_DISP
 					]);
 					// user selected a different embayment, need to create a new scenario 
 					$scenarioid = $scenario->ScenarioID;
@@ -56,7 +56,7 @@ class WizardController extends Controller
 					//  need to create a new scenario 
 					// $scenarioid = DB::select('exec CapeCodMA.CreateScenario ' . $id);
 				$scenario = $user->scenarios()->create([
-						'AreaID'=>$id, 'ScenarioPeriod'=>'Existing'
+						'AreaID'=>$id, 'ScenarioPeriod'=>'Existing', 'AreaName'=>$embayment->EMBAY_DISP
 					]);
 
 					$scenarioid = $scenario->ScenarioID;
