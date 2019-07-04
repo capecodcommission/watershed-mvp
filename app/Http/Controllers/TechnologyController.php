@@ -248,11 +248,6 @@ class TechnologyController extends Controller
 	public function ApplyTreatment_Groundwater($treat_id, $rate, $units)
 	{
 
-<<<<<<< HEAD
-		// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Groundwater] ' . $treat_id . ', ' . $rate . ', ' . $units);
-
-=======
->>>>>>> e8c512c... updated from 'CapeCodMA' to 'dbo' for the 'CALC_ApplyTreatment_Groundwater1' stored procedure
 		$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Groundwater1] ' . $treat_id . ', ' . $rate . ', ' . $units);
 
 	}
