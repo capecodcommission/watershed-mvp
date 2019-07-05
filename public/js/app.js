@@ -117,14 +117,14 @@
 			if(!$(this).is('.close-popdown'))  {	 //Only close when someone click on the html element with close-popdown class
 				e.preventDefault();
 			}
-			$.fn.close_popdown();
+			// $.fn.close_popdown();
 		});
 
 		// Close popdown when user clicks outside its container
 		$(document).click(function(event) {
 	    if(!$(event.target).closest('#popdown-dialog').length) {
         if($('#popdown-dialog').is(":visible")) {
-          $.fn.close_popdown();
+        //   $.fn.close_popdown();
         }
 	    }
 		});
