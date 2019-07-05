@@ -131,7 +131,7 @@ class TechnologyController extends Controller
 		{
 			case 'fert':
 				// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Fert] ' . $treat_id . ', ' . $rate );
-				$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Fert1] ' . $treat_id . ', ' . $rate );
+				$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Percent1] ' . $treat_id . ', ' . $rate . ', fert' );
 				Session::put('fert_applied', 1);
 				$n_removed = session('n_removed');
 				$n_removed += $updated[0]->removed;
