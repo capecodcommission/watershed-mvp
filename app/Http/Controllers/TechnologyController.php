@@ -16,15 +16,11 @@ use Log;
 class TechnologyController extends Controller
 {
 
-	/**
-	 * Get the technology requested
-	 *
-	 * @return void
-	 * @author 
-	 **/
+	// Retrieve and initialize selected technology data
 	public function get($type, $id)
 	{
 
+		// Retrieve technology data from tech_matrix based on passed TM_ID
 		$tech = DB::table('dbo.v_Technology_Matrix')
 			->select(
 				'Technology_ID',
@@ -44,8 +40,10 @@ class TechnologyController extends Controller
 			->where('TM_ID', $id)
 			->first();
 
+		// Retrieve Scenario ID from Laravel session
 		$scenarioid = session('scenarioid');
 
+		// Create / associate selected technology with scenario
 		$treatment = Treatment::create([
 			'ScenarioID' => $scenarioid, 
 			'TreatmentType_ID'=>$tech->Technology_ID, 
@@ -54,22 +52,19 @@ class TechnologyController extends Controller
 			'Treatment_Class'=>$tech->Technology_Sys_Type, 
 			'treatment_icon'=>$tech->Icon
 		]);
-		
-		// dump($tech, $treatment);
 
-		if ($tech->Show_In_wMVP == 4) // Fert Management Good
+		// If selected technology is management-based (embayment-wide)
+		if ($tech->Show_In_wMVP == 4)
 		{
+			// Retrieve Scenario data from SQL, parse embayment id
 			$scenario = Scenario::find($scenarioid);
 			$embay_id = $scenario->AreaID;
-			// this is embayment-wide, need to get the embayment_area and use that as the custom polygon for the Get_PointsfromPolygon
-			// $embay_id = session('embay_id');
-			// $parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment->TreatmentID . ', \'embayment\'');
 
+			// Retrieve / associate all parcels within embayment with user's scenario 
 			$parcels = DB::select('exec dbo.GET_PointsFromPolygon1 ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment->TreatmentID . ', \'embayment\'');
 		}
-		// create a new record in the treatment_wiz table for this scenario & technology
-		// get the treatmentID back and use that for the treatment_parcels table
 
+		// Show relevant technology blade, pass retrieved technology data to blade
 		switch ($type) {
 			case 'fert':
 				return view('common/technology-fertilizer', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
@@ -92,45 +87,18 @@ class TechnologyController extends Controller
 			default:
 				return view('common/technology', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 				break;
-		}
-		
-
-		
-	}
-
-	public function getCollection($id)
-	{
-		$scenarioid = session('scenarioid');
-		// dd($scenarioid);
-		$tech = DB::table('dbo.v_Technology_Matrix')->select('*')->where('TM_ID', $id)->get();
-		
-		$treatment = Treatment::create(['ScenarioID' => $scenarioid, 'TreatmentType_ID'=>$tech[0]->TM_ID]);
-
-		return view('common/technology-collection', ['tech'=>$tech[0], 'treatment'=>$treatment]);
+		}		
 	}
 
 
-	/**
-	 * Apply Treatment Percent
-	 *
-	 * @return void
-	 * @author 
-	 **/
-
-	//  TODO: Fert/Storm Management should use CALC_ApplyTreatment_Percent1 stored proc
-	// All other storm techs should use CALC_ApplyTreatment_Storm1
+	// Apply Fertilizer and Stormwater management technologies based on type
 	public function ApplyTreatment_Percent($treat_id, $rate, $type, $units = null)
 	{
-		
 		$scenarioid = session('scenarioid');
 		$rate = round($rate, 2);
-		// $rate = number_format($rate, 2, "." , "" );
-		// dd($rate);
-
 		switch ($type) 
 		{
 			case 'fert':
-				// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Fert] ' . $treat_id . ', ' . $rate );
 				$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Percent1] ' . $treat_id . ', ' . $rate . ', fert' );
 				Session::put('fert_applied', 1);
 				$n_removed = session('n_removed');
@@ -140,72 +108,31 @@ class TechnologyController extends Controller
 				break;
 			
 			case 'storm':
-				if ($units > 0) 
-				{
-					// Storm treatments with a unit metric (acres) need a different calculation
-					// Also need to store the point where the user indicated the treatment would be located
-					// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Storm] ' . $treat_id . ', ' . $rate . ', ' . $units );
-					$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Storm1] ' . $treat_id . ', ' . $rate . ', ' . $units );
-				}
-				else
-				{
-					// $updated = DB::select('exec CapeCodMA.CALC_ApplyTreatment_Percent ' . $treat_id . ', ' . $rate . ', storm' );
-					$updated = DB::select('exec dbo.CALC_ApplyTreatment_Percent1 ' . $treat_id . ', ' . $rate . ', storm' );
-					Session::put('storm_applied', 1);
-				}
-
+				$updated = DB::select('exec dbo.CALC_ApplyTreatment_Percent1 ' . $treat_id . ', ' . $rate . ', storm' );
+				Session::put('storm_applied', 1);
 				$n_removed = session('n_removed');
 				$n_removed += $updated[0]->removed;
 				Session::put('n_removed', $n_removed);			
 				return $n_removed;
 				break;
 
-
 			default:
-				# code...
 				break;
 		}
-		
-
-
 	}
 
 
 
-	/**
-	 * Apply Treatment Percent
-	 *
-	 * @return void
-	 * @author 
-	 **/
-
-	//  Used for stormwater point technologies
+	// Apply non-management Stormwater technology
 	public function ApplyTreatment_Storm($treat_id, $rate, $units = null, $location = null)
 	{
 		
 		$scenarioid = session('scenarioid');
-
-		// Storm treatments with a unit metric (acres) need a different calculation
-		// Also need to store the point where the user indicated the treatment would be located
-	 if ( $units > 0) 
-		{
-			// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Storm] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $location );
-			$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Storm1] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $location );
-		}
-
-		// this is probably stormwater management policies, flat percent
-		else 	
-		{
-			// $updated = DB::select('exec CapeCodMA.CALC_ApplyTreatment_Percent ' . $treat_id . ', ' . $rate);
-			$updated = DB::select('exec dbo.CALC_ApplyTreatment_Percent1 ' . $treat_id . ', ' . $rate);
-		}
-
+		$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Storm1] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $location );
 		$n_removed = session('n_removed');
 		$n_removed += $updated[0]->removed;
 		Session::put('n_removed', $n_removed);
-		
 		return $n_removed;
-
 	}
 
 	/**
@@ -370,19 +297,10 @@ class TechnologyController extends Controller
 
 	}
 
-
-	/**
-	 * User wants to cancel a treatment for this scenario
-	 *
-	 * @return void
-	 * @author 
-	 **/
+	// Disassociate and delete selected technology data from user's scenario
 	public function cancel($treat_id)
 	{
-
-		// DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
 		$del = DB::select('exec dbo.DEL_Treatment '. $treat_id);
-
 		return 1;
 	}
 

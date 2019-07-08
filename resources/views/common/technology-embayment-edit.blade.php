@@ -110,13 +110,8 @@
 		$('#select_polygon').on('click', function(f){
 			f.preventDefault();
 			$('#popdown-opacity').hide();
-			// $( "#info" ).trigger( "click" );
-			// dom.byId("info")
-
 			map.disableMapNavigation();
 			tb.activate('polygon');
-			// console.log('polygon clicked');
-			// $('#popdown-opacity').show();
 
 		});
 
