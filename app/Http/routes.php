@@ -18,7 +18,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/apply_septic/{treatment}/{rate}', 'TechnologyController@ApplyTreatment_Septic');
 	Route::get('/apply_embayment/{treatment}/{rate}/{units}/{subemid?}', 'TechnologyController@ApplyTreatment_Embayment');
 	Route::get('/apply_groundwater/{treatment}/{rate}/{units}', 'TechnologyController@ApplyTreatment_Groundwater');
-	Route::get('/polygon/{type}/{treatment}/{polygon}', 'TechnologyController@getPolygon');
 	Route::get('/map/point/{x}/{y}/{treatment}', 'MapController@point');
 	Route::get('/map/move/{x}/{y}/{treatment}', 'MapController@moveNitrogen');
 	Route::get('/getScenarioNitrogen', 'ScenarioController@GetScenarioNitrogen');
@@ -29,7 +28,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/', 'HomeController@index');
 	Route::get('/home', 'HomeController@index');
 	// TODO: Rename /poly route to reference custom polygon creation
-	Route::post('/poly', 'WizardController@getPolygon2');
+	Route::post('/getPointsInCustomPoly', 'WizardController@getPointsInCustomPolygon');
 	Route::post('/sumTotalsWithinPolygon', 'WelcomeController@sumTotalsWithinPoly');
 	Route::post('/getIDArrayWithinPolygon', 'WelcomeController@getIDArrayWithinPoly');
 	Route::post('/update_polygon', 'TechnologyController@updatePolygon');

@@ -18,11 +18,10 @@ use Excel;
 
 class WizardController extends Controller
 {
-	//
+	
 	public function start($id, $scenarioid = null)
 	{
 		$user = Auth::user();
-
 		$embayment = Embayment::find($id);
 		
 		// Need to create a new scenario or find existing one that the user is editing
@@ -38,12 +37,17 @@ class WizardController extends Controller
 				}
 				else
 				{
-					$scenario = $user->scenarios()->create([
-						'AreaID'=>$id, 'ScenarioPeriod'=>'Existing', 'AreaName'=>$embayment->EMBAY_DISP
-					]);
+					$scenario = $user
+						->scenarios()
+						->create(
+							[
+								'AreaID'=>$id, 
+								'ScenarioPeriod'=>'Existing', 
+								'AreaName'=>$embayment->EMBAY_DISP
+							]
+						);
 					// user selected a different embayment, need to create a new scenario 
-					$scenarioid = $scenario->ScenarioID;
-					
+					$scenarioid = $scenario->ScenarioID;		
 					Session::put('scenarioid', $scenarioid);
 					Session::put('n_removed', 0);
 					Session::put('fert_applied', 0);
@@ -53,11 +57,16 @@ class WizardController extends Controller
 			}
 			else
 			{
-					//  need to create a new scenario 
-					// $scenarioid = DB::select('exec CapeCodMA.CreateScenario ' . $id);
-				$scenario = $user->scenarios()->create([
-						'AreaID'=>$id, 'ScenarioPeriod'=>'Existing', 'AreaName'=>$embayment->EMBAY_DISP
-					]);
+				//  need to create a new scenario 
+				$scenario = $user
+					->scenarios()
+					->create(
+						[
+							'AreaID'=>$id, 
+							'ScenarioPeriod'=>'Existing', 
+							'AreaName'=>$embayment->EMBAY_DISP
+						]
+					);
 
 					$scenarioid = $scenario->ScenarioID;
 
@@ -140,115 +149,39 @@ class WizardController extends Controller
 		];
 
 		JavaScript::put([
-				'nitrogen_unatt' => $nitrogen[0],
-				'nitrogen_att' => $nitrogen_att,
-				'center_x'	=> $embayment->longitude,
-				'center_y'	=> $embayment->latitude,
-				'selectlayer' => $embayment->embay_id,
-				'treatments' => $treatments
-			]);
+			'nitrogen_unatt' => $nitrogen[0],
+			'nitrogen_att' => $nitrogen_att,
+			'center_x'	=> $embayment->longitude,
+			'center_y'	=> $embayment->latitude,
+			'selectlayer' => $embayment->embay_id,
+			'treatments' => $treatments
+		]);
 		
 
-		return view('layouts/wizard', ['embayment'=>$embayment, 'subembayments'=>$subembayments, 
-			// 'nitrogen_att'=>$nitrogen_att[0], 'nitrogen_unatt'=>$nitrogen[0], 
-			'goal'=>$total_goal, 'treatments'=>$treatments, 'progress'=>$progress, 'remaining'=>$remaining]);
-
-	}
-
-	/**
-	 * Test page to show all Nitrogen values for Embayment
-	 *
-	 * @return void
-	 * @author 
-	 **/
-	
-
-	public function test($id)
-	{
-		$embayment = Embayment::find($id);
-		// $subembayments = DB::table('CapeCodMA.SubEmbayments')
-		// 	->select('SUBEM_NAME', 'SUBEM_DISP', 'Nload_Total', 'Total_Tar_Kg', 'MEP_Total_Tar_Kg')
-		// 	->where('EMBAY_ID', $embayment->EMBAY_ID)->get();
-		$subembayments = DB::select('exec dbo.GET_SubembaymentNitrogen ' . $id);
-		$nitrogen = DB::select('exec dbo.GET_EmbaymentNitrogen ' . $id);
-
-		 JavaScript::put([
-				'nitrogen' => $nitrogen[0]
-			]);
-
-		return view('layouts/test', ['embayment'=>$embayment, 'subembayments'=>$subembayments]);
+		return view(
+			'layouts/wizard', 
+			[
+				'embayment'=>$embayment, 
+				'subembayments'=>$subembayments, 
+				'goal'=>$total_goal, 
+				'treatments'=>$treatments, 
+				'progress'=>$progress, 
+				'remaining'=>$remaining
+			]
+		);
 	}
 
 
-	/**
-	 * Get Nitrogen Totals from a polygon string
-	 *
-	 * @return void
-	 * @author 
-	 **/
-	public function getPolygon($treatment_id, $poly, $part2 = null)
+	// Associate parcels within user-definied polygon to user's scenario
+	public function getPointsInCustomPolygon(Request $data)
 	{
-		if ($part2) 
-		{
-			// this means the poly string was too long to be sent as a single url parameter so we are going to concatenate the strings	
-			$poly = $poly + $part2;
-		}
-		// DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING, NOCOUNT ON');
-		$scenarioid = Session::get('scenarioid');
-		$scenario = Scenario::find($scenarioid);
-		$embay_id = $scenario->AreaID;
-
-
-		// $parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
-
-		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon1 ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
-
-		if ($parcels) {
-			$poly_nitrogen = $parcels[0]->Septic;
-		}
-		else
-		{
-			$parcels = 0;
-			$poly_nitrogen = 0;
-		}
-		
-
-		JavaScript::put([
-				'poly_nitrogen' => $parcels
-			]);
-
-		return $parcels;
-	}
-
-
-	/**
-	 * Get Nitrogen Totals from a polygon string
-	 *
-	 * @return void
-	 * @author 
-	 **/
-
-	//  TODO: Rename to acount for custom polygon creation
-	public function getPolygon2(Request $data)
-	{
-		// dd($data);
-		    // Log::info('Data received '.$data);
 		$data = $data->all();
-		// return $test;
 		$treatment_id = $data['treatment'];
 		$poly = $data['polystring'];
-		// DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING, NOCOUNT ON');
 		$scenarioid = Session::get('scenarioid');
 		$scenario = Scenario::find($scenarioid);
 		$embay_id = $scenario->AreaID;
-
-		// $query = 'exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'';
-		// Log::info($query);
-		// $parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
-
-
 		$parcels = DB::select('exec dbo.GET_PointsFromPolygon1 ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');	
-
 		if ($parcels) {
 			$poly_nitrogen = $parcels[0]->Septic;
 		}
@@ -257,24 +190,9 @@ class WizardController extends Controller
 			$parcels = 0;
 			$poly_nitrogen = 0;
 		}
-		
-
 		JavaScript::put([
-				'poly_nitrogen' => $parcels
-			]);
-
+			'poly_nitrogen' => $parcels
+		]);
 		return $parcels;
 	}
-
-	public function getPolygon3(Request $data)
-	{
-		$user = Auth::user();
-		$data = $data->all();
-		$poly = $data['polystring'];
-
-		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon2 ' . '\'' . $poly . '\'');
-
-		return $parcels;
-	}
-	
 }

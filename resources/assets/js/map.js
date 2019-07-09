@@ -189,7 +189,7 @@ require([
 			polystring = polystring.substring(0, len - 2);
 			treatment_polygons[treatment] = polystring;
 			
-			var url = '/poly';
+			var url = '/getPointsInCustomPoly';
 						
 			var data = {treatment: treatment, polystring: polystring};
 console.log(data);
