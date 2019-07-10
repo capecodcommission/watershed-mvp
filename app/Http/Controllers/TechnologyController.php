@@ -129,7 +129,7 @@ class TechnologyController extends Controller
 
 
 
-	// Apply non-management Stormwater technology
+	// Apply non-management Stormwater technologies
 	public function ApplyTreatment_Storm($treat_id, $rate, $units = null, $subEmbaymentID = null)
 	{
 		// Retrieve scenario id from session, apply stomwater technology to a selected parcel, set new global removed value from stored procedure
