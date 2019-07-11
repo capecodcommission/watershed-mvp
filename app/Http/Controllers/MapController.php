@@ -12,7 +12,7 @@ use App\Treatment;
 class MapController extends Controller
 {
 	// Find selected subembayment using coordinates from map-click
-	// Associate parcel within selected subembayment with user's scenario
+	// Associate parcels within selected subembayment with user's scenario
 	public function point($x, $y, $treatment)
 	{
 		$subembayment = DB::select("exec [dbo].[UPD_Credit_Subembayment1] @x='$x', @y='$y', @treatment=$treatment");

@@ -110,7 +110,7 @@
 					})
 					.done(function(msg) {
 						msg = $.parseJSON(msg);
-						subEmbaymentID = msg.SUBEM_ID; 
+						location1 = msg.SUBEM_ID; // TODO: Rename to subembayment id
 						$('#'+msg.SUBEM_NAME+'> .stats').show();
 						$('#popdown-opacity').show();
 						$('.select > span').text('Selected: '+msg.SUBEM_DISP);
@@ -134,7 +134,7 @@
 			$('#select_area_'+treatment).on('click', function(f) {
 				f.preventDefault();
 				$('#popdown-opacity').hide();
-				let subEmbaymentID = 0;
+				let location1 = 0;
 				stormwaterSelectLocationTech();
 				let destination_active = 0;
 			});
@@ -178,9 +178,10 @@
 					units = 1;
 				}
 				else {
-					units = 0;
+					// TODO: Are 8 decimas necessary?
+					units = 0.00000000;
 				}
-				var url = "{{url('/apply_storm')}}" + '/' +  treatment + '/' + percent + '/' + units + '/' + subEmbaymentID;
+				var url = "{{url('/apply_storm')}}" + '/' +  treatment + '/' + percent + '/' + units + '/' + location1;
 				$.ajax({
 					method: 'GET',
 					url: url
