@@ -32,7 +32,7 @@
 				unit metric is used to calculate cost
 			4 => user does not enter a treatment area (Fertilizer Mgmt or Stormwater BMPs)
 		-->
-		<!-- TODO: Switch if/else to case/switch once Laravel is upgraded -->
+		<!-- TODO: Switch if/else to case/switch once Laravel is upgraded. Case statement switches are unavailable in current version (5.2) -->
 		@if($tech->Show_In_wMVP == 1)
 			<p>
 				<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated: 
@@ -78,10 +78,12 @@
 		// If technology is non-management
 		 @if($tech->Show_In_wMVP < 4)
 
+			// Handle click-event for closing popdown
 			$('#closeWindow').on('click', function (e) {
 				$('#popdown-opacity').hide();
 			})
 
+			// Handle click-event for custom polygon creation
 			$('#select_polygon').on('click', function(f) {
 				f.preventDefault();
 				$('#popdown-opacity').hide();
