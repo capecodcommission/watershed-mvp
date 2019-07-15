@@ -116,7 +116,7 @@ class TechnologyController extends Controller
 			Session::put('storm_applied', 1);
 		}
 
-		return $n_removed
+		return $n_removed;
 	}
 
 
