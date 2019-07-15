@@ -130,6 +130,11 @@
 		// If technology is non-management related
 	 	@if($tech->Show_In_wMVP < 4) {
 
+			// Handle on-click event for closing popdown, disassociating, and deleting the selected technology from the user's scenario
+			$('#closeWindow').on('click', function (e) {
+				$('#popdown-opacity').hide();
+			})
+
 			// Handle on-click event for selecting a location
 			$('#select_area_'+treatment).on('click', function(f) {
 				f.preventDefault();
@@ -146,25 +151,6 @@
 				map.disableMapNavigation();
 				tb.activate('polygon');
 			});
-
-			// Handle on-click event for disassociating and deleting the selected technology from the user's scenario
-			$('#closeWindow').on('click', function (e) {
-				$('#popdown-opacity').hide();
-				var url = "{{url('cancel', $treatment->TreatmentID)}}";
-				$.ajax({
-					method: 'GET',
-					url: url
-				})
-				.done(function(msg){
-					for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
-		                if (map.graphics.graphics[i].attributes) {
-		                    if (map.graphics.graphics[i].attributes.treatment_id == treatment) {
-		                    	map.graphics.remove(map.graphics.graphics[i])
-		                    }
-		                }
-	           		}
-	           	})
-			})
 
 			// Handle on-click event for applying selected technology, adding to applied technology stack
 			$('#apply_treatment_'+treatment).on('click', function(e) {
@@ -200,6 +186,25 @@
 
 		// Else if technology is management-related
 		@else {
+
+			// Handle on-click event for closing popdown, disassociating, and deleting the selected technology from the user's scenario
+			$('#closeWindow').on('click', function (e) {
+				$('#popdown-opacity').hide();
+				var url = "{{url('cancel', $treatment->TreatmentID)}}";
+				$.ajax({
+					method: 'GET',
+					url: url
+				})
+				.done(function(msg){
+					for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
+						if (map.graphics.graphics[i].attributes) {
+							if (map.graphics.graphics[i].attributes.treatment_id == treatment) {
+								map.graphics.remove(map.graphics.graphics[i])
+							}
+						}
+					}
+				})
+			})
 
 			// Handle on-click event for applying management technology
 			$('#apply_treatment_'+treatment).on('click', function(e) {

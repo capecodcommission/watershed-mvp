@@ -76,12 +76,7 @@
 		treatment = {{$treatment->TreatmentID}};
 		 
 		// If technology is non-management
-		 @if($tech->Show_In_wMVP < 4)
-
-			// Handle click-event for closing popdown
-			$('#closeWindow').on('click', function (e) {
-				$('#popdown-opacity').hide();
-			})
+		 @if($tech->Show_In_wMVP < 4) {
 
 			// Handle click-event for custom polygon creation
 			$('#select_polygon').on('click', function(f) {
@@ -120,7 +115,10 @@
 					$( "#update" ).trigger( "click" );
 				});
 			});
-		@else
+		}
+
+		// ELse if technology is management-related
+		@else {
 			
 			// Handle click-event for management technology
 			$('#updatetreatment').on('click', function(e) {
@@ -136,7 +134,13 @@
 					$( "#update" ).trigger( "click" );
 				});
 			});
+		}
 		@endif
+
+		// Handle click-event for closing popdown
+		$('#closeWindow').on('click', function (e) {
+			$('#popdown-opacity').hide();
+		})
 
 		// Handle click-event for deleting selected technology
 		$('#deletetreatment').on('click', function(e){
