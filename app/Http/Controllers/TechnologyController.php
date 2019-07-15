@@ -17,7 +17,8 @@ class TechnologyController extends Controller
 {
 
 	// Retrieve and initialize selected technology data
-	public function get($type, $id)
+	// Associate with scenario
+	public function associateTech($type, $id)
 	{
 
 		// Retrieve technology data from tech_matrix based on passed TM_ID
@@ -92,33 +93,30 @@ class TechnologyController extends Controller
 
 
 	// Apply Fertilizer and Stormwater management technologies based on type
-	public function ApplyTreatment_Percent($treat_id, $rate, $type, $units = null)
+	public function ApplyTreatment_Percent($treat_id, $rate, $type)
 	{
+		// Retrieve scenario id and removed nitrogen global variables, passed rate from blade
 		$scenarioid = session('scenarioid');
 		$rate = round($rate, 2);
-		switch ($type) 
-		{
-			case 'fert':
-				$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Percent1] ' . $treat_id . ', ' . $rate . ', fert' );
-				Session::put('fert_applied', 1);
-				$n_removed = session('n_removed');
-				$n_removed += $updated[0]->removed;
-				Session::put('n_removed', $n_removed);
-				return $n_removed;
-				break;
-			
-			case 'storm':
-				$updated = DB::select('exec dbo.CALC_ApplyTreatment_Percent1 ' . $treat_id . ', ' . $rate . ', storm' );
-				Session::put('storm_applied', 1);
-				$n_removed = session('n_removed');
-				$n_removed += $updated[0]->removed;
-				Session::put('n_removed', $n_removed);			
-				return $n_removed;
-				break;
+		$n_removed = session('n_removed');
 
-			default:
-				break;
+		// Trigger stored proc with function parameters
+		// Set removed nitrogen global variable with new total returned from stored proc
+		$updated = DB::select('exec dbo.CALC_ApplyTreatment_Percent ' . $treat_id . ', ' . $rate . ', ' . $type);
+		$n_removed += $updated[0]->removed;
+		Session::put('n_removed', $n_removed);
+
+		// Set fert or storm applied global variable to disable management from being selected/applied again
+		if ($type == 'fert')
+		{
+			Session::put('fert_applied', 1);
 		}
+		else if ($type == 'storm')
+		{
+			Session::put('storm_applied', 1);
+		}
+
+		return $n_removed
 	}
 
 
