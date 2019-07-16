@@ -124,10 +124,12 @@ class TechnologyController extends Controller
 	// Apply non-management Stormwater technology
 	public function ApplyTreatment_Storm($treat_id, $rate, $units = null, $location = null)
 	{
-		
+		// Retrieve scenario id and removed nitrogen global variables from session
 		$scenarioid = session('scenarioid');
-		$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Storm1] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $location );
 		$n_removed = session('n_removed');
+
+		// Trigger parameterized stored proc, update nitrogen removed global variable
+		$updated = DB::select('exec dbo.CALC_ApplyTreatment_Storm ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $location );
 		$n_removed += $updated[0]->removed;
 		Session::put('n_removed', $n_removed);
 		return $n_removed;
