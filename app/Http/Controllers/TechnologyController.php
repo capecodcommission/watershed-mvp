@@ -129,7 +129,7 @@ class TechnologyController extends Controller
 		$n_removed = session('n_removed');
 
 		// Trigger parameterized stored proc, update nitrogen removed global variable
-		$updated = DB::select('exec dbo.CALC_ApplyTreatment_Storm ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $location );
+		$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $location );
 		$n_removed += $updated[0]->removed;
 		Session::put('n_removed', $n_removed);
 		return $n_removed;
@@ -357,83 +357,70 @@ class TechnologyController extends Controller
 
 	}
 
-	/**
-	 * User updated an existing treatment for this scenario
-	 *
-	 * @return void
-	 * @author 
-	 **/
+	// Handle treatment reapplication by type
 	public function update($type, $treat_id, $rate, $units=null, $subemid=null)
 	{
-		$treatment = Treatment::find($treat_id);
-			switch ($type) 
-			{
-				case 'fert':
-					// TODO: Change reference to CALC_ApplyTreatment_Percent1, modify CALC_ApplyTreatment_Percent1 stored procedure to take in 'fert' param similar to storm-percent switch below
-					$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Fert1] ' . $treat_id . ', ' . $rate );
-					return $updated;	
-					break;
+		// Trigger parameterized stored proc based on passed type
+		switch ($type) 
+		{
+			// Fertilizer Management
+			case 'fert':
+				$updated = DB::select('exec dbo.CALCapplyTreatmentPercent ' . $treat_id . ', ' . $rate . ', fert' );
+				return $updated;	
+				break;
 
-				// Stormwater Management
-				case 'storm-percent':
-					// $updated = DB::select('exec CapeCodMA.CALC_ApplyTreatment_Percent ' . $treat_id . ', ' . $rate . ', storm' );
-					$updated = DB::select('exec dbo.CALCapplyTreatmentPercent' . $treat_id . ', ' . $rate . ', storm' );
-					return $updated;
-					break;
+			// Stormwater Management
+			case 'storm-percent':
+				$updated = DB::select('exec dbo.CALCapplyTreatmentPercent ' . $treat_id . ', ' . $rate . ', storm' );
+				return $updated;
+				break;
 
-				// Stormwater treatments
-				case 'storm':
-					// $updated = DB::select('exec [CapeCodMA].[CALC_UpdateTreatment_Storm] ' . $treat_id . ', ' . $rate . ', ' . $units );
-					$updated = DB::select('exec [dbo].[CALC_UpdateTreatment_Storm] ' . $treat_id . ', ' . $rate . ', ' . $units );
-					return $updated;
-					break;
+			// Stormwater non-management
+			case 'storm':
+				$updated = DB::select('exec dbo.CALCupdateTreatmentStorm ' . $treat_id . ', ' . $rate . ', ' . $units );
+				return $updated;
+				break;
 
-				case 'toilets':
-					// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Septic] '. $treat_id . ', '. $rate);
-					$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Septic1] '. $treat_id . ', '. $rate);
-					return $updated;
-					break;
+			// Septic (first row)
+			case 'collect':
+				$updated = DB::select('exec dbo.CALC_ApplyTreatment_Septic1 '. $treat_id . ', '. $rate);
+				return $updated;
+				break;
 
-				case 'collect':
-				// $query = 'exec [CapeCodMA].[CALC_ApplyTreatment_Septic] '. $treat_id . ', '. $rate;
-				$query = 'exec [dbo].[CALC_ApplyTreatment_Septic1] '. $treat_id . ', '. $rate;
-				Log::info($query);
-					// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Septic] '. $treat_id . ', '. $rate);
-					$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Septic1] '. $treat_id . ', '. $rate);
-					return $updated;
-					break;	
-				case 'septic':
-					
-					break;
-				case 'groundwater':
-					$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Groundwater1] '. $treat_id . ', '. $rate . ', ' . $units);
-					return $updated;
-					break;	
-					
-				case 'embay':
-					$n_total = 0;
-					$scenarioid = session('scenarioid');
-					$subemid = session('subemid');
-					$n_parcels = 0;
+			// Septic (second row)
+			case 'toilets':
+				$updated = DB::select('exec dbo.CALC_ApplyTreatment_Septic1 '. $treat_id . ', '. $rate);
+				return $updated;
+				break;
+
+			// Groundwater
+			case 'groundwater':
+				$updated = DB::select('exec dbo.CALC_ApplyTreatment_Groundwater1 '. $treat_id . ', '. $rate . ', ' . $units);
+				return $updated;
+				break;	
 				
-					// TODO: Can we pass in # of parcels from either session or treatment id?
-					$parcels = DB::table("dbo.wiz_treatment_towns")->select("*")->where("wtt_treatment_id", "=", $treat_id)->get();
+			// Embayment
+			case 'embay':
 
-					foreach ($parcels as $parcel) 
-					{
-						$n_parcels += $parcel->wtt_tot_parcels;
-					}
+				// Retrieve scenario id and subembayment id from session, initialize nitrogen load and parcel totals
+				$scenarioid = session('scenarioid');
+				$subemid = session('subemid');
+				$n_total = 0;
+				$n_parcels = 0;
 
-					// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Embayment] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $n_total . ', ' . $n_parcels);
-					$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Embayment1] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $n_parcels);
+				// Query and total number of parcels treated from wiz_treatment_towns
+				// Trigger parameterized stored proc using function params and number of parcels
+				$parcels = DB::table("dbo.wiz_treatment_towns")->select("wtt_tot_parcels")->where("wtt_treatment_id", "=", $treat_id)->get();
+				foreach ($parcels as $parcel) 
+				{
+					$n_parcels += $parcel->wtt_tot_parcels;
+				}
+				$updated = DB::select('exec dbo.CALC_ApplyTreatment_Embayment1 ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $n_parcels);
+				break;
 
-					break;
-				default:
-					
-					break;
-			}
-
-
+			default:
+				break;
+		}
 	}
 
 		/**
