@@ -95,23 +95,23 @@ class TechnologyController extends Controller
 	// Apply Fertilizer and Stormwater management technologies based on type
 	public function ApplyTreatment_Percent($treat_id, $rate, $type)
 	{
-		// Retrieve scenario id and removed nitrogen global variables, passed rate from blade
+		// Retrieve scenario id and removed nitrogen global variables, passed rate from user input percent slider on popdown
 		$scenarioid = session('scenarioid');
 		$rate = round($rate, 2);
 		$n_removed = session('n_removed');
 
 		// Trigger stored proc with function parameters
 		// Set removed nitrogen global variable with new total returned from stored proc
-		$updated = DB::select('exec dbo.CALC_ApplyTreatment_Percent ' . $treat_id . ', ' . $rate . ', ' . $type);
+		$updated = DB::select('exec dbo.CALCapplyTreatmentPercent ' . $treat_id . ', ' . $rate . ', ' . $type);
 		$n_removed += $updated[0]->removed;
 		Session::put('n_removed', $n_removed);
 
 		// Set fert or storm applied global variable to disable management from being selected/applied again
-		if ($type == 'fert')
+		if ($type = 'fert')
 		{
 			Session::put('fert_applied', 1);
 		}
-		else if ($type == 'storm')
+		else if ($type = 'storm')
 		{
 			Session::put('storm_applied', 1);
 		}
@@ -300,7 +300,7 @@ class TechnologyController extends Controller
 	// Disassociate and delete selected technology data from user's scenario
 	public function cancel($treat_id)
 	{
-		$del = DB::select('exec dbo.DEL_Treatment '. $treat_id);
+		$del = DB::select('exec dbo.DELtreatment '. $treat_id);
 		return 1;
 	}
 
@@ -377,7 +377,7 @@ class TechnologyController extends Controller
 				// Stormwater Management
 				case 'storm-percent':
 					// $updated = DB::select('exec CapeCodMA.CALC_ApplyTreatment_Percent ' . $treat_id . ', ' . $rate . ', storm' );
-					$updated = DB::select('exec dbo.CALC_ApplyTreatment_Percent1 ' . $treat_id . ', ' . $rate . ', storm' );
+					$updated = DB::select('exec dbo.CALCapplyTreatmentPercent' . $treat_id . ', ' . $rate . ', storm' );
 					return $updated;
 					break;
 
@@ -445,14 +445,14 @@ class TechnologyController extends Controller
 	public function delete($treat_id, $type = NULL)
 	{
 	
-		$del = DB::select('exec dbo.DEL_Treatment '. $treat_id);
+		$del = DB::select('exec dbo.DELtreatment '. $treat_id);
 
 		// Reset global variables to handle fert/storm clickability
-		if ($type == 'fert') {
+		if ($type = 'fert') {
 			
 			Session::put('fert_applied',0);
 		} 
-		else if ($type == 'storm') {
+		else if ($type = 'storm') {
 			
 			Session::put('storm_applied',0);
 		}
