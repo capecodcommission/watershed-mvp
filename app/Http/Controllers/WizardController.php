@@ -84,13 +84,16 @@ class WizardController extends Controller
 		foreach ($treatments as $key) {
 			if ($key->TreatmentType_Name == 'Fertilizer Management') {
 				Session::put('fert_applied', 1);
+				Session::save();
 			}
 			else if ($key->TreatmentType_Name == 'Stormwater Management') {
 				Session::put('storm_applied', 1);
+				Session::save();
 			}
 			else {
 				Session::put('fert_applied', 0);
 				Session::put('storm_applied', 0);
+				Session::save();
 			}
 		}
 		// TODO: Determine if global values can be initially set and updated without initializing additoinal variables

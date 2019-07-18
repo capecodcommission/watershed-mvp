@@ -107,13 +107,15 @@ class TechnologyController extends Controller
 		Session::put('n_removed', $n_removed);
 
 		// Set fert or storm applied global variable to disable management from being selected/applied again
-		if ($type = 'fert')
+		if ($type == 'fert')
 		{
 			Session::put('fert_applied', 1);
+			Session::save();
 		}
-		else if ($type = 'storm')
+		if ($type == 'storm')
 		{
 			Session::put('storm_applied', 1);
+			Session::save();
 		}
 
 		return $n_removed;
@@ -435,13 +437,15 @@ class TechnologyController extends Controller
 		$del = DB::select('exec dbo.DELtreatment '. $treat_id);
 
 		// Reset global variables to handle fert/storm clickability
-		if ($type = 'fert') {
+		if ($type == 'fert') {
 			
 			Session::put('fert_applied',0);
+			Session::save();
 		} 
-		else if ($type = 'storm') {
+		if ($type == 'storm') {
 			
 			Session::put('storm_applied',0);
+			Session::save();
 		}
 
 		// TODO: Check if deleted treatment can be removed from global treatments array
