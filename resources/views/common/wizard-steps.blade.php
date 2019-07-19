@@ -413,13 +413,25 @@
 <script>
 	$(document).ready(function(){
 
-		scenario = {{session('scenarioid')}};
+		scenario = {{session('scenarioid')}}
+		// TODO: Use technology clicked properties to handle not adding additional
+		// spinners
+		// fertApplied = {{session('fert_applied')}}
 
-		$('div.technology').on('click', function(e) {
-
-			$(this).append("<div class = 'fa fa-spinner fa-spin'></div>")
-
-		})
+		// switch (fert_applied) {
+		// 	case 0:
+		// 		$('div.technology').on('click', function(e) {
+		// 			$(this).append("<div class = 'fa fa-spinner fa-spin'></div>")
+		// 		})
+		// 	break;
+			
+		// 	case 1:
+		// 		{}
+		// 	break;
+			
+		// 	default: 
+		// 		"An error has occured"
+		// }
 
 		$('#fim').on('click', function(e) {
 

@@ -56,13 +56,13 @@
 
 
 <script>
-	$(document).ready(function(){
+	$(document).ready(function() {
 		// Check the state of readyness for applyTreatment, closeWindow & canceltreatment - remove the spinner once ready
 		$('div.fa.fa-spinner.fa-spin').remove()
 		
 		// On Click of treatment icon set the percent variable for the fertilization percent for reduction selection by user
 		// and set the url to use to send an ajax GET method to route the user input slider value for the fertilzation percent
-		$('#applytreatment').on('click', function(e){
+		$('#applytreatment').on('click', function(e) {
 			e.preventDefault();
 			var percent = $('#fert-percent').val();
 			var url = "{{url('/apply_percent')}}" + '/' +  {{$treatment->TreatmentID}} + '/' + percent + '/fert';
@@ -73,7 +73,7 @@
 			// Once the GET method is complete, format the returned message, route that to the text, hide the popdown, click
 			// the update subemebayments progress and embayment progress, set the newtreatment variable and add it to the
 			// selected treatments popdown tray at top
-			.done(function(msg){
+			.done(function(msg) {
 				msg = Math.round(msg);
 				$('#n_removed').text(msg);
 				$('#popdown-opacity').hide();
@@ -86,35 +86,21 @@
 		});
 		
 		// Clicking the close window button: hide the popdown, set the url to cancel the treatment which runs the DELtreatment
-		// stored procedure, send an ajax GET method to the url and once the method is complete, use the return to remove the fert
-		// treatment polygon
+		// stored procedure, send an ajax GET method to the url to disassociate the treatment with the parcels and return nothing
 		$('#closeWindow').on('click', function (e) {
-			
 			$('#popdown-opacity').hide();
 			$('#fert-percent').val(0);
-			let fertApplied = {{session('fert_applied')}};
-			console.log(fertApplied);
 			var url = "{{url('cancel', $treatment->TreatmentID)}}";
-			
 			$.ajax({
 				method: 'GET',
 				url: url
 			})
-			.done(function(msg){
-				// for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
-				// 		if (map.graphics.graphics[i].attributes) {
-				// 			if (map.graphics.graphics[i].attributes.treatment_id == treatment) {
-				// 				map.graphics.remove(map.graphics.graphics[i])
-	            //         	}
-	            //     	}
-				// 	   }
-			});
-			$('#fert-percent').val(0);
+			.done(function(msg){});
 		})
 
 		// On clicking cancel treatment, hide the popdown, reset the fertilizer percent back to 0, cancel the treatment in the
 		// same fashion as closeWindow and return an empty message
-		$('#canceltreatment').on('click', function(e){
+		$('#canceltreatment').on('click', function(e) {
 			$('#popdown-opacity').hide();
 			$('#fert-percent').val(0);
 			var url = "{{url('cancel', $treatment->TreatmentID)}}";
@@ -124,5 +110,5 @@
 			})
 			.done(function(msg){});
 		});
-	});
+ 	});
 </script>
