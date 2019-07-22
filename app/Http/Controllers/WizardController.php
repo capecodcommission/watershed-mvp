@@ -151,12 +151,11 @@ class WizardController extends Controller
 
 		$nitrogen = DB::select('exec dbo.GET_AreaNitrogen_Unattenuated ' . $id);
 		$nitrogen_att = DB::select('exec dbo.GET_AreaNitrogen_attenuated ' . $id);
-		$nitrogen_att = [ 'Total_Att' => $n_load_orig ];
 
 		JavaScript::put (
 			[
 				'nitrogen_unatt' => $nitrogen[0],
-				'nitrogen_att' => $nitrogen_att,
+				'nitrogen_att' => $nitrogen_att[0],
 				'center_x'	=> $embayment->longitude,
 				'center_y'	=> $embayment->latitude,
 				'selectlayer' => $embayment->embay_id,
@@ -164,14 +163,14 @@ class WizardController extends Controller
 			]
 		);
 		
-		return view (
-			'layouts/wizard',
-			[ 
-				'embayment'=>$embayment,
-				'subembayments'=>$subembayments,
-				'goal'=>$total_goal,
-				'treatments'=>$treatments,
-				'progress'=>$progress,
+
+		return view('layouts/wizard', 
+			[
+				'embayment'=>$embayment, 
+				'subembayments'=>$subembayments, 
+				'goal'=>$total_goal, 
+				'treatments'=>$treatments, 
+				'progress'=>$progress, 
 				'remaining'=>$remaining
 			]
 		);
