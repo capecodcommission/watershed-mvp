@@ -104,18 +104,21 @@ class TechnologyController extends Controller
 		// Set removed nitrogen global variable with new total returned from stored proc
 		$updated = DB::select('exec dbo.CALCapplyTreatmentPercent ' . $treat_id . ', ' . $rate . ', ' . $type);
 		$n_removed += $updated[0]->removed;
-		Session::put('n_removed', $n_removed);
+		session(['n_removed' => $n_removed]);
+		// Session::put('n_removed', $n_removed);
 
 		// Set fert or storm applied global variable to disable management from being selected/applied again
 		if ($type == 'fert')
 		{
-			Session::put('fert_applied', 1);
-			Session::save();
+			session(['fert_applied' => 1]);
+			// Session::put('fert_applied', 1);
+			// Session::save();
 		}
 		if ($type == 'storm')
 		{
-			Session::put('storm_applied', 1);
-			Session::save();
+			session(['storm_applied' => 1]);
+			// Session::put('storm_applied', 1);
+			// Session::save();
 		}
 
 		return $n_removed;
@@ -133,7 +136,8 @@ class TechnologyController extends Controller
 		// Trigger parameterized stored proc, update nitrogen removed global variable
 		$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $location );
 		$n_removed += $updated[0]->removed;
-		Session::put('n_removed', $n_removed);
+		session(['n_removed' => $n_removed]);
+		// Session::put('n_removed', $n_removed);
 		return $n_removed;
 	}
 
@@ -155,7 +159,8 @@ class TechnologyController extends Controller
 		{
 			// $parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $subemid . ', ' . $scenarioid . ', ' . $treat_id . ', \'subembayment\'');
 			$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $subemid . ', ' . $scenarioid . ', ' . $treat_id . ', \'subembayment\'');
-			Session::put('subemid', $subemid);
+			session(['subemid' => $subemid]);
+			// Session::put('subemid', $subemid);
 		} 
 
 		foreach ($parcels as $parcel) 
@@ -189,18 +194,13 @@ class TechnologyController extends Controller
 	 * @author 
 	 **/
 	public function ApplyTreatment_Septic($treat_id, $rate)
-	{		
-		//$scenarioid = session('scenarioid');
-		
-		// $updated = DB::select('exec [CapeCodMA].[CALC_ApplyTreatment_Septic] ' . $treat_id . ', ' . $rate );
+	{
 		$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Septic1] ' . $treat_id . ', ' . $rate );
-		
 		$n_removed = session('n_removed');
 		$n_removed += $updated[0]->removed;
-		Session::put('n_removed', $n_removed);
-		
+		session(['n_removed' => $n_removed]);
+		// Session::put('n_removed', $n_removed);
 		return $n_removed;
-
 	}
 
 	/**
@@ -233,14 +233,11 @@ class TechnologyController extends Controller
 			return $parcels[0];
 		}
 
-		// dd($embay_id, $scenarioid);
-		// dd($parcels);
 		$poly_nitrogen = $parcels[0]->Septic;
 
-		// dd($parcels);
-		JavaScript::put([
-				'poly_nitrogen' => $parcels
-			]);
+		JavaScript::put(
+			[ 'poly_nitrogen' => $parcels ]
+		);
 
 
 		/**********************************************
@@ -265,8 +262,7 @@ class TechnologyController extends Controller
 		// 	$total_septic_nitrogen += $parcel->wtp_nload_septic;
 		// }
 
-		return $poly_nitrogen;
-		// return view ('layouts/test_septic', ['parcels'=>$parcels, 'poly_nitrogen'=>$poly_nitrogen]);		
+		return $poly_nitrogen;	
 	}
 
 
@@ -284,7 +280,6 @@ class TechnologyController extends Controller
 
 		// TODO: Create switch to use proper stored proc based on $type
 		
-
 		// DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
 		// stored procedure needs to update the parcels in wiz_treatment_parcel to match the new polygon
 		// then update the polygon and parcel data/N total for this treatment in Treatment_Wiz
@@ -295,8 +290,6 @@ class TechnologyController extends Controller
 		Log::info($query);
 		$upd = DB::select('exec dbo.UPD_TreatmentPolygon ' . $data['treatment'] . ', \'' . $data['polystring'] . '\'');
 		return $upd;
-
-
 	}
 
 	// Disassociate and delete selected technology data from user's scenario
@@ -316,12 +309,10 @@ class TechnologyController extends Controller
 	public function edit($treat_id)
 	{
 		$treatment = Treatment::find($treat_id);
-		// dd($treatment);
 		$tech = DB::table('dbo.v_Technology_Matrix')->select('*')->where('Technology_ID', $treatment->TreatmentType_ID)->first();
-		// dd($treatment, $tech);
 		$type = $tech->Technology_Sys_Type;
-				$toilets = [21, 22, 23, 24];
-		if (in_array($treatment->TreatmentType_ID, $toilets) ) 
+		$toilets = [21, 22, 23, 24];
+		if ( in_array($treatment->TreatmentType_ID, $toilets) ) 
 		{
 			return view('common/technology-septic-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 			break;
@@ -338,10 +329,7 @@ class TechnologyController extends Controller
 					break;
 				case 'Septic/Sewer':
 					return view('common/technology-collection-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
-					break;		
-				// case 'septic':
-				// 	return view('common/technology-septic-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
-				// 	break;
+					break;
 				case 'Groundwater':
 					return view('common/technology-groundwater-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 					break;
@@ -353,57 +341,62 @@ class TechnologyController extends Controller
 					break;
 			}
 		}
-
-
 		return view('common/technology-septic-edit', ['treatment'=>$treatment, 'tech'=>$tech]);
-
 	}
 
 	// Handle treatment reapplication by type
 	public function update($type, $treat_id, $rate, $units=null, $subemid=null)
 	{
+		// Set n_removed to 0 before updating in each swithc - case statement below
+		session(['n_removed' => 0]);
+		$n_removed = session('n_removed');
 		// Trigger parameterized stored proc based on passed type
 		switch ($type) 
 		{
 			// Fertilizer Management
 			case 'fert':
-				$updated = DB::select('exec dbo.CALCapplyTreatmentPercent ' . $treat_id . ', ' . $rate . ', fert' );
-				return $updated;	
+				$updated = DB::select('exec dbo.CALCapplyTreatmentPercent ' . $treat_id . ', ' . $rate . ', ' . $type);
+				$n_removed += $updated[0]->removed;
+				session(['n_removed' => $n_removed]);
+				return $updated;
 				break;
-
 			// Stormwater Management
 			case 'storm-percent':
 				$updated = DB::select('exec dbo.CALCapplyTreatmentPercent ' . $treat_id . ', ' . $rate . ', storm' );
+				$n_removed += $updated[0]->removed;
+				session(['n_removed' => $n_removed]);
 				return $updated;
 				break;
-
 			// Stormwater non-management
 			case 'storm':
 				$updated = DB::select('exec dbo.CALCupdateTreatmentStorm ' . $treat_id . ', ' . $rate . ', ' . $units );
+				$n_removed += $updated[0]->removed;
+				session(['n_removed' => $n_removed]);
 				return $updated;
 				break;
-
 			// Septic (first row)
 			case 'collect':
 				$updated = DB::select('exec dbo.CALC_ApplyTreatment_Septic1 '. $treat_id . ', '. $rate);
+				$n_removed += $updated[0]->removed;
+				session(['n_removed' => $n_removed]);
 				return $updated;
 				break;
-
 			// Septic (second row)
 			case 'toilets':
 				$updated = DB::select('exec dbo.CALC_ApplyTreatment_Septic1 '. $treat_id . ', '. $rate);
+				$n_removed += $updated[0]->removed;
+				session(['n_removed' => $n_removed]);
 				return $updated;
 				break;
-
 			// Groundwater
 			case 'groundwater':
 				$updated = DB::select('exec dbo.CALC_ApplyTreatment_Groundwater1 '. $treat_id . ', '. $rate . ', ' . $units);
+				$n_removed += $updated[0]->removed;
+				session(['n_removed' => $n_removed]);
 				return $updated;
 				break;	
-				
 			// Embayment
 			case 'embay':
-
 				// Retrieve scenario id and subembayment id from session, initialize nitrogen load and parcel totals
 				$scenarioid = session('scenarioid');
 				$subemid = session('subemid');
@@ -418,14 +411,15 @@ class TechnologyController extends Controller
 					$n_parcels += $parcel->wtt_tot_parcels;
 				}
 				$updated = DB::select('exec dbo.CALC_ApplyTreatment_Embayment1 ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $n_parcels);
+				$n_removed += $updated[0]->removed;
+				session(['n_removed' => $n_removed]);
 				break;
-
 			default:
 				break;
 		}
 	}
 
-		/**
+	/**
 	 * User wants to delete a treatment for this scenario
 	 *
 	 * @return void
@@ -433,26 +427,26 @@ class TechnologyController extends Controller
 	 **/
 	public function delete($treat_id, $type = NULL)
 	{
-	
 		$del = DB::select('exec dbo.DELtreatment '. $treat_id);
 
 		// Reset global variables to handle fert/storm clickability
 		if ($type == 'fert') {
-			
-			Session::put('fert_applied',0);
-			Session::save();
-		} 
+			session(['n_removed' => 0]);
+			session(['fert_applied' => 0]);
+			// Session::put('n_removed', 0);
+			// Session::put('fert_applied',0);
+			// Session::save();
+		}
 		if ($type == 'storm') {
-			
-			Session::put('storm_applied',0);
-			Session::save();
+			session(['n_removed' => 0]);
+			session(['storm_applied' => 0]);	
+			// Session::put('n_removed', 0);
+			// Session::put('storm_applied',0);
+			// Session::save();
 		}
 
 		// TODO: Check if deleted treatment can be removed from global treatments array
 		// Can we go Back to Map without page refresh?
-		
 		return 1;
 	}
-
-
 }
