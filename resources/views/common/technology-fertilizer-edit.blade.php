@@ -27,7 +27,7 @@ and delete button -->
 			<input type="range" id="fert-percent" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="fert_percent" value="{{$treatment->Treatment_Value}}"> @{{fert_percent}}%
 		</p>
 		<p>
-			<button id="updatetreatment">Update</button>
+			<button v-if="fert_percent != {{$treatment->Treatment_Value}}" id="updatetreatment">Update</button>
 			<button data-treatment = "{{$treatment->TreatmentID}}" id="deletetreatment" class='button--cta right'><i class="fa fa-trash-o"></i> Delete</button>
 		</p>
 	</section>
