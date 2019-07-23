@@ -65,7 +65,7 @@
 								<td><?php if ($result->Nload_Reduction > 0) {
 								echo '$'.number_format(($result->Cost_Total/$result->Nload_Reduction)/12.46,0,'.',',');}?></td>
 								<!-- money_format('%10.0n', ($result->Cost_Total/$result->Nload_Reduction)/12.46);}?> -->
-								<td><a data-treatment="{{$result->TreatmentID}}" class="deletetreatment button--cta"><i class="fa fa-trash-o"></i> Delete</a></td>
+								<td><a data-treatment="{{$result->TreatmentID}}" data-treatmenttype= "{{$result->TreatmentType_ID}}" class="deletetreatment button--cta"><i class="fa fa-trash-o"></i> Delete</a></td>
 
 							@endif
 
@@ -168,15 +168,24 @@
 
 			e.preventDefault();
 			var treat = $(this).data('treatment');
+			var treatType = $(this).data('treatmenttype');
 			var url = "{{url('delete_treatment')}}" + '/' + treat;
+
+			if (treatType === 400) {
+				url = "{{url('delete_treatment')}}" + '/' + treat + '/' + 'fert';
+			} 
+			else if (treatType === 401) {
+				url = "{{url('delete_treatment')}}" + '/' + treat + '/' + 'storm';
+			}
+
 			$.ajax({
 				method: 'GET',
 				url: url
 			})
-				.done(function(msg){
-					$('#treat_'+treat).remove();
-				});
+			.done(function(msg){
+				$('#treat_'+treat).remove();
 			});
+		});
 
 		// href="{{url('save', $scenario->ScenarioID)}}"
 		$('.save').on('click', function(e){
