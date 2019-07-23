@@ -31,7 +31,6 @@ class WizardController extends Controller
 		{
 			if (session('scenarioid')) 
 			{
-				// $scenarioid = Session::get('scenarioid');
 				$scenarioid = session()->get('scenarioid');
 				$scenario = Scenario::find($scenarioid);
 
@@ -47,15 +46,9 @@ class WizardController extends Controller
 					// user selected a different embayment, need to create a new scenario 
 					$scenarioid = $scenario->ScenarioID;
 					session(['scenarioid' => $scenarioid]);
-					// Session::put('scenarioid', $scenarioid);
-					// Session::save();
 					session(['n_removed' => 0]);
-					// Session::put('n_removed', 0);
 					session(['fert_applied' => 0]);
-					// Session::put('fert_applied', 0);
 					session(['storm_applied' => 0]);
-					// Session::put('storm_applied', 0);
-					// Session::save();
 				}
 			}
 			else
@@ -68,24 +61,15 @@ class WizardController extends Controller
 				$scenarioid = $scenario->ScenarioID;
 
 				session(['scenarioid' => $scenarioid]);
-				// Session::put('scenarioid', $scenarioid);
 				session(['n_removed' => 0]);
-				// Session::put('n_removed', 0);
 				session(['fert_applied' => 0]);
-				// Session::put('fert_applied', 0);
 				session(['storm_applied' => 0]);
-				// Session::put('storm_applied', 0);
-				// Session::save();
 			}
 			session(['embay_id' => $id]);
-			// Session::put('embay_id', $id);
-			// Session::save();
 		}
 		else
 		{
 			session(['scenarioid' => $scenarioid]);
-			// Session::put('scenarioid', $scenarioid);
-			// Session::save();
 		}
 
 		$scenario = Scenario::find($scenarioid);
@@ -94,20 +78,13 @@ class WizardController extends Controller
 		foreach ($treatments as $key) {
 			if ($key->TreatmentType_Name == 'Fertilizer Management') {
 				session(['fert_applied' => 1]);
-				// Session::put('fert_applied', 1);
-				// Session::save();
 			}
 			else if ($key->TreatmentType_Name == 'Stormwater Management') {
 				session(['storm_applied' => 1]);
-				// Session::put('storm_applied', 1);
-				// Session::save();
 			}
 			else {
 				session(['fert_applied' => 0]);
 				session(['storm_applied' => 0]);
-				// Session::put('fert_applied', 0);
-				// Session::put('storm_applied', 0);
-				// Session::save();
 			}
 		}
 
@@ -151,11 +128,12 @@ class WizardController extends Controller
 
 		$nitrogen = DB::select('exec dbo.GET_AreaNitrogen_Unattenuated ' . $id);
 		$nitrogen_att = DB::select('exec dbo.GET_AreaNitrogen_attenuated ' . $id);
+		$nitrogen_att = [ 'Total_Att' => $n_load_orig ];
 
 		JavaScript::put (
 			[
 				'nitrogen_unatt' => $nitrogen[0],
-				'nitrogen_att' => $nitrogen_att[0],
+				'nitrogen_att' => $nitrogen_att,
 				'center_x'	=> $embayment->longitude,
 				'center_y'	=> $embayment->latitude,
 				'selectlayer' => $embayment->embay_id,
@@ -163,14 +141,14 @@ class WizardController extends Controller
 			]
 		);
 		
-
-		return view('layouts/wizard', 
-			[
-				'embayment'=>$embayment, 
-				'subembayments'=>$subembayments, 
-				'goal'=>$total_goal, 
-				'treatments'=>$treatments, 
-				'progress'=>$progress, 
+		return view (
+			'layouts/wizard',
+			[ 
+				'embayment'=>$embayment,
+				'subembayments'=>$subembayments,
+				'goal'=>$total_goal,
+				'treatments'=>$treatments,
+				'progress'=>$progress,
 				'remaining'=>$remaining
 			]
 		);
@@ -212,7 +190,6 @@ class WizardController extends Controller
 		}
 		
 		$scenarioid = session()->get('scenarioid');
-		// $scenarioid = Session::get('scenarioid');
 		$scenario = Scenario::find($scenarioid);
 		$embay_id = $scenario->AreaID;
 		$parcels = DB::select('exec CapeCodMA.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
@@ -247,7 +224,6 @@ class WizardController extends Controller
 		$treatment_id = $data['treatment'];
 		$poly = $data['polystring'];
 		$scenarioid = session()->get('scenarioid');
-		// $scenarioid = Session::get('scenarioid');
 		$scenario = Scenario::find($scenarioid);
 		$embay_id = $scenario->AreaID;
 		$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');	
