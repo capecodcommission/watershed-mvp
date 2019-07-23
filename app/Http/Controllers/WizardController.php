@@ -32,7 +32,7 @@ class WizardController extends Controller
 			if (session('scenarioid')) 
 			{
 				// $scenarioid = Session::get('scenarioid');
-				$scenarioid = session('scenarioid');
+				$scenarioid = session()->get('scenarioid');
 				$scenario = Scenario::find($scenarioid);
 
 				if ($scenario->AreaID == $id) 
@@ -211,7 +211,7 @@ class WizardController extends Controller
 			$poly = $poly + $part2;
 		}
 		
-		session(['scenarioid' => $scenarioid]);
+		$scenarioid = session()->get('scenarioid');
 		// $scenarioid = Session::get('scenarioid');
 		$scenario = Scenario::find($scenarioid);
 		$embay_id = $scenario->AreaID;
@@ -246,7 +246,7 @@ class WizardController extends Controller
 		$data = $data->all();
 		$treatment_id = $data['treatment'];
 		$poly = $data['polystring'];
-		session(['scenarioid' => $scenarioid]);
+		$scenarioid = session()->get('scenarioid');
 		// $scenarioid = Session::get('scenarioid');
 		$scenario = Scenario::find($scenarioid);
 		$embay_id = $scenario->AreaID;
