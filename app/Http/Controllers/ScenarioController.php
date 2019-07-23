@@ -31,7 +31,6 @@ class ScenarioController extends Controller
 
 	public function getCurrentProgress()
 	{
-		// dd(session('scenarioid'));
 		$scenarioid = session('scenarioid');
 		$scenario = Scenario::find($scenarioid);
 
