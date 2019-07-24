@@ -114,7 +114,6 @@ class TechnologyController extends Controller
 		// Trigger stored proc with function parameters
 		// Run the updateNitrogenRemoved public function to update the n_removed session variable
 		$updated = DB::select('exec dbo.CALCapplyTreatmentPercent ' . $treat_id . ', ' . $rate . ', ' . $type);
-		return $this->updateNitrogenRemoved();
 
 		// Set fert or storm applied global variable to 1 and disable management from being selected/applied again
 		if ($type == 'fert')
@@ -125,7 +124,7 @@ class TechnologyController extends Controller
 		{
 			session(['storm_applied' => 1]);
 		}
-		return $n_removed;
+		return $this->updateNitrogenRemoved();
 	}
 
 
@@ -140,7 +139,6 @@ class TechnologyController extends Controller
 		// Trigger parameterized stored proc, update n_remove session variable
 		$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $location );
 		return $this->updateNitrogenRemoved();
-		return $n_removed;
 	}
 
 	/**
@@ -192,7 +190,6 @@ class TechnologyController extends Controller
 	{
 		$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Septic1] ' . $treat_id . ', ' . $rate );
 		return $this->updateNitrogenRemoved();
-		return $n_removed;
 	}
 
 	/**
@@ -340,37 +337,31 @@ class TechnologyController extends Controller
 			case 'fert':
 				$updated = DB::select('exec dbo.CALCapplyTreatmentPercent ' . $treat_id . ', ' . $rate . ', ' . $type);
 				return $this->updateNitrogenRemoved();
-				return $updated;
 				break;
 			// Stormwater Management
 			case 'storm-percent':
 				$updated = DB::select('exec dbo.CALCapplyTreatmentPercent ' . $treat_id . ', ' . $rate . ', storm' );
 				return $this->updateNitrogenRemoved();
-				return $updated;
 				break;
 			// Stormwater non-management
 			case 'storm':
 				$updated = DB::select('exec dbo.CALCupdateTreatmentStorm ' . $treat_id . ', ' . $rate . ', ' . $units );
 				return $this->updateNitrogenRemoved();
-				return $updated;
 				break;
 			// Septic (first row)
 			case 'collect':
 				$updated = DB::select('exec dbo.CALC_ApplyTreatment_Septic1 '. $treat_id . ', '. $rate);
 				return $this->updateNitrogenRemoved();
-				return $updated;
 				break;
 			// Septic (second row)
 			case 'toilets':
 				$updated = DB::select('exec dbo.CALC_ApplyTreatment_Septic1 '. $treat_id . ', '. $rate);
 				return $this->updateNitrogenRemoved();
-				return $updated;
 				break;
 			// Groundwater
 			case 'groundwater':
 				$updated = DB::select('exec dbo.CALC_ApplyTreatment_Groundwater1 '. $treat_id . ', '. $rate . ', ' . $units);
 				return $this->updateNitrogenRemoved();
-				return $updated;
 				break;	
 			// Embayment
 			case 'embay':
@@ -416,9 +407,5 @@ class TechnologyController extends Controller
 		}
 		
 		return $this->updateNitrogenRemoved();
-
-		// TODO: Check if deleted treatment can be removed from global treatments array
-		// Can we go Back to Map without page refresh?
-		return 1;
 	}
 }

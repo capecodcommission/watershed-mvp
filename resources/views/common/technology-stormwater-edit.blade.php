@@ -60,7 +60,7 @@
 			</p> 
 		@endif
 		<p>
-			<button v-if="storm_percent != {{$treatment->Treatment_Value}}" id="updatetreatment">Update</button>
+			<button v-show="storm_percent != {{$treatment->Treatment_Value}}" id="updatetreatment">Update</button>
 			<button id="deletetreatment" data-treatment = "{{$treatment->TreatmentID}}" class='button--cta right'><i class="fa fa-trash-o"></i> Delete</button>
 		</p>
 	</section>
