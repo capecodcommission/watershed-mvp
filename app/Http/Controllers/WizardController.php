@@ -72,19 +72,21 @@ class WizardController extends Controller
 			session(['scenarioid' => $scenarioid]);
 		}
 
+		// Find scenario row by id, parse treatments
 		$scenario = Scenario::find($scenarioid);
 		$treatments = $scenario->treatments;
 
+		// Set default management applied session variables
+		session(['fert_applied' => 0]);
+		session(['storm_applied' => 0]);
+
+		// If fert/storm applied previously, update management session variables
 		foreach ($treatments as $key) {
-			if ($key->TreatmentType_Name == 'Fertilizer Management') {
+			if ($key->TreatmentType_ID == 400) {
 				session(['fert_applied' => 1]);
 			}
-			else if ($key->TreatmentType_Name == 'Stormwater Management') {
+			if ($key->TreatmentType_ID == 401) {
 				session(['storm_applied' => 1]);
-			}
-			else {
-				session(['fert_applied' => 0]);
-				session(['storm_applied' => 0]);
 			}
 		}
 
