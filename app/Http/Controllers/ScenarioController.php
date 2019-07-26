@@ -68,6 +68,12 @@ class ScenarioController extends Controller
 		{
 			$progress = 100;
 		}
+
+		$fertApplied = session()->get('fert_applied');
+		$stormApplied = session()->get('storm_applied');
+
+		$data['fertapplied'] = $fertApplied;
+		$data['stormapplied'] = $stormApplied;
 		
 		$data['remaining'] = $remaining;
 		$data['embayment'] = $progress;

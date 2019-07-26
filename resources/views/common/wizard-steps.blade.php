@@ -52,21 +52,13 @@
 			<span class="remaining"><strong>Nitrogen Remaining to Threshold:</strong> <span></span>kg</span>
 			</p>
 			<hr>
-			@if(session('fert_applied')==1)
-			<div class="technology disabled">
-				<a title="Fertilizer Management Policies have already been applied to this scenario"><img src="http://www.watershedmvp.org/images/SVG/FertilizerManagement.svg"></a><br />
-						Fertilizer Management
-				<!-- <p>Fertilizer Management Policies have already been applied to this scenario</p> -->
-				</div>
-			@else
-				<div class="technology">
-					<a href="/tech/fert/25" class="popdown"><img src="http://www.watershedmvp.org/images/SVG/FertilizerManagement.svg"></a><br />
-						Fertilizer Management
-				</div>
-
-			@endif
-
-
+			<div id = 'fertMan' class="technology">
+				<a href="/tech/fert/25" class="popdown">
+					<img src="http://www.watershedmvp.org/images/SVG/FertilizerManagement.svg">
+				</a>
+				<br />
+				Fertilizer Management
+			</div>
 		</div>
 	</article>
 	</aside>
@@ -88,13 +80,6 @@
 				<hr>
 
 				<div class="technology_list">
-				@if(session('storm_applied')==1)
-					<div class="technology disabled">
-						<a title="Stormwater Management Policies have already been applied to this scenario"><img src="http://www.watershedmvp.org/images/SVG/StormwaterManagement.svg"></a><br />
-								Stormwater Management
-						<!-- <p>Fertilizer Management Policies have already been applied to this scenario</p> -->
-						</div>
-				@else
 					<!-- TODO: Set all technologies with respective name id -->
 					<div id = "stormMan" class="technology">
 					<!-- href="{{url('/tech/storm/26')}}"  -->
@@ -103,7 +88,6 @@
 							 Stormwater Management
 						</a>
 					</div>
-				@endif
 					<div class="technology">
 						<a href="{{url('/tech/storm/8')}}" class="popdown">
 							<img src="http://www.watershedmvp.org/images/SVG/StormwaterGravelWetland.svg"><br />
@@ -413,25 +397,7 @@
 <script>
 	$(document).ready(function(){
 
-		scenario = {{session('scenarioid')}}
-		// TODO: Use technology clicked properties to handle not adding additional
-		// spinners
-		// fertApplied = {{session('fert_applied')}}
-
-		// switch (fert_applied) {
-		// 	case 0:
-		// 		$('div.technology').on('click', function(e) {
-		// 			$(this).append("<div class = 'fa fa-spinner fa-spin'></div>")
-		// 		})
-		// 	break;
-			
-		// 	case 1:
-		// 		{}
-		// 	break;
-			
-		// 	default: 
-		// 		"An error has occured"
-		// }
+		scenario = {{session('scenarioid')}};
 
 		$('#fim').on('click', function(e) {
 

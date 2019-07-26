@@ -78,6 +78,27 @@
 						})
 			});
 
+			// Retrieve static session variables for fert/storm application
+			fertApplied = {{session('fert_applied')}};
+			stormApplied = {{session('storm_applied')}};
+
+			// If fert management applied, disable clickability for icon
+			if (fertApplied) {
+				$('#fertMan')
+					.css({'pointer-events': 'none'})
+			} else {
+				$('#fertMan')
+					.css({'pointer-events': 'auto'})
+			}
+
+			// If storm management applied, disable clickability for icon
+			if (stormApplied) {
+				$('#stormMan')
+					.css({'pointer-events': 'none'})
+			} else {
+				$('#stormMan')
+					.css({'pointer-events': 'auto'})
+			}
 
 		});
 	</script>
@@ -131,6 +152,23 @@
 								$('#subem_'+value.SUBEM_ID + ' .stats .stat-data.scenario-progress').text(Math.round(value.n_load_scenario)+'kg');
 							});
 							
+							// If fert management applied, disable clickability on fert icon
+							if (msg.fertapplied) {
+								$('#fertMan')
+									.css({'pointer-events': 'none'})
+							} else {
+								$('#fertMan')
+									.css({'pointer-events': 'auto'})
+							}
+
+							// If storm management applied, disable clickability on storm icon
+							if (msg.stormapplied) {
+								$('#stormMan')
+									.css({'pointer-events': 'none'})
+							} else {
+								$('#stormMan')
+									.css({'pointer-events': 'auto'})
+							}
 						})
 			});
 		</script>
