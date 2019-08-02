@@ -54,6 +54,12 @@
 
 <script type="text/javascript">
 		$(document).ready(function(){
+
+			// TODO: Handle spinner icon on-click. There should be only a single spinner on an icon at one time.
+			// $('div.technology').on('click', function(e) {	
+			// 	$(this).append("<div class = 'fa fa-spinner fa-spin'></div>")	
+			// })
+
 			$('.popdown').popdown();
 			$('#closeACC').on('click', function(event){
 				$('.state').prop('checked', false);
