@@ -73,7 +73,7 @@ class TechnologyController extends Controller
 			$embay_id = $scenario->AreaID;
 
 			// Retrieve / associate all parcels within embayment with user's scenario 
-			$parcels = DB::select('exec dbo.GETpointsFromPolygonEmbayID ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment->TreatmentID . ', \'embayment\'');
+			$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment->TreatmentID . ', \'embayment\'');
 		}
 
 		// Show relevant technology blade, pass retrieved technology data to blade

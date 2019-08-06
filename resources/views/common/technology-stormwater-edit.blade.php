@@ -36,7 +36,7 @@
 		@if($tech->Show_In_wMVP == 1)
 			<p>
 				<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated: 
-				<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;" value="{{$treatment->Treatment_MetricValue}}"></label>
+				<input v-model="uMetric" type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;" value="{{$treatment->Treatment_MetricValue}}"></label>
 			</p>
 		@elseif($tech->Show_In_wMVP == 2)
 			<button id="select_polygon">Draw Polygon</button>
@@ -60,7 +60,8 @@
 			</p> 
 		@endif
 		<p>
-			<button v-show="storm_percent != {{$treatment->Treatment_Value}}" id="updatetreatment">Update</button>
+			<button v-if="storm_percent != {{$treatment->Treatment_Value}}" id="updatetreatment">Update</button>
+			<button v-if="{{$treatment->Treatment_MetricValue}} != uMetric" id="updatetreatment">Update</button>
 			<button id="deletetreatment" data-treatment = "{{$treatment->TreatmentID}}" class='button--cta right'><i class="fa fa-trash-o"></i> Delete</button>
 		</p>
 	</section>

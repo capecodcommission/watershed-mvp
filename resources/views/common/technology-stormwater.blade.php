@@ -74,18 +74,20 @@
 				</tbody>
 			</table>
 		@endif
-		<p> Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.
-			<br />
-			<input 
-				type="range" 
-				id="storm-percent" 
-				min="{{$tech->Nutri_Reduc_N_Low}}" 
-				max="{{$tech->Nutri_Reduc_N_High}}" 
-				v-model="storm_percent" 
-				value="{{$tech->Nutri_Reduc_N_Low}}"
-			> 
-			@{{storm_percent}}%
-		</p>
+		@if($tech->Show_In_wMVP == 4)
+			<p> Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.
+				<br />
+				<input 
+					type="range" 
+					id="storm-percent" 
+					min="{{$tech->Nutri_Reduc_N_Low}}" 
+					max="{{$tech->Nutri_Reduc_N_High}}" 
+					v-model="storm_percent" 
+					value="{{$tech->Nutri_Reduc_N_Low}}"
+				> 
+				@{{storm_percent}}%
+			</p>
+		@endif
 		<p>
 			<button id="apply_treatment_{{$treatment->TreatmentID}}">Apply</button>
 			<button id="cancel_treatment_{{$treatment->TreatmentID}}" class="button--cta right"><i class="fa fa-ban"></i> Cancel</button>
