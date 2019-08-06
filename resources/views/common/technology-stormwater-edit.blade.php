@@ -60,8 +60,8 @@
 			</p> 
 		@endif
 		<p>
-			<button v-if="storm_percent != {{$treatment->Treatment_Value}}" id="updatetreatment">Update</button>
-			<button v-if="{{$treatment->Treatment_MetricValue}} != uMetric" id="updatetreatment">Update</button>
+			<button v-show="storm_percent != {{$treatment->Treatment_Value}}" id="updateManagement">Update</button>
+			<button v-show="{{$treatment->Treatment_MetricValue}} != uMetric" id="updateNonManangement">Update</button>
 			<button id="deletetreatment" data-treatment = "{{$treatment->TreatmentID}}" class='button--cta right'><i class="fa fa-trash-o"></i> Delete</button>
 		</p>
 	</section>
@@ -88,7 +88,7 @@
 			});
 
 			// Handle click-event for updating non-management technologies
-			$('#updatetreatment').on('click', function(e) {
+			$('#updateNonManangement').on('click', function(e) {
 				e.preventDefault();
 				var percent = 0
 				var units = 1;
@@ -122,7 +122,7 @@
 		@else {
 			
 			// Handle click-event for management technology
-			$('#updatetreatment').on('click', function(e) {
+			$('#updateManagement').on('click', function(e) {
 				e.preventDefault();
 				var percent = $('#storm-percent').val();
 				var url = "{{url('/update/storm-percent', $treatment->TreatmentID)}}"  + '/' + percent;
