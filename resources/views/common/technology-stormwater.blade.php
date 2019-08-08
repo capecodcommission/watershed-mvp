@@ -100,11 +100,19 @@
 <script>
 	$(document).ready(function(){
 
+		// Init select location flag to deactivate
+		let destination_active = 0
+
+		// Remove loading icon from technology icon
+		$('div.fa.fa-spinner.fa-spin').remove()
+
+		// Retrieve treatment id from props
+		treatment = {{$treatment->TreatmentID}};
+
 		// Handle point selection for non-management Stormwater technologies
 		function stormwaterSelectLocationTech () {
-			let destination_active = 1;
 			map.on('click', function(e) {
-				if (destination_active > 0) {
+				if (destination_active) {
 					var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y + '/' + treatment;
 					$.ajax({
 						method: 'GET',
@@ -118,16 +126,11 @@
 						$('.select > span').text('Selected: '+msg.SUBEM_DISP);
 						$('.select > span').show();
 						$('#select_area_'+treatment).hide();
+						destination_active = 0
 					})
 				}
 			});
 		};
-
-		// Remove loading icon from technology icon
-		$('div.fa.fa-spinner.fa-spin').remove()
-
-		// Retrieve treatment id from props
-		treatment = {{$treatment->TreatmentID}};
 		 
 		// If technology is non-management related
 	 	@if($tech->Show_In_wMVP < 4) {
@@ -142,8 +145,8 @@
 				f.preventDefault();
 				$('#popdown-opacity').hide();
 				let subEmbaymentID = 0;
+				destination_active = 1
 				stormwaterSelectLocationTech();
-				let destination_active = 0;
 			});
 
 			// Handle on-click event for drawing a custom polygon
