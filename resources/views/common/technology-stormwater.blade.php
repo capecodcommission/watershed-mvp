@@ -108,7 +108,6 @@
 
 <script>
 	$(document).ready(function(){
-<<<<<<< HEAD
 
 		// Init select location flag to deactivate
 		let destination_active = 0
@@ -119,8 +118,6 @@
 		// Retrieve treatment id from props
 		treatment = {{$treatment->TreatmentID}};
 
-=======
->>>>>>> 7044cbb... Fertilizer and Stormwater Management icons now become unclickable using session data property/value once selected from the accordion. Deleted 'package.json' which was never being used. Updated vue from version 1.0.21 to 2.6.10. Close #3.
 		// Handle point selection for non-management Stormwater technologies
 		function stormwaterSelectLocationTech () {
 			map.on('click', function(e) {
