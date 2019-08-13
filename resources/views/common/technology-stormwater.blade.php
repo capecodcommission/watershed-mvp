@@ -1,7 +1,8 @@
+<!-- Set the title to 'Technology_Strategy' from the dbo.v_Technology_Matrix obtained by 'TechnologyController.php' -->
 <title>{{$tech->Technology_Strategy}}</title>
 <link rel="stylesheet" href="{{url('/css/jquery.popdown.css')}}">
 <meta name="csrf-token" id="token" content="{{ csrf_token() }}">
-
+<!-- Set the popdown up with a header, a body with the technology, a table and reduction rate selection -->
 <div class="popdown-content" id="app">
 	<header>
 		<div class = 'row'>
@@ -10,6 +11,7 @@
 			</div>
 		</div>
 	</header>
+	
 	<section class="body">
 		<div class="technology">
 			<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
@@ -18,7 +20,7 @@
 		</div>
 
 		<!--
-			This needs to be a case/switch based on the show_in_wmvp field
+			Case/switch based on the Show_In_wMVP field
 			0 => (this shouldn't ever appear because this technology shouldn't have been listed)
 			1 => user will enter a unit metric to use for calculations (acres, linear feet, etc)
 			2 => user will need to select a polygon for the treatment area
@@ -27,6 +29,7 @@
 			4 => user does not enter a treatment area (Fertilizer Mgmt or Stormwater BMPs)
 		-->
 		<!-- TODO: Replace ifelse with case/switch once Laravel is upgraded -->
+		<!-- 1 => user will enter a unit metric to use for calculations (acres, linear feet, etc) -->
 		@if($tech->Show_In_wMVP == 1)
 			<p class="select">
 				<button id="select_area_{{$treatment->TreatmentID}}">Select a location</button> 
@@ -36,8 +39,11 @@
 				<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated:
 				<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;"></label>
 			</p>
+		<!-- 2 => user will need to select a polygon for the treatment area -->
 		@elseif($tech->Show_In_wMVP == 2)
 			<button id="select_polygon_{{$treatment->TreatmentID}}">Draw Polygon</button>
+		<!-- 3 => user will select a polygon and enter the unit metric for the treatment area calculation
+		unit metric is used to calculate cost -->
 		@elseif($tech->Show_In_wMVP == 3)
 			<p class="select">
 				<button id="select_polygon_{{$treatment->TreatmentID}}">Select a polygon</button> 
@@ -47,6 +53,7 @@
 				<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated:
 				<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;"></label>
 			</p>
+		<!-- 4 => user does not enter a treatment area (Fertilizer Mgmt or Stormwater BMPs) -->
 		@elseif($tech->Show_In_wMVP == 4)
 			<table>
 				<thead>
@@ -74,6 +81,7 @@
 				</tbody>
 			</table>
 		@endif
+		<!-- 4 => user does not enter a treatment area (Fertilizer Mgmt or Stormwater BMPs) -->
 		@if($tech->Show_In_wMVP == 4)
 			<p> Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.
 				<br />
@@ -95,10 +103,12 @@
 	</section>
 </div>
 
+<!-- Import the vue data and computed properties -->
 <script src="{{url('/js/main.js')}}"></script>
 
 <script>
 	$(document).ready(function(){
+<<<<<<< HEAD
 
 		// Init select location flag to deactivate
 		let destination_active = 0
@@ -109,6 +119,8 @@
 		// Retrieve treatment id from props
 		treatment = {{$treatment->TreatmentID}};
 
+=======
+>>>>>>> 7044cbb... Fertilizer and Stormwater Management icons now become unclickable using session data property/value once selected from the accordion. Deleted 'package.json' which was never being used. Updated vue from version 1.0.21 to 2.6.10. Close #3.
 		// Handle point selection for non-management Stormwater technologies
 		function stormwaterSelectLocationTech () {
 			map.on('click', function(e) {
@@ -131,14 +143,20 @@
 				}
 			});
 		};
+
+		// Remove loading icon from technology icon
+		$('div.fa.fa-spinner.fa-spin').remove();
+
+		// Retrieve treatment id from props
+		treatment = {{$treatment->TreatmentID}};
 		 
-		// If technology is non-management related
+		// If technology is not fertilizer or stormwater management
 	 	@if($tech->Show_In_wMVP < 4) {
 
 			// Handle on-click event for closing popdown, disassociating, and deleting the selected technology from the user's scenario
-			$('#closeWindow').on('click', function (e) {
+			$('#closeWindow').on('click', function(e) {
 				$('#popdown-opacity').hide();
-			})
+			});
 
 			// Handle on-click event for selecting a location
 			$('#select_area_'+treatment).on('click', function(f) {
@@ -160,7 +178,7 @@
 			// Handle on-click event for applying selected technology, adding to applied technology stack
 			$('#apply_treatment_'+treatment).on('click', function(e) {
 				e.preventDefault();
-				var percent = 0
+				var percent = 0;
 				var units = 1;
 				if ('{{$tech->Show_In_wMVP}}' == '1' || '{{$tech->Show_In_wMVP}}' == '3' ) {
 					units = $('#unit_metric').val();
@@ -169,8 +187,7 @@
 					units = 1;
 				}
 				else {
-					// TODO: Are 8 decimas necessary?
-					units = 0.00000000;
+					units = 0;
 				}
 				var url = "{{url('/apply_storm')}}" + '/' +  treatment + '/' + percent + '/' + units + '/' + subEmbaymentID;
 				$.ajax({
@@ -189,27 +206,32 @@
 			});
 		}
 
-		// Else if technology is management-related
+		// Else if technology is fertilizer or stormwater management
 		@else {
-
-			// Handle on-click event for closing popdown, disassociating, and deleting the selected technology from the user's scenario
+			// Clicking the close window button: hide the popdown, set the url to cancel the treatment which runs the DELtreatment
+			// stored procedure, send an ajax GET method to the url to disassociate the treatment with the parcels and handle the
+			// stormwater icon clickability
 			$('#closeWindow').on('click', function (e) {
+				e.preventDefault();
 				$('#popdown-opacity').hide();
-				var url = "{{url('cancel', $treatment->TreatmentID)}}";
+				$('#storm-percent').val(0);
+				let treat = {{$treatment->TreatmentID}};
+				let url = "{{url('cancel')}}" + '/' + treat + '/' + 'storm';
 				$.ajax({
 					method: 'GET',
 					url: url
 				})
-				.done(function(msg){
-					for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
-						if (map.graphics.graphics[i].attributes) {
-							if (map.graphics.graphics[i].attributes.treatment_id == treatment) {
-								map.graphics.remove(map.graphics.graphics[i])
-							}
-						}
+				.done(function(msg) {
+					// If storm management applied, disable clickability for icon
+					if (msg.stormApplied) {
+						$('#stormMan')
+							.css({'pointer-events': 'none'})
+					} else {
+						$('#stormMan')
+							.css({'pointer-events': 'auto'})
 					}
-				})
-			})
+				});
+			});
 
 			// Handle on-click event for applying management technology
 			$('#apply_treatment_'+treatment).on('click', function(e) {
@@ -233,15 +255,28 @@
 		}
 		@endif
 
-		// Handle on-click event for disassociating and deleting selected technology
+		// Clicking the cancel window button: hide the popdown, set the url to cancel the treatment which runs the DELtreatment
+		// stored procedure, send an ajax GET method to the url to disassociate the treatment with the parcels and handle the
+		// stormwater icon clickability
 		$('#cancel_treatment_'+treatment).on('click', function(e) {
-			var url = "{{url('cancel', $treatment->TreatmentID)}}";
+			e.preventDefault();
+			$('#popdown-opacity').hide();
+			$('#storm-percent').val(0);
+			let treat = {{$treatment->TreatmentID}};
+			var url = "{{url('cancel')}}" + '/' + treat + '/' + 'storm';
 			$.ajax({
 				method: 'GET',
 				url: url
 			})
-			.done(function(msg){
-				$('#popdown-opacity').hide();
+			.done(function(msg) {
+				// If storm management applied, disable clickability for icon
+				if (msg.stormApplied) {
+					$('#stormMan')
+						.css({'pointer-events': 'none'})
+				} else {
+					$('#stormMan')
+						.css({'pointer-events': 'auto'})
+				}
 			});
 		});
 	});

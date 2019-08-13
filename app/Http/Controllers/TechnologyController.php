@@ -68,6 +68,13 @@ class TechnologyController extends Controller
 		// If selected technology is management-based (embayment-wide)
 		if ($tech->Show_In_wMVP == 4)
 		{
+			// Reset global variables to handle fert/storm clickability
+			if ($type == 'fert') {
+				session(['fert_applied' => 1]);
+			}
+			if ($type == 'storm') {
+				session(['storm_applied' => 1]);
+			}
 			// Retrieve Scenario data from SQL, parse embayment id
 			$scenario = Scenario::find($scenarioid);
 			$embay_id = $scenario->AreaID;
@@ -277,9 +284,17 @@ class TechnologyController extends Controller
 	}
 
 	// Disassociate and delete selected technology data from user's scenario
-	public function cancel($treat_id)
+	public function cancel($treat_id, $type = NULL)
 	{
 		$del = DB::select('exec dbo.DELtreatment '. $treat_id);
+		
+		// Reset global variables to handle fert/storm clickability
+		if ($type == 'fert') {
+			session(['fert_applied' => 0]);
+		}
+		if ($type == 'storm') {
+			session(['storm_applied' => 0]);
+		}
 		return 1;
 	}
 

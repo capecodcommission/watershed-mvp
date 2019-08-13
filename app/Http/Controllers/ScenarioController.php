@@ -49,9 +49,9 @@ class ScenarioController extends Controller
 		$total_goal = 0;
 		foreach ($subembayments as $key) 
 		{
-			$n_load_orig += $key->n_load_att;
-			$removed += $key->n_load_att_removed;
-			$total_goal += $key->n_load_target;
+			$n_load_orig += round($key->n_load_att);
+			$removed += round($key->n_load_att_removed);
+			$total_goal += round($key->n_load_target);
 		}
 		$current = $n_load_orig - $removed;
 		$remaining = $current - $total_goal;

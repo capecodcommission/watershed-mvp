@@ -145,7 +145,6 @@
 							subembayments = msg.subembayments;
 							$.each(subembayments, function(key, value)
 							{
-								// console.log(value);
 								var sub_progress = value.n_load_target / (value.n_load_att - value.n_load_att_removed);
 								if (sub_progress < 1 & sub_progress > 0) {
 

@@ -11814,7 +11814,7 @@
 
       installGlobalAPI(Vue);
 
-      Vue.version = '1.0.21';
+      Vue.version = '2.6.10';
 
       // devtools global hook
       /* istanbul ignore next */
@@ -11863,7 +11863,6 @@
       },
       el: 'body',
       data: {
-        // poly_nitrogen: poly_nitrogen.Septic,
         unatt: parseFloat(nitrogen_unatt.Total_UnAtt),
         att: parseFloat(nitrogen_att.Total_Att),
         treatment: 13,
@@ -11882,13 +11881,13 @@
         atmosphere_unatt: parseFloat(nitrogen_unatt.Total_UnAtt_Atmosphere),
         atmosphere_att: parseFloat(nitrogen_att.Total_Att_Atmosphere),
         embayment_percent: 0,
-        uMetric: 0
+        uMetric: 0,
+        // isActive: false
       },
 
       computed: {
-        // treated: function()
-        // {
-        // 	return this.att * ((100 - this.effective)/100);
+        // updateClickedValue: function(e) {
+        //   this.isActive = !this.isActive
         // },
         fert_unatt_treated: function fert_unatt_treated() {
           return this.fert_unatt * ((100 - this.fert_percent) / 100);

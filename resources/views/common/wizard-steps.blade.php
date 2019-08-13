@@ -52,6 +52,7 @@
 			<span class="remaining"><strong>Nitrogen Remaining to Threshold:</strong> <span></span>kg</span>
 			</p>
 			<hr>
+			<!-- <div  v-on:click="updateClickedValue($event)" v-class="active: isActive" id = 'fertMan' class="technology"> -->
 			<div id = 'fertMan' class="technology">
 				<a href="/tech/fert/25" class="popdown">
 					<img src="http://www.watershedmvp.org/images/SVG/FertilizerManagement.svg">
@@ -82,7 +83,6 @@
 				<div class="technology_list">
 					<!-- TODO: Set all technologies with respective name id -->
 					<div id = "stormMan" class="technology">
-					<!-- href="{{url('/tech/storm/26')}}"  -->
 						<a href="{{url('/tech/storm/26')}}" class="popdown">
 							<img src="http://www.watershedmvp.org/images/SVG/StormwaterManagement.svg"><br />
 							 Stormwater Management
@@ -396,15 +396,27 @@
 
 <script>
 	$(document).ready(function(){
-
+		// Retrieve session data values
 		scenario = {{session('scenarioid')}};
+		fertApplied = {{session('fert_applied')}};
+		stormApplied = {{session('storm_applied')}};
+
+		$('#fertMan').on('click', function(e) {
+			e.preventDefault();
+			$('#fertMan')
+				.css({'pointer-events': 'none'})
+		});
+
+		$('#stormMan').on('click', function(e) {
+			e.preventDefault();
+			$('#stormMan')
+				.css({'pointer-events': 'none'})
+		});
 
 		$('#fim').on('click', function(e) {
-
 			// if below doesn't work, add to fim button above ----> href = "http://2016.watershedmvp.org/fim/scenario/{{session('scenarioid')}}/treatmentsDetails"
-
 			window.open("http://www.watershedmvp.org/fim/scenario/" + scenario + "/treatmentsDetails")
-		})
+		});
 
 		$('#sam').on('click', function(e) {
 
@@ -416,7 +428,7 @@
 				localStorage.setItem("scenarioID",scenarioID);
 			};
 
-		})
+		});
 
 		$('.save').on('click', function(e){
 

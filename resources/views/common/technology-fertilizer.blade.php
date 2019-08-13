@@ -54,7 +54,6 @@
 <!-- Import the vue data and computed properties -->
 <script src="{{url('/js/main.js')}}"></script>
 
-
 <script>
 	$(document).ready(function() {
 		// Check the state of readyness for applyTreatment, closeWindow & canceltreatment - remove the spinner once ready
@@ -88,27 +87,49 @@
 		// Clicking the close window button: hide the popdown, set the url to cancel the treatment which runs the DELtreatment
 		// stored procedure, send an ajax GET method to the url to disassociate the treatment with the parcels and return nothing
 		$('#closeWindow').on('click', function (e) {
+			e.preventDefault();
 			$('#popdown-opacity').hide();
 			$('#fert-percent').val(0);
-			var url = "{{url('cancel', $treatment->TreatmentID)}}";
+			let treat = {{$treatment->TreatmentID}};
+			let url = "{{url('cancel')}}" + '/' + treat + '/' + 'fert';
 			$.ajax({
 				method: 'GET',
 				url: url
 			})
-			.done(function(msg){});
-		})
+			.done(function(msg) {
+				// If fert management applied, disable clickability for icon
+				if (msg.fertApplied) {
+					$('#fertMan')
+						.css({'pointer-events': 'none'})
+				} else {
+					$('#fertMan')
+						.css({'pointer-events': 'auto'})
+				}
+			});
+		});
 
 		// On clicking cancel treatment, hide the popdown, reset the fertilizer percent back to 0, cancel the treatment in the
 		// same fashion as closeWindow and return an empty message
 		$('#canceltreatment').on('click', function(e) {
+			e.preventDefault();
 			$('#popdown-opacity').hide();
 			$('#fert-percent').val(0);
-			var url = "{{url('cancel', $treatment->TreatmentID)}}";
+			let treat = {{$treatment->TreatmentID}};
+			var url = "{{url('cancel')}}" + '/' + treat + '/' + 'fert';
 			$.ajax({
 				method: 'GET',
 				url: url
 			})
-			.done(function(msg){});
+			.done(function(msg) {
+				// If fert management applied, disable clickability for icon
+				if (msg.fertApplied) {
+					$('#fertMan')
+						.css({'pointer-events': 'none'})
+				} else {
+					$('#fertMan')
+						.css({'pointer-events': 'auto'})
+				}
+			});
 		});
  	});
 </script>
