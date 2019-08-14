@@ -27,11 +27,6 @@ jobs:
             echo MAIL_DRIVER=${MAIL_DRIVER} >> .env
             echo MAIL_HOST=${MAIL_HOST} >> .env
             echo MAIL_PORT=${MAIL_PORT} >> .env
-            echo DB_HOST=${DB_HOST} >> .env
-            echo DB_PORT=${DB_PORT} >> .env
-            echo DB_DATABASE=${DB_DATABASE} >> .env
-            echo DB_USERNAME=${DB_USERNAME} >> .env
-            echo DB_PASSWORD=${DB_PASSWORD} >> .env
             echo -e "text\n" >> .env
             docker build . -t ${registryName}.azurecr.io/wmvp:latest
             docker login ${registryName}.azurecr.io -u ${registryName} -p ${registryPassword}
@@ -63,11 +58,6 @@ jobs:
             echo MAIL_DRIVER=${MAIL_DRIVER} >> .env
             echo MAIL_HOST=${MAIL_HOST} >> .env
             echo MAIL_PORT=${MAIL_PORT} >> .env
-            echo DB_HOST=${DB_HOST} >> .env
-            echo DB_PORT=${DB_PORT} >> .env
-            echo DB_DATABASE=${DB_DATABASE} >> .env
-            echo DB_USERNAME=${DB_USERNAME} >> .env
-            echo DB_PASSWORD=${DB_PASSWORD} >> .env
             echo -e "text\n" >> .env
             docker build . -t ${registryName}.azurecr.io/wmvp:dev
             docker login ${registryName}.azurecr.io -u ${registryName} -p ${registryPassword}
