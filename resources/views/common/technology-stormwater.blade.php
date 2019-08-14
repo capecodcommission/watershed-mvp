@@ -115,37 +115,10 @@
 		// Remove loading icon from technology icon
 		$('div.fa.fa-spinner.fa-spin').remove()
 
-		// Retrieve treatment id from props
+		// Retrieve treatment id, icon from props
 		treatment = {{$treatment->TreatmentID}};
-
-		// Handle point selection for non-management Stormwater technologies
-		function stormwaterSelectLocationTech () {
-			map.on('click', function(e) {
-				if (destination_active) {
-					var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y + '/' + treatment;
-					$.ajax({
-						method: 'GET',
-						url: url
-					})
-					.done(function(msg) {
-						msg = $.parseJSON(msg);
-						subEmbaymentID = msg.SUBEM_ID; // TODO: Rename to subembayment id
-						$('#'+msg.SUBEM_NAME+'> .stats').show();
-						$('#popdown-opacity').show();
-						$('.select > span').text('Selected: '+msg.SUBEM_DISP);
-						$('.select > span').show();
-						$('#select_area_'+treatment).hide();
-						destination_active = 0
-					})
-				}
-			});
-		};
-
-		// Remove loading icon from technology icon
-		$('div.fa.fa-spinner.fa-spin').remove();
-
-		// Retrieve treatment id from props
-		treatment = {{$treatment->TreatmentID}};
+		icon = '{{$tech->Icon}}';
+		$('#select_area_'+treatment).data('icon', icon.toString())
 		 
 		// If technology is not fertilizer or stormwater management
 	 	@if($tech->Show_In_wMVP < 4) {
@@ -153,15 +126,22 @@
 			// Handle on-click event for closing popdown, disassociating, and deleting the selected technology from the user's scenario
 			$('#closeWindow').on('click', function(e) {
 				$('#popdown-opacity').hide();
-			});
+				for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
+					if (map.graphics.graphics[i].attributes) {
+						if (map.graphics.graphics[i].attributes.treatment_id == treatment) {
+							map.graphics.remove(map.graphics.graphics[i])
+						}
+					}
+				}
+			})
 
 			// Handle on-click event for selecting a location
 			$('#select_area_'+treatment).on('click', function(f) {
 				f.preventDefault();
+
+				// Hide modal, activate point geometry on map's draw-toolbar
 				$('#popdown-opacity').hide();
-				let subEmbaymentID = 0;
-				destination_active = 1
-				stormwaterSelectLocationTech();
+				tb.activate('point')
 			});
 
 			// Handle on-click event for drawing a custom polygon
@@ -177,6 +157,7 @@
 				e.preventDefault();
 				var percent = 0;
 				var units = 1;
+				var subemID =  $('.select > span').data('subemid')
 				if ('{{$tech->Show_In_wMVP}}' == '1' || '{{$tech->Show_In_wMVP}}' == '3' ) {
 					units = $('#unit_metric').val();
 				}
@@ -186,7 +167,9 @@
 				else {
 					units = 0;
 				}
-				var url = "{{url('/apply_storm')}}" + '/' +  treatment + '/' + percent + '/' + units + '/' + subEmbaymentID;
+
+				// Create and trigger API route url from parsed properties
+				var url = "{{url('/apply_storm')}}" + '/' +  treatment + '/' + percent + '/' + units + '/' + subemID;
 				$.ajax({
 					method: 'GET',
 					url: url
@@ -273,6 +256,13 @@
 				} else {
 					$('#stormMan')
 						.css({'pointer-events': 'auto'})
+				}
+				for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
+					if (map.graphics.graphics[i].attributes) {
+						if (map.graphics.graphics[i].attributes.treatment_id == treatment) {
+							map.graphics.remove(map.graphics.graphics[i])
+						}
+					}
 				}
 			});
 		});

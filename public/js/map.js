@@ -200,6 +200,50 @@ require([
 		************************************/
 		function addGraphic(evt) {
 
+            // Handle parcel selection icons
+            if (evt.geometry.type === 'point') {
+
+                // Create point graphic based on click coordinates
+                var icon = $('#select_area_'+treatment).data('icon')
+                var imageURL = "http://www.watershedmvp.org/images/SVG/" + icon;
+                var pointSymbology = new PictureMarkerSymbol(imageURL,30,30)
+                var pointGeometry = new Point({
+                    x: evt.geometry.x,
+                    y: evt.geometry.y,
+                    spatialReference: { wkid: 102100, latestWkid: 3857 }
+                })
+                var pointGraphic = new Graphic(pointGeometry, pointSymbology, {
+                    keeper: true,
+                    'treatment_id': treatment
+                })
+
+                // Add point graphic to the map, deactivate draw toolbar, enable map navigation
+                map.graphics.add(pointGraphic)
+                tb.deactivate();
+                map.enableMapNavigation();
+                
+                // Associate parcel to scenario using click coordinates
+                var url = "/map/point"+'/'+ evt.geometry.x+'/'+ evt.geometry.y + '/' + treatment;
+                $.ajax({
+                    method: 'GET',
+                    url: url
+                })
+                .done(function(msg) {
+
+                    // Parse submebayment info from API route response, display modal
+                    msg = $.parseJSON(msg);
+                    $('#'+msg.SUBEM_NAME+'> .stats').show();
+                    $('#popdown-opacity').show();
+                    $('.select > span').text('Selected: '+msg.SUBEM_DISP);
+                    $('.select > span').show();
+                    $('.select > span').data('subemid', msg.SUBEM_ID)
+                    $('#select_area_'+treatment).hide();
+                })
+
+                // Finish addGraphic function
+                return
+            }
+
             $('#progress').append("<div class = 'fa fa-spinner fa-spin'></div>")
 
 			var treatmentTypeId = typeid
