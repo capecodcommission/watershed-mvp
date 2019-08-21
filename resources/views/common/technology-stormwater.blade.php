@@ -109,9 +109,6 @@
 <script>
 	$(document).ready(function(){
 
-		// Init select location flag to deactivate
-		let destination_active = 0
-
 		// Remove loading icon from technology icon
 		$('div.fa.fa-spinner.fa-spin').remove()
 

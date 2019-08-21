@@ -187,12 +187,8 @@ class TechnologyController extends Controller
 	}
 
 
-	/**
-	 * Apply Septic Treatment
-	 *
-	 * @return void
-	 * @author 
-	 **/
+	// Apply Septic technology passing the treatment id and selected reduction rate
+	// Update nitrogen load post-treatment
 	public function ApplyTreatment_Septic($treat_id, $rate)
 	{
 		$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Septic1] ' . $treat_id . ', ' . $rate );
