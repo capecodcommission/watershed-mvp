@@ -179,26 +179,29 @@ class WizardController extends Controller
 	// Associate parcels within custom polygon geometry with a given treatment and scenario
 	public function getParcelsWithinPoly(Request $data)
 	{
+		// Retrieve treatment id and xy coordinate array from post data
 		$data = $data->all();
 		$treatment_id = $data['treatment'];
 		$poly = $data['polystring'];
+
+		// Execute stored procedure using properties from the request and associated scenario objects
 		$scenarioid = session()->get('scenarioid');
 		$scenario = Scenario::find($scenarioid);
 		$embay_id = $scenario->AreaID;
 		$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');	
 
-		if ($parcels) {
+		// Update global variable with stored proc's total Septic nitrogen load or zero
+		if ($parcels) 
+		{
 			$poly_nitrogen = $parcels[0]->Septic;
 		}
-		
-		else {
+		else 
+		{
 			$parcels = 0;
 			$poly_nitrogen = 0;
 		}
 		
-		JavaScript::put (
-			[ 'poly_nitrogen' => $parcels ]
-		);
+		JavaScript::put(['poly_nitrogen' => $parcels]);
 
 		return $parcels;
 	}
