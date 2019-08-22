@@ -26,10 +26,10 @@
 		<fieldset>
 			<h3>Treatment Stats</h3>
 			<ul>
-				<li>Treatment reduction rate: <strong>{{$treatment->Treatment_Value}}ppm</strong></li>
-				<li>Nitrogen removed by this treatment: <strong>{{round($treatment->Nload_Reduction)}}kg</strong></li>
+				<li>Treatment reduction rate: <strong>{{$treatment->Treatment_Value}} ppm</strong></li>
+				<li>Nitrogen removed by this treatment: <strong>{{round($treatment->Nload_Reduction)}} kg</strong></li>
 				<li>Parcels affected: <strong>{{$treatment->Treatment_Parcels}}</strong></li>
-				<li>Total Treatment Cost: <strong>{{money_format('%10.0n', $treatment->Cost_Total)}}</strong></li>
+				<li>Total Treatment Cost: <strong>${{number_format($treatment->Cost_Total)}}</strong></li>
 			</ul>
 		</fieldset>	
 		<p>
@@ -45,7 +45,7 @@
 			@{{septic_rate}}
 		</p>
 		<p>
-			<button id="updatetreatment">Update</button>
+			<button v-show="septic_rate != {{$treatment->Treatment_Value}}" id="updatetreatment">Update</button>
 			<button id="deletetreatment" class='button--cta right'><i class="fa fa-trash-o"></i> Delete</button>
 		</p>
 	</section>

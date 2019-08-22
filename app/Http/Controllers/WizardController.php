@@ -176,50 +176,8 @@ class WizardController extends Controller
 		return view('layouts/test', ['embayment'=>$embayment, 'subembayments'=>$subembayments]);
 	}
 
-
-	/**
-	 * Get Nitrogen Totals from a polygon string
-	 *
-	 * @return void
-	 * @author 
-	 **/
-	public function getPolygon($treatment_id, $poly, $part2 = null)
-	{
-		if ($part2) {
-			// this means the poly string was too long to be sent as a single url parameter so we are going to concatenate the strings	
-			$poly = $poly + $part2;
-		}
-		
-		$scenarioid = session()->get('scenarioid');
-		$scenario = Scenario::find($scenarioid);
-		$embay_id = $scenario->AreaID;
-		$parcels = DB::select('exec CapeCodMA.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
-
-		if ($parcels) {
-			$poly_nitrogen = $parcels[0]->Septic;
-		}
-		
-		else {
-			$parcels = 0;
-			$poly_nitrogen = 0;
-		}
-		
-		JavaScript::put (
-			[ 'poly_nitrogen' => $parcels ]
-		);
-		return $parcels;
-	}
-
-
-	/**
-	 * Get Nitrogen Totals from a polygon string
-	 *
-	 * @return void
-	 * @author 
-	 **/
-
-	//  TODO: Rename to acount for custom polygon creation
-	public function getPolygon2(Request $data)
+	// Associate parcels within custom polygon geometry with a given treatment and scenario
+	public function getParcelsWithinPoly(Request $data)
 	{
 		$data = $data->all();
 		$treatment_id = $data['treatment'];
@@ -244,14 +202,4 @@ class WizardController extends Controller
 
 		return $parcels;
 	}
-
-	public function getPolygon3(Request $data)
-	{
-		$user = Auth::user();
-		$data = $data->all();
-		$poly = $data['polystring'];
-		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon2 ' . '\'' . $poly . '\'');
-		return $parcels;
-	}
-	
 }
