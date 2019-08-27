@@ -14,7 +14,8 @@ class TechnologyController extends Controller
 	// integer, loop through treatments and take the sum of the Nload_Reduction from dbo.Treatment_Wiz & update the session
 	// n_removed with the value
 	// This function is to be used anywhere n_removed is updated (applying, updating, deleting technologies)
-	public function updateNitrogenRemoved() {
+	public function updateNitrogenRemoved() 
+	{
 		$scenarioid = session()->get('scenarioid');
 		$scenario = Scenario::find($scenarioid);
 		$treatments = $scenario->treatments;
@@ -24,6 +25,23 @@ class TechnologyController extends Controller
 			$n_removed_sum += $treatment->Nload_Reduction;
 		}
 		session(['n_removed' => $n_removed_sum]);
+	}
+
+	// Create / associate selected technology with scenario
+	public function createTreatment($scenarioid, $tech)
+	{
+		$treatment = Treatment::create(
+			[
+				'ScenarioID' => $scenarioid, 
+				'TreatmentType_ID'=>$tech->Technology_ID, 
+				'TreatmentType_Name'=>substr($tech->Technology_Strategy, 0, 50), 
+				'Treatment_UnitMetric'=>$tech->Unit_Metric, 
+				'Treatment_Class'=>$tech->Technology_Sys_Type, 
+				'treatment_icon'=>$tech->Icon
+			]
+		);
+
+		return $treatment;
 	}
 
 	// Retrieve and initialize selected technology data
@@ -53,17 +71,8 @@ class TechnologyController extends Controller
 		// Retrieve Scenario ID from Laravel session
 		$scenarioid = session('scenarioid');
 
-		// Create / associate selected technology with scenario
-		$treatment = Treatment::create(
-			[
-				'ScenarioID' => $scenarioid, 
-				'TreatmentType_ID'=>$tech->Technology_ID, 
-				'TreatmentType_Name'=>substr($tech->Technology_Strategy, 0, 50), 
-				'Treatment_UnitMetric'=>$tech->Unit_Metric, 
-				'Treatment_Class'=>$tech->Technology_Sys_Type, 
-				'treatment_icon'=>$tech->Icon
-			]
-		);
+		$treatment = $this->createTreatment($scenarioid, $tech);
+		
 
 		// If selected technology is management-based (embayment-wide)
 		if ($tech->Show_In_wMVP == 4)
@@ -75,12 +84,6 @@ class TechnologyController extends Controller
 			if ($type == 'storm') {
 				session(['storm_applied' => 1]);
 			}
-			// Retrieve Scenario data from SQL, parse embayment id
-			$scenario = Scenario::find($scenarioid);
-			$embay_id = $scenario->AreaID;
-
-			// Retrieve / associate all parcels within embayment with user's scenario 
-			$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment->TreatmentID . ', \'embayment\'');
 		}
 
 		// Show relevant technology blade, pass retrieved technology data to blade
@@ -118,6 +121,13 @@ class TechnologyController extends Controller
 		$rate = round($rate, 2);
 		$n_removed = session('n_removed');
 
+		// Retrieve Scenario data from SQL, parse embayment id
+		$scenario = Scenario::find($scenarioid);
+		$embay_id = $scenario->AreaID;
+
+		// Retrieve / associate all parcels within embayment with user's scenario 
+		$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treat_id . ', \'embayment\'');
+
 		// Trigger stored proc with function parameters
 		// Run the updateNitrogenRemoved public function to update the n_removed session variable
 		$updated = DB::select('exec dbo.CALCapplyTreatmentPercent ' . $treat_id . ', ' . $rate . ', ' . $type);
@@ -139,12 +149,17 @@ class TechnologyController extends Controller
 	// Apply non-management Stormwater technology
 	public function ApplyTreatment_Storm($treat_id, $rate, $units = null, $location = null)
 	{
-		// Retrieve scenario id and removed nitrogen global variables from session
+		// Retrieve scenario id, removed nitrogen, and point XY coordinates from session
 		$scenarioid = session('scenarioid');
 		$n_removed = session('n_removed');
+		$x = session()->get('pointX');
+		$y = session()->get('pointY');
 
-		// Trigger parameterized stored proc, update n_remove session variable
-		$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $location );
+		// Associate parcel
+		$point = DB::select("exec dbo.UPDcreditSubembayment @x='$x', @y='$y', @treatment=$treat_id");
+
+		// Treat parcel using parameterized stored proc, update n_remove session variable
+		$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $point[0]->SUBEM_ID);
 		return $this->updateNitrogenRemoved();
 	}
 

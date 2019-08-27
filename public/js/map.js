@@ -224,14 +224,7 @@ require([
                     url: url
                 })
                 .done(function(msg) {
-
-                    // Parse submebayment info from API route response, display modal
-                    msg = $.parseJSON(msg);
-                    $('#'+msg.SUBEM_NAME+'> .stats').show();
                     $('#popdown-opacity').show();
-                    $('.select > span').text('Selected: '+msg.SUBEM_DISP);
-                    $('.select > span').show();
-                    $('.select > span').data('subemid', msg.SUBEM_ID)
                     $('#select_area_'+treatment).hide();
                 })
 

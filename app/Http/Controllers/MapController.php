@@ -15,8 +15,10 @@ class MapController extends Controller
 	// Return name of subemebayment where parcel was selected
 	public function point($x, $y, $treatment)
 	{
-		$point = DB::select("exec dbo.UPDcreditSubembayment @x='$x', @y='$y', @treatment=$treatment");
-		return json_encode($point[0]);
+		session(['pointX' => $x]);
+		session(['pointY' => $y]);
+		// $point = DB::select("exec dbo.UPDcreditSubembayment @x='$x', @y='$y', @treatment=$treatment");
+		return 1;
 	}
 
 	// Find selected subembayment using coordinates from map-click
