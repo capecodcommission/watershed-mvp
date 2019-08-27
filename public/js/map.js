@@ -134,61 +134,56 @@ require([
 
 		var fillSymbol = new SimpleFillSymbol();
 
+        // Handle map Draw and Edit toolbar functionality 
 		function initToolbar() {
+
+            // Create and listen for polygon Draw events
 			tb = new Draw(map);
 			tb.on("draw-end", addGraphic);
-
-
-
-			// event delegation so a click handler is not
-			// needed for each individual button
 			on(dom.byId("info"), "click", function(evt) {
 				if (evt.target.id === "info") {
 					return;
 				}
-
 				var tool = evt.target.id.toLowerCase();
-				// map.disableMapNavigation();
 				tb.activate(tool);
-			});
-
-			editToolbar = new Edit(map);
-			// $('.edit_poly').on('click', function(e){
+            });
+            
+            // Create and listen for polygon Edit events
+            editToolbar = new Edit(map); 
 			on(dom.byId('edit_polygon'), 'click', function(e){
-				// console.log(e);
-				edit_active = 1;
-				// polyGLs[0].on('click', function(evt){
-					// console.log(this);
 
+				edit_active = 1;
+
+                // Start editing selected polygon
 				map.graphics.on("click", function(evt) {
-					// console.log(edit_active);
 					if (edit_active > 0) {
-					// console.log(this);
-					$('#save_polygon').show();
-					event.stop(evt);
-					activateToolbar(evt.graphic);
-				}
-			  });
-				 //deactivate the toolbar when you click outside a graphic
-			  map.on("click", function(evt){
-				editToolbar.deactivate();
-				event.stop(e);
-				// e.remove()
-			  });
-			  $('#save_polygon').on('click', function(evt){
-			  	editToolbar.deactivate();
-			  	$('#save_polygon').hide();
-			  	event.stop(e);
-			  })
-			 editToolbar.on("deactivate", function(evt) {
-				if(evt.info.isModified){
-				// firePerimeterFL.applyEdits(null, [evt.graphic], null);
-				// console.log(evt.graphic);
-				update_treatment_poly(evt.graphic);
-					edit_active = 0;
-				}
-			});
-		});
+                        $('#save_polygon').show();
+                        event.stop(evt);
+                        activateToolbar(evt.graphic);
+				    }
+                });
+                
+                // Deactivate tool on next map click
+                map.on("click", function(evt){
+                    editToolbar.deactivate();
+                    event.stop(e);
+                });
+
+                // Also deactivate tool on button click
+                $('#save_polygon').on('click', function(evt){
+                    editToolbar.deactivate();
+                    $('#save_polygon').hide();
+                    event.stop(e);
+                })
+
+                // On-deactivate, handle new polygon coordinates in separate function
+                editToolbar.on("deactivate", function(evt) {
+                    if(evt.info.isModified){
+                        handle_polygon_edit(evt.graphic);
+                        edit_active = 0;
+                    }
+                });
+		    });
 		}
 
 
@@ -954,8 +949,7 @@ require([
 
 
 
-		function addTreatmentPolygons(treatments)
-		{
+		function addTreatmentPolygons(treatments) {
 			var polyGLs = [];
 			var pointGLs = []
 			var polyGL = new esri.layers.GraphicsLayer();
@@ -1718,87 +1712,38 @@ require([
 					polyGraphic.setInfoTemplate(template);
 					map.graphics.add(polyGraphic);
 				}
-
-				// if (Treatment.Custom_POLY == 0 && Treatment.POLY_STRING.startsWith('POINT')) {
-
-				// 	// console.log(pointRings)
-
-				// 	for (var k = 0; k < pointRings.length; k++) {
-
-				// 		var pointGeo = {
-				// 			x: pointRings[k][0],
-				// 			y: pointRings[k][1],
-				// 			spatialReference: sr
-				// 		}
-
-				// 		// console.log(pointGeo)
-
-				// 		var pointGeom = new Point(pointGeo)
-				// 		var pointGraphic = new Graphic(pointGeom, pointSymbol, {
-				// 			keeper: true
-				// 		})
-
-				// 		var template = new InfoTemplate({
-				// 		title: popupVal1,
-				// 		content: '<div align="left" class="treatment info technology"><img style="width:60pxfloat:right;margin-right:10px;" src=" '
-				// 					+ imageURL1 + '" /><strong>Treatment Stats</strong>:<br /> '
-				// 					+ treatmentArea1 + " Acres<br/>"
-				// 					+ parcels1 + " parcels treated<br/>" + n_removed1 + "kg (unatt) N removed.<br />"
-				// 					// + "<button class='edit_poly' data-treatment='"+Treatment.TreatmentID+"'>Edit Polygon</button>  "
-				// 					// + "<button class='save_poly' data-treatment='"+Treatment.TreatmentID+"'>Save Polygon</button></div>"
-				// 		});
-
-				// 		pointGLs[k].add(pointGraphic.setInfoTemplate(template))
-
-
-				// 		map.addLayer(pointGLs[k])
-				// 	}
-				// }
 			}
 		}
 
+        // Handle polygon edit once complete
+		function handle_polygon_edit(treatment_poly) {
 
-
-
-
-		function update_treatment_poly(treatment_poly)
-		{
-			// need to do an ajax call to a stored procedure that accepts the new polygon and treatment id and updates the treatment info
-			// make sure wiz_treatment_parcels info gets deleted and recreated or updated
+            // Pass xy coordinates of edited polygon as string to API route
 			var new_polygon = '';
-			// console.log(treatment_poly.attributes.treatment_id);
-			// console.log(treatment_poly.geometry);
 			for (var i = 0; i < treatment_poly.geometry.rings[0].length; i++) {
-				// console.log('x: ' + treatment_poly.geometry.rings[0][i][0]);
-				// console.log('y: '+ treatment_poly.geometry.rings[0][i][1]);
 				new_polygon += treatment_poly.geometry.rings[0][i][0] + ' ';
 				new_polygon += treatment_poly.geometry.rings[0][i][1] + ', ';
 			}
-			// console.log(new_polygon);
 			var treat_id = treatment_poly.attributes.treatment_id;
 			var len = new_polygon.length;
-			new_polygon = new_polygon.substring(0, len - 2);
-
+            new_polygon = new_polygon.substring(0, len - 2);
+            
+            // Package coordinates as payload
 			var data = {treatment: treat_id, polystring: new_polygon};
-			// treatment_polygons[treatment] = polystring;
-			// console.log('exec CapeCodMa.Get_NitrogenFromPolygon \'' + polystring + '\'');
-			// console.log(new_polygon);
-			// console.log(polystring);
 			var url = "/update_polygon";
-			// var url = '/polygon/' + func + '/' + treatment + '/' + polystring;
-			// console.log(url);
 			$.ajax({
-					method: 'POST',
-					data: data,
-					url: url
-				})
-				.done(function(msg) {
-					$("li.technology[data-treatment='"+treat_id+"'] a").trigger('click');
-				}).fail(function(msg){
-					// console.log(msg);
-					alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg.status + ' ' + msg.statusText );
-				});
+                method: 'POST',
+                data: data,
+                url: url
+            })
+            .done(function(msg) {
 
+                // When complete, open update window of relevant applied treatment
+                $("li.technology[data-treatment='"+treat_id+"'] a").trigger('click');
+            })
+            .fail(function(msg){
+                alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg.status + ' ' + msg.statusText );
+            });
 		}
 
 
