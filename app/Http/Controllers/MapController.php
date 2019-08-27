@@ -15,7 +15,7 @@ class MapController extends Controller
 	// Return name of subemebayment where parcel was selected
 	public function point($x, $y, $treatment)
 	{
-		$point = DB::select("exec dbo.UPD_Credit_Subembayment @x='$x', @y='$y', @treatment=$treatment");
+		$point = DB::select("exec dbo.UPDcreditSubembayment @x='$x', @y='$y', @treatment=$treatment");
 		return json_encode($point[0]);
 	}
 
@@ -23,9 +23,9 @@ class MapController extends Controller
 	// Dump nitrogen load from parcels within custom polygon to a single selected parcel
 	public function moveNitrogen($x, $y, $treatment)
 	{
-		$subembayment = DB::select("exec [dbo].[GET_Subembayment_from_Point] @x='$x', @y='$y'");
+		$subembayment = DB::select("exec dbo.GETsubembaymentFromPoint @x='$x', @y='$y'");
 		$scenarioid = session('scenarioid');
-		$move = DB::select("exec dbo.CALC_MoveNitrogen1 '$x', '$y', $treatment, $scenarioid");
+		$move = DB::select("exec dbo.CALCmoveNitrogen '$x', '$y', $treatment, $scenarioid");
 		return json_encode($subembayment[0]);
 	}
 }

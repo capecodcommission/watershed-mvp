@@ -191,7 +191,7 @@ class TechnologyController extends Controller
 	// Update nitrogen load post-treatment
 	public function ApplyTreatment_Septic($treat_id, $rate)
 	{
-		$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Septic1] ' . $treat_id . ', ' . $rate );
+		$updated = DB::select('exec dbo.CALCapplyTreatmentSeptic ' . $treat_id . ', ' . $rate );
 		return $this->updateNitrogenRemoved();
 	}
 
@@ -361,12 +361,12 @@ class TechnologyController extends Controller
 				break;
 			// Septic (first row)
 			case 'collect':
-				$updated = DB::select('exec dbo.CALC_ApplyTreatment_Septic1 '. $treat_id . ', '. $rate);
+				$updated = DB::select('exec dbo.CALCapplyTreatmentSeptic '. $treat_id . ', '. $rate);
 				return $this->updateNitrogenRemoved();
 				break;
 			// Septic (second row)
 			case 'toilets':
-				$updated = DB::select('exec dbo.CALC_ApplyTreatment_Septic1 '. $treat_id . ', '. $rate);
+				$updated = DB::select('exec dbo.CALCapplyTreatmentSeptic '. $treat_id . ', '. $rate);
 				return $this->updateNitrogenRemoved();
 				break;
 			// Groundwater

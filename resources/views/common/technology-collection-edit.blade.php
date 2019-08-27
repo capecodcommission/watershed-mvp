@@ -56,53 +56,19 @@
 <script>
 	$(document).ready(function(){
 
+		// Remove loading spinner, retrieve relevant id's from props
 		$('div.fa.fa-spinner.fa-spin').remove()
 		treatment = {{$treatment->TreatmentID}};
 		typeid = {{$treatment->TreatmentType_ID}};
 		func = 'collect';
 
-		$('#select_polygon').on('click', function(f){
-			f.preventDefault();
-			$('#popdown-opacity').hide();
-			map.disableMapNavigation();
-			tb.activate('polygon');
-			// console.log(tb);
-			$('#select_polygon').hide();
-			$('#select_destination').show();
-			// console.log(msg);
-		});
-
-		$('#select_destination').on('click', function(f){
-			f.preventDefault();
-			// console.log('button clicked');
-			$('#popdown-opacity').hide();
-			map.on('click', function(e){
-				// console.log(e);
-			
-				var url = "{{url('/map/move/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y +'/' + treatment;
-				$.ajax({
-					method: 'GET',
-					url: url
-				})
-				.done(function(msg){
-					msg = $.parseJSON(msg);
-					// console.log(msg.SUBEM_DISP);
-					// console.log(msg);
-					$('#'+msg.SUBEM_NAME+'> .stats').show();
-					// $('.notification_count').remove();
-					$('#popdown-opacity').show();
-					$('.select > span').text('Selected: '+msg.SUBEM_DISP);
-					$('.select > span').show();
-					$('#select_destination').hide();
-				})
-			});
-		});
-
+		// Handle click event for closing the modal
 		$('#closeWindow').on('click', function (e) {
 
 			$('#popdown-opacity').hide();
 		})
 
+		// Handle click event for updating treatment with new rate
 		$('#updatetreatment').on('click', function(e) {
 			e.preventDefault();
 			var rate = $('#septic-rate').val();
@@ -117,6 +83,7 @@
 			});
 		});
 
+		// Handle click even for deleting treatment
 		$('#deletetreatment').on('click', function(e){
 			var url = "{{url('delete_treatment', $treatment->TreatmentID)}}";
 			$.ajax({
