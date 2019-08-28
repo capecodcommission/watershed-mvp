@@ -44,11 +44,9 @@ class TechnologyController extends Controller
 		return $treatment;
 	}
 
-	// Retrieve and initialize selected technology data
-	// Associate with scenario
-	public function associateTech($type, $id)
+	// Retrieve technolgy-related data from tech matrix
+	public function getTech($id)
 	{
-		// Retrieve technology data from tech_matrix based on passed TM_ID
 		$tech = DB::table('dbo.v_Technology_Matrix')
 			->select(
 				'Technology_ID',
@@ -68,12 +66,23 @@ class TechnologyController extends Controller
 			->where('TM_ID', $id)
 			->first();
 
+		return $tech;
+	}
+
+	// Retrieve and initialize selected technology data
+	// Associate with scenario
+	public function associateTech($type, $id)
+	{
+
 		// Retrieve Scenario ID from Laravel session
 		$scenarioid = session('scenarioid');
+		
+		// Retrieve technology data from tech_matrix based on passed TM_ID
+		$tech = $this->getTech($id);
 
+		// Create and query Treatment through ORM normally
 		$treatment = $this->createTreatment($scenarioid, $tech);
 		
-
 		// If selected technology is management-based (embayment-wide)
 		if ($tech->Show_In_wMVP == 4)
 		{
@@ -155,7 +164,7 @@ class TechnologyController extends Controller
 		$x = session()->get('pointX');
 		$y = session()->get('pointY');
 
-		// Associate parcel
+		// Associate parcel with treatment aand scenario
 		$point = DB::select("exec dbo.UPDcreditSubembayment @x='$x', @y='$y', @treatment=$treat_id");
 
 		// Treat parcel using parameterized stored proc, update n_remove session variable
