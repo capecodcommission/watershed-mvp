@@ -70,7 +70,7 @@ class TechnologyController extends Controller
 	}
 
 	// Retrieve and initialize selected technology data
-	// Associate with scenario
+	// Pass technology data to respective blade based on type
 	public function associateTech($type, $id)
 	{
 
@@ -80,13 +80,19 @@ class TechnologyController extends Controller
 		// Retrieve technology data from tech_matrix based on passed TM_ID
 		$tech = $this->getTech($id);
 
-		// Create and query Treatment through ORM normally
-		$treatment = $this->createTreatment($scenarioid, $tech);
+		// Technologies to be bypassed during treatment creation
+		$idFilter = ['25' ];
+
+		// Create and query Treatment through ORM
+		if (!in_array($id, $idFilter))
+		{
+			$treatment = $this->createTreatment($scenarioid, $tech);
+		}
 		
 		// If selected technology is management-based (embayment-wide)
 		if ($tech->Show_In_wMVP == 4)
 		{
-			// Reset global variables to handle fert/storm clickability
+			// Set fert/storm clickability
 			if ($type == 'fert') {
 				session(['fert_applied' => 1]);
 			}
@@ -98,10 +104,10 @@ class TechnologyController extends Controller
 		// Show relevant technology blade, pass retrieved technology data to blade
 		switch ($type) {
 			case 'fert':
-				return view('common/technology-fertilizer', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				return view('common/technology-fertilizer', ['tech'=>$tech, 'type'=>$type]);
 				break;
 			case 'storm':
-				return view('common/technology-stormwater', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				return view('common/technology-stormwater', ['tech'=>$tech, 'type'=>$type]);
 				break;
 			case 'collect':
 				return view('common/technology-collection', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
@@ -123,7 +129,7 @@ class TechnologyController extends Controller
 
 
 	// Apply Fertilizer and Stormwater management technologies based on type
-	public function ApplyTreatment_Percent($treat_id, $rate, $type)
+	public function ApplyTreatment_Percent($rate, $type)
 	{
 		// Retrieve scenario id and removed nitrogen global variables, passed rate from user input percent slider on popdown
 		$scenarioid = session('scenarioid');
@@ -133,24 +139,33 @@ class TechnologyController extends Controller
 		// Retrieve Scenario data from SQL, parse embayment id
 		$scenario = Scenario::find($scenarioid);
 		$embay_id = $scenario->AreaID;
+		$techid = 0;
 
-		// Retrieve / associate all parcels within embayment with user's scenario 
-		$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treat_id . ', \'embayment\'');
-
-		// Trigger stored proc with function parameters
-		// Run the updateNitrogenRemoved public function to update the n_removed session variable
-		$updated = DB::select('exec dbo.CALCapplyTreatmentPercent ' . $treat_id . ', ' . $rate . ', ' . $type);
-
-		// Set fert or storm applied global variable to 1 and disable management from being selected/applied again
+		// Set fert or storm tech id and applied
 		if ($type == 'fert')
 		{
+			$techid = 25;	
 			session(['fert_applied' => 1]);
 		}
 		if ($type == 'storm')
 		{
+			$techid = 26;	
 			session(['storm_applied' => 1]);
 		}
-		return $this->updateNitrogenRemoved();
+
+		$tech = $this->getTech($techid);	
+		$treatment = $this->createTreatment($scenarioid, $tech);	
+
+		// Retrieve / associate all parcels within embayment with user's scenario 
+		$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment->TreatmentID . ', \'embayment\'');
+
+		// Trigger stored proc with function parameters
+		// Run the updateNitrogenRemoved public function to update the n_removed session variable
+		$updated = DB::select('exec dbo.CALCapplyTreatmentPercent ' . $treatment->TreatmentID . ', ' . $rate . ', ' . $type);
+
+		$this->updateNitrogenRemoved();
+
+		return $treatment->TreatmentID;
 	}
 
 

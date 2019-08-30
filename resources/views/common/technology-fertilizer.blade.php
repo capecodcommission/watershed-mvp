@@ -64,7 +64,7 @@
 		$('#applytreatment').on('click', function(e) {
 			e.preventDefault();
 			var percent = $('#fert-percent').val();
-			var url = "{{url('/apply_percent')}}" + '/' +  {{$treatment->TreatmentID}} + '/' + percent + '/fert';
+			var url = "{{url('/apply_percent')}}" + '/' + percent + '/fert';
 			$.ajax({
 				method: 'GET',
 				url: url
@@ -73,15 +73,12 @@
 			// the update subemebayments progress and embayment progress, set the newtreatment variable and add it to the
 			// selected treatments popdown tray at top
 			.done(function(msg) {
-				msg = Math.round(msg);
-				$('#n_removed').text(msg);
 				$('#popdown-opacity').hide();
 				$( "#update" ).trigger( "click" );
-				var newtreatment = '<li class="technology" data-treatment="{{$treatment->TreatmentID}}"><a href="{{url('/edit', $treatment->TreatmentID)}}" class="popdown"><img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" alt=""></a></li>';
+				var newtreatment = '<li class="technology" data-treatment="' + msg + '">' + '<a href=/edit/' + msg + ' class="popdown">' + '<img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" alt=""></a></li>';
 				$('ul.selected-treatments').append(newtreatment);
-				$('ul.selected-treatments li[data-treatment="{{$treatment->TreatmentID}}"] a').popdown();
+				$('ul.selected-treatments li[data-treatment="' + msg + '"] a').popdown();
 			});
-
 		});
 		
 		// Clicking the close window button: hide the popdown, set the url to cancel the treatment which runs the DELtreatment
@@ -90,22 +87,7 @@
 			e.preventDefault();
 			$('#popdown-opacity').hide();
 			$('#fert-percent').val(0);
-			let treat = {{$treatment->TreatmentID}};
-			let url = "{{url('cancel')}}" + '/' + treat + '/' + 'fert';
-			$.ajax({
-				method: 'GET',
-				url: url
-			})
-			.done(function(msg) {
-				// If fert management applied, disable clickability for icon
-				if (msg.fertApplied) {
-					$('#fertMan')
-						.css({'pointer-events': 'none'})
-				} else {
-					$('#fertMan')
-						.css({'pointer-events': 'auto'})
-				}
-			});
+			$('#fertMan').css({'pointer-events': 'auto'});
 		});
 
 		// On clicking cancel treatment, hide the popdown, reset the fertilizer percent back to 0, cancel the treatment in the
@@ -114,22 +96,7 @@
 			e.preventDefault();
 			$('#popdown-opacity').hide();
 			$('#fert-percent').val(0);
-			let treat = {{$treatment->TreatmentID}};
-			var url = "{{url('cancel')}}" + '/' + treat + '/' + 'fert';
-			$.ajax({
-				method: 'GET',
-				url: url
-			})
-			.done(function(msg) {
-				// If fert management applied, disable clickability for icon
-				if (msg.fertApplied) {
-					$('#fertMan')
-						.css({'pointer-events': 'none'})
-				} else {
-					$('#fertMan')
-						.css({'pointer-events': 'auto'})
-				}
-			});
+			$('#fertMan').css({'pointer-events': 'auto'});
 		});
  	});
 </script>
