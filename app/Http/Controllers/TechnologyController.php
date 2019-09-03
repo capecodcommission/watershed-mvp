@@ -151,11 +151,15 @@ class TechnologyController extends Controller
 			$treatment = $this->createTreatment($scenarioid, $tech);	
 
 			// Retrieve / associate all parcels within embayment with user's scenario 
-			$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'embayment\'');
+			$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment->Treatment_ID . ', \'embayment\'');
 
 			// Trigger stored proc with function parameters
 			// Run the updateNitrogenRemoved public function to update the n_removed session variable
-			$updated = DB::select('exec dbo.CALCapplyTreatmentPercent ' . $treatment_id . ', ' . $rate . ', ' . $type);
+			$updated = DB::select('exec dbo.CALCapplyTreatmentPercent ' . $treatment->Treatment_ID . ', ' . $rate . ', ' . $type);
+
+			$this->updateNitrogenRemoved();
+
+			return $treatment->Treatment_ID;
 		}
 		if ($type == 'storm')
 		{
@@ -168,11 +172,11 @@ class TechnologyController extends Controller
 			// Trigger stored proc with function parameters
 			// Run the updateNitrogenRemoved public function to update the n_removed session variable
 			$updated = DB::select('exec dbo.CALCapplyTreatmentPercent ' . $treatment_id . ', ' . $rate . ', ' . $type);
+
+			$this->updateNitrogenRemoved();
+
+			return $treatment_id;
 		}
-
-		$this->updateNitrogenRemoved();
-
-		return $techid;
 	}
 
 
