@@ -7,6 +7,7 @@ use DB;
 use App\Treatment;
 use App\Scenario;
 use Log;
+use View;
 
 class TechnologyController extends Controller
 {
@@ -100,6 +101,8 @@ class TechnologyController extends Controller
 				session(['storm_applied' => 1]);
 			}
 		}
+
+		// return View::make('common/modal', ['tech'=>$tech, 'type'=>$type]);
 
 		// Show relevant technology blade, pass retrieved technology data to blade
 		switch ($type) {

@@ -15,7 +15,9 @@
   	<link rel="stylesheet" href="https://js.arcgis.com/3.16/dijit/themes/claro/claro.css">  
   	<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>  
 </head>
-<body class="claro">
+<body>
+	<!-- <div id="modal">
+		<div class="claro"> -->
 
 <div data-dojo-type="dijit/layout/BorderContainer" 
 	   data-dojo-props="design:'headline', gutters:false" 
@@ -39,7 +41,8 @@
 			@include('common/wizard-steps')
 		</div>
 	</div>
-	
+<!-- </div>
+</div> -->
 	<script>
 		var selectlayer = {{$embayment->EMBAY_ID}};
 		var center_x = {{$embayment->longitude}};
@@ -60,6 +63,7 @@
 			// 	$(this).append("<div class = 'fa fa-spinner fa-spin'></div>")	
 			// })
 
+			// Disable during testing
 			$('.popdown').popdown();
 			$('#closeACC').on('click', function(event){
 				$('.state').prop('checked', false);

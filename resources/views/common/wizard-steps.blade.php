@@ -396,6 +396,7 @@
 
 <script>
 	$(document).ready(function(){
+
 		// Retrieve session data values
 		scenario = {{session('scenarioid')}};
 		fertApplied = {{session('fert_applied')}};
@@ -405,6 +406,7 @@
 			e.preventDefault();
 			$('#fertMan')
 				.css({'pointer-events': 'none'})
+			// $('#modal').load('/tech/fert/25');
 		});
 
 		$('#stormMan').on('click', function(e) {
