@@ -15,7 +15,7 @@
   	<link rel="stylesheet" href="https://js.arcgis.com/3.16/dijit/themes/claro/claro.css">  
   	<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>  
 </head>
-<body>
+<body class="claro">
 	<!-- <div id="modal">
 		<div class="claro"> -->
 
