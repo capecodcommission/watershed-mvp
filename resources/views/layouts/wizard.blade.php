@@ -59,6 +59,11 @@
 <script type="text/javascript">
 		$(document).ready(function(){
 
+			$('.modal-wrapper').hide();
+			
+			$('#fertMan')
+				.css({'cursor': 'pointer'});
+
 			// TODO: Handle spinner icon on-click. There should be only a single spinner on an icon at one time.
 			// $('div.technology').on('click', function(e) {	
 			// 	$(this).append("<div class = 'fa fa-spinner fa-spin'></div>")	
@@ -96,19 +101,19 @@
 			// If fert management applied, disable clickability for icon
 			if (fertApplied) {
 				$('#fertMan')
-					.css({'pointer-events': 'none'})
+					.css({'pointer-events': 'none'});
 			} else {
 				$('#fertMan')
-					.css({'pointer-events': 'auto'})
+					.css({'pointer-events': 'auto'});
 			}
 
 			// If storm management applied, disable clickability for icon
 			if (stormApplied) {
 				$('#stormMan')
-					.css({'pointer-events': 'none'})
+					.css({'pointer-events': 'none'});
 			} else {
 				$('#stormMan')
-					.css({'pointer-events': 'auto'})
+					.css({'pointer-events': 'auto'});
 			}
 
 		});
@@ -165,19 +170,19 @@
 							// If fert management applied, disable clickability on fert icon
 							if (msg.fertapplied) {
 								$('#fertMan')
-									.css({'pointer-events': 'none'})
+									.css({'pointer-events': 'none'});
 							} else {
 								$('#fertMan')
-									.css({'pointer-events': 'auto'})
+									.css({'pointer-events': 'auto'});
 							}
 
 							// If storm management applied, disable clickability on storm icon
 							if (msg.stormapplied) {
 								$('#stormMan')
-									.css({'pointer-events': 'none'})
+									.css({'pointer-events': 'none'});
 							} else {
 								$('#stormMan')
-									.css({'pointer-events': 'auto'})
+									.css({'pointer-events': 'auto'});
 							}
 						})
 			});

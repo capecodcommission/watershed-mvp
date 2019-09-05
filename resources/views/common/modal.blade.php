@@ -1,10 +1,7 @@
 <meta name="csrf-token" id="token" content="{{ csrf_token() }}">
 
 <div class="modal-wrapper">
-	<div class="modal-content">
-		<button id = "closeModal"><i class = 'fa fa-times'></i></button>
-		<p>Hello World</p>
-	</div>
+	<div class="modal-content"></div>
 </div>
 
 <script type="text/javascript">
@@ -12,7 +9,10 @@
 
 		$('#closeModal').on('click', function(e) {
 			e.preventDefault()
-			$('.modal-wrapper').hide()
+			$('.modal-wrapper').hide();
+			$('#fertMan')
+				.css({'pointer-events': 'auto'})
+				.css({'cursor': 'pointer'});
 		})
     })
 </script>

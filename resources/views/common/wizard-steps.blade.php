@@ -54,7 +54,7 @@
 			<hr>
 			<!-- <div  v-on:click="updateClickedValue($event)" v-class="active: isActive" id = 'fertMan' class="technology"> -->
 			<div id = 'fertMan' class="technology">
-				<a href="/tech/fert/25" class="popdown">
+				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/FertilizerManagement.svg">
 				</a>
 				<br />
@@ -406,7 +406,9 @@
 			e.preventDefault();
 			$('#fertMan')
 				.css({'pointer-events': 'none'})
-			// $('#modal').load('/tech/fert/25');
+				.css({'cursor': 'pointer'});
+			$('.modal-wrapper').show();
+			$('.modal-content').load('/tech/fert/25');
 		});
 
 		$('#stormMan').on('click', function(e) {
