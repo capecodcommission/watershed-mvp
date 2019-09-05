@@ -17,6 +17,7 @@ html {
 
 body {
   margin: 0;
+  overflow: hidden;
 }
 
 /* HTML5 display definitions
@@ -6378,7 +6379,7 @@ include flash mixins
   background: #efefef;
   border-radius: 25px;
   padding: 1.5em;
-  border: 2px solid #2caae4; }
+  border: 2px solid #2caae4;}
 
 .login-register {
   padding: 2em;
@@ -6460,7 +6461,7 @@ nav.toolbar {
   transform: translateX(420px);
   transition: all 0.25s linear;
   background: #efefef;
-  z-index: 999999;
+  z-index: 2;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch; }
   .sliding-panel-content.is-visible {
@@ -6514,7 +6515,7 @@ nav.toolbar {
         vertical-align: middle;
         text-align: center;
         color: #fff;
-        z-index: 20;
+        z-index: 3;
         position: absolute;
         top: 0; }
         #progress .subembayment .sub-progress-container h3 span {
@@ -6662,13 +6663,13 @@ nav.toolbar {
       width: 750px; }
   .accordion .backdrop {
     position: absolute;
-    z-index: 3;
+    z-index: 4;
     margin: 0;
     padding: 0;
     width: 50px;
     height: 100%; }
     .accordion .backdrop .fa {
-      z-index: 4;
+      z-index: 5;
       display: block;
       opacity: 0;
       content: "";
@@ -6738,9 +6739,7 @@ nav.toolbar {
   
   .modal-wrapper {
     position: absolute;
-    /* left: 50%;
-    top: 50%; */
-    background: black;
+    background-color: rgba(0,0,0,0.7);
     margin: 0;
     padding: 0;
     width: 100%;
@@ -6748,7 +6747,9 @@ nav.toolbar {
     align-items: center;
     justify-content: center;
     display: flex;
-    z-index: 2;
+    z-index: 6;
+    top: 0;
+    left: 0;
   }
 
   .modal-content {
@@ -6758,5 +6759,5 @@ nav.toolbar {
     padding: 0;
     max-height: 75%;
     max-width: 90%;
-    z-index: 2;
+    z-index: 7;
   }

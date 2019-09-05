@@ -41,6 +41,7 @@
 			@include('common/wizard-steps')
 		</div>
 	</div>
+	@include('common/modal')
 <!-- </div>
 </div> -->
 	<script>
