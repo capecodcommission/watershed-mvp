@@ -73,7 +73,7 @@
 			// the update subemebayments progress and embayment progress, set the newtreatment variable and add it to the
 			// selected treatments popdown tray at top
 			.done(function(msg) {
-				$('#popdown-opacity').hide();
+				$('.modal-wrapper').hide();
 				$( "#update" ).trigger( "click" );
 				var newtreatment = '<li class="technology" data-treatment="' + msg + '">' + '<a href=/edit/' + msg + ' class="popdown">' + '<img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" alt=""></a></li>';
 				$('ul.selected-treatments').append(newtreatment);
