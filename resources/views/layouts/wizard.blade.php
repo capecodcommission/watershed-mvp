@@ -64,6 +64,9 @@
 			$('#fertMan')
 				.css({'cursor': 'pointer'});
 
+			$('#stormMan')
+				.css({'cursor': 'pointer'});
+
 			// TODO: Handle spinner icon on-click. There should be only a single spinner on an icon at one time.
 			// $('div.technology').on('click', function(e) {	
 			// 	$(this).append("<div class = 'fa fa-spinner fa-spin'></div>")	

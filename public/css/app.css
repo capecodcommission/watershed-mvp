@@ -7785,7 +7785,7 @@ nav.toolbar .tool {
 
 .modal-wrapper {
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px) grayscale(.5);
   margin: 0;
   padding: 0;
   width: 100%;
@@ -7806,4 +7806,10 @@ nav.toolbar .tool {
   max-height: 75%;
   max-width: 90%;
   z-index: 7;
+}
+
+.modal-close {
+  position: absolute;
+  right: 0%;
+  top: -10%;
 }

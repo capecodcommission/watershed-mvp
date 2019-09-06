@@ -81,9 +81,8 @@
 				<hr>
 
 				<div class="technology_list">
-					<!-- TODO: Set all technologies with respective name id -->
 					<div id = "stormMan" class="technology">
-						<a href="{{url('/tech/storm/26')}}" class="popdown">
+						<a>
 							<img src="http://www.watershedmvp.org/images/SVG/StormwaterManagement.svg"><br />
 							 Stormwater Management
 						</a>
@@ -408,13 +407,16 @@
 				.css({'pointer-events': 'none'})
 				.css({'cursor': 'pointer'});
 			$('.modal-wrapper').show();
-			$('.modal-content').load('/tech/fert/25');
+			$('#techView').load('/tech/fert/25');
 		});
 
 		$('#stormMan').on('click', function(e) {
 			e.preventDefault();
 			$('#stormMan')
 				.css({'pointer-events': 'none'})
+				.css({'cursor': 'pointer'});
+			$('.modal-wrapper').show();
+			$('#techView').load('/tech/storm/26');
 		});
 
 		$('#fim').on('click', function(e) {
