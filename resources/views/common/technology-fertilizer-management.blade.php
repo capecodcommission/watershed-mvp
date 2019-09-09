@@ -29,7 +29,7 @@
 		$('#applytreatment').on('click', function(e) {
 			e.preventDefault();
 			var percent = $('#fert-percent').val();
-			var url = "{{url('/apply_percent')}}" + '/' + null + '/' + percent + '/fert';
+			var url = "{{url('/apply_percent')}}" + '/' + percent + '/fert';
 			$.ajax({
 				method: 'GET',
 				url: url
