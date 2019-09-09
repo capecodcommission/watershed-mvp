@@ -89,6 +89,12 @@ class TechnologyController extends Controller
 		{
 			$treatment = $this->createTreatment($scenarioid, $tech);
 		}
+		else 
+		{
+			// Mock Treatment object for bypassed technologies
+			$treatment = new \stdClass();
+   			$treatment->TreatmentID = 0;
+		}
 		
 		// If selected technology is management-based (embayment-wide)
 		if ($tech->Show_In_wMVP == 4)

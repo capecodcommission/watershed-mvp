@@ -32,7 +32,7 @@
 		<!-- 1 => user will enter a unit metric to use for calculations (acres, linear feet, etc) -->
 		@if($tech->Show_In_wMVP == 1)
 			<p class="select">
-				<button id="select_area_{{$treatment->TreatmentID}}">Select a location</button> 
+				<button id="select_area">Select a location</button> 
 				<span>@{{subembayment}}</span>
 			</p>
 			<p>
@@ -41,12 +41,12 @@
 			</p>
 		<!-- 2 => user will need to select a polygon for the treatment area -->
 		@elseif($tech->Show_In_wMVP == 2)
-			<button id="select_polygon_{{$treatment->TreatmentID}}">Draw Polygon</button>
+			<button id="select_polygon">Draw Polygon</button>
 		<!-- 3 => user will select a polygon and enter the unit metric for the treatment area calculation
 		unit metric is used to calculate cost -->
 		@elseif($tech->Show_In_wMVP == 3)
 			<p class="select">
-				<button id="select_polygon_{{$treatment->TreatmentID}}">Select a polygon</button> 
+				<button id="select_polygon">Select a polygon</button> 
 				<span>@{{subembayment}}</span>
 			</p>
 			<p>
@@ -97,8 +97,8 @@
 			</p>
 		@endif
 		<p>
-			<button id="apply_treatment_{{$treatment->TreatmentID}}">Apply</button>
-			<button id="cancel_treatment_{{$treatment->TreatmentID}}" class="button--cta right"><i class="fa fa-ban"></i> Cancel</button>
+			<button id="apply_treatment">Apply</button>
+			<button id="cancel_treatment" class="button--cta right"><i class="fa fa-ban"></i> Cancel</button>
 		</p>
 	</section>
 </div>
@@ -115,7 +115,7 @@
 		// Retrieve treatment id, icon from props
 		treatment = {{$treatment->TreatmentID}};
 		icon = '{{$tech->Icon}}';
-		$('#select_area_'+treatment).data('icon', icon.toString())
+		$('#select_area').data('icon', icon.toString())
 		 
 		// If technology is not fertilizer or stormwater management
 	 	@if($tech->Show_In_wMVP < 4) {
@@ -133,7 +133,7 @@
 			})
 
 			// Handle on-click event for selecting a location
-			$('#select_area_'+treatment).on('click', function(f) {
+			$('#select_area').on('click', function(f) {
 				f.preventDefault();
 
 				// Hide modal, activate point geometry on map's draw-toolbar
@@ -142,7 +142,7 @@
 			});
 
 			// Handle on-click event for drawing a custom polygon
-			$('#select_polygon_'+treatment).on('click', function(f) {
+			$('#select_polygon').on('click', function(f) {
 				f.preventDefault();
 				$('#popdown-opacity').hide();
 				map.disableMapNavigation();
@@ -150,7 +150,7 @@
 			});
 
 			// Handle on-click event for applying selected technology, adding to applied technology stack
-			$('#apply_treatment_'+treatment).on('click', function(e) {
+			$('#apply_treatment').on('click', function(e) {
 				e.preventDefault();
 				var percent = 0;
 				var units = 1;
@@ -190,43 +190,26 @@
 			// stormwater icon clickability
 			$('#closeWindow').on('click', function (e) {
 				e.preventDefault();
-				$('#popdown-opacity').hide();
+				$('.modal-opacity').hide();
 				$('#storm-percent').val(0);
-				let treat = {{$treatment->TreatmentID}};
-				let url = "{{url('cancel')}}" + '/' + treat + '/' + 'storm';
-				$.ajax({
-					method: 'GET',
-					url: url
-				})
-				.done(function(msg) {
-					// If storm management applied, disable clickability for icon
-					if (msg.stormApplied) {
-						$('#stormMan')
-							.css({'pointer-events': 'none'})
-					} else {
-						$('#stormMan')
-							.css({'pointer-events': 'auto'})
-					}
-				});
+				$('#stormMan').css({'pointer-events': 'auto'})
 			});
 
 			// Handle on-click event for applying management technology
-			$('#apply_treatment_'+treatment).on('click', function(e) {
+			$('#apply_treatment').on('click', function(e) {
 				e.preventDefault();
 				var percent = $('#storm-percent').val();
-				var url = "{{url('/apply_percent')}}" + '/' +  treatment + '/' + percent + '/storm';
+				var url = "{{url('/apply_percent')}}" + '/' + percent + '/storm';
 				$.ajax({
 					method: 'GET',
 					url: url
 				})
 				.done(function(msg) {
-					msg = Math.round(msg);
-					$('#n_removed').text(msg);
-					$('#popdown-opacity').hide();
+					$('.modal-wrapper').hide();
 					$( "#update" ).trigger( "click" );
-					var newtreatment = '<li class="technology" data-treatment="{{$treatment->TreatmentID}}"><a href="{{url('/edit', $treatment->TreatmentID)}}" class="popdown"><img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" alt=""></a></li>';
+					var newtreatment = '<li class="technology" data-treatment="' + msg + '">' + '<a href=/edit/' + msg + ' class="popdown">' + '<img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" alt=""></a></li>';
 					$('ul.selected-treatments').append(newtreatment);
-					$('ul.selected-treatments li[data-treatment="{{$treatment->TreatmentID}}"] a').popdown();
+					$('ul.selected-treatments li[data-treatment="' + msg + '"] a').popdown();
 				});
 			});
 		}
@@ -235,12 +218,11 @@
 		// Clicking the cancel window button: hide the popdown, set the url to cancel the treatment which runs the DELtreatment
 		// stored procedure, send an ajax GET method to the url to disassociate the treatment with the parcels and handle the
 		// stormwater icon clickability
-		$('#cancel_treatment_'+treatment).on('click', function(e) {
+		$('#cancel_treatment').on('click', function(e) {
 			e.preventDefault();
 			$('#popdown-opacity').hide();
 			$('#storm-percent').val(0);
-			let treat = {{$treatment->TreatmentID}};
-			var url = "{{url('cancel')}}" + '/' + treat + '/' + 'storm';
+			var url = "{{url('cancel')}}" + '/' + treatment + '/' + 'storm';
 			$.ajax({
 				method: 'GET',
 				url: url
