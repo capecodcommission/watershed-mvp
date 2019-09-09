@@ -105,7 +105,7 @@ class TechnologyController extends Controller
 		// Show relevant technology blade, pass retrieved technology data to blade
 		switch ($type) {
 			case 'fert':
-				return view('common/technology-fertilizer', ['tech'=>$tech, 'type'=>$type]);
+				return View('common/technology-fertilizer-management', ['tech'=>$tech, 'type'=>$type]);
 				break;
 			case 'storm':
 				return view('common/technology-stormwater', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);

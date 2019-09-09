@@ -7812,4 +7812,99 @@ nav.toolbar .tool {
   position: absolute;
   right: 0%;
   top: -10%;
+.blade_container {
+  display: grid;
+  background-color: #f0f0f0;
+  grid-template-columns: repeat(3, [col-start] 1fr);
+  grid-gap: 0.5vw;
+  font: 4vh black bolder TrendSansOne, Futura, "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  margin: 0 auto;
+  padding: 0.5vw;
+  justify-items: center;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 100%;
+}
+
+.blade_title {
+  grid-column: col-start / -1;
+  grid-row: 1;
+  cursor: default;
+  font-variant: small-caps;
+}
+
+.blade_image {
+  grid-column: col-start / span 1;
+  grid-row: 2;
+  width: 50%;
+}
+
+.blade_slider {
+  grid-column: col-start 2 / span 1;
+  grid-row: 2;
+  width: 100%;
+}
+
+.blade_slider > label {
+  font: 2vh bold;
+  font-variant: small-caps;
+}
+
+.blade_slider > input {
+  width: 100%;
+}
+
+.blade_button {
+  grid-column: col-start 3 / -1;
+  grid-row: 2;
+  font: 1.5vh bold;
+  text-transform: uppercase;
+}
+
+.blade_slider > input {
+  margin-top: 0.5em;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 0.75vh;
+  background: rgb(220,220,220);
+  outline: none;
+  opacity: 1;
+  border-radius: 100em;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.blade_slider > input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 0.7em;
+  height: 0.7em;
+  border-radius: 100em;
+  background: rgb(40,40,40);
+  cursor: pointer;
+}
+
+.blade_slider >  input::-webkit-slider-thumb:active {
+  cursor: grabbing;
+}
+
+.blade_slider >  input::-webkit-slider-thumb:hover {
+  background: rgb(17,15,15);
+}
+
+.blade_slider > input::-moz-range-thumb {
+  width: 0.7em;
+  height: 0.7em;
+  border-radius: 100em;
+  background: rgb(40,40,40);
+  cursor: pointer;
+}
+
+.blade_slider >  input::-moz-range-thumb:active {
+  cursor: grabbing;
+}
+
+.blade_slider >  input::-webkit-slider-thumb:hover {
+  background: rgb(17,15,15);
 }

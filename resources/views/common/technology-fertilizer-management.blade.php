@@ -1,18 +1,20 @@
 <!-- Set the title to 'Technology_Strategy' from the dbo.v_Technology_Matrix obtained by 'TechnologyController.php' -->
 <!-- Set the popdown up with a header, a body with the technology, a table and reduction rate selection -->
-<div class="column fertilizer_management_modal">
-	<div class="row fertilizer_management_modal_content">
-		Shawn@theTop
+	<div class="blade_container">
+		<h4 class="blade_title" title="{{$tech->Technology_Strategy}}">
+			{{$tech->Technology_Strategy}}
+		</h4>
+		<a title="{{$tech->Technology_Strategy}} - Technology Matrix" class="blade_image" href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
+			<img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}">
+		</a>
+		<div class="blade_slider" title="Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.">
+			<label>Nutrient Reduction Rate</label>
+			<label>@{{fert_percent}}%</label>
+			<input type="range" id="{{$type}}-percent"
+			  min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="fert_percent" value="{{$tech->Nutri_Reduc_N_High}}" step="1">
+		</div>
+		<button title="Apply Strategy" class="blade_button" id="applytreatment">Apply</button>
 	</div>
-	<div class="row fertilizer_management_modal_content">
-		<div class="column=4">Shawn1</div>
-		<div class="column=4">Shawn2</div>
-		<div class="column=4">Shawn3</div>
-	</div>
-	<div class="row fertilizer_management_modal_content">
-		Shawn@theBottom
-	</div>
-</div>
 
 <!-- Import the vue data and computed properties -->
 <script src="{{url('/js/main.js')}}"></script>
@@ -50,16 +52,6 @@
 			e.preventDefault();
 			// $('#popdown-opacity').hide();
 			$('#fert-percent').val(0);
-			$('#fertMan').css({'pointer-events': 'auto'});
-		});
-
-		// On clicking cancel treatment, hide the popdown, reset the fertilizer percent back to 0, cancel the treatment in the
-		// same fashion as closeWindow and return an empty message
-		$('#canceltreatment').on('click', function(e) {
-			e.preventDefault();
-			// $('#popdown-opacity').hide();
-			$('#fert-percent').val(0);
-			$('#fertMan').css({'pointer-events': 'auto'});
 		});
  	});
 </script>
