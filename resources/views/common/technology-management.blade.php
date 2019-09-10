@@ -11,9 +11,9 @@
 			<label>Nutrient Reduction Rate</label>
 			<label v-if="{{$tech->id == 25}}">@{{fert_percent}}%</label>
 			<label v-else="{{$tech->id == 26}}">@{{storm_percent}}%</label>
-			<input type="range" id="{{$type}}-percent"
+			<input type="range" id="fert-percent"
 			v-if="{{$tech->id == 25}}" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="fert_percent" value="{{$tech->Nutri_Reduc_N_High}}" step="1">
-			<input type="range" id="{{$type}}-percent"
+			<input type="range" id="storm-percent"
 			v-else="{{$tech->id == 26}}" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="storm_percent" value="{{$tech->Nutri_Reduc_N_High}}" step="1">
 		</div>
 		<button title="Apply Strategy" class="blade_button" id="applytreatment">Apply</button>
