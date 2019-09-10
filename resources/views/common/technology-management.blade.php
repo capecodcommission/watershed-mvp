@@ -42,7 +42,6 @@
 				// Once the GET method is complete, hide the modal, update the subembayments and embayment progresses,
 				// set the newtreatment variable and add it to the treatment stack using the popdown generator
 				.done(function(msg) {
-					$('.modal-wrapper').hide();
 					$( "#update" ).trigger( "click" );
 					let newtreatment = '<li class="technology" data-treatment="' + msg + '">' + '<a href=/edit/' + msg + ' class="popdown">' + '<img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" alt=""></a></li>';
 					$('ul.selected-treatments').append(newtreatment);
@@ -60,7 +59,6 @@
 				// Once the GET method is complete, hide the modal, update the subembayments and embayment progresses,
 				// set the newtreatment variable and add it to the treatment stack using the popdown generator
 				.done(function(msg) {
-					$('.modal-wrapper').hide();
 					$( "#update" ).trigger( "click" );
 					let newtreatment = '<li class="technology" data-treatment="' + msg + '">' + '<a href=/edit/' + msg + ' class="popdown">' + '<img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" alt=""></a></li>';
 					$('ul.selected-treatments').append(newtreatment);

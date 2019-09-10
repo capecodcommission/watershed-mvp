@@ -53,7 +53,7 @@
 			</p>
 			<hr>
 			<!-- <div  v-on:click="updateClickedValue($event)" v-class="active: isActive" id = 'fertMan' class="technology"> -->
-			<div id = 'fertMan' class="technology">
+			<div id = 'fertMan' class="technology" data-route = "/tech/management/25">
 				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/FertilizerManagement.svg">
 				</a>
@@ -81,7 +81,7 @@
 				<hr>
 
 				<div class="technology_list">
-					<div id = "stormMan" class="technology">
+					<div id = "stormMan" class="technology" data-route = "/tech/management/26">
 						<a>
 							<img src="http://www.watershedmvp.org/images/SVG/StormwaterManagement.svg"><br />
 							 Stormwater Management
@@ -401,28 +401,13 @@
 		fertApplied = {{session('fert_applied')}};
 		stormApplied = {{session('storm_applied')}};
 
-		function loadTechView (route) {
-			$('.modal-wrapper').show();
-			$('#techView').load(route, function () {
-				$('#closeModal').show();
-			})
-		}
-
-		$('#fertMan').on('click', function(e) {
+		$('.technology').on('click', function (e) {
 			e.preventDefault();
-			$('#fertMan')
-				.css({'pointer-events': 'none'})
-				.css({'cursor': 'pointer'});
-			loadTechView('/tech/management/25');
-		});
-
-		$('#stormMan').on('click', function(e) {
-			e.preventDefault();
-			$('#stormMan')
-				.css({'pointer-events': 'none'})
-				.css({'cursor': 'pointer'});
-			loadTechView('/tech/management/26');
-		});
+			let apiRoute = $(this).data('route')
+			if (apiRoute) {
+				localLoadTechView(apiRoute)
+			}
+		})
 
 		$('#fim').on('click', function(e) {
 			// if below doesn't work, add to fim button above ----> href = "http://2016.watershedmvp.org/fim/scenario/{{session('scenarioid')}}/treatmentsDetails"

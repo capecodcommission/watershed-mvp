@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\Treatment;
+use App\Technology;
 use App\Scenario;
 use Log;
 use View;
@@ -94,18 +95,6 @@ class TechnologyController extends Controller
 			// Mock Treatment object for bypassed technologies
 			$treatment = new \stdClass();
    			$treatment->TreatmentID = 0;
-		}
-		
-		// If selected technology is management-based (embayment-wide)
-		if ($tech->Show_In_wMVP == 4)
-		{
-			// Set fert/storm clickability
-			if ($type == 'fert') {
-				session(['fert_applied' => 1]);
-			}
-			if ($type == 'storm') {
-				session(['storm_applied' => 1]);
-			}
 		}
 
 		// Show relevant technology blade, pass retrieved technology data to blade
@@ -352,9 +341,18 @@ class TechnologyController extends Controller
 	public function edit($treat_id)
 	{
 		$treatment = Treatment::find($treat_id);
-		$tech = DB::table('dbo.v_Technology_Matrix')->select('*')->where('Technology_ID', $treatment->TreatmentType_ID)->first();
+		$tech = Technology::find($treatment->TreatmentType_ID);
 		$type = $tech->Technology_Sys_Type;
+		
+		$management_TM_IDs = ['25','26'];
 		$toilets = [21, 22, 23, 24];
+
+		if ( in_array($tech->TM_ID, $management_TM_IDs) )	
+		{
+			return view('common/technology-management-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+			break;
+		}	
+
 		if ( in_array($treatment->TreatmentType_ID, $toilets) ) 
 		{
 			return view('common/technology-septic-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);

@@ -55,8 +55,19 @@
 <script src="{{url('/js/map.js')}}"></script>
 <script src="{{url('/js/main.js')}}"></script>
 <script src="{{url('/js/jquery.popdown.js')}}"></script>
+<script src="{{url('/js/helpers.js')}}"></script>
 
 <script type="text/javascript">
+
+
+		function localCloseModalContent () {
+			return destroyModalContents()
+		}
+
+		function localLoadTechView (route) {
+			return loadTechView(route)
+		}
+
 		$(document).ready(function(){
 
 			$('.modal-wrapper').hide();
@@ -66,11 +77,6 @@
 
 			$('#stormMan')
 				.css({'cursor': 'pointer'});
-
-			// TODO: Handle spinner icon on-click. There should be only a single spinner on an icon at one time.
-			// $('div.technology').on('click', function(e) {	
-			// 	$(this).append("<div class = 'fa fa-spinner fa-spin'></div>")	
-			// })
 
 			// Disable during testing
 			$('.popdown').popdown();
@@ -187,6 +193,8 @@
 								$('#stormMan')
 									.css({'pointer-events': 'auto'});
 							}
+
+							localCloseModalContent()
 						})
 			});
 		</script>

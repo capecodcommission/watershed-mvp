@@ -7813,6 +7813,17 @@ nav.toolbar .tool {
   right: 0%;
 }
 
+.modal-loading {
+  display: block;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('https://i.stack.imgur.com/MnyxU.gif');
+  background-repeat: no-repeat;
+  background-position: center;
+  overflow: hidden;
+}
+
 .blade_container {
   display: grid;
   background-color: #f0f0f0;
