@@ -2,7 +2,7 @@
 
 <div class="modal-wrapper" style = "display: none;">
 	<div class="modal-content">
-		<button class = 'modal-close' id = "closeModal">
+		<button style = 'display: none;' class = 'modal-close' id = "closeModal">
 			<i class = 'fa fa-times'></i>
 		</button>
 		<div id = 'techView'></div>
@@ -10,10 +10,12 @@
 </div>
 
 <script type="text/javascript">
-	$(document).ready(function() {
+	$(document).ready(function() {	
 
 		$('#closeModal').on('click', function(e) {
 			e.preventDefault()
+			$(this).hide()
+			$('#techView').empty()
 			$('.modal-wrapper').hide();
 			$('#fertMan')
 				.css({'pointer-events': 'auto'})

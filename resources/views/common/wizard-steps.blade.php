@@ -401,13 +401,19 @@
 		fertApplied = {{session('fert_applied')}};
 		stormApplied = {{session('storm_applied')}};
 
+		function loadTechView (route) {
+			$('.modal-wrapper').show();
+			$('#techView').load(route, function () {
+				$('#closeModal').show();
+			})
+		}
+
 		$('#fertMan').on('click', function(e) {
 			e.preventDefault();
 			$('#fertMan')
 				.css({'pointer-events': 'none'})
 				.css({'cursor': 'pointer'});
-			$('.modal-wrapper').show();
-			$('#techView').load('/tech/management/25');
+			loadTechView('/tech/management/25');
 		});
 
 		$('#stormMan').on('click', function(e) {
@@ -415,8 +421,7 @@
 			$('#stormMan')
 				.css({'pointer-events': 'none'})
 				.css({'cursor': 'pointer'});
-			$('.modal-wrapper').show();
-			$('#techView').load('/tech/management/26');
+			loadTechView('/tech/management/26');
 		});
 
 		$('#fim').on('click', function(e) {
