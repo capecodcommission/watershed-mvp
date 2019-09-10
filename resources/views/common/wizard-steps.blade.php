@@ -407,7 +407,7 @@
 				.css({'pointer-events': 'none'})
 				.css({'cursor': 'pointer'});
 			$('.modal-wrapper').show();
-			$('#techView').load('/tech/fert/25');
+			$('#techView').load('/tech/management/25');
 		});
 
 		$('#stormMan').on('click', function(e) {
@@ -416,7 +416,7 @@
 				.css({'pointer-events': 'none'})
 				.css({'cursor': 'pointer'});
 			$('.modal-wrapper').show();
-			$('#techView').load('/tech/storm/26');
+			$('#techView').load('/tech/management/26');
 		});
 
 		$('#fim').on('click', function(e) {
