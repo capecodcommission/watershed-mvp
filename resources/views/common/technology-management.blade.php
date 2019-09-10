@@ -1,5 +1,5 @@
 <!-- Set the title to 'Technology_Strategy' from the dbo.v_Technology_Matrix obtained by 'TechnologyController.php' -->
-<!-- Set the popdown up with a header, a body with the technology, a table and reduction rate selection -->
+<!-- Set up the HTML for the grid layout as specified in the css -->
 	<div class="blade_container">
 		<h4 class="blade_title" title="{{$tech->Technology_Strategy}}">
 			{{$tech->Technology_Strategy}}
@@ -27,51 +27,49 @@
 		// Check the state of readyness for applyTreatment, closeWindow & canceltreatment - remove the spinner once ready
 		$('div.fa.fa-spinner.fa-spin').remove()
 		
-		// On Click of treatment icon set the percent variable for the fertilization percent for reduction selection by user
-		// and set the url to use to send an ajax GET method to route the user input slider value for the fertilzation percent
+		// On click of the 'Apply' button, wrap the logic in a fert/storm conditional, set the percent variable for
+		// reduction selection by user, set the url to use to send an ajax GET method to route the user input slider
+		// value for the technology percent
 		$('#applytreatment').on('click', function(e) {
 			e.preventDefault();
 			if ("{{$tech->id == 25}}") {
-				var percent = $('#fert-percent').val();
-				var url = "{{url('/apply_percent')}}" + '/' + percent + '/fert';
+				let percent = $('#fert-percent').val();
+				let url = "{{url('/apply_percent')}}" + '/' + percent + '/fert';
 				$.ajax({
 					method: 'GET',
 					url: url
 				})
-				// Once the GET method is complete, format the returned message, route that to the text, hide the popdown, click
-				// the update subemebayments progress and embayment progress, set the newtreatment variable and add it to the
-				// selected treatments popdown tray at top
+				// Once the GET method is complete, hide the modal, update the subembayments and embayment progresses,
+				// set the newtreatment variable and add it to the treatment stack using the popdown generator
 				.done(function(msg) {
 					$('.modal-wrapper').hide();
 					$( "#update" ).trigger( "click" );
-					var newtreatment = '<li class="technology" data-treatment="' + msg + '">' + '<a href=/edit/' + msg + ' class="popdown">' + '<img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" alt=""></a></li>';
+					let newtreatment = '<li class="technology" data-treatment="' + msg + '">' + '<a href=/edit/' + msg + ' class="popdown">' + '<img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" alt=""></a></li>';
 					$('ul.selected-treatments').append(newtreatment);
 					$('ul.selected-treatments li[data-treatment="' + msg + '"] a').popdown();
 				});
 			}
 
 			else {
-				var percent = $('#storm-percent').val();
-				var url = "{{url('/apply_percent')}}" + '/' + percent + '/storm';
+				let percent = $('#storm-percent').val();
+				let url = "{{url('/apply_percent')}}" + '/' + percent + '/storm';
 				$.ajax({
 					method: 'GET',
 					url: url
 				})
-				// Once the GET method is complete, format the returned message, route that to the text, hide the popdown, click
-				// the update subemebayments progress and embayment progress, set the newtreatment variable and add it to the
-				// selected treatments popdown tray at top
+				// Once the GET method is complete, hide the modal, update the subembayments and embayment progresses,
+				// set the newtreatment variable and add it to the treatment stack using the popdown generator
 				.done(function(msg) {
 					$('.modal-wrapper').hide();
 					$( "#update" ).trigger( "click" );
-					var newtreatment = '<li class="technology" data-treatment="' + msg + '">' + '<a href=/edit/' + msg + ' class="popdown">' + '<img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" alt=""></a></li>';
+					let newtreatment = '<li class="technology" data-treatment="' + msg + '">' + '<a href=/edit/' + msg + ' class="popdown">' + '<img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" alt=""></a></li>';
 					$('ul.selected-treatments').append(newtreatment);
 					$('ul.selected-treatments li[data-treatment="' + msg + '"] a').popdown();
 				});
 			}
 		});
 		
-		// Clicking the close window button: hide the popdown, set the url to cancel the treatment which runs the DELtreatment
-		// stored procedure, send an ajax GET method to the url to disassociate the treatment with the parcels and return nothing
+		// Clicking the close button: wrap the logic in a fert/storm conditional, set the fert or storm percent values to 0
 		$('#closeWindow').on('click', function (e) {
 			e.preventDefault();
 			if ("{{$tech->id == 25}}") {
