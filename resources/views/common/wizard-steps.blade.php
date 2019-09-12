@@ -401,14 +401,6 @@
 		fertApplied = {{session('fert_applied')}};
 		stormApplied = {{session('storm_applied')}};
 
-		$('.technology').on('click', function (e) {
-			e.preventDefault();
-			let apiRoute = $(this).data('route')
-			if (apiRoute) {
-				localLoadTechView(apiRoute)
-			}
-		})
-
 		$('#fim').on('click', function(e) {
 			// if below doesn't work, add to fim button above ----> href = "http://2016.watershedmvp.org/fim/scenario/{{session('scenarioid')}}/treatmentsDetails"
 			window.open("http://www.watershedmvp.org/fim/scenario/" + scenario + "/treatmentsDetails")

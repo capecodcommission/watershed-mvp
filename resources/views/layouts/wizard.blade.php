@@ -59,15 +59,6 @@
 
 <script type="text/javascript">
 
-
-		function localCloseModalContent () {
-			return destroyModalContents()
-		}
-
-		function localLoadTechView (route) {
-			return loadTechView(route)
-		}
-
 		$(document).ready(function(){
 
 			$('.modal-wrapper').hide();
@@ -194,7 +185,7 @@
 									.css({'pointer-events': 'auto'});
 							}
 
-							localCloseModalContent()
+							destroyModalContents()
 						})
 			});
 		</script>

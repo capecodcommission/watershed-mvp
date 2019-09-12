@@ -16,7 +16,7 @@
 		// Handle click event for closing modal
 		$('#closeModal').on('click', function(e) {
 			e.preventDefault()
-			localCloseModalContent()
+			destroyModalContents()
 		})
     })
 </script>

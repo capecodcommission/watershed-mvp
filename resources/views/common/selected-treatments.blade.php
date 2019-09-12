@@ -3,8 +3,8 @@
 	<ul class="selected-treatments">
 			@foreach($treatments as $treatment)
 				@if(!$treatment->Parent_TreatmentId)
-					<li class="technology" data-treatment="{{$treatment->TreatmentID}}">
-						<a href="{{url('/edit', $treatment->TreatmentID)}}" class="popdown">
+					<li class="technology" data-route="{{url('/edit', $treatment->TreatmentID)}}" data-treatment="{{$treatment->TreatmentID}}">
+						<a href="">
 							<img src="http://www.watershedmvp.org/images/SVG/{{$treatment->treatment_icon}}" alt="">
 						</a>
 					</li>
@@ -22,10 +22,10 @@
 	#edit_polygon:focus { background-color: #ff0000; }
 </style>
 
-<script>
+<!-- <script>
 	$("li.technology").on('click', function (e) {
 
 		$(this).append("<div class = 'fa fa-spinner fa-spin fa-inverse'></div>")
 	})
 
-</script>
+</script> -->
