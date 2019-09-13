@@ -332,27 +332,26 @@ class TechnologyController extends Controller
 		return 1;
 	}
 
-	/**
-	 * User wants to edit a treatment for this scenario
-	 *
-	 * @return void
-	 * @author 
-	 **/
+	// Return html of relevant tech-edit blade based on various tech-matrix id's
 	public function edit($treat_id)
 	{
+		// Obtain treatment and tech objects using relevant id's
 		$treatment = Treatment::find($treat_id);
 		$tech = Technology::find($treatment->TreatmentType_ID);
 		$type = $tech->Technology_Sys_Type;
 		
+		// Create ID route filters for management and septic technologies
 		$management_TM_IDs = ['25','26'];
 		$toilets = [21, 22, 23, 24];
 
+		// Load new management edit blade if associated TM_ID matches the management id array
 		if ( in_array($tech->TM_ID, $management_TM_IDs) )	
 		{
 			return view('common/technology-management-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 			break;
 		}	
 
+		// Load septic edit blade if associated Technology_ID matches the septic id array
 		if ( in_array($treatment->TreatmentType_ID, $toilets) ) 
 		{
 			return view('common/technology-septic-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
@@ -360,6 +359,7 @@ class TechnologyController extends Controller
 		}
 		else 
 		{
+			// Switch and load edit blade based on Technology System Type
 			switch ($type) 
 			{
 				case 'Fertilization':
@@ -382,6 +382,7 @@ class TechnologyController extends Controller
 					break;
 			}
 		}
+		// Load collection blade if no other conditions met
 		return view('common/technology-septic-edit', ['treatment'=>$treatment, 'tech'=>$tech]);
 	}
 

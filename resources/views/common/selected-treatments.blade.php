@@ -1,10 +1,10 @@
 <div class="selected-treatments">
 				
-	<ul class="selected-treatments">
+	<ul id = 'stackList' class="selected-treatments">
 			@foreach($treatments as $treatment)
 				@if(!$treatment->Parent_TreatmentId)
-					<li class="technology" data-route="{{url('/edit', $treatment->TreatmentID)}}" data-treatment="{{$treatment->TreatmentID}}">
-						<a href="">
+					<li class="technology" data-route="/edit/{{$treatment->TreatmentID}}" data-treatment="{{$treatment->TreatmentID}}">
+						<a href="" title = "{{$treatment->TreatmentID}}">
 							<img src="http://www.watershedmvp.org/images/SVG/{{$treatment->treatment_icon}}" alt="">
 						</a>
 					</li>
@@ -27,5 +27,4 @@
 
 		$(this).append("<div class = 'fa fa-spinner fa-spin fa-inverse'></div>")
 	})
-
 </script> -->

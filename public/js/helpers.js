@@ -1,3 +1,4 @@
+// Replace modal contents with blade html from API route
 function loadTechView (route) {
     $('.modal-wrapper').show();
     $('#techView').load(route, function () {
@@ -6,6 +7,7 @@ function loadTechView (route) {
     })
 }
 
+// Hide and remove relevant modal components on-close
 function destroyModalContents () {
     $('#closeModal').hide();
     $('#techView').empty();
@@ -13,14 +15,24 @@ function destroyModalContents () {
     return 1;
 }
 
-function addToStack (treatment_id, icon, url) {
-    let newtreatment = '<li class="technology" data-route="' + url + '" data-treatment="' + treatment_id + '">' + '<a title="' + treatment_id +'">' + '<img src="http://www.watershedmvp.org/images/SVG/' + icon + '" alt=""></a></li>';
+// Create and append appropriate tech icons to the selected treatments stack post-apply
+function addToStack (treatment_id, icon) {
+    let newtreatment = '<li class="technology" data-route="/edit/' + treatment_id + '" data-treatment="' + treatment_id + '">' + '<a href="" title="' + treatment_id +'">' + '<img src="http://www.watershedmvp.org/images/SVG/' + icon + '" alt=""></a></li>';
     $('ul.selected-treatments').append(newtreatment);
-    $('ul.selected-treatments li[data-treatment="' + treatment_id + '"] a').popdown()
     return 1;
 }
 
-$('.technology').on('click', function (e) {
+// Event handler for loading the appropriate view on-click of a technology in the accordion blade
+$('div.technology').on('click', function (e) {
+    e.preventDefault();
+    let apiRoute = $(this).data('route')
+    if (apiRoute) {
+        loadTechView(apiRoute)
+    }
+})
+
+// Event handler for loading the appropriate view on-click of a technology in the selected treatments blade
+$('#stackList').on('click', 'li.technology', function (e) {
     e.preventDefault();
     let apiRoute = $(this).data('route')
     if (apiRoute) {
