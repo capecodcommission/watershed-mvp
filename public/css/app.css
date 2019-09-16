@@ -7748,6 +7748,11 @@ nav.toolbar .tool {
   float: left;
   text-align: center;
 }
+
+.technology:hover {
+  cursor: pointer;
+}
+
 .technology img {
   /*background: #2caae4;*/
   border-radius: 50%;

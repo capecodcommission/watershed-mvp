@@ -199,7 +199,7 @@ require([
             if (evt.geometry.type === 'point') {
 
                 // Create point graphic based on click coordinates
-                var icon = $('#select_area').data('icon')
+                var icon = $('#select_area').data('icon');
                 var imageURL = "http://www.watershedmvp.org/images/SVG/" + icon;
                 var pointSymbology = new PictureMarkerSymbol(imageURL,30,30)
                 var pointGeometry = new Point({
@@ -226,7 +226,9 @@ require([
                 .done(function(msg) {
                     $('.modal-wrapper').show();
                     $('#popdown-opacity').show();
-                    $('#select_area').hide();
+                    $('.modal-wrapper').show();
+                    $('#unit_metric_label').show();
+                    $('#unit_metric').show();
                 })
 
                 // Finish addGraphic function
