@@ -58,7 +58,7 @@
 				// set the newtreatment variable and add it to the treatment stack using the popdown generator
 				.done(function(treatment_id) {
 					$( "#update" ).trigger( "click" );
-					addToStack(treatment_id, '{{$tech->Icon}}')
+					addToStack(treatment_id, '{{$tech->Icon}}');
 				});
 			}
 		});

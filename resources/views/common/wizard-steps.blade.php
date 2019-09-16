@@ -87,7 +87,7 @@
 							 Stormwater Management
 						</a>
 					</div>
-					<div class="technology" data-route = "/tech/storm/8">
+					<div class="technology" data-route = "/tech/stormwater-non-management/8">
 						<a>
 							<img src="http://www.watershedmvp.org/images/SVG/StormwaterGravelWetland.svg"><br />
 							 Gravel Wetland

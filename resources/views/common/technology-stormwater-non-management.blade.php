@@ -22,8 +22,8 @@
 	$(document).ready(function() {
 
 		// Retrieve treatment id, icon from props
-		treatment = {{$treatment->TreatmentID}};
 		icon = '{{$tech->Icon}}';
+		tm_id = '{{$tech->id}}';
 		$('#select_area').data('icon', icon.toString());
 		
 		// On click of the 'Apply' button, wrap the logic in a fert/storm conditional, set the percent variable for
@@ -45,18 +45,14 @@
 				}
 
 				// Create and trigger API route url from parsed properties
-				var url = "{{url('/apply_storm')}}" + '/' +  treatment + '/' + percent + '/' + units + '/' + subemID;
+				var url = "{{url('/apply_storm')}}" + '/' +  0 + '/' + percent + '/' + units + '/' + subemID + '/' + tm_id;
 				$.ajax({
 					method: 'GET',
 					url: url
 				})
-				.done(function(msg) {
-					msg = Math.round(msg);
-					$('#n_removed').text(msg);
+				.done(function(treatment_id) {
 					$( "#update" ).trigger( "click" );
-					var newtreatment = '<li class="technology" data-treatment="{{$treatment->TreatmentID}}"><a href="{{url('/edit', $treatment->TreatmentID)}}" class="popdown"><img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" alt=""></a></li>';
-					$('ul.selected-treatments').append(newtreatment);
-					$('ul.selected-treatments li[data-treatment="{{$treatment->TreatmentID}}"] a').popdown();
+					addToStack(treatment_id, '{{$tech->Icon}}');
 				});
 		});
 
