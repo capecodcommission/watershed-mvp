@@ -83,7 +83,7 @@ class TechnologyController extends Controller
 		$tech = $this->getTech($id);
 
 		// Technologies to be bypassed during treatment creation
-		$treatBypassArray = ['25', '26'];
+		$treatBypassArray = ['25', '26', '8'];
 
 		// Create and query Treatment through ORM
 		if (!in_array($id, $treatBypassArray))
@@ -170,20 +170,42 @@ class TechnologyController extends Controller
 
 
 	// Apply non-management Stormwater technology
-	public function ApplyTreatment_Storm($treat_id, $rate, $units = null, $location = null)
+	public function ApplyTreatment_Storm($treat_id, $rate, $units = null, $location = null, $tm_id)
 	{
 		// Retrieve scenario id, removed nitrogen, and point XY coordinates from session
 		$scenarioid = session('scenarioid');
 		$n_removed = session('n_removed');
 		$x = session()->get('pointX');
 		$y = session()->get('pointY');
+		$tech = $this->getTech($tm_id);
+		$tm_IdArray = ['8'];
 
-		// Associate parcel with treatment aand scenario
-		$point = DB::select("exec dbo.UPDcreditSubembayment @x='$x', @y='$y', @treatment=$treat_id");
+		// If technology is being worked on, create treatment first
+		if (in_array($tm_id, $tm_IdArray))
+		{
+			// Create new treatment
+			$treatment = $this->createTreatment($scenarioid, $tech);
 
-		// Treat parcel using parameterized stored proc, update n_remove session variable
-		$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $point[0]->SUBEM_ID);
-		return $this->updateNitrogenRemoved();
+			// Associate parcel with treatment aand scenario
+			$point = DB::select("exec dbo.UPDcreditSubembayment @x='$x', @y='$y', @treatment=$treatment->TreatmentID");
+
+			// Treat parcel using parameterized stored proc, update n_remove session variable
+			$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treatment->TreatmentID . ', ' . $rate . ', ' . $units . ', ' . $point[0]->SUBEM_ID);
+			$this->updateNitrogenRemoved();
+			return $treatment->TreatmentID;
+		}
+		else
+		{
+			// Associate parcel with treatment aand scenario
+			$point = DB::select("exec dbo.UPDcreditSubembayment @x='$x', @y='$y', @treatment=$treat_id");
+
+			// Treat parcel using parameterized stored proc, update n_remove session variable
+			$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $point[0]->SUBEM_ID);
+
+			$this->updateNitrogenRemoved();
+
+			return $treat_id;
+		}
 	}
 
 	/**

@@ -39,3 +39,27 @@ $('#stackList').on('click', 'li.technology', function (e) {
         loadTechView(apiRoute)
     }
 })
+
+// Remove map graphic by associated treatment id
+// Graphics created mid-process, such as points or polygons, are given an id of 1 until applied
+function deleteGraphic (treatment_id = null) {
+    for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
+        if (map.graphics.graphics[i].attributes) {
+            if (map.graphics.graphics[i].attributes.treatment_id == treatment_id || map.graphics.graphics[i].attributes.treatment_id == 1) {
+                map.graphics.remove(map.graphics.graphics[i])
+            }
+        }
+    }
+}
+
+// Update associated treatment id of point or polygon geometry created mid-process
+// Updated post-apply
+function addTreatmentIdToGraphic (treatment_id) {
+    for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
+        if (map.graphics.graphics[i].attributes) {
+            if (map.graphics.graphics[i].attributes.treatment_id == 1) {
+                map.graphics.graphics[i].attributes.treatment_id = treatment_id;
+            }
+        }
+    }
+}

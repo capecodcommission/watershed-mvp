@@ -115,6 +115,7 @@
 		// Retrieve treatment id, icon from props
 		treatment = {{$treatment->TreatmentID}};
 		icon = '{{$tech->Icon}}';
+		tm_id = {{$tech->id}}
 		$('#select_area').data('icon', icon.toString())
 		 
 		// If technology is not fertilizer or stormwater management
@@ -137,7 +138,8 @@
 				f.preventDefault();
 
 				// Hide modal, activate point geometry on map's draw-toolbar
-				$('#popdown-opacity').hide();
+				$('.modal-wrapper').hide();
+				$('#popdown-opacity').hide()
 				tb.activate('point')
 			});
 
@@ -166,19 +168,16 @@
 				}
 
 				// Create and trigger API route url from parsed properties
-				var url = "{{url('/apply_storm')}}" + '/' +  treatment + '/' + percent + '/' + units + '/' + subemID;
+				var url = "{{url('/apply_storm')}}" + '/' +  treatment + '/' + percent + '/' + units + '/' + subemID + '/' + tm_id;
 				$.ajax({
 					method: 'GET',
 					url: url
 				})
-				.done(function(msg) {
-					msg = Math.round(msg);
-					$('#n_removed').text(msg);
-					$('#popdown-opacity').hide();
+				.done(function(treatment_id) {
 					$( "#update" ).trigger( "click" );
-					var newtreatment = '<li class="technology" data-treatment="{{$treatment->TreatmentID}}"><a href="{{url('/edit', $treatment->TreatmentID)}}" class="popdown"><img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" alt=""></a></li>';
-					$('ul.selected-treatments').append(newtreatment);
-					$('ul.selected-treatments li[data-treatment="{{$treatment->TreatmentID}}"] a').popdown();
+					$('#popdown-opacity').hide();
+					addTreatmentIdToGraphic(treatment_id)
+					addToStack(treatment_id, icon)
 				});
 			});
 		}

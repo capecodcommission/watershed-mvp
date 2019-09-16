@@ -11,13 +11,11 @@ use App\Treatment;
 
 class MapController extends Controller
 {
-	// Associate closest parcel to scenario using coordinates from map-click
-	// Return name of subemebayment where parcel was selected
-	public function point($x, $y, $treatment)
+	// Save map click geometry to session
+	public function point($x, $y)
 	{
 		session(['pointX' => $x]);
 		session(['pointY' => $y]);
-		// $point = DB::select("exec dbo.UPDcreditSubembayment @x='$x', @y='$y', @treatment=$treatment");
 		return 1;
 	}
 

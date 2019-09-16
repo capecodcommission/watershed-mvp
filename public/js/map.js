@@ -209,7 +209,7 @@ require([
                 })
                 var pointGraphic = new Graphic(pointGeometry, pointSymbology, {
                     keeper: true,
-                    'treatment_id': treatment
+                    'treatment_id': 1
                 })
 
                 // Add point graphic to the map, deactivate draw toolbar, enable map navigation
@@ -218,12 +218,13 @@ require([
                 map.enableMapNavigation();
                 
                 // Associate parcel to scenario using click coordinates
-                var url = "/map/point"+'/'+ evt.geometry.x+'/'+ evt.geometry.y + '/' + treatment;
+                var url = "/map/point"+'/'+ evt.geometry.x+'/'+ evt.geometry.y;
                 $.ajax({
                     method: 'GET',
                     url: url
                 })
                 .done(function(msg) {
+                    $('.modal-wrapper').show();
                     $('#popdown-opacity').show();
                     $('#select_area').hide();
                 })
