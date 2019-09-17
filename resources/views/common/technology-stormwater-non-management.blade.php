@@ -5,7 +5,7 @@
 			{{$tech->Technology_Strategy}}
 		</h4>
 		<a title="{{$tech->Technology_Strategy}} - Technology Matrix" class="blade_image" href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->TM_ID}}" target="_blank">
-			<img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}">
+			<img src="http://www.watershedmvp.org/images/SVG/{{$tech->icon}}">
 		</a>
 		<div class="blade_slider" title="Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.">
 			<button title="Select Location" class="blade_button" id="select_area">Select Location</button>
@@ -22,7 +22,7 @@
 	$(document).ready(function() {
 
 		// Retrieve treatment id, icon from props
-		icon = '{{$tech->Icon}}';
+		icon = '{{$tech->icon}}';
 		techId = '{{$tech->technology_id}}';
 		$('#select_area').data('icon', icon.toString());
 		
@@ -44,7 +44,7 @@
 				})
 				.done(function(treatment_id) {
 					$( "#update" ).trigger( "click" );
-					addToStack(treatment_id, '{{$tech->Icon}}');
+					addToStack(treatment_id, icon);
 				});
 		});
 

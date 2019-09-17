@@ -39,7 +39,7 @@ class TechnologyController extends Controller
 				'TreatmentType_Name'=>substr($tech->Technology_Strategy, 0, 50), 
 				'Treatment_UnitMetric'=>$tech->Unit_Metric, 
 				'Treatment_Class'=>$tech->Technology_Sys_Type, 
-				'treatment_icon'=>$tech->Icon
+				'treatment_icon'=>$tech->icon
 			]
 		);
 
@@ -56,7 +56,7 @@ class TechnologyController extends Controller
 				'Technology_Sys_Type',
 				'Technology_Strategy',
 				'TM_ID as id',
-				'Icon',
+				'icon',
 				'Nutri_Reduc_N_High_ppm',
 				'Nutri_Reduc_N_Low_ppm',
 				'Nutri_Reduc_N_Low',

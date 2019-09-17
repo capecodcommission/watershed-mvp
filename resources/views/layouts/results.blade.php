@@ -53,7 +53,7 @@
 							@if(!$result->Parent_TreatmentId)
 								<td>
 									<div class="technology">
-										<img src="http://www.watershedmvp.org/images/SVG/{{$result->technology->Icon}}" alt="">
+										<img src="http://www.watershedmvp.org/images/SVG/{{$result->technology->icon}}" alt="">
 									</div>
 								</td>
 								<td>{{$result->technology->Technology_Strategy}} ({{$result->TreatmentID}})</td>

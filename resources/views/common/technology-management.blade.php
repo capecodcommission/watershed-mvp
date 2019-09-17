@@ -5,7 +5,7 @@
 			{{$tech->Technology_Strategy}}
 		</h4>
 		<a title="{{$tech->Technology_Strategy}} - Technology Matrix" class="blade_image" href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->TM_ID}}" target="_blank">
-			<img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}">
+			<img src="http://www.watershedmvp.org/images/SVG/{{$tech->icon}}">
 		</a>
 		<div class="blade_slider" title="Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.">
 			<label>Nutrient Reduction Rate</label>
@@ -47,7 +47,7 @@
 				// set the newtreatment variable and add it to the treatment stack using the popdown generator
 				.done(function(treatment_id) {
 					$( "#update" ).trigger( "click" );
-					addToStack(treatment_id, '{{$tech->Icon}}')
+					addToStack(treatment_id, '{{$tech->icon}}')
 				});
 			}
 
@@ -62,7 +62,7 @@
 				// set the newtreatment variable and add it to the treatment stack using the popdown generator
 				.done(function(treatment_id) {
 					$( "#update" ).trigger( "click" );
-					addToStack(treatment_id, '{{$tech->Icon}}');
+					addToStack(treatment_id, '{{$tech->icon}}');
 				});
 			}
 		});
