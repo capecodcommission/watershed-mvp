@@ -23,7 +23,7 @@
 
 		// Retrieve treatment id, icon from props
 		icon = '{{$tech->Icon}}';
-		techId = '{{$tech->Technology_ID}}';
+		techId = '{{$tech->technology_id}}';
 		$('#select_area').data('icon', icon.toString());
 		
 		// On click of the 'Apply' button, wrap the logic in a fert/storm conditional, set the percent variable for

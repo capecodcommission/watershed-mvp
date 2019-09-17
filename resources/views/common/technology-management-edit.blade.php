@@ -9,17 +9,17 @@
         </a>
         <div class="blade_slider" title="Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.">
             <label>Nutrient Reduction Rate</label>
-            <label v-if="{{$tech->Technology_ID == 400}}">@{{fert_percent}}%</label>
-            <label v-else="{{$tech->Technology_ID == 401}}">@{{storm_percent}}%</label>
+            <label v-if="{{$tech->technology_id == 400}}">@{{fert_percent}}%</label>
+            <label v-else="{{$tech->technology_id == 401}}">@{{storm_percent}}%</label>
             <input type="range" id="fert-percent"
-            v-if="{{$tech->Technology_ID == 400}}" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="fert_percent" value="{{$treatment->Treatment_Value}}" step="1">
+            v-if="{{$tech->technology_id == 400}}" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="fert_percent" value="{{$treatment->Treatment_Value}}" step="1">
             <input type="range" id="storm-percent"
-            v-else="{{$tech->Technology_ID == 401}}" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="storm_percent" value="{{$treatment->Treatment_Value}}" step="1">
+            v-else="{{$tech->technology_id == 401}}" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="storm_percent" value="{{$treatment->Treatment_Value}}" step="1">
         </div>
-        <button title="Delete Treatment" data-treatment="{{$treatment->TreatmentID}}" class="blade_button" v-if="{{$tech->Technology_ID == 400}}" v-show="fert_percent == {{$treatment->Treatment_Value}}" id="deletetreatment">Delete</button>
-        <button title="Delete Treatment" data-treatment="{{$treatment->TreatmentID}}" class="blade_button" v-else="{{$tech->Technology_ID == 401}}"v-show="storm_percent == {{$treatment->Treatment_Value}}" id="deletetreatment">Delete</button>
-        <button title="Update Treatment" data-treatment="{{$treatment->TreatmentID}}" class="blade_button" v-if="{{$tech->Technology_ID == 400}}" v-show="fert_percent != {{$treatment->Treatment_Value}}" id="updatetreatment">Update</button>
-        <button title="Update Treatment" data-treatment="{{$treatment->TreatmentID}}" class="blade_button" v-else="{{$tech->Technology_ID == 401}}" v-show="storm_percent != {{$treatment->Treatment_Value}}" id="updatetreatment">Update</button>
+        <button title="Delete Treatment" data-treatment="{{$treatment->TreatmentID}}" class="blade_button" v-if="{{$tech->technology_id == 400}}" v-show="fert_percent == {{$treatment->Treatment_Value}}" id="deletetreatment">Delete</button>
+        <button title="Delete Treatment" data-treatment="{{$treatment->TreatmentID}}" class="blade_button" v-else="{{$tech->technology_id == 401}}"v-show="storm_percent == {{$treatment->Treatment_Value}}" id="deletetreatment">Delete</button>
+        <button title="Update Treatment" data-treatment="{{$treatment->TreatmentID}}" class="blade_button" v-if="{{$tech->technology_id == 400}}" v-show="fert_percent != {{$treatment->Treatment_Value}}" id="updatetreatment">Update</button>
+        <button title="Update Treatment" data-treatment="{{$treatment->TreatmentID}}" class="blade_button" v-else="{{$tech->technology_id == 401}}" v-show="storm_percent != {{$treatment->Treatment_Value}}" id="updatetreatment">Update</button>
     </div>
 <!-- Import the vue data and computed properties -->
 <script src="{{url('/js/main.js')}}"></script>
@@ -32,7 +32,7 @@
         $('#updatetreatment').on('click', function(e) {
             e.preventDefault();
             let percent = $('#fert-percent').val();
-            if ("{{$tech->Technology_ID == 400}}") {
+            if ("{{$tech->technology_id == 400}}") {
                 let url = "{{url('/update/fert', $treatment->TreatmentID)}}" + '/' + percent;
                 $.ajax({
                     method: 'GET',
@@ -67,7 +67,7 @@
         // update subemebayments progress and embayment progress
         $('#deletetreatment').on('click', function(e) {
             let treat = $(this).data('treatment');
-            if ("{{$tech->Technology_ID == 400}}") {
+            if ("{{$tech->technology_id == 400}}") {
                 let url = "{{url('delete_treatment')}}" + '/' + treat + '/' + 'fert';
                 $.ajax({
                     method: 'GET',

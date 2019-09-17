@@ -56,7 +56,7 @@ class Treatment extends Model
 
     public function technology()
     {
-    	return $this->hasOne('App\Technology', 'Technology_ID', 'TreatmentType_ID');
+    	return $this->hasOne('App\Technology', 'technology_id', 'TreatmentType_ID');
 		}
  
 }

@@ -35,7 +35,7 @@ class TechnologyController extends Controller
 		$treatment = Treatment::create(
 			[
 				'ScenarioID' => $scenarioid, 
-				'TreatmentType_ID'=>$tech->Technology_ID, 
+				'TreatmentType_ID'=>$tech->technology_id, 
 				'TreatmentType_Name'=>substr($tech->Technology_Strategy, 0, 50), 
 				'Treatment_UnitMetric'=>$tech->Unit_Metric, 
 				'Treatment_Class'=>$tech->Technology_Sys_Type, 
@@ -51,7 +51,7 @@ class TechnologyController extends Controller
 	{
 		$tech = DB::table('dbo.v_Technology_Matrix')
 			->select(
-				'Technology_ID',
+				'technology_id',
 				'Unit_Metric',
 				'Technology_Sys_Type',
 				'Technology_Strategy',
@@ -139,7 +139,7 @@ class TechnologyController extends Controller
 		session([$type . '_applied' => 1]);
 
 		// Create treatment based on selected Technology ID
-		$tech = $this->getTech($techid);
+		$tech = Technology::find($techId);
 		$treatment = $this->createTreatment($scenarioid, $tech);
 
 		// Retrieve / associate all parcels within embayment with user's scenario 
@@ -353,14 +353,14 @@ class TechnologyController extends Controller
 		$toiletsIdArray = [21, 22, 23, 24];
 
 		// Load new management edit blade if associated TM_ID matches the management id array
-		if ( in_array($tech->Technology_ID, $managementTechIdArray) )	
+		if ( in_array($tech->technology_id, $managementTechIdArray) )	
 		{
 			return view('common/technology-management-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 			break;
 		}	
 
 		// Load septic edit blade if associated Technology_ID matches the septic id array
-		if ( in_array($tech->Technology_ID, $toiletsIdArray) ) 
+		if ( in_array($tech->technology_id, $toiletsIdArray) ) 
 		{
 			return view('common/technology-septic-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 			break;
