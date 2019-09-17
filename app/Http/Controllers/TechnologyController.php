@@ -54,16 +54,13 @@ class TechnologyController extends Controller
 				'Technology_ID',
 				'Unit_Metric',
 				'Technology_Sys_Type',
-				'Show_In_wMVP',
 				'Technology_Strategy',
-				'id',
+				'TM_ID as id',
 				'Icon',
 				'Nutri_Reduc_N_High_ppm',
 				'Nutri_Reduc_N_Low_ppm',
 				'Nutri_Reduc_N_Low',
-				'Nutri_Reduc_N_High',
-				'Absolu_Reduc_perMetric_Low',
-				'Absolu_Reduc_perMetric_High'
+				'Nutri_Reduc_N_High'
 			)
 			->where('TM_ID', $id)
 			->first();
@@ -78,21 +75,20 @@ class TechnologyController extends Controller
 
 		// Retrieve Scenario ID from Laravel session
 		$scenarioid = session('scenarioid');
-		
-		// Retrieve technology data from tech_matrix based on passed TM_ID
-		$tech = $this->getTech($id);
 
 		// Technologies to be bypassed during treatment creation
-		$treatBypassArray = ['25', '26', '8'];
+		$treatBypassArray = ['400', '401', '108'];
 
 		// Create and query Treatment through ORM
 		if (!in_array($id, $treatBypassArray))
 		{
+			$tech = getTech($id);
 			$treatment = $this->createTreatment($scenarioid, $tech);
 		}
 		else 
 		{
 			// Mock Treatment object for bypassed technologies
+			$tech = Technology::find($id);
 			$treatment = new \stdClass();
    			$treatment->TreatmentID = 0;
 		}
@@ -128,7 +124,7 @@ class TechnologyController extends Controller
 
 
 	// Apply Fertilizer and Stormwater management technologies based on type
-	public function ApplyTreatment_Percent($rate, $type)
+	public function ApplyTreatment_Percent($rate, $type, $techId)
 	{
 		// Retrieve scenario id and removed nitrogen global variables, passed rate from user input percent slider on popdown
 		$scenarioid = session('scenarioid');
@@ -138,22 +134,9 @@ class TechnologyController extends Controller
 		// Retrieve Scenario data from SQL, parse embayment id
 		$scenario = Scenario::find($scenarioid);
 		$embay_id = $scenario->AreaID;
-		$techid = 0;
 
 		// Set applied session variable to disable icon clickability
 		session([$type . '_applied' => 1]);
-
-		// Set Technology ID based on type
-		switch($type)
-		{
-			case 'fert':
-				$techid = 25;
-				break;
-
-			case 'storm':
-				$techid = 26;
-				break;
-		}
 
 		// Create treatment based on selected Technology ID
 		$tech = $this->getTech($techid);
@@ -173,18 +156,18 @@ class TechnologyController extends Controller
 
 
 	// Apply non-management Stormwater technology
-	public function ApplyTreatment_Storm($treat_id, $rate, $units = null, $location = null, $tm_id)
+	public function ApplyTreatment_Storm($treat_id, $rate, $units = null, $location = null, $techId)
 	{
 		// Retrieve scenario id, removed nitrogen, and point XY coordinates from session
 		$scenarioid = session('scenarioid');
 		$n_removed = session('n_removed');
 		$x = session()->get('pointX');
 		$y = session()->get('pointY');
-		$tech = $this->getTech($tm_id);
-		$tm_IdArray = ['8'];
+		$tech = Technology::find($techId);
+		$techIdArray = ['108'];
 
 		// If technology is being worked on, create treatment first
-		if (in_array($tm_id, $tm_IdArray))
+		if (in_array($techId, $techIdArray))
 		{
 			// Create new treatment
 			$treatment = $this->createTreatment($scenarioid, $tech);
@@ -366,18 +349,18 @@ class TechnologyController extends Controller
 		$type = $tech->Technology_Sys_Type;
 		
 		// Create ID route filters for management and septic technologies
-		$management_TM_IDs = ['25','26'];
-		$toilets = [21, 22, 23, 24];
+		$managementTechIdArray = ['400','401'];
+		$toiletsIdArray = [21, 22, 23, 24];
 
 		// Load new management edit blade if associated TM_ID matches the management id array
-		if ( in_array($tech->TM_ID, $management_TM_IDs) )	
+		if ( in_array($tech->Technology_ID, $managementTechIdArray) )	
 		{
 			return view('common/technology-management-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 			break;
 		}	
 
 		// Load septic edit blade if associated Technology_ID matches the septic id array
-		if ( in_array($treatment->TreatmentType_ID, $toilets) ) 
+		if ( in_array($tech->Technology_ID, $toiletsIdArray) ) 
 		{
 			return view('common/technology-septic-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 			break;
@@ -387,7 +370,7 @@ class TechnologyController extends Controller
 			// Switch and load edit blade based on Technology System Type
 			switch ($type) 
 			{
-				case 'Fertilization':
+				case 'Management':
 					return view('common/technology-management-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 					break;
 				case 'Stormwater':

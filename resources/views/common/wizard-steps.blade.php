@@ -53,7 +53,7 @@
 			</p>
 			<hr>
 			<!-- <div  v-on:click="updateClickedValue($event)" v-class="active: isActive" id = 'fertMan' class="technology"> -->
-			<div id = 'fertMan' class="technology" data-route = "/tech/management/25">
+			<div id = 'fertMan' class="technology" data-route = "/tech/management/400">
 				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/FertilizerManagement.svg">
 				</a>
@@ -81,39 +81,39 @@
 				<hr>
 
 				<div class="technology_list">
-					<div id = "stormMan" class="technology" data-route = "/tech/management/26">
+					<div id = "stormMan" class="technology" data-route = "/tech/management/401">
 						<a>
 							<img src="http://www.watershedmvp.org/images/SVG/StormwaterManagement.svg"><br />
 							 Stormwater Management
 						</a>
 					</div>
-					<div class="technology" data-route = "/tech/stormwater-non-management/8">
+					<div class="technology" data-route = "/tech/stormwater-non-management/108">
 						<a>
 							<img src="http://www.watershedmvp.org/images/SVG/StormwaterGravelWetland.svg"><br />
 							 Gravel Wetland
 						</a>
 					</div>
 					<div class="technology">
-						<a href="{{url('/tech/storm/9')}}"  class="popdown">
+						<a href="{{url('/tech/storm/109')}}"  class="popdown">
 							<img src="http://www.watershedmvp.org/images/SVG/StormwaterBioretentionSoilMediaFilters.svg"><br />
 							 Bioretention/Soil Media Filters
 						</a>
 					</div>
 
 					<div class="technology">
-						<a href="{{url('/tech/storm/6')}}"  class="popdown">
+						<a href="{{url('/tech/storm/106')}}"  class="popdown">
 							<img src="http://www.watershedmvp.org/images/SVG/StormwaterBMPs.svg"><br />
 							Phytobuffers
 						</a>
 					</div>
 					<div class="technology">
-						<a href="{{url('/tech/storm/7')}}"  class="popdown">
+						<a href="{{url('/tech/storm/107')}}"  class="popdown">
 							<img src="http://www.watershedmvp.org/images/SVG/StormwaterBMPs.svg"><br />
 							Vegetated Swale
 						</a>
 					</div>
 					<div class="technology">
-						<a href="{{url('/tech/storm/10')}}"  class="popdown">
+						<a href="{{url('/tech/storm/110')}}"  class="popdown">
 							<img src="http://www.watershedmvp.org/images/SVG/StormwaterBMPs.svg"><br />
 							Constructed Wetlands
 						</a>

@@ -4,7 +4,7 @@
 		<h4 class="blade_title" title="{{$tech->Technology_Strategy}}">
 			{{$tech->Technology_Strategy}}
 		</h4>
-		<a title="{{$tech->Technology_Strategy}} - Technology Matrix" class="blade_image" href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
+		<a title="{{$tech->Technology_Strategy}} - Technology Matrix" class="blade_image" href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->TM_ID}}" target="_blank">
 			<img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}">
 		</a>
 		<div class="blade_slider" title="Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.">
@@ -23,7 +23,7 @@
 
 		// Retrieve treatment id, icon from props
 		icon = '{{$tech->Icon}}';
-		tm_id = '{{$tech->id}}';
+		techId = '{{$tech->Technology_ID}}';
 		$('#select_area').data('icon', icon.toString());
 		
 		// On click of the 'Apply' button, wrap the logic in a fert/storm conditional, set the percent variable for
@@ -32,20 +32,12 @@
 		$('#applytreatment').on('click', function(e) {
 			e.preventDefault();
 				var percent = 0;
-				var units = 1;
-				var subemID =  $('.select > span').data('subemid')
-				if ('{{$tech->Show_In_wMVP}}' == '1' || '{{$tech->Show_In_wMVP}}' == '3' ) {
-					units = $('#unit_metric').val();
-				}
-				else if ('{{$tech->Unit_Metric}}' == 'Each') {
-					units = 1;
-				}
-				else {
-					units = 0;
-				}
+				var units = $('#unit_metric').val();
+				var subemID =  $('.select > span').data('subemid');
+				
 
 				// Create and trigger API route url from parsed properties
-				var url = "{{url('/apply_storm')}}" + '/' +  0 + '/' + percent + '/' + units + '/' + subemID + '/' + tm_id;
+				var url = "{{url('/apply_storm')}}" + '/' +  0 + '/' + percent + '/' + units + '/' + subemID + '/' + techId;
 				$.ajax({
 					method: 'GET',
 					url: url
