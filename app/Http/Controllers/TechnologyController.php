@@ -77,12 +77,12 @@ class TechnologyController extends Controller
 		$scenarioid = session('scenarioid');
 
 		// Technologies to be bypassed during treatment creation
-		$treatBypassArray = ['400', '401', '108'];
+		$treatBypassArray = ['400', '401', '106', '107', '108', '109', '110', '300', '301', '302', '303', '601', '602'];
 
 		// Create and query Treatment through ORM
 		if (!in_array($id, $treatBypassArray))
 		{
-			$tech = getTech($id);
+			$tech = $this->getTech($id);
 			$treatment = $this->createTreatment($scenarioid, $tech);
 		}
 		else 
@@ -100,9 +100,6 @@ class TechnologyController extends Controller
 				break;
 			case 'stormwater-non-management':
 				return view('common/technology-stormwater-non-management', ['tech'=>$tech, 'type'=>$type]);
-				break;
-			case 'storm':
-				return view('common/technology-stormwater', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 				break;
 			case 'collect':
 				return view('common/technology-collection', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
@@ -156,7 +153,7 @@ class TechnologyController extends Controller
 
 
 	// Apply non-management Stormwater technology
-	public function ApplyTreatment_Storm($treat_id, $rate, $units = null, $location = null, $techId)
+	public function ApplyTreatment_Storm($rate, $units = null, $techId)
 	{
 		// Retrieve scenario id, removed nitrogen, and point XY coordinates from session
 		$scenarioid = session('scenarioid');
@@ -164,34 +161,18 @@ class TechnologyController extends Controller
 		$x = session()->get('pointX');
 		$y = session()->get('pointY');
 		$tech = Technology::find($techId);
-		$techIdArray = ['108'];
 
-		// If technology is being worked on, create treatment first
-		if (in_array($techId, $techIdArray))
-		{
-			// Create new treatment
-			$treatment = $this->createTreatment($scenarioid, $tech);
+		// Create new treatment
+		$treatment = $this->createTreatment($scenarioid, $tech);
 
-			// Associate parcel with treatment aand scenario
-			$point = DB::select("exec dbo.UPDcreditSubembayment @x='$x', @y='$y', @treatment=$treatment->TreatmentID");
+		// Associate parcel with treatment aand scenario
+		$point = DB::select("exec dbo.UPDcreditSubembayment @x='$x', @y='$y', @treatment=$treatment->TreatmentID");
 
-			// Treat parcel using parameterized stored proc, update n_remove session variable
-			$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treatment->TreatmentID . ', ' . $rate . ', ' . $units . ', ' . $point[0]->SUBEM_ID);
-			$this->updateNitrogenRemoved();
-			return $treatment->TreatmentID;
-		}
-		else
-		{
-			// Associate parcel with treatment aand scenario
-			$point = DB::select("exec dbo.UPDcreditSubembayment @x='$x', @y='$y', @treatment=$treat_id");
+		// Treat parcel using parameterized stored proc
+		$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treatment->TreatmentID . ', ' . $rate . ', ' . $units);
+		$this->updateNitrogenRemoved();
 
-			// Treat parcel using parameterized stored proc, update n_remove session variable
-			$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $point[0]->SUBEM_ID);
-
-			$this->updateNitrogenRemoved();
-
-			return $treat_id;
-		}
+		return $treatment->TreatmentID;
 	}
 
 	/**
@@ -235,10 +216,23 @@ class TechnologyController extends Controller
 
 	// Apply Septic technology passing the treatment id and selected reduction rate
 	// Update nitrogen load post-treatment
-	public function ApplyTreatment_Septic($treat_id, $rate)
+	public function ApplyTreatment_Septic($rate, $techId)
 	{
-		$updated = DB::select('exec dbo.CALCapplyTreatmentSeptic ' . $treat_id . ', ' . $rate );
-		return $this->updateNitrogenRemoved();
+		// Retrieve Scenario and technology, create treatment
+		$scenarioid = session()->get('scenarioid');
+		$scenario = Scenario::find($scenarioid);
+		$tech = Technology::find($techId);
+		$treatment = $this->createTreatment($scenarioid, $tech);
+		$embay_id = $scenario->AreaID;
+		$polyString = session()->get('polyString');
+
+		// Retrieve / associate all parcels within custom polygon with user's scenario 
+		// Apply treatment to parcels with associated polygon
+		$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment->TreatmentID . ', \'' . $polyString . '\'');
+		$updated = DB::select('exec dbo.CALCapplyTreatmentSeptic ' . $treatment->TreatmentID . ', ' . $rate );
+		$this->updateNitrogenRemoved();
+
+		return $treatment->TreatmentID;
 	}
 
 	/**
@@ -350,7 +344,7 @@ class TechnologyController extends Controller
 		
 		// Create ID route filters for management and septic technologies
 		$managementTechIdArray = ['400','401'];
-		$toiletsIdArray = [21, 22, 23, 24];
+		$toiletsIdArray = ['300', '301', '302', '303'];
 
 		// Load new management edit blade if associated TM_ID matches the management id array
 		if ( in_array($tech->technology_id, $managementTechIdArray) )	
@@ -412,7 +406,7 @@ class TechnologyController extends Controller
 				break;
 			// Stormwater non-management
 			case 'storm':
-				$updated = DB::select('exec dbo.CALCupdateTreatmentStorm ' . $treat_id . ', ' . $rate . ', ' . $units );
+				$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treat_id . ', ' . $rate . ', ' . $units );
 				return $this->updateNitrogenRemoved();
 				break;
 			// Septic (first row)

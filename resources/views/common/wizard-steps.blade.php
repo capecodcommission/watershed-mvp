@@ -93,27 +93,27 @@
 							 Gravel Wetland
 						</a>
 					</div>
-					<div class="technology">
-						<a href="{{url('/tech/storm/109')}}"  class="popdown">
+					<div data-route = "/tech/stormwater-non-management/109" class="technology">
+						<a>
 							<img src="http://www.watershedmvp.org/images/SVG/StormwaterBioretentionSoilMediaFilters.svg"><br />
 							 Bioretention/Soil Media Filters
 						</a>
 					</div>
 
-					<div class="technology">
-						<a href="{{url('/tech/storm/106')}}"  class="popdown">
+					<div data-route = "/tech/stormwater-non-management/106" class="technology">
+						<a>
 							<img src="http://www.watershedmvp.org/images/SVG/StormwaterBMPs.svg"><br />
 							Phytobuffers
 						</a>
 					</div>
-					<div class="technology">
-						<a href="{{url('/tech/storm/107')}}"  class="popdown">
+					<div data-route = "/tech/stormwater-non-management/107" class="technology">
+						<a>
 							<img src="http://www.watershedmvp.org/images/SVG/StormwaterBMPs.svg"><br />
 							Vegetated Swale
 						</a>
 					</div>
-					<div class="technology">
-						<a href="{{url('/tech/storm/110')}}"  class="popdown">
+					<div data-route = "/tech/stormwater-non-management/110" class="technology">
+						<a>
 							<img src="http://www.watershedmvp.org/images/SVG/StormwaterBMPs.svg"><br />
 							Constructed Wetlands
 						</a>
@@ -172,34 +172,34 @@
 					<img src="http://www.watershedmvp.org/images/SVG/SatelliteTreatmentEnhanced.svg" alt="" ><br />
 					Satellite Treatment - Enahnced</a>
 			</div>
-			<div class="technology">
-				<a href="{{url('/tech/septic/21')}}" class="popdown">
+			<div class="technology" data-route = "/tech/septic/21">
+				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/CompostingToilet.svg" alt="" ><br />
 					Composting Toilets</a>
 			</div>
-			<div class="technology">
-				<a href="{{url('/tech/septic/22')}}" class="popdown">
+			<div class="technology" data-route = "/tech/septic/22">
+				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/IncineratingToilet.svg" alt="" ><br />
 					Incinerating Toilets</a>
 			</div>
 
-			<div class="technology">
-				<a href="{{url('/tech/septic/23')}}" class="popdown">
+			<div class="technology" data-route = "/tech/septic/23">
+				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/PackagingToilet.svg" alt="" ><br />
 					Packaging Toilets</a>
 			</div>
-			<div class="technology">
-				<a href="{{url('/tech/septic/24')}}" class="popdown">
+			<div class="technology" data-route = "/tech/septic/24">
+				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/UrineDivertingToilet.svg" alt="" ><br />
 					Urine Diverting Toilets</a>
 			</div>
-			<div class="technology">
-				<a href="{{url('/tech/septic/38')}}" class="popdown">
+			<div class="technology" data-route = "/tech/septic/38">
+				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/IA.svg" alt="" ><br />
 					I/A Systems</a>
 			</div>
-			<div class="technology">
-				<a href="{{url('/tech/septic/39')}}" class="popdown">
+			<div class="technology" data-route = "/tech/septic/39">
+				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/EnhancedIA.svg" alt="" ><br />
 					Enhanced I/A Systems</a>
 			</div>

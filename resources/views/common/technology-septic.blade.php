@@ -13,11 +13,11 @@
 	<section class="body">
 		<div class="technology">
 			<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
-				<img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" width="75">
+				<img src="http://www.cch2o.org/Matrix/icons/{{$tech->icon}}" width="75">
 				<br />{{$tech->Technology_Strategy}}&nbsp;<i class="fa fa-question-circle"></i>
 			</a>			
 		</div>
-		<p class="select"><button id="select_polygon_{{$treatment->TreatmentID}}">Draw a polygon</button> <span>@{{subembayment}}</span></p>
+		<p class="select"><button id="select_polygon">Draw a polygon</button> <span>@{{subembayment}}</span></p>
 		@if($tech->Nutri_Reduc_N_High_ppm > $tech->Nutri_Reduc_N_Low_ppm)
 			<p>
 				Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low_ppm}} and {{$tech->Nutri_Reduc_N_High_ppm}} ppm.<br />
@@ -29,18 +29,12 @@
 		@endif
 
 		<p>
-			<button id="apply_treatment_{{$treatment->TreatmentID}}">Apply</button>
-			<button id="cancel_treatment_{{$treatment->TreatmentID}}" class='button--cta right'><i class="fa fa-ban"></i> Cancel</button>
+			<button id="apply_treatment">Apply</button>
+			<button id="cancel_treatment" class='button--cta right'><i class="fa fa-ban"></i> Cancel</button>
 		</p>
 		<!-- TODO: Add warning that sewered parcels will not be affected -->
 	</section>
 </div>
-
-<template id="treatment-template">
-	<div class="treatment" id="@{{TreatmentID}}">
-		<p>Total Unattenuated Nitrogen: <span id="total_nitrogen_polygon">@{{Total_Orig_Nitrogen}}</span>; Nitrogen Removed by Treatment: <span id="Nitrogen_Removed">@{{Nitrogen_Removed}}</span></p>
-	</div>
-</template>
 
 
 
@@ -51,88 +45,32 @@
 <script>
 	$(document).ready(function(){
 
-		$('div.fa.fa-spinner.fa-spin').remove()
-		treatment = {{$treatment->TreatmentID}};
-		typeid = {{$treatment->TreatmentType_ID}};
-		func = 'septic';
+		// Append technology id to div to be parsed for polygon creation
+		// Obtain icon filename and technology id from props
+		$('#select_polygon').data('techId','{{$tech->technology_id}}')
+		icon = '{{$tech->icon}}'
+		techId = '{{$tech->technology_id}}'
 
-		$('#select_polygon_'+treatment).on('click', function(f){
+		$('#select_polygon').on('click', function(f){
 			f.preventDefault();
-			$('#popdown-opacity').hide();
 			map.disableMapNavigation();
+			$('#popdown-opacity').hide()
+			$('.modal-wrapper').hide()
 			tb.activate('polygon');
-			// console.log(tb);
-			$('#select_polygon_'+treatment).hide();
-			// $('#select_destination_'+treatment).show();
-			
 		});
 
-		$('#closeWindow').on('click', function (e) {
-
-			$('#popdown-opacity').hide();
-
-			var url = "{{url('cancel', $treatment->TreatmentID)}}";
-
-			$.ajax({
-				method: 'GET',
-				url: url
-			})
-			.done(function(msg){
-				
-				for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
-                
-	                if (map.graphics.graphics[i].attributes) {
-
-	                    if (map.graphics.graphics[i].attributes.treatment_id == treatment) {
-
-	                    	map.graphics.remove(map.graphics.graphics[i])
-	                    }
-	                }
-           		}
-           	})
-		})
-
-		$('#apply_treatment_'+treatment).on('click', function(e){
+		$('#apply_treatment').on('click', function(e){
 			e.preventDefault();
 			var rate = $('#septic-rate').val();
-			var url = "{{url('/apply_septic')}}" + '/' +  treatment + '/' + rate;
-			// console.log(url);
+			var url = "{{url('/apply_septic')}}" + '/' + rate + '/' + techId;
 			$.ajax({
 				method: 'GET',
 				url: url
 			})
-			.done(function(msg){
-				// console.log(msg);
-				msg = Math.round(msg);
-				$('#n_removed').text(msg);
-				$('#popdown-opacity').hide();
+			.done(function(treatment_id){
 				$( "#update" ).trigger( "click" );
-				var newtreatment = '<li class="technology" data-treatment="{{$treatment->TreatmentID}}"><a href="{{url('/edit', $treatment->TreatmentID)}}" class="popdown"><img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" alt=""></a></li>';
-				$('ul.selected-treatments').append(newtreatment);
-				$('ul.selected-treatments li[data-treatment="{{$treatment->TreatmentID}}"] a').popdown();	
-			});
-		});
-
-
-		$('#cancel_treatment_'+treatment).on('click', function(e){
-			var url = "{{url('cancel', $treatment->TreatmentID)}}";
-			$.ajax({
-				method: 'GET',
-				url: url
-			})
-			.done(function(msg){
-				$('#popdown-opacity').hide();
-
-				for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
-				
-					if (map.graphics.graphics[i].attributes) {
-
-						if (map.graphics.graphics[i].attributes.treatment_id == treatment) {
-
-							map.graphics.remove(map.graphics.graphics[i])
-						}
-					}
-				}
+				addTreatmentIdToGraphic(treatment_id);
+				addToStack(treatment_id, icon);
 			});
 		});
 	});

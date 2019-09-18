@@ -5,8 +5,6 @@ var embay_shape;
 var treatment;
 var func;
 var edit_active;
-// var destination_active;
-var treatment_polygons = new Array();
 require([
 		"esri/map",
 		"esri/dijit/BasemapGallery",
@@ -186,7 +184,209 @@ require([
 		    });
 		}
 
+        // Create and color polygon using passed rgba array
+function createPolySymbol(colorArray) {
+    var polySymbol = new esri.symbol.SimpleFillSymbol(
+      SimpleFillSymbol.STYLE_SOLID,
+      new SimpleLineSymbol(
+        SimpleLineSymbol.STYLE_SOLID,
+        new Color(colorArray),
+        4
+      ),
+      new Color([0, 0, 0, 0.0])
+    );
 
+    return polySymbol;
+  }
+
+  // Create colored-polygon using the technology_id
+  function selectPoly(techId) {
+    let polySymbol = {};
+
+    switch (techId) {
+      case "101":
+        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+        break;
+
+      case "102":
+        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+        break;
+
+      case "103":
+        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+        break;
+
+      case "104":
+        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+        break;
+
+      case "105":
+        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+        break;
+
+      case "106":
+        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+        break;
+
+      case "107":
+        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+        break;
+
+      case "108":
+        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+        break;
+
+      case "109":
+        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+        break;
+
+      case "110":
+        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+        break;
+
+      case "201":
+        polySymbol = createPolySymbol([143, 199, 77, 1.0]);
+        break;
+
+      case "202":
+        polySymbol = createPolySymbol([143, 199, 77, 1.0]);
+        break;
+
+      case "203":
+        polySymbol = createPolySymbol([143, 199, 77, 1.0]);
+        break;
+
+      case "204":
+        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+        break;
+
+      case "205":
+        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+        break;
+
+      case "206":
+        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+        break;
+
+      case "207":
+        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+        break;
+
+      case "208":
+        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+        break;
+
+      case "209":
+        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+        break;
+
+      case "210":
+        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+        break;
+
+      case "300":
+        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+        break;
+
+      case "301":
+        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+        break;
+
+      case "302":
+        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+        break;
+
+      case "303":
+        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+        break;
+
+      case "400":
+        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+        break;
+
+      case "401":
+        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+        break;
+
+      case "402":
+        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+        break;
+
+      case "403":
+        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+        break;
+
+      case "404":
+        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+        break;
+
+      case "500":
+        polySymbol = createPolySymbol([143, 199, 77, 1.0]);
+        break;
+
+      case "501":
+        polySymbol = createPolySymbol([143, 199, 77, 1.0]);
+        break;
+
+      case "502":
+        polySymbol = createPolySymbol([143, 199, 77, 1.0]);
+        break;
+
+      case "503":
+        polySymbol = createPolySymbol([143, 199, 77, 1.0]);
+        break;
+
+      case "504":
+        polySymbol = createPolySymbol([143, 199, 77, 1.0]);
+        break;
+
+      case "505":
+        polySymbol = createPolySymbol([143, 199, 77, 1.0]);
+        break;
+
+      case "506":
+        polySymbol = createPolySymbol([143, 199, 77, 1.0]);
+        break;
+
+      case "600":
+        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+        break;
+
+      case "601":
+        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+        break;
+
+      case "602":
+        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+        break;
+
+      case "603":
+        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+        break;
+
+      case "604":
+        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+        break;
+
+      case "605":
+        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+        break;
+
+      case "606":
+        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+        break;
+
+      case "607":
+        polySymbol = createPolySymbol([143, 199, 77, 1.0]);
+        break;
+
+      case "608":
+        polySymbol = createPolySymbol([143, 199, 77, 1.0]);
+        break;
+    }
+
+    return polySymbol;
+  }
 
 		/***********************************
 			Need to have an array of custom polygons so we can access them later
@@ -200,7 +400,7 @@ require([
 
                 // Create point graphic based on click coordinates
                 var icon = $('#select_area').data('icon');
-                var imageURL = "http://www.watershedmvp.org/images/SVG/" + icon;
+                var imageURL = "http://www.cch2o.org/Matrix/icons/" + icon;
                 var pointSymbology = new PictureMarkerSymbol(imageURL,30,30)
                 var pointGeometry = new Point({
                     x: evt.geometry.x,
@@ -226,7 +426,6 @@ require([
                 .done(function(msg) {
                     $('.modal-wrapper').show();
                     $('#popdown-opacity').show();
-                    $('.modal-wrapper').show();
                     $('#unit_metric_label').show();
                     $('#unit_metric').show();
                 })
@@ -235,682 +434,46 @@ require([
                 return
             }
 
-            $('#progress').append("<div class = 'fa fa-spinner fa-spin'></div>")
-
-			var treatmentTypeId = typeid
-
-            // TODO: Pump in from elsewhere instead of programmatically setting here
-			if (treatmentTypeId == '101') { //purple heart
-					var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([102, 43, 145, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-                }
-
-                else if (treatmentTypeId == '102') { //purple heart
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([102, 43, 145, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '103') { //purple heart
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([102, 43, 145, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-                }
-
-                else if (treatmentTypeId == '104') { //summer sky
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([43, 171, 227, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-                }
-
-                else if (treatmentTypeId == '105') { //purple heart
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([102, 43, 145, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '106') { //purple heart
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([102, 43, 145, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '107') { //purple heart
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([102, 43, 145, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '108') { //puple heart
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([102, 43, 145, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-
-                }
-
-                else if (treatmentTypeId == '109') { //purple heart
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([102, 43, 145, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-
-                }
-
-                else if (treatmentTypeId == '110') { //purple heart
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([102, 43, 145, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-
-                }
-
-                else if (treatmentTypeId == '201') { //mantis
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([143, 199, 77, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-
-                }
-
-                else if (treatmentTypeId == '202') { //mantis
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([143, 199, 77, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-
-                }
-
-                else if (treatmentTypeId == '203') { //mantis
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([143, 199, 77, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-
-                }
-
-                else if (treatmentTypeId == '204') { //purple heart
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([102, 43, 145, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '205') { //purple heart
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([102, 43, 145, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '206') { //purple heart
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([102, 43, 145, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '207') { //purple heart
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([102, 43, 145, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '208') { //purple heart
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([102, 43, 145, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '209') { //purple heart
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([102, 43, 145, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '210') { //purple heart
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([102, 43, 145, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-	            else if (treatmentTypeId == '300') { //summer sky
-
-	                var polySymbol = new esri.symbol.SimpleFillSymbol(
-	                    SimpleFillSymbol.STYLE_SOLID,
-	                    new SimpleLineSymbol(
-	                        SimpleLineSymbol.STYLE_SOLID,
-	                        new Color([43, 171, 227, 1.0]),
-	                        4
-	                    ),
-	                    new Color([0, 0, 0, 0.0])
-	                );
-
-	            }
-
-	            else if (treatmentTypeId == '301') { //summer sky
-
-	                var polySymbol = new esri.symbol.SimpleFillSymbol(
-	                    SimpleFillSymbol.STYLE_SOLID,
-	                    new SimpleLineSymbol(
-	                        SimpleLineSymbol.STYLE_SOLID,
-	                        new Color([43, 171, 227, 1.0]),
-	                        4
-	                    ),
-	                    new Color([0, 0, 0, 0.0])
-	                );
-
-	            }
-
-	            else if (treatmentTypeId == '302') { //summer sky
-
-	                var polySymbol = new esri.symbol.SimpleFillSymbol(
-	                    SimpleFillSymbol.STYLE_SOLID,
-	                    new SimpleLineSymbol(
-	                        SimpleLineSymbol.STYLE_SOLID,
-	                        new Color([43, 171, 227, 1.0]),
-	                        4
-	                    ),
-	                    new Color([0, 0, 0, 0.0])
-	                );
-
-	            }
-
-                else if (treatmentTypeId == '303') { //summer sky
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([43, 171, 227, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '400') { //summer sky
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([43, 171, 227, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '401') { //purple heart
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([102, 43, 145, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '402') { //summer sky
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([43, 171, 227, 1.0]), //**********MAY CHANGE**********
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '403') { //summer sky
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([43, 171, 227, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '404') { //summer sky
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([43, 171, 227, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '500') { //mantis
-                    var popupVal = "Inlet / Culvert Widening";
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([143, 199, 77, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-
-                }
-
-                else if (treatmentTypeId == '501') { //mantis
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([143, 199, 77, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '502') { //mantis
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([143, 199, 77, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '503') { //mantis
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([143, 199, 77, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '504') { //mantis
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([143, 199, 77, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '505') { //mantis
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([143, 199, 77, 1.0]), //**********MAY CHANGE**********
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '506') { //mantis
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([143, 199, 77, 1.0]), //**********MAY CHANGE**********
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '600') { //summer sky
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([43, 171, 227, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '601') { //summer sky
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([43, 171, 227, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '602') { //summer sky
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([43, 171, 227, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '603') { //summer sky
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([43, 171, 227, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '604') { //summer sky
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([43, 171, 227, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '605') { //summer sky
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([43, 171, 227, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '606') { //summer sky
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([43, 171, 227, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '607') { //summer sky
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([43, 171, 227, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-                else if (treatmentTypeId == '608') { //summer sky
-
-                    var polySymbol = new esri.symbol.SimpleFillSymbol(
-                        SimpleFillSymbol.STYLE_SOLID,
-                        new SimpleLineSymbol(
-                            SimpleLineSymbol.STYLE_SOLID,
-                            new Color([43, 171, 227, 1.0]),
-                            4
-                        ),
-                        new Color([0, 0, 0, 0.0])
-                    );
-
-                }
-
-			//deactivate the toolbar and clear existing graphics
+            // Obtain technology id from select polygon div
+            let techId = $('#select_polygon').data('techId');
+            
+            // Create and color polygon using technology id
+            let polySymbol = selectPoly(techId)
+
+			// Deactivate the toolbar and clear existing graphics
 			tb.deactivate();
-			map.enableMapNavigation();
-			// console.log(evt);
-			// figure out which symbol to use
-			var symbol;
-			symbol = polySymbol;
+            map.enableMapNavigation();
+            
+            // Initialize string to append polygon coordinates along with treatment id
 			var polystring = '';
-			var attr = {'treatment_id': treatment};
-			map.graphics.add(new Graphic(evt.geometry, symbol, attr));
+            var attr = {'treatment_id': 1};
+            
+            // Add polygon and symbology to map with attached treatment id
+			map.graphics.add(new Graphic(evt.geometry, polySymbol, attr));
 
+            // Build coordinate string
 			for (var i = 0; i < evt.geometry.rings[0].length; i++) {
 				polystring += evt.geometry.rings[0][i][0] + ' ';
 				polystring += evt.geometry.rings[0][i][1] + ', ';
 			}
 			var len = polystring.length;
 			polystring = polystring.substring(0, len - 2);
-			treatment_polygons[treatment] = polystring;
 
+            // Save string coordinate string array to session
 			var url = '/customPoly';
-
-			var data = {treatment: treatment, polystring: polystring};
-
+			var data = {polystring: polystring};
 			$.ajax({
-					method: 'POST',
-					data: data,
-					url: url
-				})
-				.done(function(msg) {
-                    // console.log(msg);
-                    // TODO: Check if necessary. Remove if not working
-					$('#total_nitrogen_polygon').text(msg);
-					$('#popdown-opacity').show();
-                    $('div.fa.fa-spinner.fa-spin').remove()
-
-				}).fail(function(msg){
-					// console.log(msg);
-					alert('There was a problem saving the polygon. Please send this error message info@capecodcommission.org: <br />Response: ' + msg.status + ' ' + msg.statusText );
-				});
-
-			var area = evt.geometry.getExtent();
+                method: 'POST',
+                data: data,
+                url: url
+            })
+            .done(function(msg) {
+                $('#popdown-opacity').show();
+                $('.modal-wrapper').show()
+            })
+            .fail(function(msg){
+                alert('There was a problem saving the polygon. Please send this error message info@capecodcommission.org: <br />Response: ' + msg.status + ' ' + msg.statusText );
+            });
 		}
 
 
@@ -974,7 +537,7 @@ require([
 				if (Treatment.Custom_POLY == 0 && Treatment.POLY_STRING.startsWith('POINT')) {
 
 					treatmentType1 = Treatment.TreatmentType_Name;
-					imageURL1 = "http://www.watershedmvp.org/images/SVG/"+Treatment.treatment_icon;
+					imageURL1 = "http://www.cch2o.org/Matrix/icons/"+Treatment.treatment_icon;
 					treatmentArea1 = Math.round(Treatment.Treatment_Acreage);
 					parcels1 = Treatment.Treatment_Parcels;
 					n_removed1 = Math.round(Treatment.Nload_Reduction);
@@ -1661,7 +1224,7 @@ require([
 
                 }
 
-				var imageURL = "http://www.watershedmvp.org/images/SVG/"+Treatment.treatment_icon;
+				var imageURL = "http://www.cch2o.org/Matrix/icons/"+Treatment.treatment_icon;
 				var pointSymbol = new PictureMarkerSymbol(imageURL,30,30)
 
 

@@ -5,7 +5,7 @@
 			{{$tech->Technology_Strategy}}
 		</h4>
 		<a title="{{$tech->Technology_Strategy}} - Technology Matrix" class="blade_image" href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->TM_ID}}" target="_blank">
-			<img src="http://www.watershedmvp.org/images/SVG/{{$tech->icon}}">
+			<img src="http://www.cch2o.org/Matrix/icons/{{$tech->icon}}">
 		</a>
 		<div class="blade_slider" title="Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.">
 			<button title="Select Location" class="blade_button" id="select_area">Select Location</button>
@@ -33,17 +33,16 @@
 			e.preventDefault();
 				var percent = 0;
 				var units = $('#unit_metric').val();
-				var subemID =  $('.select > span').data('subemid');
-				
 
 				// Create and trigger API route url from parsed properties
-				var url = "{{url('/apply_storm')}}" + '/' +  0 + '/' + percent + '/' + units + '/' + subemID + '/' + techId;
+				var url = "{{url('/apply_storm')}}" + '/' + percent + '/' + units + '/' + techId;
 				$.ajax({
 					method: 'GET',
 					url: url
 				})
 				.done(function(treatment_id) {
 					$( "#update" ).trigger( "click" );
+					addTreatmentIdToGraphic(treatment_id);
 					addToStack(treatment_id, icon);
 				});
 		});
@@ -51,7 +50,6 @@
 		// Handle on-click event for selecting a location
 		$('#select_area').on('click', function(f) {
 			f.preventDefault();
-			// destroyModalContents();
 			$('.modal-wrapper').hide();
 			tb.activate('point');
 		});

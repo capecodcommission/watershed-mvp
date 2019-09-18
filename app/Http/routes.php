@@ -6,7 +6,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/start', 'StartController@index');
 	Route::get('/map/{embayment}/{scenarioid?}', 'WizardController@start');
 	Route::get('/save/{id}', 'ScenarioController@saveScenario');
-	Route::get('/tech/{type}/{tech}', 'TechnologyController@associateTech');
+	Route::get('/tech/{type}/{techId}', 'TechnologyController@associateTech');
 	Route::get('/edit/{treatment}', 'TechnologyController@edit');
 	Route::get('/update/{type}/{treatment}/{rate}/{units?}/{subemid?}', 'TechnologyController@update');
 	// TODO: Fix 'delete_treatment' to delete/{treatment}/{type?}
@@ -14,8 +14,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/cancel/{treatment}/{type?}', 'TechnologyController@cancel');
 	Route::get('/delete_scenario/{scenarioid}', 'ScenarioController@deleteScenario');
 	Route::get('/apply_percent/{rate}/{type}/{techId}', 'TechnologyController@ApplyTreatment_Percent');
-	Route::get('/apply_storm/{treatment}/{rate}/{units}/{location}/{techId}', 'TechnologyController@ApplyTreatment_Storm');
-	Route::get('/apply_septic/{treatment}/{rate}', 'TechnologyController@ApplyTreatment_Septic');
+	Route::get('/apply_storm/{rate}/{units}/{techId}', 'TechnologyController@ApplyTreatment_Storm');
+	Route::get('/apply_septic/{rate}/{techId}', 'TechnologyController@ApplyTreatment_Septic');
 	Route::get('/apply_embayment/{treatment}/{rate}/{units}/{subemid?}', 'TechnologyController@ApplyTreatment_Embayment');
 	Route::get('/apply_groundwater/{treatment}/{rate}/{units}', 'TechnologyController@ApplyTreatment_Groundwater');
 	Route::get('/map/point/{x}/{y}', 'MapController@point');

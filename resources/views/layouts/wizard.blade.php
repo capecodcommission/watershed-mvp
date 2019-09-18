@@ -60,8 +60,6 @@
 <script type="text/javascript">
 
 		$(document).ready(function(){
-
-			$('.modal-wrapper').hide();
 			
 			$('#fertMan')
 				.css({'cursor': 'pointer'});
