@@ -33,32 +33,11 @@
 			4 => user does not enter a treatment area (Fertilizer Mgmt or Stormwater BMPs)
 		-->
 		<!-- TODO: Switch if/else to case/switch once Laravel is upgraded. Case statement switches are unavailable in current version (5.2) -->
-		@if($tech->Show_In_wMVP == 1)
-			<p>
-				<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated: 
-				<input v-model="uMetric" type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;" value="{{$treatment->Treatment_MetricValue}}"></label>
-			</p>
-		@elseif($tech->Show_In_wMVP == 2)
-			<button id="select_polygon">Draw Polygon</button>
-		@elseif($tech->Show_In_wMVP == 3)
-			<p>
-				<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated: 
-				<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;" value="{{$treatment->Treatment_MetricValue}}"></label>
-			</p>
-		@elseif($tech->Show_In_wMVP == 4)
-			<p> Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.
-				<br />
-				<input 
-					type="range" 
-					id="storm-percent" 
-					min="{{$tech->Nutri_Reduc_N_Low}}" 
-					max="{{$tech->Nutri_Reduc_N_High}}" 
-					v-model="storm_percent" 
-					value="{{$treatment->Treatment_Value}}"
-				> 
-				@{{storm_percent}}%
-			</p> 
-		@endif
+		
+		<p>
+			<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated: 
+			<input v-model="uMetric" type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;" value="{{$treatment->Treatment_MetricValue}}"></label>
+		</p>
 		<p>
 			<button v-show="storm_percent != {{$treatment->Treatment_Value}}" id="updateManagement">Update</button>
 			<button v-show="{{$treatment->Treatment_MetricValue}} != uMetric" id="updateNonManangement">Update</button>
@@ -90,21 +69,8 @@
 			// Handle click-event for updating non-management technologies
 			$('#updateNonManangement').on('click', function(e) {
 				e.preventDefault();
-				var percent = 0
-				var units = 1;
-				if ('{{$tech->Show_In_wMVP}}' != '2' )
-				{
-					units = $('#unit_metric').val();
-				}
-				else if ('{{$tech->Unit_Metric}}' == 'Each')
-				{
-					units = 1;
-				}
-				else
-				{
-					units = 0.00000000;
-				}
-				var url = "{{url('/update/storm', $treatment->TreatmentID)}}" + '/' + percent + '/' + units;
+				var units = $('#unit_metric').val();
+				var url = "{{url('/update/storm', $treatment->TreatmentID)}}" + '/' + units;
 				$.ajax({
 					method: 'GET',
 					url: url

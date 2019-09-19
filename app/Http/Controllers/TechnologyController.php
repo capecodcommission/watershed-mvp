@@ -153,7 +153,7 @@ class TechnologyController extends Controller
 
 
 	// Apply non-management Stormwater technology
-	public function ApplyTreatment_Storm($rate, $units = null, $techId)
+	public function ApplyTreatment_Storm($rate, $techId)
 	{
 		// Retrieve scenario id, removed nitrogen, and point XY coordinates from session
 		$scenarioid = session('scenarioid');
@@ -169,7 +169,7 @@ class TechnologyController extends Controller
 		$point = DB::select("exec dbo.UPDcreditSubembayment @x='$x', @y='$y', @treatment=$treatment->TreatmentID");
 
 		// Treat parcel using parameterized stored proc
-		$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treatment->TreatmentID . ', ' . $rate . ', ' . $units);
+		$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treatment->TreatmentID . ', ' . $rate);
 		$this->updateNitrogenRemoved();
 
 		return $treatment->TreatmentID;
@@ -406,7 +406,7 @@ class TechnologyController extends Controller
 				break;
 			// Stormwater non-management
 			case 'storm':
-				$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treat_id . ', ' . $rate . ', ' . $units );
+				$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treat_id . ', ' . $rate );
 				return $this->updateNitrogenRemoved();
 				break;
 			// Septic (first row)

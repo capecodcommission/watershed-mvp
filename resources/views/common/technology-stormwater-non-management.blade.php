@@ -31,20 +31,19 @@
 		// value for the technology percent
 		$('#applytreatment').on('click', function(e) {
 			e.preventDefault();
-				var percent = 0;
-				var units = $('#unit_metric').val();
+			var units = $('#unit_metric').val();
 
-				// Create and trigger API route url from parsed properties
-				var url = "{{url('/apply_storm')}}" + '/' + percent + '/' + units + '/' + techId;
-				$.ajax({
-					method: 'GET',
-					url: url
-				})
-				.done(function(treatment_id) {
-					$( "#update" ).trigger( "click" );
-					addTreatmentIdToGraphic(treatment_id);
-					addToStack(treatment_id, icon);
-				});
+			// Create and trigger API route url from parsed properties
+			var url = "{{url('/apply_storm')}}" + '/' + units + '/' + techId;
+			$.ajax({
+				method: 'GET',
+				url: url
+			})
+			.done(function(treatment_id) {
+				$( "#update" ).trigger( "click" );
+				addTreatmentIdToGraphic(treatment_id);
+				addToStack(treatment_id, icon);
+			});
 		});
 
 		// Handle on-click event for selecting a location
