@@ -342,16 +342,8 @@ class TechnologyController extends Controller
 		$tech = Technology::find($treatment->TreatmentType_ID);
 		$type = $tech->Technology_Sys_Type;
 		
-		// Create ID route filters for management and septic technologies
-		$managementTechIdArray = ['400','401'];
+		// Create ID route filters for septic technologies
 		$toiletsIdArray = ['300', '301', '302', '303'];
-
-		// Load new management edit blade if associated TM_ID matches the management id array
-		if ( in_array($tech->technology_id, $managementTechIdArray) )	
-		{
-			return view('common/technology-management-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
-			break;
-		}	
 
 		// Load septic edit blade if associated Technology_ID matches the septic id array
 		if ( in_array($tech->technology_id, $toiletsIdArray) ) 
@@ -389,39 +381,45 @@ class TechnologyController extends Controller
 	}
 
 	// Handle treatment reapplication by type
-	public function update($type, $treat_id, $rate, $units=null, $subemid=null)
+	public function update($type, $treat_id, $treatmentValue, $units=null, $subemid=null)
 	{
 		// Trigger parameterized stored proc based on passed type
 		switch ($type) 
 		{
 			// Fertilizer Management
-			case 'fert':
-				$updated = DB::select('exec dbo.CALCapplyTreatmentPercent ' . $treat_id . ', ' . $rate . ', ' . $type);
-				return $this->updateNitrogenRemoved();
-				break;
-			// Stormwater Management
-			case 'storm-percent':
-				$updated = DB::select('exec dbo.CALCapplyTreatmentPercent ' . $treat_id . ', ' . $rate . ', storm' );
+			case 'management':
+				// Obtain treatment object using relevant id
+				$treatment = Treatment::find($treat_id);
+				switch($treatment->TreatmentType_ID)
+				{
+					case 400:
+						$updated = DB::select('exec dbo.CALCapplyTreatmentPercent ' . $treat_id . ', ' . $treatmentValue . ', ' . 'fert');
+						break;
+
+					case 401:
+						$updated = DB::select('exec dbo.CALCapplyTreatmentPercent ' . $treat_id . ', ' . $treatmentValue . ', ' . 'storm');
+						break;
+				}
 				return $this->updateNitrogenRemoved();
 				break;
 			// Stormwater non-management
 			case 'storm':
-				$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treat_id . ', ' . $rate );
+				$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treat_id . ', ' . $treatmentValue );
 				return $this->updateNitrogenRemoved();
 				break;
 			// Septic (first row)
 			case 'collect':
-				$updated = DB::select('exec dbo.CALCapplyTreatmentSeptic '. $treat_id . ', '. $rate);
+				$updated = DB::select('exec dbo.CALCapplyTreatmentSeptic '. $treat_id . ', '. $treatmentValue);
 				return $this->updateNitrogenRemoved();
 				break;
 			// Septic (second row)
 			case 'toilets':
-				$updated = DB::select('exec dbo.CALCapplyTreatmentSeptic '. $treat_id . ', '. $rate);
+				$updated = DB::select('exec dbo.CALCapplyTreatmentSeptic '. $treat_id . ', '. $treatmentValue);
 				return $this->updateNitrogenRemoved();
 				break;
 			// Groundwater
 			case 'groundwater':
-				$updated = DB::select('exec dbo.CALC_ApplyTreatment_Groundwater1 '. $treat_id . ', '. $rate . ', ' . $units);
+				$updated = DB::select('exec dbo.CALC_ApplyTreatment_Groundwater1 '. $treat_id . ', '. $treatmentValue . ', ' . $units);
 				return $this->updateNitrogenRemoved();
 				break;	
 			// Embayment
@@ -440,7 +438,7 @@ class TechnologyController extends Controller
 				{
 					$n_parcels += $parcel->wtt_tot_parcels;
 				}
-				$updated = DB::select('exec dbo.CALC_ApplyTreatment_Embayment1 ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $n_parcels);
+				$updated = DB::select('exec dbo.CALC_ApplyTreatment_Embayment1 ' . $treat_id . ', ' . $treatmentValue . ', ' . $units . ', ' . $n_parcels);
 				$n_removed += $updated[0]->removed;
 				session(['n_removed' => $n_removed]);
 				break;

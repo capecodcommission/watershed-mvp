@@ -8,7 +8,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/save/{id}', 'ScenarioController@saveScenario');
 	Route::get('/tech/{type}/{techId}', 'TechnologyController@associateTech');
 	Route::get('/edit/{treatment}', 'TechnologyController@edit');
-	Route::get('/update/{type}/{treatment}/{rate}/{units?}/{subemid?}', 'TechnologyController@update');
+	Route::get('/update/{type}/{treatment}/{treatmentValue}/{units?}/{subemid?}', 'TechnologyController@update');
 	// TODO: Fix 'delete_treatment' to delete/{treatment}/{type?}
 	Route::get('/delete_treatment/{treatment}/{type?}', 'TechnologyController@delete');
 	Route::get('/cancel/{treatment}/{type?}', 'TechnologyController@cancel');

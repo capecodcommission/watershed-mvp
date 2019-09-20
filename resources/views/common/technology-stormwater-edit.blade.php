@@ -39,7 +39,6 @@
 			<input v-model="uMetric" type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;" value="{{$treatment->Treatment_MetricValue}}"></label>
 		</p>
 		<p>
-			<button v-show="storm_percent != {{$treatment->Treatment_Value}}" id="updateManagement">Update</button>
 			<button v-show="{{$treatment->Treatment_MetricValue}} != uMetric" id="updateNonManangement">Update</button>
 			<button id="deletetreatment" data-treatment = "{{$treatment->TreatmentID}}" class='button--cta right'><i class="fa fa-trash-o"></i> Delete</button>
 		</p>

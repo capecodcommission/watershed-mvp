@@ -31,9 +31,9 @@
         // and set the url to use to send an ajax GET method to route the user input slider value for the fertilzation percent
         $('#updatetreatment').on('click', function(e) {
             e.preventDefault();
-            let percent = $('#fert-percent').val();
+            let treatmentValue = $('#fert-percent').val();
             if ("{{$tech->technology_id == 400}}") {
-                let url = "{{url('/update/fert', $treatment->TreatmentID)}}" + '/' + percent;
+                let url = "{{url('/update/management', $treatment->TreatmentID)}}" + '/' + treatmentValue;
                 $.ajax({
                     method: 'GET',
                     url: url
@@ -46,8 +46,8 @@
                 });
             }
             else {
-                let percent = $('#storm-percent').val();
-                let url = "{{url('/update/storm-percent', $treatment->TreatmentID)}}" + '/' + percent;
+                let treatmentValue = $('#storm-percent').val();
+                let url = "{{url('/update/management', $treatment->TreatmentID)}}" + '/' + treatmentValue;
                 $.ajax({
                     method: 'GET',
                     url: url
