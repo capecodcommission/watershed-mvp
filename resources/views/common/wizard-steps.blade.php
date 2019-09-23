@@ -172,33 +172,33 @@
 					<img src="http://www.watershedmvp.org/images/SVG/SatelliteTreatmentEnhanced.svg" alt="" ><br />
 					Satellite Treatment - Enahnced</a>
 			</div>
-			<div class="technology" data-route = "/tech/septic/21">
+			<div class="technology" data-route = "/tech/septic/300">
 				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/CompostingToilet.svg" alt="" ><br />
 					Composting Toilets</a>
 			</div>
-			<div class="technology" data-route = "/tech/septic/22">
+			<div class="technology" data-route = "/tech/septic/301">
 				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/IncineratingToilet.svg" alt="" ><br />
 					Incinerating Toilets</a>
 			</div>
 
-			<div class="technology" data-route = "/tech/septic/23">
+			<div class="technology" data-route = "/tech/septic/302">
 				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/PackagingToilet.svg" alt="" ><br />
 					Packaging Toilets</a>
 			</div>
-			<div class="technology" data-route = "/tech/septic/24">
+			<div class="technology" data-route = "/tech/septic/303">
 				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/UrineDivertingToilet.svg" alt="" ><br />
 					Urine Diverting Toilets</a>
 			</div>
-			<div class="technology" data-route = "/tech/septic/38">
+			<div class="technology" data-route = "/tech/septic/601">
 				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/IA.svg" alt="" ><br />
 					I/A Systems</a>
 			</div>
-			<div class="technology" data-route = "/tech/septic/39">
+			<div class="technology" data-route = "/tech/septic/602">
 				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/EnhancedIA.svg" alt="" ><br />
 					Enhanced I/A Systems</a>

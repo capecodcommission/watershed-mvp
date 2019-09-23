@@ -12,7 +12,7 @@
 	</header>
 	<section class="body">
 		<div class="technology">
-			<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
+			<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->technology_id}}" target="_blank">
 				<img src="http://www.cch2o.org/Matrix/icons/{{$tech->icon}}" width="75">
 				<br />{{$tech->Technology_Strategy}}&nbsp;<i class="fa fa-question-circle"></i>
 			</a>			
@@ -54,6 +54,7 @@
 		$('#select_polygon').on('click', function(f){
 			f.preventDefault();
 			map.disableMapNavigation();
+			deleteGraphic();
 			$('#popdown-opacity').hide()
 			$('.modal-wrapper').hide()
 			tb.activate('polygon');

@@ -343,7 +343,7 @@ class TechnologyController extends Controller
 		$type = $tech->Technology_Sys_Type;
 		
 		// Create ID route filters for septic technologies
-		$toiletsIdArray = ['300', '301', '302', '303'];
+		$toiletsIdArray = ['300', '301', '302', '303', '601', '602'];
 
 		// Load septic edit blade if associated Technology_ID matches the septic id array
 		if ( in_array($tech->technology_id, $toiletsIdArray) ) 
@@ -376,8 +376,6 @@ class TechnologyController extends Controller
 					break;
 			}
 		}
-		// Load collection blade if no other conditions met
-		return view('common/technology-septic-edit', ['treatment'=>$treatment, 'tech'=>$tech]);
 	}
 
 	// Handle treatment reapplication by type
@@ -386,9 +384,9 @@ class TechnologyController extends Controller
 		// Trigger parameterized stored proc based on passed type
 		switch ($type) 
 		{
-			// Fertilizer Management
+			// Management
 			case 'management':
-				// Obtain treatment object using relevant id
+				// Trigger fert or storm by technology id from treatment object
 				$treatment = Treatment::find($treat_id);
 				switch($treatment->TreatmentType_ID)
 				{
@@ -407,12 +405,12 @@ class TechnologyController extends Controller
 				$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treat_id . ', ' . $treatmentValue );
 				return $this->updateNitrogenRemoved();
 				break;
-			// Septic (first row)
+			// CollectMove (first row)
 			case 'collect':
 				$updated = DB::select('exec dbo.CALCapplyTreatmentSeptic '. $treat_id . ', '. $treatmentValue);
 				return $this->updateNitrogenRemoved();
 				break;
-			// Septic (second row)
+			// CollectStay (second row)
 			case 'toilets':
 				$updated = DB::select('exec dbo.CALCapplyTreatmentSeptic '. $treat_id . ', '. $treatmentValue);
 				return $this->updateNitrogenRemoved();

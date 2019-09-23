@@ -175,17 +175,4 @@ class WizardController extends Controller
 		);
 		return view('layouts/test', ['embayment'=>$embayment, 'subembayments'=>$subembayments]);
 	}
-
-	// Save custom polygon coordinate array to session
-	public function getParcelsWithinPoly(Request $data)
-	{
-		// Retrieve coordinate string from post data
-		$data = $data->all();
-		$poly = $data['polystring'];
-
-		// Save to session
-		session(['polyString' => $poly]);
-
-		return 1;
-	}
 }

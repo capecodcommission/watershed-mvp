@@ -42,17 +42,7 @@
 	</section>
 </div>
 
-<template id="treatment-template">
-	<div class="treatment" id="@{{TreatmentID}}">
-		<p>Total Unattenuated Nitrogen: <span id="total_nitrogen_polygon">@{{Total_Orig_Nitrogen}}</span>; Nitrogen Removed by Treatment: <span id="Nitrogen_Removed">@{{Nitrogen_Removed}}</span></p>
-	</div>
-</template>
-
-
-
-
 <script src="{{url('/js/main.js')}}"></script>
-{{-- <script src="{{url('/js/app.js')}}"></script> --}}
 
 
 <script>
@@ -81,7 +71,7 @@
 		$('#updatetreatment').on('click', function(e)
 		{
 			e.preventDefault();
-			var rate = $('#septic-percent').val();
+			var rate = $('#septic-rate').val();
 			var url = "{{url('/update/toilets', $treatment->TreatmentID)}}"  + '/' + rate;
 			$.ajax({
 				method: 'GET',

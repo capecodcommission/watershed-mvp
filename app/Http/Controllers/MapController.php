@@ -12,10 +12,23 @@ use App\Treatment;
 class MapController extends Controller
 {
 	// Save map click geometry to session
-	public function point($x, $y)
+	public function setPointCoords($x, $y)
 	{
 		session(['pointX' => $x]);
 		session(['pointY' => $y]);
+		return 1;
+	}
+
+	// Save custom polygon coordinate array to session
+	public function setCoordArray(Request $data)
+	{
+		// Retrieve coordinate string from post data
+		$data = $data->all();
+		$stringCoordArray = $data['coordString'];
+
+		// Save to session
+		session(['polyString' => $stringCoordArray]);
+
 		return 1;
 	}
 

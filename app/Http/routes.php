@@ -18,7 +18,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/apply_septic/{rate}/{techId}', 'TechnologyController@ApplyTreatment_Septic');
 	Route::get('/apply_embayment/{treatment}/{rate}/{units}/{subemid?}', 'TechnologyController@ApplyTreatment_Embayment');
 	Route::get('/apply_groundwater/{treatment}/{rate}/{units}', 'TechnologyController@ApplyTreatment_Groundwater');
-	Route::get('/map/point/{x}/{y}', 'MapController@point');
+	Route::get('/map/point/{x}/{y}', 'MapController@setPointCoords');
+	Route::post('/map/poly', 'MapController@setCoordArray');
 	Route::get('/map/move/{x}/{y}/{treatment}', 'MapController@moveNitrogen');
 	Route::get('/getScenarioNitrogen', 'ScenarioController@GetScenarioNitrogen');
 	Route::get('/getScenarioProgress', 'ScenarioController@getCurrentProgress');
@@ -27,7 +28,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('progress', 'ScenarioController@getProgress');
 	Route::get('/', 'HomeController@index');
 	Route::get('/home', 'HomeController@index');
-	Route::post('/customPoly', 'WizardController@getParcelsWithinPoly');
 	Route::post('/sumTotalsWithinPolygon', 'WelcomeController@sumTotalsWithinPoly');
 	Route::post('/getIDArrayWithinPolygon', 'WelcomeController@getIDArrayWithinPoly');
 	Route::post('/update_polygon', 'TechnologyController@updatePolygon');

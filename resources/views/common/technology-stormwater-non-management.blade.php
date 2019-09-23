@@ -50,6 +50,7 @@
 		$('#select_area').on('click', function(f) {
 			f.preventDefault();
 			$('.modal-wrapper').hide();
+			deleteGraphic();
 			tb.activate('point');
 		});
  	});
