@@ -6,1358 +6,1471 @@ var treatment;
 var func;
 var edit_active;
 require([
-		"esri/map",
-		"esri/dijit/BasemapGallery",
-		"esri/arcgis/utils",
-		"dojo/parser",
-		"esri/layers/ArcGISDynamicMapServiceLayer",
-		"esri/layers/ImageParameters",
-		"esri/layers/FeatureLayer",
-		"esri/dijit/Legend",
+    "esri/map",
+    "esri/dijit/BasemapGallery",
+    "esri/arcgis/utils",
+    "dojo/parser",
+    "esri/layers/ArcGISDynamicMapServiceLayer",
+    "esri/layers/ImageParameters",
+    "esri/layers/FeatureLayer",
+    "esri/dijit/Legend",
 
-		"esri/toolbars/draw",
-		"esri/toolbars/edit",
-		"esri/symbols/SimpleFillSymbol",
-		"esri/symbols/SimpleMarkerSymbol",
-		"esri/renderers/SimpleRenderer",
-		"esri/symbols/SimpleLineSymbol",
-		"esri/graphic",
-		"esri/Color",
-		"esri/renderers/Renderer",
-		"esri/renderers/UniqueValueRenderer",
-		"esri/renderers/ClassBreaksRenderer",
-		"esri/symbols/PictureMarkerSymbol",
-		"esri/geometry/Point",
-		"esri/graphic",
+    "esri/toolbars/draw",
+    "esri/toolbars/edit",
+    "esri/symbols/SimpleFillSymbol",
+    "esri/symbols/SimpleMarkerSymbol",
+    "esri/renderers/SimpleRenderer",
+    "esri/symbols/SimpleLineSymbol",
+    "esri/graphic",
+    "esri/Color",
+    "esri/renderers/Renderer",
+    "esri/renderers/UniqueValueRenderer",
+    "esri/renderers/ClassBreaksRenderer",
+    "esri/symbols/PictureMarkerSymbol",
+    "esri/geometry/Point",
+    "esri/graphic",
 
-		"esri/tasks/query",
-		"esri/tasks/QueryTask",
-		"esri/tasks/identify",
-		"esri/InfoTemplate",
-		      // "esri/dijit/Popup",
-        //    "esri/dijit/PopupTemplate",
-		// "esri/tasks/infoWindow",
-		"esri/dijit/LayerList",
-		"esri/geometry/Extent",
+    "esri/tasks/query",
+    "esri/tasks/QueryTask",
+    "esri/tasks/identify",
+    "esri/InfoTemplate",
+    // "esri/dijit/Popup",
+    //    "esri/dijit/PopupTemplate",
+    // "esri/tasks/infoWindow",
+    "esri/dijit/LayerList",
+    "esri/geometry/Extent",
 
+    // "esri/SpatialReference",
+    // "dijit/layout/BorderContainer",
+    // "dijit/layout/ContentPane",
+    // "dijit/TitlePane",
 
-		// "esri/SpatialReference",
-		// "dijit/layout/BorderContainer",
-		// "dijit/layout/ContentPane",
-		// "dijit/TitlePane",
+    "dojo/_base/event",
+    "dojo/dom",
+    "dojo/on",
+    "dijit/registry",
+    "esri/geometry/geometryEngine",
+    "dojo/dom-construct",
+    "dojo/domReady!",
+    "esri/geometry/geometryEngine"
+], function(
+    Map,
+    // Popup, PopupTemplate,
+    BasemapGallery,
+    arcgisUtils,
+    parser,
+    ArcGISDynamicMapServiceLayer,
+    ImageParameters,
+    FeatureLayer,
+    Legend,
 
-		 "dojo/_base/event",
-		"dojo/dom",
-		"dojo/on", "dijit/registry",
-		"esri/geometry/geometryEngine",
-		"dojo/dom-construct",
-		"dojo/domReady!",
-		"esri/geometry/geometryEngine"
-	],
-	function(
-		Map,
-		// Popup, PopupTemplate,
-		BasemapGallery,
-		arcgisUtils,
-		parser,
-		ArcGISDynamicMapServiceLayer,
-		ImageParameters,
-		FeatureLayer,
-		Legend,
+    Draw,
+    Edit,
+    SimpleFillSymbol,
+    SimpleMarkerSymbol,
+    SimpleRenderer,
+    SimpleLineSymbol,
+    Graphic,
+    Color,
+    Renderer,
+    UniqueValueRenderer,
+    ClassBreaksRenderer,
+    PictureMarkerSymbol,
+    Point,
+    Graphic,
 
-		Draw,
-		Edit,
-		SimpleFillSymbol,
-		SimpleMarkerSymbol,
-		SimpleRenderer,
-		SimpleLineSymbol,
-		Graphic,
-		Color,
-		Renderer,
-		UniqueValueRenderer,
-		ClassBreaksRenderer,
-		PictureMarkerSymbol,
-		Point,
-		Graphic,
+    Query,
+    QueryTask,
 
-		Query,
-		QueryTask,
+    identify,
+    InfoTemplate,
+    // infoWindow,
+    LayerList,
+    Extent,
+    event,
+    dom,
+    on,
+    registry,
 
-		identify,
-		InfoTemplate,
-		// infoWindow,
-		LayerList,
-		Extent,
-		event,
-		dom, on,
-		registry,
+    geometryEngine,
+    domConstruct
+) {
+    parser.parse();
 
-		geometryEngine,
-		domConstruct
-	) {
-		parser.parse();
+    var initialExtent = new Extent({
+        xmin: -7980970.14,
+        ymin: 5033003.02,
+        xmax: -7705796.84,
+        ymax: 5216451.89,
+        spatialReference: { wkid: 102100 }
+    });
+    if (!center_x) {
+        center_x = -70.35;
+        center_y = 41.68;
+    }
+    // console.log('x: ' + center_x + ' and y: '+ center_y);
+    map = new Map("map", {
+        // center: [-70.35, 41.68],
+        center: [center_x, center_y],
+        // extent: initialExtent,
+        // infoWindow: subem_template,
+        zoom: 14,
+        basemap: "dark-gray",
+        slider: true,
+        sliderOrientation: "horizontal",
+        logo: false,
+        showAttribution: false
+    });
 
-		var initialExtent = new Extent({ "xmin": -7980970.14, "ymin": 5033003.02, "xmax": -7705796.84, "ymax": 5216451.89, "spatialReference": { "wkid": 102100 } });
-		if (!center_x ) {
-			center_x = -70.35;
-			center_y = 41.68;
-		}
-		// console.log('x: ' + center_x + ' and y: '+ center_y);
-		map = new Map("map", {
-			// center: [-70.35, 41.68],
-			center: [center_x, center_y],
-			// extent: initialExtent,
-			// infoWindow: subem_template,
-			zoom: 14,
-			basemap: "dark-gray",
-			slider: true,
-			sliderOrientation: "horizontal",
-            logo: false,
-            showAttribution: false
-		});
+    // map.on("load", createToolbar);
+    // map.on("load", initToolbar);
+    map.on("load", function(e) {
+        initToolbar();
+        map.infoWindow.resize(375, 400);
 
+        if (treatments.length > 0) {
+            addGraphicsOnLoad(treatments);
+        }
+    });
 
-		// map.on("load", createToolbar);
-		// map.on("load", initToolbar);
-		map.on("load", function(e){
-			initToolbar();
-			map.infoWindow.resize(375,400)
+    var fillSymbol = new SimpleFillSymbol();
 
-			if (treatments.length > 0)
-			{
-				addTreatmentPolygons(treatments);
+    // Handle map Draw and Edit toolbar functionality
+    function initToolbar() {
+        // Create and listen for polygon Draw events
+        tb = new Draw(map);
+        tb.on("draw-end", addGraphicOnSelect);
+        on(dom.byId("info"), "click", function(evt) {
+            if (evt.target.id === "info") {
+                return;
+            }
+            var tool = evt.target.id.toLowerCase();
+            tb.activate(tool);
+        });
 
-			}
-		});
+        // Create and listen for polygon Edit events
+        editToolbar = new Edit(map);
+        on(dom.byId("edit_polygon"), "click", function(e) {
+            edit_active = 1;
 
-		var fillSymbol = new SimpleFillSymbol();
-
-        // Handle map Draw and Edit toolbar functionality 
-		function initToolbar() {
-
-            // Create and listen for polygon Draw events
-			tb = new Draw(map);
-			tb.on("draw-end", addGraphic);
-			on(dom.byId("info"), "click", function(evt) {
-				if (evt.target.id === "info") {
-					return;
-				}
-				var tool = evt.target.id.toLowerCase();
-				tb.activate(tool);
+            // Start editing selected polygon
+            map.graphics.on("click", function(evt) {
+                if (edit_active > 0) {
+                    $("#save_polygon").show();
+                    event.stop(evt);
+                    activateToolbar(evt.graphic);
+                }
             });
-            
-            // Create and listen for polygon Edit events
-            editToolbar = new Edit(map); 
-			on(dom.byId('edit_polygon'), 'click', function(e){
 
-				edit_active = 1;
+            // Deactivate tool on next map click
+            map.on("click", function(evt) {
+                editToolbar.deactivate();
+                event.stop(e);
+            });
 
-                // Start editing selected polygon
-				map.graphics.on("click", function(evt) {
-					if (edit_active > 0) {
-                        $('#save_polygon').show();
-                        event.stop(evt);
-                        activateToolbar(evt.graphic);
-				    }
-                });
-                
-                // Deactivate tool on next map click
-                map.on("click", function(evt){
-                    editToolbar.deactivate();
-                    event.stop(e);
-                });
+            // Also deactivate tool on button click
+            $("#save_polygon").on("click", function(evt) {
+                editToolbar.deactivate();
+                $("#save_polygon").hide();
+                event.stop(e);
+            });
 
-                // Also deactivate tool on button click
-                $('#save_polygon').on('click', function(evt){
-                    editToolbar.deactivate();
-                    $('#save_polygon').hide();
-                    event.stop(e);
-                })
-
-                // On-deactivate, handle new polygon coordinates in separate function
-                editToolbar.on("deactivate", function(evt) {
-                    if(evt.info.isModified){
-                        handle_polygon_edit(evt.graphic);
-                        edit_active = 0;
-                    }
-                });
-		    });
-		}
-
-        // Create and color polygon using passed rgba array
-function createPolySymbol(colorArray) {
-    var polySymbol = new esri.symbol.SimpleFillSymbol(
-      SimpleFillSymbol.STYLE_SOLID,
-      new SimpleLineSymbol(
-        SimpleLineSymbol.STYLE_SOLID,
-        new Color(colorArray),
-        4
-      ),
-      new Color([0, 0, 0, 0.0])
-    );
-
-    return polySymbol;
-  }
-
-  // Create colored-polygon using the technology_id
-  function selectPoly(techId) {
-    let polySymbol = {};
-
-    switch (techId) {
-      case "101":
-        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
-        break;
-
-      case "102":
-        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
-        break;
-
-      case "103":
-        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
-        break;
-
-      case "104":
-        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
-        break;
-
-      case "105":
-        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
-        break;
-
-      case "106":
-        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
-        break;
-
-      case "107":
-        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
-        break;
-
-      case "108":
-        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
-        break;
-
-      case "109":
-        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
-        break;
-
-      case "110":
-        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
-        break;
-
-      case "201":
-        polySymbol = createPolySymbol([143, 199, 77, 1.0]);
-        break;
-
-      case "202":
-        polySymbol = createPolySymbol([143, 199, 77, 1.0]);
-        break;
-
-      case "203":
-        polySymbol = createPolySymbol([143, 199, 77, 1.0]);
-        break;
-
-      case "204":
-        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
-        break;
-
-      case "205":
-        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
-        break;
-
-      case "206":
-        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
-        break;
-
-      case "207":
-        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
-        break;
-
-      case "208":
-        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
-        break;
-
-      case "209":
-        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
-        break;
-
-      case "210":
-        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
-        break;
-
-      case "300":
-        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
-        break;
-
-      case "301":
-        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
-        break;
-
-      case "302":
-        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
-        break;
-
-      case "303":
-        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
-        break;
-
-      case "400":
-        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
-        break;
-
-      case "401":
-        polySymbol = createPolySymbol([102, 43, 145, 1.0]);
-        break;
-
-      case "402":
-        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
-        break;
-
-      case "403":
-        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
-        break;
-
-      case "404":
-        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
-        break;
-
-      case "500":
-        polySymbol = createPolySymbol([143, 199, 77, 1.0]);
-        break;
-
-      case "501":
-        polySymbol = createPolySymbol([143, 199, 77, 1.0]);
-        break;
-
-      case "502":
-        polySymbol = createPolySymbol([143, 199, 77, 1.0]);
-        break;
-
-      case "503":
-        polySymbol = createPolySymbol([143, 199, 77, 1.0]);
-        break;
-
-      case "504":
-        polySymbol = createPolySymbol([143, 199, 77, 1.0]);
-        break;
-
-      case "505":
-        polySymbol = createPolySymbol([143, 199, 77, 1.0]);
-        break;
-
-      case "506":
-        polySymbol = createPolySymbol([143, 199, 77, 1.0]);
-        break;
-
-      case "600":
-        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
-        break;
-
-      case "601":
-        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
-        break;
-
-      case "602":
-        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
-        break;
-
-      case "603":
-        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
-        break;
-
-      case "604":
-        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
-        break;
-
-      case "605":
-        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
-        break;
-
-      case "606":
-        polySymbol = createPolySymbol([43, 171, 227, 1.0]);
-        break;
-
-      case "607":
-        polySymbol = createPolySymbol([143, 199, 77, 1.0]);
-        break;
-
-      case "608":
-        polySymbol = createPolySymbol([143, 199, 77, 1.0]);
-        break;
+            // On-deactivate, handle new polygon coordinates in separate function
+            editToolbar.on("deactivate", function(evt) {
+                if (evt.info.isModified) {
+                    handle_polygon_edit(evt.graphic);
+                    edit_active = 0;
+                }
+            });
+        });
     }
 
-    return polySymbol;
-  }
+    // Create and color polygon using passed rgba array
+    function createPolySymbol(colorArray) {
+        var polySymbol = new esri.symbol.SimpleFillSymbol(
+            SimpleFillSymbol.STYLE_SOLID,
+            new SimpleLineSymbol(
+                SimpleLineSymbol.STYLE_SOLID,
+                new Color(colorArray),
+                4
+            ),
+            new Color([0, 0, 0, 0.0])
+        );
 
-		/***********************************
-			Need to have an array of custom polygons so we can access them later
-			See 208 viewer for example with technology icon & color coding
+        return polySymbol;
+    }
 
-		************************************/
-		function addGraphic(evt) {
+    // Create colored-polygon using the technology_id
+    function selectPoly(techId) {
+        let polySymbol = {};
 
-            // Handle parcel selection icons
-            if (evt.geometry.type === 'point') {
+        switch (techId) {
+            case "101":
+                polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+                break;
 
-                // Create point graphic based on click coordinates
-                var icon = $('#select_area').data('icon');
-                var imageURL = "http://www.cch2o.org/Matrix/icons/" + icon;
-                var pointSymbology = new PictureMarkerSymbol(imageURL,30,30)
-                var pointGeometry = new Point({
-                    x: evt.geometry.x,
-                    y: evt.geometry.y,
-                    spatialReference: { wkid: 102100, latestWkid: 3857 }
-                })
-                var pointGraphic = new Graphic(pointGeometry, pointSymbology, {
-                    keeper: true,
-                    'treatment_id': 1
-                })
+            case "102":
+                polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+                break;
 
-                // Add point graphic to the map, deactivate draw toolbar, enable map navigation
-                map.graphics.add(pointGraphic)
-                tb.deactivate();
-                map.enableMapNavigation();
-                
-                // Associate parcel to scenario using click coordinates
-                var url = "/map/point" + '/' + evt.geometry.x + '/' + evt.geometry.y;
-                $.ajax({
-                    method: 'GET',
-                    url: url
-                })
-                .done(function(msg) {
-                    $('.modal-wrapper').show();
-                    $('#popdown-opacity').show();
-                    $('#unit_metric_label').show();
-                    $('#unit_metric').show();
-                })
+            case "103":
+                polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+                break;
 
-                // Finish addGraphic function
-                return
+            case "104":
+                polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+                break;
+
+            case "105":
+                polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+                break;
+
+            case "106":
+                polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+                break;
+
+            case "107":
+                polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+                break;
+
+            case "108":
+                polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+                break;
+
+            case "109":
+                polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+                break;
+
+            case "110":
+                polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+                break;
+
+            case "201":
+                polySymbol = createPolySymbol([143, 199, 77, 1.0]);
+                break;
+
+            case "202":
+                polySymbol = createPolySymbol([143, 199, 77, 1.0]);
+                break;
+
+            case "203":
+                polySymbol = createPolySymbol([143, 199, 77, 1.0]);
+                break;
+
+            case "204":
+                polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+                break;
+
+            case "205":
+                polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+                break;
+
+            case "206":
+                polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+                break;
+
+            case "207":
+                polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+                break;
+
+            case "208":
+                polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+                break;
+
+            case "209":
+                polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+                break;
+
+            case "210":
+                polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+                break;
+
+            case "300":
+                polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+                break;
+
+            case "301":
+                polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+                break;
+
+            case "302":
+                polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+                break;
+
+            case "303":
+                polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+                break;
+
+            case "400":
+                polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+                break;
+
+            case "401":
+                polySymbol = createPolySymbol([102, 43, 145, 1.0]);
+                break;
+
+            case "402":
+                polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+                break;
+
+            case "403":
+                polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+                break;
+
+            case "404":
+                polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+                break;
+
+            case "500":
+                polySymbol = createPolySymbol([143, 199, 77, 1.0]);
+                break;
+
+            case "501":
+                polySymbol = createPolySymbol([143, 199, 77, 1.0]);
+                break;
+
+            case "502":
+                polySymbol = createPolySymbol([143, 199, 77, 1.0]);
+                break;
+
+            case "503":
+                polySymbol = createPolySymbol([143, 199, 77, 1.0]);
+                break;
+
+            case "504":
+                polySymbol = createPolySymbol([143, 199, 77, 1.0]);
+                break;
+
+            case "505":
+                polySymbol = createPolySymbol([143, 199, 77, 1.0]);
+                break;
+
+            case "506":
+                polySymbol = createPolySymbol([143, 199, 77, 1.0]);
+                break;
+
+            case "600":
+                polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+                break;
+
+            case "601":
+                polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+                break;
+
+            case "602":
+                polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+                break;
+
+            case "603":
+                polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+                break;
+
+            case "604":
+                polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+                break;
+
+            case "605":
+                polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+                break;
+
+            case "606":
+                polySymbol = createPolySymbol([43, 171, 227, 1.0]);
+                break;
+
+            case "607":
+                polySymbol = createPolySymbol([143, 199, 77, 1.0]);
+                break;
+
+            case "608":
+                polySymbol = createPolySymbol([143, 199, 77, 1.0]);
+                break;
+        }
+
+        return polySymbol;
+    }
+
+    // Create and add point graphic to map
+    // Save point coordinates to Laravel session
+    function addPointOnSelect (evt) {
+
+        // Create point graphic based on clicked-coordinates
+        var icon = $("#select_area").data("icon");
+        var imageURL = "http://www.cch2o.org/Matrix/icons/" + icon;
+        var pointSymbology = new PictureMarkerSymbol(imageURL, 30, 30);
+        var pointGeometry = new Point({
+            x: evt.geometry.x,
+            y: evt.geometry.y,
+            spatialReference: { wkid: 102100, latestWkid: 3857 }
+        });
+        var pointGraphic = new Graphic(pointGeometry, pointSymbology, {
+            keeper: true,
+            treatment_id: 1
+        });
+
+        // Add point graphic to the map, deactivate draw toolbar, enable map navigation
+        map.graphics.add(pointGraphic);
+        tb.deactivate();
+        map.enableMapNavigation();
+
+        // Save clicked coordinates to Laravel session
+        var url =
+            "/map/point" + "/" + evt.geometry.x + "/" + evt.geometry.y;
+        $.ajax({
+            method: "GET",
+            url: url
+        }).done(function(msg) {
+            $(".modal-wrapper").toggle();
+            $("#popdown-opacity").show();
+            $("#unit_metric_label").show();
+            $("#unit_metric").show();
+        });
+
+        // Finish addGraphic function
+        return;
+    }
+
+    // Create and add polygon geometry to map on-selection
+    function addPolygonOnSelect (evt) {
+
+        // Obtain technology id from select polygon div
+        let techId = $("#select_polygon").data("techId");
+
+        // Create and color polygon using technology id
+        let polySymbol = selectPoly(techId);
+
+        // Deactivate the toolbar and clear existing graphics
+        tb.deactivate();
+        map.enableMapNavigation();
+
+        // Initialize treatment id attribute for polygon
+        let attr = { treatment_id: 1 };
+
+        // Add polygon and symbology to map with attached treatment id
+        map.graphics.add(new Graphic(evt.geometry, polySymbol, attr));
+
+        // Retrieve coordinate arrays
+        let nodeArray = evt.geometry.rings[0];
+
+        // Remove comma separator from individual node pairs then join together comma-separated as string
+        let nodeString = nodeArray
+            .map(coords => {
+                return coords.join(" ");
+            })
+            .join();
+
+        // Save coordinate string to session
+        var url = "/map/poly";
+        var data = { coordString: nodeString };
+        $.ajax({
+            method: "POST",
+            data: data,
+            url: url
+        })
+        .done(function(msg) {
+            $("#popdown-opacity").show();
+            $(".modal-wrapper").toggle();
+        })
+        .fail(function(msg) {
+            alert(
+                "There was a problem saving the polygon. Please send this error message info@capecodcommission.org: <br />Response: " +
+                    msg.status +
+                    " " +
+                    msg.statusText
+            );
+        });
+    }
+
+    // Handle draw-end event by creating a point or polygon graphic on the map
+    function addGraphicOnSelect(evt) {
+        
+        if (evt.geometry.type === "point") {
+            addPointOnSelect(evt)
+        }
+
+        else if (evt.geometry.type === "polygon") {
+            addPolygonOnSelect(evt)
+        }
+    }
+
+    function activateToolbar(graphic) {
+        var tool = 0;
+
+        if (registry.byId("tool_move").checked) {
+            tool = tool | Edit.MOVE;
+        }
+        if (registry.byId("tool_vertices").checked) {
+            tool = tool | Edit.EDIT_VERTICES;
+        }
+        if (registry.byId("tool_scale").checked) {
+            tool = tool | Edit.SCALE;
+        }
+        if (registry.byId("tool_rotate").checked) {
+            tool = tool | Edit.ROTATE;
+        }
+        // enable text editing if a graphic uses a text symbol
+        if (graphic.symbol.declaredClass === "esri.symbol.TextSymbol") {
+            tool = tool | Edit.EDIT_TEXT;
+        }
+        //specify toolbar options
+        var options = {
+            allowAddVertices: true, //registry.byId("vtx_ca").checked,
+            allowDeleteVertices: true, //registry.byId("vtx_cd").checked,
+            uniformScaling: true //registry.byId("uniform_scaling").checked
+        };
+        editToolbar.activate(tool, graphic, options);
+    }
+
+    // Add point graphic with treatment properties to map
+    function addPointOnLoad (treatmentid, treatmentArea, imageURL, parcels, n_removed, popupVal, sr, geo_string) {
+        
+        // Remove SQL Spatial type and spatial reference from the geometry string
+        // Create point geometry and symbology
+        geo_string = geo_string.replace("POINT(", "").replace(", 3857)", "").split(", ");
+        var pointGeom = new Point({
+            x: parseFloat(geo_string[0]),
+            y: parseFloat(geo_string[1]),
+            spatialReference: sr
+        });
+        var pointSymbol = new PictureMarkerSymbol(imageURL, 30, 30);
+
+        // Create graphic using geometry and symbology
+        var pointGraphic = new Graphic(pointGeom, pointSymbol, {
+            keeper: true,
+            treatment_id: treatmentid
+        });
+
+        // Create popup template containing treatment properties
+        var template = new InfoTemplate({
+            title: popupVal,
+            content:
+                '<div align="left" class="treatment info technology"><img style="width:60pxfloat:right;margin-right:10px;" src=" ' +
+                imageURL +
+                '" /><strong>Treatment Stats</strong>:<br /> ' +
+                treatmentArea +
+                " Acres<br/>" +
+                parcels +
+                " parcels treated<br/>" +
+                n_removed +
+                "kg (unatt) N removed.<br />"
+        });
+
+        // Assign popup template to point graphic
+        // Add graphic to map
+        pointGraphic.setInfoTemplate(template);
+        map.graphics.add(pointGraphic);
+    }
+
+
+    // Add polygon graphic with treatment properties to map
+    function addPolygonOnLoad (treatmentid, treatmentArea, imageURL, parcels, n_removed, popupVal, sr, geo_string, polySymbol) {
+
+        // Translate SQL Spatial geometry string to an array of polygon nodes consumable for polygon creation
+        let geoArray = geo_string.replace("POLYGON((", "").replace("))", "").split(",");
+        let nodes = [];
+        geoArray.map((coords) => {
+            let splitCoords = coords.split(' ');
+            let node = [ parseFloat(splitCoords[0]), parseFloat(splitCoords[1]) ];
+            nodes.push(node)
+        });
+        nodes = [nodes]
+
+        // Create polygon geometry and symbology using treatment properties
+        let geo = { rings: nodes, spatialReference: sr };
+        let poly = new esri.geometry.Polygon(geo);
+        let attr = { treatment_id: treatmentid };
+
+        let polyGraphic = new esri.Graphic(poly, polySymbol, attr);
+        let template = new InfoTemplate({
+            title: popupVal,
+            content:
+                '<div align="left" class="treatment info technology"><img style="width:60pxfloat:right;margin-right:10px;" src=" ' +
+                imageURL +
+                '" /><strong>Treatment Stats</strong>:<br /> ' +
+                treatmentArea +
+                " Acres<br/>" +
+                parcels +
+                " parcels treated<br/>" +
+                n_removed +
+                "kg (unatt) N removed.<br />"
+        });
+
+        // Assign popup template to polygon graphic
+        // Add graphic to map
+        polyGraphic.setInfoTemplate(template);
+        map.graphics.add(polyGraphic);
+    }
+
+    // Add point and polygon graphics based on treatment geometry on-load of map
+    function addGraphicsOnLoad(treatments) {
+
+        treatments.map((row) => {
+
+            // Retrieve appropriate treatment properties to pass into point or polygon graphics loading
+            const treatmentType = row.TreatmentType_Name;
+            const treatmentid = row.TreatmentID
+            const imageURL = "http://www.cch2o.org/Matrix/icons/" + row.treatment_icon;
+            const treatmentArea = Math.round(row.Treatment_Acreage);
+            const parcels = row.Treatment_Parcels;
+            const n_removed = Math.round(row.Nload_Reduction);
+            const popupVal = treatmentType + " (" + row.TreatmentID + ")";
+            const sr = { wkid: 102100, latestWkid: 3857 };
+            const treatmentTypeId = row.TreatmentType_ID;
+            const polySymbol = selectPoly(treatmentTypeId);
+            const geo_string = row.POLY_STRING;
+
+            // Load point or polygon creation by geometry type
+            if ( row.Custom_POLY == 0 && row.POLY_STRING.startsWith("POINT") ) {
+
+                addPointOnLoad(treatmentid,treatmentArea,imageURL,parcels,n_removed,popupVal,sr,geo_string)
             }
+            else if ( row.Custom_POLY == 1 && row.POLY_STRING.startsWith("POLYGON") ) {
 
-            // Obtain technology id from select polygon div
-            let techId = $('#select_polygon').data('techId');
-            
-            // Create and color polygon using technology id
-            let polySymbol = selectPoly(techId)
+                addPolygonOnLoad(treatmentid,treatmentArea,imageURL,parcels,n_removed,popupVal,sr,geo_string,polySymbol)
+            }
+        })
+    }
 
-			// Deactivate the toolbar and clear existing graphics
-			tb.deactivate();
-            map.enableMapNavigation();
-            
-            // Initialize treatment id attribute for polygon
-            let attr = {'treatment_id': 1};
-            
-            // Add polygon and symbology to map with attached treatment id
-			map.graphics.add(new Graphic(evt.geometry, polySymbol, attr));
+    // Handle polygon edit once complete
+    function handle_polygon_edit(evt) {
 
-			// Retrieve coordinate arrays
-			let nodeArray = evt.geometry.rings[0];
+        let treatment_id = evt.attributes.treatment_id;
 
-			// Remove comma separator from individual node pairs then join together comma-separated as string
-			let nodeString = nodeArray
-				.map((coords) => {
-					return coords.join(' ')
-				})
-				.join()
+        // Retrieve coordinate arrays
+        let nodeArray = evt.geometry.rings[0];
 
-            // Save string coordinate string array to session
-			var url = '/map/poly';
-			var data = {coordString: nodeString};
-			$.ajax({
-                method: 'POST',
-                data: data,
-                url: url
+        // Remove comma separator from individual node pairs then join together comma-separated as string
+        let nodeString = nodeArray
+            .map(coords => {
+                return coords.join(" ");
             })
-            .done(function(msg) {
-                $('#popdown-opacity').show();
-                $('.modal-wrapper').show()
-            })
-            .fail(function(msg){
-                alert('There was a problem saving the polygon. Please send this error message info@capecodcommission.org: <br />Response: ' + msg.status + ' ' + msg.statusText );
-            });
-		}
-
-
-		function activateToolbar(graphic) {
-		  var tool = 0;
-
-		  if (registry.byId("tool_move").checked) {
-			tool = tool | Edit.MOVE;
-		  }
-		  if (registry.byId("tool_vertices").checked) {
-			tool = tool | Edit.EDIT_VERTICES;
-		  }
-		  if (registry.byId("tool_scale").checked) {
-			tool = tool | Edit.SCALE;
-		  }
-		  if (registry.byId("tool_rotate").checked) {
-			tool = tool | Edit.ROTATE;
-		  }
-		  // enable text editing if a graphic uses a text symbol
-		  if ( graphic.symbol.declaredClass === "esri.symbol.TextSymbol" ) {
-			tool = tool | Edit.EDIT_TEXT;
-		  }
-		  //specify toolbar options
-		  var options = {
-			allowAddVertices: true,//registry.byId("vtx_ca").checked,
-			allowDeleteVertices: true, //registry.byId("vtx_cd").checked,
-			uniformScaling: true //registry.byId("uniform_scaling").checked
-
-		  };
-		  editToolbar.activate(tool, graphic, options);
-		}
-
-
-
-		function addTreatmentPolygons(treatments) {
-			var polyGLs = [];
-			var pointGLs = []
-			var polyGL = new esri.layers.GraphicsLayer();
-			var areaGL = new esri.layers.GraphicsLayer();
-			var pointGL = new esri.layers.GraphicsLayer();
-			polyGLs.push(polyGL);
-			pointGLs.push(pointGL);
-			// console.log(polyGLs);
-			// areaGLs.push(areaGL);
-			var pointRings = []
-			var imageURL1 = ''
-			var treatmentArea1 = ''
-			var parcels1 = ''
-			var n_removed1 = ''
-			var popupVal1 = ''
-			var treatmentType1 = ''
-
-            var pointGLArray = []
-
-			var sr = { wkid: 102100, latestWkid: 3857 };
-
-			for (var i = 0; i < treatments.length; i++) {
-
-				var Treatment = treatments[i]
-
-				if (Treatment.Custom_POLY == 0 && Treatment.POLY_STRING.startsWith('POINT')) {
-
-					treatmentType1 = Treatment.TreatmentType_Name;
-					imageURL1 = "http://www.cch2o.org/Matrix/icons/"+Treatment.treatment_icon;
-					treatmentArea1 = Math.round(Treatment.Treatment_Acreage);
-					parcels1 = Treatment.Treatment_Parcels;
-					n_removed1 = Math.round(Treatment.Nload_Reduction);
-					popupVal1 = treatmentType1 + ' (' + Treatment.TreatmentID + ')';
-
-					var point_string = Treatment.POLY_STRING;
-						point_string = point_string.replace('POINT(', '');
-						point_string = point_string.replace(', 3857)', '');
-					var geometry1 = point_string.split(', ');
-
-                    var pointSymbol = new PictureMarkerSymbol(imageURL1,30,30)
-
-                    var pointGeom = new Point({
-
-                            x: parseFloat(geometry1[0]),
-                            y: parseFloat(geometry1[1]),
-                            spatialReference: sr
-                    })
-
-                    var pointGraphic = new Graphic(pointGeom, pointSymbol, {
-                        keeper: true,
-                        'treatment_id': Treatment.TreatmentID
-                    })
-
-                    var template = new InfoTemplate({
-                    title: popupVal1,
-                    content: '<div align="left" class="treatment info technology"><img style="width:60pxfloat:right;margin-right:10px;" src=" '
-                                + imageURL1 + '" /><strong>Treatment Stats</strong>:<br /> '
-                                + treatmentArea1 + " Acres<br/>"
-                                + parcels1 + " parcels treated<br/>" + n_removed1 + "kg (unatt) N removed.<br />"
-                                // + "<button class='edit_poly' data-treatment='"+Treatment.TreatmentID+"'>Edit Polygon</button>  "
-                                // + "<button class='save_poly' data-treatment='"+Treatment.TreatmentID+"'>Save Polygon</button></div>"
-                    });
-
-                    pointGraphic.setInfoTemplate(template)
-
-                    map.graphics.add(pointGraphic)
-				}
-			}
-
-
-			for (var i = treatments.length - 1; i >= 0; i--)
-			{
-				var Treatment = treatments[i];
-				var xList = [];
-				var yList = [];
-				var scenarioID = Treatment.ScenarioID;
-				// console.log(Treatment);
-				var treatmentArea = Math.round(Treatment.Treatment_Acreage);
-				var treatmentClass = Treatment.Treatment_Class;
-				var parcels = Treatment.Treatment_Parcels;
-				var treatmentType = Treatment.TreatmentType_Name;
-				var treatmentTypeId = Treatment.TreatmentType_ID;
-				var n_removed = Math.round(Treatment.Nload_Reduction);
-				var popupVal = treatmentType + ' (' + Treatment.TreatmentID + ')';
-
-				let polySymbol = selectPoly(treatmentTypeId)
-
-				var imageURL = "http://www.cch2o.org/Matrix/icons/"+Treatment.treatment_icon;
-				var pointSymbol = new PictureMarkerSymbol(imageURL,30,30)
-
-
-				if (Treatment.Custom_POLY == 1 && Treatment.POLY_STRING.startsWith('POLYGON'))
-				{
-					var nodes = [];
-					var rings = [];
-					var poly_string = Treatment.POLY_STRING;
-						poly_string = poly_string.replace('POLYGON((', '');
-						poly_string = poly_string.replace('))', '');
-					var geometry = poly_string.split(', ');
-
-					for (var j = 0; j < geometry.length; j++)
-					{
-						var space = geometry[j].indexOf(' ');
-						var x = geometry[j].substr(0, space);
-						var y = geometry[j].substr(space);
-						// console.log('geometry: ' + geometry[j]);
-						// console.log('x: ' + x + ' y: '+y);
-
-						xList.push(x);
-						yList.push(y);
-						var point = [parseFloat(x), parseFloat(y)];
-						nodes.push(point);
-					};
-					rings.push(nodes);
-					var geo = { rings: rings, spatialReference: sr };
-
-					// var popupVal2 = "Scenario " + scenarioID;
-
-					var poly = new esri.geometry.Polygon(geo);
-					var attr = {'treatment_id': Treatment.TreatmentID};
-					var polyGraphic = new esri.Graphic(poly, polySymbol, attr);
-					var template = new InfoTemplate({
-						title: popupVal,
-						content: '<div align="left" class="treatment info technology"><img style="width:60pxfloat:right;margin-right:10px;" src=" '
-									+ imageURL + '" /><strong>Treatment Stats</strong>:<br /> '
-									+ treatmentArea + " Acres<br/>"
-									+ parcels + " parcels treated<br/>" + n_removed + "kg (unatt) N removed.<br />"
-									// + "<button class='edit_poly' data-treatment='"+Treatment.TreatmentID+"'>Edit Polygon</button>  "
-									// + "<button class='save_poly' data-treatment='"+Treatment.TreatmentID+"'>Save Polygon</button></div>"
-
-					});
-					polyGraphic.setInfoTemplate(template);
-					map.graphics.add(polyGraphic);
-				}
-			}
-		}
-
-        // Handle polygon edit once complete
-		function handle_polygon_edit(treatment_poly) {
-
-            // Pass xy coordinates of edited polygon as string to API route
-			var new_polygon = '';
-			for (var i = 0; i < treatment_poly.geometry.rings[0].length; i++) {
-				new_polygon += treatment_poly.geometry.rings[0][i][0] + ' ';
-				new_polygon += treatment_poly.geometry.rings[0][i][1] + ', ';
-			}
-			var treat_id = treatment_poly.attributes.treatment_id;
-			var len = new_polygon.length;
-            new_polygon = new_polygon.substring(0, len - 2);
-            
-            // Package coordinates as payload
-			var data = {treatment: treat_id, polystring: new_polygon};
-			var url = "/update_polygon";
-			$.ajax({
-                method: 'POST',
-                data: data,
-                url: url
-            })
-            .done(function(msg) {
-
-                // When complete, open update window of relevant applied treatment
-                $("li.technology[data-treatment='"+treat_id+"'] a").trigger('click');
-            })
-            .fail(function(msg){
-                alert('There was a problem saving the polygon. Please send this error message to mario.carloni@capecodcommission.org: <br />Response: ' + msg.status + ' ' + msg.statusText );
-            });
-		}
-
-
-
-
-
-		/*******************************
-		 *
-		 *	This is the ArcGIS Basemap Gallery which (used to) break everything
-		 *
-		 *********************************/
-
-		var basemapGallery = new BasemapGallery({
-			   showArcGISBasemaps: true,
-			   map: map
-			 }, "basemapGallery");
-			 basemapGallery.startup();
-
-			 basemapGallery.on("error", function(msg) {
-			   console.log("basemap gallery error:  ", msg);
-			 });
-
-
-		var extent;
-
-
-		var embayments = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/4', {
-			mode: FeatureLayer.MODE_ONDEMAND,
-			outFields: ["*"],
-			// maxAllowableOffset: map.extent,
-			opacity: 1
-		});
-		embayments.setDefinitionExpression('EMBAY_ID = ' + selectlayer);
-
-		map.addLayer(embayments);
-		// var point = (embayments.X_Centroid, embayments.Y_Centroid);
-		// map.centerAndZoom(point, 11);
-		// map.setExtent(embayments.fullExtent);
-
-		var subwater_template = new InfoTemplate({
-
-			title: "<b>Subwatershed</b>",
-			content: "${SUBWATER_D}"
-		});
-
-
-		var Subwatersheds = new FeatureLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/6", {
-			mode: FeatureLayer.MODE_ONDEMAND,
-			outFields: ["*"],
-			infoTemplate: subwater_template,
-			opacity: 1
-		});
-		Subwatersheds.setDefinitionExpression('EMBAY_ID = ' + selectlayer);
-
-		Subwatersheds.hide();
-		// Subwatersheds.setExtent(extent);
-		map.addLayer(Subwatersheds);
-
-		var subem_template = new InfoTemplate({
-
-			title: "<b>Subembayment</b>",
-			content: "${SUBEM_DISP}"
-		});
-			// subem_template.setTitle("<b>${SUBEM_DISP}</b>");
-			// subem_template.setContent("${SUBEM_DISP}");
-
-		var Subembayments = new FeatureLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/11", {
-			mode: FeatureLayer.MODE_ONDEMAND,
-			outFields: ["*"],
-			infoTemplate: subem_template,
-			opacity: 1
-		});
-		Subembayments.setDefinitionExpression('EMBAY_ID = ' + selectlayer);
-		// Subembayments.show();
-		Subembayments.hide();
-		// console.log(Subembayments);
-		map.addLayer(Subembayments);
-
-		var nitro_template = new InfoTemplate({
-
-			title: "Info",
-			content: "<table class = 'table'><tbody>" +
-						"<tr style = 'height: 2px'>" + "<td style = 'padding: 0px; margin: 0px;'>" + "Water Use (Gal/Day): " + "</td>" + "<td style = 'padding: 0px; margin: 0px;'>" + "${WaterUseExisting:NumberFormat(places:2)}" + "</td>" + "</tr>" +
-						"<tr style = 'height: 2px'>" + "<td style = 'padding: 0px; margin: 0px;'>" + "Waste Water Treatment: " + "</td>" + "<td style = 'padding: 0px; margin: 0px;'>" + "${WWTreatmentExisting}" + "</td>" + "</tr>" +
-						"<tr style = 'height: 2px'>" + "<td style = 'padding: 0px; margin: 0px;'>" + "Land Use Category: " + "</td>" + "<td style = 'padding: 0px; margin: 0px;'>" + "${LandUseCatExisting}" + "</td>" + "</tr>" +
-						"<tr style = 'height: 2px'>" + "<td style = 'padding: 0px; margin: 0px;'>" + "Water Use Source: " + "</td>" + "<td style = 'padding: 0px; margin: 0px;'>" + "${WaterUseSource}" + "</td>" + "</tr>" +
-						"<tr style = 'height: 2px'>" + "<td style = 'padding: 0px; margin: 0px;'>" + "Unattn Nitrogen Load (Septic) (Kg/Yr): " + "</td>" + "<td style = 'padding: 0px; margin: 0px;'>" + "${NLoad_Septic_Existing:NumberFormat(places:2)}" + "</td>" + "</tr>" +
-						"<tr style = 'height: 2px'>" + "<td style = 'padding: 0px; margin: 0px;'>" + "Unattn Nitrogen Load (Fertilization) (Kg/Yr): " + "</td>" + "<td style = 'padding: 0px; margin: 0px;'>" + "${Nload_Fert:NumberFormat(places:2)}" + "</td>" + "</tr>" +
-						"<tr style = 'height: 2px'>" + "<td style = 'padding: 0px; margin: 0px;'>" + "Unattn Nitrogen Load (Stormwater) (Kg/Yr): " + "</td>" + "<td style = 'padding: 0px; margin: 0px;'>" + "${Nload_Stormwater:NumberFormat(places:2)}" + "</td>" + "</tr>" +
-						"<tr style = 'height: 2px'>" + "<td style = 'padding: 0px; margin: 0px;'>" + "Unattn Nitrogen Load (Atmosphere) (Kg/Yr): " + "</td>" + "<td style = 'padding: 0px; margin: 0px;'>" + "${Nload_Atmosphere:NumberFormat(places:2)}" + "</td>" + "</tr>" +
-						"<tr style = 'height: 2px'>" + "<td style = 'padding: 0px; margin: 0px;'>" + "Unattn Nitrogen Load (Full) (Kg/Yr): " + "</td>" + "<td style = 'padding: 0px; margin: 0px;'>" + "${Nload_Full:NumberFormat(places:2)}" + "</td>" + "</tr>" +
-						"</tbody></table>"
-		});
-
-		// Layer 13 is now used for all point layers
-		var NitrogenLayer = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13', {
-				mode: FeatureLayer.MODE_ONDEMAND,
-				outFields: ["*"],
-				opacity: 1,
-				infoTemplate: nitro_template
-			}
-		);
-
-		var symbol = new SimpleMarkerSymbol()
-			symbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE)
-			symbol.setOutline(null)
-			symbol.setColor(new Color([255,153,0]))
-			// symbol.setSize("8")
-
-		var renderer = new SimpleRenderer(symbol)
-			renderer.setSizeInfo({
-	        	field: "Nload_Full",
-	        	minSize: 2,
-                // {
-                //     type: 'sizeInfo',
-                //     expression: 'view.scale',
-                //     stops: [
-                //         {value: 5, size: 20},
-                //         {value: 10, size: 10},
-                //         {value: 20, size: 8},
-                //         {value: 50, size: 5},
-                //         {value: 100, size: 4}
-                //     ]
-                // },
-	        	maxSize: 20,
-                // {
-                //     type: 'sizeInfo',
-                //     expression: 'view.scale',
-                //     stops: [
-                //         {value: 5, size: 20},
-                //         {value: 10, size: 15},
-                //         {value: 20, size: 10},
-                //         {value: 50, size: 5},
-                //         {value: 100, size: 4}
-                //     ]
-                // },
-	        	minDataValue: 1,
-	        	maxDataValue: 25,
-                legendOptions: {
-                    customValues: [5,10,20,50,100]
-                }
-	        })
-
-	        var query = new Query()
-				query.where = "1=1"
-
-			Subembayments.queryFeatures(query, selectinBuffer)
-
-			NitrogenLayer.setRenderer(renderer)
-
-	        NitrogenLayer.hide()
-			map.addLayer(NitrogenLayer);
-
-        // Layer 13 is now used for all point layers
-		var WasteWater = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13', {
-				mode: FeatureLayer.MODE_ONDEMAND,
-				outFields: ["*"],
-				opacity: 1,
-				infoTemplate: nitro_template
-			}
-
-		);
-
-		var wasteSymbol = new SimpleMarkerSymbol()
-			wasteSymbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE)
-			wasteSymbol.setOutline(null)
-			wasteSymbol.setColor(new Color([124,252,0]))
-			wasteSymbol.setSize("8")
-
-		var wasteRenderer = new SimpleRenderer(wasteSymbol)
-			wasteRenderer.setSizeInfo({
-	        	field: "WWFlowsExisting",
-	        	minSize: 3,
-	        	maxSize: 20,
-	        	minDataValue: 50,
-	        	maxDataValue: 1000,
-                legendOptions: {
-                    customValues: [200,400,600,800,1000]
-                }
-	        })
-
-	    WasteWater.setRenderer(wasteRenderer)
-
-		WasteWater.hide();
-		map.addLayer(WasteWater);
-
-
-		var Towns = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/5', {
-				mode: FeatureLayer.MODE_ONDEMAND,
-				outFields: ["*"],
-				opacity: .4,
-				// styling: false,
-				color: [255, 0, 0, 1],
-				width: 3
-			}
-
-		);
-		Towns.hide();
-		map.addLayer(Towns);
-
-        // Layer 13 is now used for all point layers
-		var TreatmentType = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13', {
-				mode: FeatureLayer.MODE_ONDEMAND,
-				outFields: ["*"],
-				opacity: 1,
-				infoTemplate: nitro_template
-			}
-
-		);
-
-		var treattypeSymbol = new SimpleMarkerSymbol()
-			treattypeSymbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE)
-			treattypeSymbol.setOutline(null)
-			treattypeSymbol.setColor(new Color([124,252,0]))
-			treattypeSymbol.setSize("5")
-
-		var treattypeRenderer = new UniqueValueRenderer(treattypeSymbol, "WWTreatmentExisting")
-			treattypeRenderer.addValue("GWDP", new SimpleMarkerSymbol().setColor(new Color([124,252,0])).setSize("5").setOutline(null))
-			treattypeRenderer.addValue("SEPTIC", new SimpleMarkerSymbol().setColor(new Color([205,133,63])).setSize("5").setOutline(null))
-			treattypeRenderer.addValue("SEWERED", new SimpleMarkerSymbol().setColor(new Color([238,130,238])).setSize("5").setOutline(null))
-
-	    TreatmentType.setRenderer(treattypeRenderer)
-
-		TreatmentType.hide();
-		map.addLayer(TreatmentType);
-
-
-		var TreatmentFacilities = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/9', {
-				mode: FeatureLayer.MODE_ONDEMAND,
-				outFields: ["*"],
-				opacity: 1
-			}
-
-		);
-		TreatmentFacilities.hide();
-		map.addLayer(TreatmentFacilities);
-
-
-		var EcologicalIndicators = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/Projects/208_Plan/MapServer/10', {
-				mode: FeatureLayer.MODE_ONDEMAND,
-				outFields: ["*"],
-				opacity: 1
-			}
-
-		);
-		EcologicalIndicators.hide();
-		map.addLayer(EcologicalIndicators);
-
-		var ShallowGroundwater = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/Projects/208_Plan/MapServer/32', {
-				mode: FeatureLayer.MODE_ONDEMAND,
-				outFields: ["*"],
-				opacity: .5
-			}
-
-		);
-		ShallowGroundwater.hide();
-		map.addLayer(ShallowGroundwater);
-
-        // Layer 13 is now used for all point layers
-		var LandUse = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13', {
-				mode: FeatureLayer.MODE_ONDEMAND,
-				outFields: ["*"],
-				opacity: .5,
-				infoTemplate: nitro_template
-			}
-
-		);
-
-		var landuseSymbol = new SimpleMarkerSymbol()
-			landuseSymbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE)
-			landuseSymbol.setOutline(null)
-			landuseSymbol.setColor(new Color([124,252,0]))
-			landuseSymbol.setSize("5")
-
-		var landuseRenderer = new UniqueValueRenderer(landuseSymbol, "LandUseCatExisting")
-
-			landuseRenderer.addValue({
-                value: "RESSINGLEFAM",
-                symbol: new SimpleMarkerSymbol().setColor(new Color([122, 182, 245, 255])).setSize("5").setOutline(null),
-                label: "Residential Single Family"
-            })
-			landuseRenderer.addValue({
-                value: "COMMERCIAL",
-                symbol: new SimpleMarkerSymbol().setColor(new Color([255, 255, 0, 255])).setSize("5").setOutline(null),
-                label: "Commercial"
-            })
-			landuseRenderer.addValue({
-                value: "INDUSTRIAL",
-                symbol: new SimpleMarkerSymbol().setColor(new Color([115, 223, 255, 255])).setSize("5").setOutline(null),
-                label: "Industrial"
-            })
-			landuseRenderer.addValue({
-                value: "OTHERDEV",
-                symbol: new SimpleMarkerSymbol().setColor(new Color([107, 181, 123, 255])).setSize("5").setOutline(null),
-                label: "Other Developable"
-            })
-			landuseRenderer.addValue({
-                value: "OTHERNONDEV",
-                symbol: new SimpleMarkerSymbol().setColor(new Color([2197, 0, 255, 255])).setSize("5").setOutline(null),
-                label: "Other Non-Developable"
-            })
-			landuseRenderer.addValue({
-                value: "RESCONDOAPT",
-                symbol: new SimpleMarkerSymbol().setColor(new Color([205, 205, 102, 255])).setSize("5").setOutline(null),
-                label: "Residential Condo/Apartments"
-            })
-			landuseRenderer.addValue({
-                value: "RESMULTIFAM",
-                symbol: new SimpleMarkerSymbol().setColor(new Color([205, 46, 49, 255])).setSize("5").setOutline(null),
-                label: "Residential Multi Family"
-            })
-			landuseRenderer.addValue({
-                value: "VACANTDEV",
-                symbol: new SimpleMarkerSymbol().setColor(new Color([168, 0, 0, 255])).setSize("5").setOutline(null),
-                label: "Vacant Developable Land"
-            })
-			landuseRenderer.addValue({
-                value: "VACANTNONDEV",
-                symbol: new SimpleMarkerSymbol().setColor(new Color([76, 115, 0, 255])).setSize("5").setOutline(null),
-                label: "Vacant Non-Developable Land"
-            })
-
-		LandUse.setRenderer(landuseRenderer)
-
-		LandUse.hide();
-		map.addLayer(LandUse);
-
-		var FlowThrough = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/12', {
-			mode: FeatureLayer.MODE_ONDEMAND,
-			outFields: ["*"],
-			opacity: 1,
-			infoTemplate: nitro_template
-		});
-
-        FlowThrough.hide();
-        map.addLayer(FlowThrough);
-
-        var Contours = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/14', {
+            .join();
+
+        // Package coordinates as payload
+        var data = { treatment: treatment_id, polystring: nodeString };
+        var url = "/update_polygon";
+        $.ajax({
+            method: "POST",
+            data: data,
+            url: url
+        })
+        .done(function(msg) {
+            // When complete, open update window of relevant applied treatment
+            $("li.technology[data-treatment='" + treatment_id + "'] a").trigger(
+                "click"
+            );
+        })
+        .fail(function(msg) {
+            // Alert user if save unsuccessful
+            alert(
+                "There was a problem saving the polygon. Please send this error message to info@capecodcommission.org: <br />Response: " +
+                    msg.status +
+                    " " +
+                    msg.statusText
+            );
+        });
+    }
+
+    /*******************************
+     *
+     *	This is the ArcGIS Basemap Gallery which (used to) break everything
+     *
+     *********************************/
+
+    var basemapGallery = new BasemapGallery(
+        {
+            showArcGISBasemaps: true,
+            map: map
+        },
+        "basemapGallery"
+    );
+    basemapGallery.startup();
+
+    basemapGallery.on("error", function(msg) {
+        console.log("basemap gallery error:  ", msg);
+    });
+
+    var extent;
+
+    var embayments = new FeatureLayer(
+        "http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/4",
+        {
+            mode: FeatureLayer.MODE_ONDEMAND,
+            outFields: ["*"],
+            // maxAllowableOffset: map.extent,
+            opacity: 1
+        }
+    );
+    embayments.setDefinitionExpression("EMBAY_ID = " + selectlayer);
+
+    map.addLayer(embayments);
+    // var point = (embayments.X_Centroid, embayments.Y_Centroid);
+    // map.centerAndZoom(point, 11);
+    // map.setExtent(embayments.fullExtent);
+
+    var subwater_template = new InfoTemplate({
+        title: "<b>Subwatershed</b>",
+        content: "${SUBWATER_D}"
+    });
+
+    var Subwatersheds = new FeatureLayer(
+        "http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/6",
+        {
+            mode: FeatureLayer.MODE_ONDEMAND,
+            outFields: ["*"],
+            infoTemplate: subwater_template,
+            opacity: 1
+        }
+    );
+    Subwatersheds.setDefinitionExpression("EMBAY_ID = " + selectlayer);
+
+    Subwatersheds.hide();
+    // Subwatersheds.setExtent(extent);
+    map.addLayer(Subwatersheds);
+
+    var subem_template = new InfoTemplate({
+        title: "<b>Subembayment</b>",
+        content: "${SUBEM_DISP}"
+    });
+    // subem_template.setTitle("<b>${SUBEM_DISP}</b>");
+    // subem_template.setContent("${SUBEM_DISP}");
+
+    var Subembayments = new FeatureLayer(
+        "http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/11",
+        {
+            mode: FeatureLayer.MODE_ONDEMAND,
+            outFields: ["*"],
+            infoTemplate: subem_template,
+            opacity: 1
+        }
+    );
+    Subembayments.setDefinitionExpression("EMBAY_ID = " + selectlayer);
+    // Subembayments.show();
+    Subembayments.hide();
+    // console.log(Subembayments);
+    map.addLayer(Subembayments);
+
+    var nitro_template = new InfoTemplate({
+        title: "Info",
+        content:
+            "<table class = 'table'><tbody>" +
+            "<tr style = 'height: 2px'>" +
+            "<td style = 'padding: 0px; margin: 0px;'>" +
+            "Water Use (Gal/Day): " +
+            "</td>" +
+            "<td style = 'padding: 0px; margin: 0px;'>" +
+            "${WaterUseExisting:NumberFormat(places:2)}" +
+            "</td>" +
+            "</tr>" +
+            "<tr style = 'height: 2px'>" +
+            "<td style = 'padding: 0px; margin: 0px;'>" +
+            "Waste Water Treatment: " +
+            "</td>" +
+            "<td style = 'padding: 0px; margin: 0px;'>" +
+            "${WWTreatmentExisting}" +
+            "</td>" +
+            "</tr>" +
+            "<tr style = 'height: 2px'>" +
+            "<td style = 'padding: 0px; margin: 0px;'>" +
+            "Land Use Category: " +
+            "</td>" +
+            "<td style = 'padding: 0px; margin: 0px;'>" +
+            "${LandUseCatExisting}" +
+            "</td>" +
+            "</tr>" +
+            "<tr style = 'height: 2px'>" +
+            "<td style = 'padding: 0px; margin: 0px;'>" +
+            "Water Use Source: " +
+            "</td>" +
+            "<td style = 'padding: 0px; margin: 0px;'>" +
+            "${WaterUseSource}" +
+            "</td>" +
+            "</tr>" +
+            "<tr style = 'height: 2px'>" +
+            "<td style = 'padding: 0px; margin: 0px;'>" +
+            "Unattn Nitrogen Load (Septic) (Kg/Yr): " +
+            "</td>" +
+            "<td style = 'padding: 0px; margin: 0px;'>" +
+            "${NLoad_Septic_Existing:NumberFormat(places:2)}" +
+            "</td>" +
+            "</tr>" +
+            "<tr style = 'height: 2px'>" +
+            "<td style = 'padding: 0px; margin: 0px;'>" +
+            "Unattn Nitrogen Load (Fertilization) (Kg/Yr): " +
+            "</td>" +
+            "<td style = 'padding: 0px; margin: 0px;'>" +
+            "${Nload_Fert:NumberFormat(places:2)}" +
+            "</td>" +
+            "</tr>" +
+            "<tr style = 'height: 2px'>" +
+            "<td style = 'padding: 0px; margin: 0px;'>" +
+            "Unattn Nitrogen Load (Stormwater) (Kg/Yr): " +
+            "</td>" +
+            "<td style = 'padding: 0px; margin: 0px;'>" +
+            "${Nload_Stormwater:NumberFormat(places:2)}" +
+            "</td>" +
+            "</tr>" +
+            "<tr style = 'height: 2px'>" +
+            "<td style = 'padding: 0px; margin: 0px;'>" +
+            "Unattn Nitrogen Load (Atmosphere) (Kg/Yr): " +
+            "</td>" +
+            "<td style = 'padding: 0px; margin: 0px;'>" +
+            "${Nload_Atmosphere:NumberFormat(places:2)}" +
+            "</td>" +
+            "</tr>" +
+            "<tr style = 'height: 2px'>" +
+            "<td style = 'padding: 0px; margin: 0px;'>" +
+            "Unattn Nitrogen Load (Full) (Kg/Yr): " +
+            "</td>" +
+            "<td style = 'padding: 0px; margin: 0px;'>" +
+            "${Nload_Full:NumberFormat(places:2)}" +
+            "</td>" +
+            "</tr>" +
+            "</tbody></table>"
+    });
+
+    // Layer 13 is now used for all point layers
+    var NitrogenLayer = new FeatureLayer(
+        "http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13",
+        {
             mode: FeatureLayer.MODE_ONDEMAND,
             outFields: ["*"],
             opacity: 1,
             infoTemplate: nitro_template
-        });
+        }
+    );
 
-		Contours.hide();
-		map.addLayer(Contours);
+    var symbol = new SimpleMarkerSymbol();
+    symbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE);
+    symbol.setOutline(null);
+    symbol.setColor(new Color([255, 153, 0]));
+    // symbol.setSize("8")
 
+    var renderer = new SimpleRenderer(symbol);
+    renderer.setSizeInfo({
+        field: "Nload_Full",
+        minSize: 2,
+        // {
+        //     type: 'sizeInfo',
+        //     expression: 'view.scale',
+        //     stops: [
+        //         {value: 5, size: 20},
+        //         {value: 10, size: 10},
+        //         {value: 20, size: 8},
+        //         {value: 50, size: 5},
+        //         {value: 100, size: 4}
+        //     ]
+        // },
+        maxSize: 20,
+        // {
+        //     type: 'sizeInfo',
+        //     expression: 'view.scale',
+        //     stops: [
+        //         {value: 5, size: 20},
+        //         {value: 10, size: 15},
+        //         {value: 20, size: 10},
+        //         {value: 50, size: 5},
+        //         {value: 100, size: 4}
+        //     ]
+        // },
+        minDataValue: 1,
+        maxDataValue: 25,
+        legendOptions: {
+            customValues: [5, 10, 20, 50, 100]
+        }
+    });
 
-		// console.log('testing');
-		// Turn on/off each layer when the user clicks the link in the sidebar.
+    var query = new Query();
+    query.where = "1=1";
 
+    Subembayments.queryFeatures(query, selectinBuffer);
 
-		var inBuffer = [];
-		var queryString = ""
+    NitrogenLayer.setRenderer(renderer);
 
-		function selectinBuffer(response) {
+    NitrogenLayer.hide();
+    map.addLayer(NitrogenLayer);
 
-			var feature;
-    		var features = response.features;
+    // Layer 13 is now used for all point layers
+    var WasteWater = new FeatureLayer(
+        "http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13",
+        {
+            mode: FeatureLayer.MODE_ONDEMAND,
+            outFields: ["*"],
+            opacity: 1,
+            infoTemplate: nitro_template
+        }
+    );
 
-    		for (var i = 0; i < features.length; i++) {
+    var wasteSymbol = new SimpleMarkerSymbol();
+    wasteSymbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE);
+    wasteSymbol.setOutline(null);
+    wasteSymbol.setColor(new Color([124, 252, 0]));
+    wasteSymbol.setSize("8");
 
-    			feature = features[i]
+    var wasteRenderer = new SimpleRenderer(wasteSymbol);
+    wasteRenderer.setSizeInfo({
+        field: "WWFlowsExisting",
+        minSize: 3,
+        maxSize: 20,
+        minDataValue: 50,
+        maxDataValue: 1000,
+        legendOptions: {
+            customValues: [200, 400, 600, 800, 1000]
+        }
+    });
 
-    			inBuffer.push(feature.attributes["SUBEM_ID"])
-    		}
+    WasteWater.setRenderer(wasteRenderer);
 
-    		for (var j = 0; j < inBuffer.length; j++) {
+    WasteWater.hide();
+    map.addLayer(WasteWater);
 
-    			queryString += "SUBEM_ID = " + String(inBuffer[j]) + " OR "
-    		}
+    var Towns = new FeatureLayer(
+        "http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/5",
+        {
+            mode: FeatureLayer.MODE_ONDEMAND,
+            outFields: ["*"],
+            opacity: 0.4,
+            // styling: false,
+            color: [255, 0, 0, 1],
+            width: 3
+        }
+    );
+    Towns.hide();
+    map.addLayer(Towns);
 
-    		queryString = queryString.substring(0,queryString.lastIndexOf("OR")) + "";
+    // Layer 13 is now used for all point layers
+    var TreatmentType = new FeatureLayer(
+        "http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13",
+        {
+            mode: FeatureLayer.MODE_ONDEMAND,
+            outFields: ["*"],
+            opacity: 1,
+            infoTemplate: nitro_template
+        }
+    );
 
-    		// console.log(queryString)
-		}
+    var treattypeSymbol = new SimpleMarkerSymbol();
+    treattypeSymbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE);
+    treattypeSymbol.setOutline(null);
+    treattypeSymbol.setColor(new Color([124, 252, 0]));
+    treattypeSymbol.setSize("5");
 
-		var legendDijit = new Legend({
-		            map: map,
-		            layerInfos: [
-                        {layer: NitrogenLayer, title: "Nitrogen Load"},
-                        {layer: WasteWater, title: "Wastewater"},
-                        {layer: TreatmentType, title: "Treatment Type"},
-                        {layer: EcologicalIndicators, title: "Ecological Indicators"},
-                        {layer: LandUse, title: "Land Use Category"},
-                        {layer: FlowThrough, title: "FlowThrough Coefficients"},
-                        {layer: Contours, title: "2ft Contours"}
-                    ]
-                }, "legendDiv");
-		    legendDijit.startup();
+    var treattypeRenderer = new UniqueValueRenderer(
+        treattypeSymbol,
+        "WWTreatmentExisting"
+    );
+    treattypeRenderer.addValue(
+        "GWDP",
+        new SimpleMarkerSymbol()
+            .setColor(new Color([124, 252, 0]))
+            .setSize("5")
+            .setOutline(null)
+    );
+    treattypeRenderer.addValue(
+        "SEPTIC",
+        new SimpleMarkerSymbol()
+            .setColor(new Color([205, 133, 63]))
+            .setSize("5")
+            .setOutline(null)
+    );
+    treattypeRenderer.addValue(
+        "SEWERED",
+        new SimpleMarkerSymbol()
+            .setColor(new Color([238, 130, 238]))
+            .setSize("5")
+            .setOutline(null)
+    );
 
-		$('#nitrogen').on('click', function(e) {
-			e.preventDefault();
-			// console.log(NitrogenLayer);
-			if ($(this).attr('data-visible') == 'off') {
-				legendDijit.refresh([{layer: NitrogenLayer, title: "Nitrogen Load"}])
-				NitrogenLayer.setDefinitionExpression(queryString.toString())
-				NitrogenLayer.show()
-				// legendDijit.refresh([{layer: NitrogenLayer, title: "Nitrogen Load"}])
-				$(this).attr('data-visible', 'on');
-			} else {
-				NitrogenLayer.hide();
-				$(this).attr('data-visible', 'off');
-			}
-			//
-		});
+    TreatmentType.setRenderer(treattypeRenderer);
 
+    TreatmentType.hide();
+    map.addLayer(TreatmentType);
 
-		$('#subembayments').on('click', function(e) {
-			e.preventDefault();
+    var TreatmentFacilities = new FeatureLayer(
+        "http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/9",
+        {
+            mode: FeatureLayer.MODE_ONDEMAND,
+            outFields: ["*"],
+            opacity: 1
+        }
+    );
+    TreatmentFacilities.hide();
+    map.addLayer(TreatmentFacilities);
 
-			if ($(this).attr('data-visible') == 'off') {
-				Subembayments.show();
-				// console.log(Subembayments);
-				$(this).attr('data-visible', 'on');
-			} else {
-				Subembayments.hide();
-				$(this).attr('data-visible', 'off');
-			}
-			//
-		});
+    var EcologicalIndicators = new FeatureLayer(
+        "http://gis-services.capecodcommission.org/arcgis/rest/services/Projects/208_Plan/MapServer/10",
+        {
+            mode: FeatureLayer.MODE_ONDEMAND,
+            outFields: ["*"],
+            opacity: 1
+        }
+    );
+    EcologicalIndicators.hide();
+    map.addLayer(EcologicalIndicators);
 
-		$('#subwatersheds').on('click', function(e) {
-			e.preventDefault();
+    var ShallowGroundwater = new FeatureLayer(
+        "http://gis-services.capecodcommission.org/arcgis/rest/services/Projects/208_Plan/MapServer/32",
+        {
+            mode: FeatureLayer.MODE_ONDEMAND,
+            outFields: ["*"],
+            opacity: 0.5
+        }
+    );
+    ShallowGroundwater.hide();
+    map.addLayer(ShallowGroundwater);
 
-			if ($(this).attr('data-visible') == 'off') {
-				Subwatersheds.show();
-				$(this).attr('data-visible', 'on');
-			} else {
-				Subwatersheds.hide();
-				$(this).attr('data-visible', 'off');
-			}
-			//
-		});
+    // Layer 13 is now used for all point layers
+    var LandUse = new FeatureLayer(
+        "http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13",
+        {
+            mode: FeatureLayer.MODE_ONDEMAND,
+            outFields: ["*"],
+            opacity: 0.5,
+            infoTemplate: nitro_template
+        }
+    );
 
-		$('#wastewater').on('click', function(e) {
-			e.preventDefault();
+    var landuseSymbol = new SimpleMarkerSymbol();
+    landuseSymbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE);
+    landuseSymbol.setOutline(null);
+    landuseSymbol.setColor(new Color([124, 252, 0]));
+    landuseSymbol.setSize("5");
 
-			if ($(this).attr('data-visible') == 'off') {
-				legendDijit.refresh([{layer: WasteWater, title: "Wastewater"}])
-				WasteWater.setDefinitionExpression(queryString.toString())
-				WasteWater.show();
-				$(this).attr('data-visible', 'on');
-			} else {
-				WasteWater.hide();
-				$(this).attr('data-visible', 'off');
-			}
-			//
-		});
+    var landuseRenderer = new UniqueValueRenderer(
+        landuseSymbol,
+        "LandUseCatExisting"
+    );
 
+    landuseRenderer.addValue({
+        value: "RESSINGLEFAM",
+        symbol: new SimpleMarkerSymbol()
+            .setColor(new Color([122, 182, 245, 255]))
+            .setSize("5")
+            .setOutline(null),
+        label: "Residential Single Family"
+    });
+    landuseRenderer.addValue({
+        value: "COMMERCIAL",
+        symbol: new SimpleMarkerSymbol()
+            .setColor(new Color([255, 255, 0, 255]))
+            .setSize("5")
+            .setOutline(null),
+        label: "Commercial"
+    });
+    landuseRenderer.addValue({
+        value: "INDUSTRIAL",
+        symbol: new SimpleMarkerSymbol()
+            .setColor(new Color([115, 223, 255, 255]))
+            .setSize("5")
+            .setOutline(null),
+        label: "Industrial"
+    });
+    landuseRenderer.addValue({
+        value: "OTHERDEV",
+        symbol: new SimpleMarkerSymbol()
+            .setColor(new Color([107, 181, 123, 255]))
+            .setSize("5")
+            .setOutline(null),
+        label: "Other Developable"
+    });
+    landuseRenderer.addValue({
+        value: "OTHERNONDEV",
+        symbol: new SimpleMarkerSymbol()
+            .setColor(new Color([2197, 0, 255, 255]))
+            .setSize("5")
+            .setOutline(null),
+        label: "Other Non-Developable"
+    });
+    landuseRenderer.addValue({
+        value: "RESCONDOAPT",
+        symbol: new SimpleMarkerSymbol()
+            .setColor(new Color([205, 205, 102, 255]))
+            .setSize("5")
+            .setOutline(null),
+        label: "Residential Condo/Apartments"
+    });
+    landuseRenderer.addValue({
+        value: "RESMULTIFAM",
+        symbol: new SimpleMarkerSymbol()
+            .setColor(new Color([205, 46, 49, 255]))
+            .setSize("5")
+            .setOutline(null),
+        label: "Residential Multi Family"
+    });
+    landuseRenderer.addValue({
+        value: "VACANTDEV",
+        symbol: new SimpleMarkerSymbol()
+            .setColor(new Color([168, 0, 0, 255]))
+            .setSize("5")
+            .setOutline(null),
+        label: "Vacant Developable Land"
+    });
+    landuseRenderer.addValue({
+        value: "VACANTNONDEV",
+        symbol: new SimpleMarkerSymbol()
+            .setColor(new Color([76, 115, 0, 255]))
+            .setSize("5")
+            .setOutline(null),
+        label: "Vacant Non-Developable Land"
+    });
 
-		$('#towns').on('click', function(e) {
-			e.preventDefault();
+    LandUse.setRenderer(landuseRenderer);
 
-			if ($(this).attr('data-visible') == 'off') {
-				Towns.show();
-				$(this).attr('data-visible', 'on');
-			} else {
-				Towns.hide();
-				$(this).attr('data-visible', 'off');
-			}
-			//
-		});
+    LandUse.hide();
+    map.addLayer(LandUse);
 
-		$('#treatmenttype').on('click', function(e) {
-			e.preventDefault();
+    var FlowThrough = new FeatureLayer(
+        "http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/12",
+        {
+            mode: FeatureLayer.MODE_ONDEMAND,
+            outFields: ["*"],
+            opacity: 1,
+            infoTemplate: nitro_template
+        }
+    );
 
-			if ($(this).attr('data-visible') == 'off') {
-				legendDijit.refresh([{layer: TreatmentType, title: "Treatment Type"}])
-				TreatmentType.setDefinitionExpression(queryString.toString())
-				TreatmentType.show();
-				$(this).attr('data-visible', 'on');
-			} else {
-				TreatmentType.hide();
-				$(this).attr('data-visible', 'off');
-			}
-			//
-		});
+    FlowThrough.hide();
+    map.addLayer(FlowThrough);
 
-		$('#treatmentfacilities').on('click', function(e) {
-			e.preventDefault();
+    var Contours = new FeatureLayer(
+        "http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/14",
+        {
+            mode: FeatureLayer.MODE_ONDEMAND,
+            outFields: ["*"],
+            opacity: 1,
+            infoTemplate: nitro_template
+        }
+    );
 
-			if ($(this).attr('data-visible') == 'off') {
-				TreatmentFacilities.show();
-				$(this).attr('data-visible', 'on');
-			} else {
-				TreatmentFacilities.hide();
-				$(this).attr('data-visible', 'off');
-			}
-			//
-		});
+    Contours.hide();
+    map.addLayer(Contours);
 
+    // console.log('testing');
+    // Turn on/off each layer when the user clicks the link in the sidebar.
 
-		$('#ecologicalindicators').on('click', function(e) {
-			e.preventDefault();
+    var inBuffer = [];
+    var queryString = "";
 
-			if ($(this).attr('data-visible') == 'off') {
-				legendDijit.refresh([{layer: EcologicalIndicators, title: "Ecological Indicators"}])
-				EcologicalIndicators.show();
-				$(this).attr('data-visible', 'on');
-			} else {
-				EcologicalIndicators.hide();
-				$(this).attr('data-visible', 'off');
-			}
-			//
-		});
+    function selectinBuffer(response) {
+        var feature;
+        var features = response.features;
 
-		$('#shallowgroundwater').on('click', function(e) {
-			e.preventDefault();
+        for (var i = 0; i < features.length; i++) {
+            feature = features[i];
 
-			if ($(this).attr('data-visible') == 'off') {
-				ShallowGroundwater.show();
-				$(this).attr('data-visible', 'on');
-			} else {
-				ShallowGroundwater.hide();
-				$(this).attr('data-visible', 'off');
-			}
-			//
-		});
+            inBuffer.push(feature.attributes["SUBEM_ID"]);
+        }
 
-		$('#landuse').on('click', function(e) {
-			e.preventDefault();
+        for (var j = 0; j < inBuffer.length; j++) {
+            queryString += "SUBEM_ID = " + String(inBuffer[j]) + " OR ";
+        }
 
-			if ($(this).attr('data-visible') == 'off') {
-				legendDijit.refresh([{layer: LandUse, title: "Land Use Category"}])
-				LandUse.setDefinitionExpression(queryString.toString())
-				LandUse.show();
-				$(this).attr('data-visible', 'on');
-			} else {
-				LandUse.hide();
-				$(this).attr('data-visible', 'off');
-			}
-			//
-		});
+        queryString =
+            queryString.substring(0, queryString.lastIndexOf("OR")) + "";
 
+        // console.log(queryString)
+    }
 
-		$('#flowthrough').on('click', function(e) {
-			e.preventDefault();
+    var legendDijit = new Legend(
+        {
+            map: map,
+            layerInfos: [
+                { layer: NitrogenLayer, title: "Nitrogen Load" },
+                { layer: WasteWater, title: "Wastewater" },
+                { layer: TreatmentType, title: "Treatment Type" },
+                { layer: EcologicalIndicators, title: "Ecological Indicators" },
+                { layer: LandUse, title: "Land Use Category" },
+                { layer: FlowThrough, title: "FlowThrough Coefficients" },
+                { layer: Contours, title: "2ft Contours" }
+            ]
+        },
+        "legendDiv"
+    );
+    legendDijit.startup();
 
-			if ($(this).attr('data-visible') == 'off') {
-				legendDijit.refresh([{layer: FlowThrough, title: "FlowThrough Coefficients"}])
-				FlowThrough.show();
-				$(this).attr('data-visible', 'on');
-			} else {
-				FlowThrough.hide();
-				$(this).attr('data-visible', 'off');
-			}
-			//
-		});
+    $("#nitrogen").on("click", function(e) {
+        e.preventDefault();
+        // console.log(NitrogenLayer);
+        if ($(this).attr("data-visible") == "off") {
+            legendDijit.refresh([
+                { layer: NitrogenLayer, title: "Nitrogen Load" }
+            ]);
+            NitrogenLayer.setDefinitionExpression(queryString.toString());
+            NitrogenLayer.show();
+            // legendDijit.refresh([{layer: NitrogenLayer, title: "Nitrogen Load"}])
+            $(this).attr("data-visible", "on");
+        } else {
+            NitrogenLayer.hide();
+            $(this).attr("data-visible", "off");
+        }
+        //
+    });
 
-        $('#contours').on('click', function(e) {
-            e.preventDefault();
+    $("#subembayments").on("click", function(e) {
+        e.preventDefault();
 
-            if ($(this).attr('data-visible') == 'off') {
-                legendDijit.refresh([{layer: Contours, title: "2ft Contours"}])
-                Contours.show();
-                $(this).attr('data-visible', 'on');
-            } else {
-                Contours.hide();
-                $(this).attr('data-visible', 'off');
+        if ($(this).attr("data-visible") == "off") {
+            Subembayments.show();
+            // console.log(Subembayments);
+            $(this).attr("data-visible", "on");
+        } else {
+            Subembayments.hide();
+            $(this).attr("data-visible", "off");
+        }
+        //
+    });
+
+    $("#subwatersheds").on("click", function(e) {
+        e.preventDefault();
+
+        if ($(this).attr("data-visible") == "off") {
+            Subwatersheds.show();
+            $(this).attr("data-visible", "on");
+        } else {
+            Subwatersheds.hide();
+            $(this).attr("data-visible", "off");
+        }
+        //
+    });
+
+    $("#wastewater").on("click", function(e) {
+        e.preventDefault();
+
+        if ($(this).attr("data-visible") == "off") {
+            legendDijit.refresh([{ layer: WasteWater, title: "Wastewater" }]);
+            WasteWater.setDefinitionExpression(queryString.toString());
+            WasteWater.show();
+            $(this).attr("data-visible", "on");
+        } else {
+            WasteWater.hide();
+            $(this).attr("data-visible", "off");
+        }
+        //
+    });
+
+    $("#towns").on("click", function(e) {
+        e.preventDefault();
+
+        if ($(this).attr("data-visible") == "off") {
+            Towns.show();
+            $(this).attr("data-visible", "on");
+        } else {
+            Towns.hide();
+            $(this).attr("data-visible", "off");
+        }
+        //
+    });
+
+    $("#treatmenttype").on("click", function(e) {
+        e.preventDefault();
+
+        if ($(this).attr("data-visible") == "off") {
+            legendDijit.refresh([
+                { layer: TreatmentType, title: "Treatment Type" }
+            ]);
+            TreatmentType.setDefinitionExpression(queryString.toString());
+            TreatmentType.show();
+            $(this).attr("data-visible", "on");
+        } else {
+            TreatmentType.hide();
+            $(this).attr("data-visible", "off");
+        }
+        //
+    });
+
+    $("#treatmentfacilities").on("click", function(e) {
+        e.preventDefault();
+
+        if ($(this).attr("data-visible") == "off") {
+            TreatmentFacilities.show();
+            $(this).attr("data-visible", "on");
+        } else {
+            TreatmentFacilities.hide();
+            $(this).attr("data-visible", "off");
+        }
+        //
+    });
+
+    $("#ecologicalindicators").on("click", function(e) {
+        e.preventDefault();
+
+        if ($(this).attr("data-visible") == "off") {
+            legendDijit.refresh([
+                { layer: EcologicalIndicators, title: "Ecological Indicators" }
+            ]);
+            EcologicalIndicators.show();
+            $(this).attr("data-visible", "on");
+        } else {
+            EcologicalIndicators.hide();
+            $(this).attr("data-visible", "off");
+        }
+        //
+    });
+
+    $("#shallowgroundwater").on("click", function(e) {
+        e.preventDefault();
+
+        if ($(this).attr("data-visible") == "off") {
+            ShallowGroundwater.show();
+            $(this).attr("data-visible", "on");
+        } else {
+            ShallowGroundwater.hide();
+            $(this).attr("data-visible", "off");
+        }
+        //
+    });
+
+    $("#landuse").on("click", function(e) {
+        e.preventDefault();
+
+        if ($(this).attr("data-visible") == "off") {
+            legendDijit.refresh([
+                { layer: LandUse, title: "Land Use Category" }
+            ]);
+            LandUse.setDefinitionExpression(queryString.toString());
+            LandUse.show();
+            $(this).attr("data-visible", "on");
+        } else {
+            LandUse.hide();
+            $(this).attr("data-visible", "off");
+        }
+        //
+    });
+
+    $("#flowthrough").on("click", function(e) {
+        e.preventDefault();
+
+        if ($(this).attr("data-visible") == "off") {
+            legendDijit.refresh([
+                { layer: FlowThrough, title: "FlowThrough Coefficients" }
+            ]);
+            FlowThrough.show();
+            $(this).attr("data-visible", "on");
+        } else {
+            FlowThrough.hide();
+            $(this).attr("data-visible", "off");
+        }
+        //
+    });
+
+    $("#contours").on("click", function(e) {
+        e.preventDefault();
+
+        if ($(this).attr("data-visible") == "off") {
+            legendDijit.refresh([{ layer: Contours, title: "2ft Contours" }]);
+            Contours.show();
+            $(this).attr("data-visible", "on");
+        } else {
+            Contours.hide();
+            $(this).attr("data-visible", "off");
+        }
+        //
+    });
+
+    $(".subembayment").on("click", function(e) {
+        // console.log('subembayment clicked');
+        var sub = $(this).data("layer");
+
+        Subembayments.setDefinitionExpression("SUBEM_ID = " + sub);
+        Subembayments.show();
+    });
+
+    $("#disable-popups").on("click", function(e) {
+        var layers = [
+            NitrogenLayer,
+            Subembayments,
+            Subwatersheds,
+            WasteWater,
+            Towns,
+            TreatmentType,
+            TreatmentFacilities,
+            EcologicalIndicators,
+            ShallowGroundwater,
+            LandUse,
+            FlowThrough,
+            Contours
+        ];
+
+        if ($(this).hasClass("enabled")) {
+            for (var i = 0; i < layers.length; i++) {
+                if (layers[i].visible) {
+                    layers[i].setInfoTemplate(null);
+                }
             }
-            //
-        });
 
+            $(this).toggleClass("enabled fa-eye-slash");
+        } else {
+            for (var i = 0; i < layers.length; i++) {
+                if (layers[i].visible) {
+                    layers[i].setInfoTemplate(nitro_template);
+                }
+            }
 
-		$('.subembayment').on('click', function(e){
-			// console.log('subembayment clicked');
-			var sub = $(this).data('layer');
+            $(this).toggleClass("enabled fa-eye-slash");
+        }
+    });
 
-			Subembayments.setDefinitionExpression('SUBEM_ID = ' + sub);
-			Subembayments.show();
+    var getDestinationPoint = map.on("select-destination", getDestination);
 
+    function getDestination(evt) {
+        return evt;
+        getDestinationPoint.remove();
+    }
 
-		});
+    var getDestinationPoint = map.on("select-destination", getDestination);
 
-		$('#disable-popups').on('click', function(e){
+    function getDestination(evt) {
+        return evt;
+        getDestinationPoint.remove();
+    }
 
-				var layers = [NitrogenLayer, Subembayments, Subwatersheds, WasteWater, Towns, TreatmentType, TreatmentFacilities, EcologicalIndicators, ShallowGroundwater, LandUse, FlowThrough, Contours]
+    // function map_click(e) {
+    //       editToolbar.deactivate();
 
-				if ($(this).hasClass('enabled')) {
+    //           clickQuery(e);
 
-					for (var i = 0; i < layers.length; i++) {
+    //       }
 
-						if (layers[i].visible) {
+    // 		// Adding info window
+    // 		function getIdentifyParams(point) {
+    // 			  var p = new esri.tasks.IdentifyParameters();
+    // 			  p.dpi = 96;
+    // 			  p.geometry = map.toMap(point);
+    // 			  p		  p.layerIds = [0];
+    // 			  p.spatialReference = spatialReference;
+    // 			  p.layerOption = esri.tasks.IdentifyParameters.LAYER_OPTION_VISIBLE;
+    // 			  p.mapExtent = map.extent;
+    // 			  p.tolerance = 8;
+    // 			  p.returnGeometry = false;
+    // 			  p.width = map.width;
+    // 			  return p;
+    // 			}
 
-							layers[i].setInfoTemplate(null)
-						}
-					}
+    // 	function clickQuery(e) {
+    //       var identify = new esri.tasks.IdentifyTask(mapService);
+    //       var deferred = identify.execute(getIdentifyParams(clickPoint));
+    //       deferred.addCallback(function (response) {
+    //         // We're just gonna display the first result
+    //         var attributes = response[0].feature.attributes;
 
-					$(this).toggleClass('enabled fa-eye-slash')
+    //         // Setup a template to be used by dojo.string.substitute (found in Default.aspx)
+    //         var template = $("#featureInfoTemplate").html();
+    //         var content = dojo.string.substitute(template, attributes, null, {
+    //           round: function (value, key) {
+    //             return dojo.number.format(value, { places: 2 });
+    //           },
+    //           integer: function (value, key) {
+    //             return dojo.number.format(value, { places: 0 });
+    //           }
+    //         });
 
-				} else {
+    //         // Set our info window content manually
+    //         map.infoWindow.setContent(content);
+    //         map.infoWindow.setTitle("Property Info");
 
-					for (var i = 0; i < layers.length; i++) {
+    //         map.infoWindow.show(clickPoint);
 
-						if (layers[i].visible) {
-
-							layers[i].setInfoTemplate(nitro_template)
-						}
-					}
-
-					$(this).toggleClass('enabled fa-eye-slash')
-				}
-
-			});
-
-var getDestinationPoint = map.on("select-destination", getDestination);
-
-function getDestination(evt){
-  return evt;
-  getDestinationPoint.remove();
-}
-
-var getDestinationPoint = map.on("select-destination", getDestination);
-
-function getDestination(evt){
-  return evt;
-  getDestinationPoint.remove();
-}
-
-// function map_click(e) {
-//       editToolbar.deactivate();
-
-//           clickQuery(e);
-
-//       }
-
-
-
-
-// 		// Adding info window
-// 		function getIdentifyParams(point) {
-// 			  var p = new esri.tasks.IdentifyParameters();
-// 			  p.dpi = 96;
-// 			  p.geometry = map.toMap(point);
-// 			  p		  p.layerIds = [0];
-// 			  p.spatialReference = spatialReference;
-// 			  p.layerOption = esri.tasks.IdentifyParameters.LAYER_OPTION_VISIBLE;
-// 			  p.mapExtent = map.extent;
-// 			  p.tolerance = 8;
-// 			  p.returnGeometry = false;
-// 			  p.width = map.width;
-// 			  return p;
-// 			}
-
-// 	function clickQuery(e) {
-//       var identify = new esri.tasks.IdentifyTask(mapService);
-//       var deferred = identify.execute(getIdentifyParams(clickPoint));
-//       deferred.addCallback(function (response) {
-//         // We're just gonna display the first result
-//         var attributes = response[0].feature.attributes;
-
-//         // Setup a template to be used by dojo.string.substitute (found in Default.aspx)
-//         var template = $("#featureInfoTemplate").html();
-//         var content = dojo.string.substitute(template, attributes, null, {
-//           round: function (value, key) {
-//             return dojo.number.format(value, { places: 2 });
-//           },
-//           integer: function (value, key) {
-//             return dojo.number.format(value, { places: 0 });
-//           }
-//         });
-
-//         // Set our info window content manually
-//         map.infoWindow.setContent(content);
-//         map.infoWindow.setTitle("Property Info");
-
-//         map.infoWindow.show(clickPoint);
-
-//         // Striping to table rows
-//         $(".esriPopup .contentPane tr:odd td").css("background-color", "#eee");
-//       });
-//     }
-
-
-
-
-
-
-
-
-
-
-
-	});
+    //         // Striping to table rows
+    //         $(".esriPopup .contentPane tr:odd td").css("background-color", "#eee");
+    //       });
+    //     }
+});
