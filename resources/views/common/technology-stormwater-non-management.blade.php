@@ -1,10 +1,10 @@
-<!-- Set the title to 'Technology_Strategy' from the dbo.v_Technology_Matrix obtained by 'TechnologyController.php' -->
+<!-- Set the title to 'technology_strategy' from the dbo.v_Technology_Matrix obtained by 'TechnologyController.php' -->
 <!-- Set up the HTML for the grid layout as specified in the css -->
 	<div class="blade_container">
-		<h4 class="blade_title" title="{{$tech->Technology_Strategy}}">
-			{{$tech->Technology_Strategy}}
-		</h4>
-		<a title="{{$tech->Technology_Strategy}} - Technology Matrix" class="blade_image" href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->TM_ID}}" target="_blank">
+		<h3 class="blade_title" title="{{$tech->technology_strategy}}">
+			{{$tech->technology_strategy}}
+		</h3>
+		<a title="{{$tech->technology_strategy}} - Technology Matrix" class="blade_image" href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->TM_ID}}" target="_blank">
 			<img src="http://www.cch2o.org/Matrix/icons/{{$tech->icon}}">
 		</a>
 		<div class="blade_slider" title="Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.">

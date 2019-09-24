@@ -7815,7 +7815,9 @@ nav.toolbar .tool {
 
 .modal-close {
   position: absolute;
-  right: 0%;
+  right: 1%;
+  top: 1%;
+  margin: 0.5em;
 }
 
 .modal-loading {
@@ -7835,26 +7837,28 @@ nav.toolbar .tool {
   grid-template-columns: repeat(3, [col-start] 1fr);
   grid-gap: 0.5vw;
   font: 4vh black bolder TrendSansOne, Futura, "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-  margin: 0 auto;
   padding: 0.5vw;
   justify-items: center;
   align-items: center;
   justify-content: center;
   text-align: center;
   max-width: 100%;
+  margin: 0.5vw;
 }
 
 .blade_title {
-  grid-column: col-start / -1;
+  grid-column: col-start / span 3;
   grid-row: 1;
   cursor: default;
   font-variant: small-caps;
+  margin: 0.25em;
 }
 
 .blade_image {
   grid-column: col-start / span 1;
   grid-row: 2;
   width: 50%;
+  background: navy;
 }
 
 .blade_slider {
@@ -7873,7 +7877,7 @@ nav.toolbar .tool {
 }
 
 .blade_button {
-  grid-column: col-start 3 / -1;
+  grid-column: col-start 3 / span 1;
   grid-row: 2;
   font: 1.5vh bold;
   text-transform: uppercase;

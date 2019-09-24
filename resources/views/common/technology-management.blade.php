@@ -1,10 +1,10 @@
-<!-- Set the title to 'Technology_Strategy' from the dbo.v_Technology_Matrix obtained by 'TechnologyController.php' -->
+<!-- Set the title to 'technology_strategy' from the dbo.v_Technology_Matrix obtained by 'TechnologyController.php' -->
 <!-- Set up the HTML for the grid layout as specified in the css -->
 	<div class="blade_container">
-		<h4 class="blade_title" title="{{$tech->Technology_Strategy}}">
-			{{$tech->Technology_Strategy}}
+		<h4 class="blade_title" title="{{$tech->technology_strategy}}">
+			{{$tech->technology_strategy}}
 		</h4>
-		<a title="{{$tech->Technology_Strategy}} - Technology Matrix" class="blade_image" href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->TM_ID}}" target="_blank">
+		<a title="{{$tech->technology_strategy}} - Technology Matrix" class="blade_image" href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->TM_ID}}" target="_blank">
 			<img src="http://www.cch2o.org/Matrix/icons/{{$tech->icon}}">
 		</a>
 		<div class="blade_slider" title="Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.">
@@ -12,9 +12,9 @@
 			<label v-if="{{$tech->technology_id == 400}}">@{{fert_percent}}%</label>
 			<label v-else="{{$tech->technology_id == 401}}">@{{storm_percent}}%</label>
 			<input type="range" id="fert-percent"
-			v-if="{{$tech->technology_id == 400}}" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="fert_percent" value="{{$tech->Nutri_Reduc_N_High}}" step="1">
+			v-if="{{$tech->technology_id == 400}}" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="fert_percent" value="{{$tech->Nutri_Reduc_N_Low}}" step="1">
 			<input type="range" id="storm-percent"
-			v-else="{{$tech->technology_id == 401}}" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="storm_percent" value="{{$tech->Nutri_Reduc_N_High}}" step="1">
+			v-else="{{$tech->technology_id == 401}}" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="storm_percent" value="{{$tech->Nutri_Reduc_N_Low}}" step="1">
 		</div>
 		<button title="Apply Strategy" class="blade_button" id="applytreatment">Apply</button>
 	</div>
