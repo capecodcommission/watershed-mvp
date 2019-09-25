@@ -1,22 +1,39 @@
 // Replace modal contents with blade html from API route
-function loadTechView (route) {
-    $('.modal-wrapper').show();
-    $('#techView').load(route, function () {
-        $('#closeModal').show();
+const loadTechView = (route) => {
+    $(".modal-loading").toggle();
+    $('.modal-wrapper').toggle();
+    $(".modal-content").load(route, function () {
+        $(".modal-loading").toggle();
+        $("#closeModal").toggle();
         return 1;
-    })
+    });
 }
 
-// Hide and remove relevant modal components on-close
-function destroyModalContents () {
-    $('#closeModal').hide();
-    $('#techView').empty();
-    $('.modal-wrapper').hide();
-    return 1;
+// Attach click event listener to the modal-close class of the .blade_container class,
+// destroy modal contents, delete graphic if graphic exists and, if necessary, set percent values to 0
+$(document).on('click', '.blade_container .modal-close', function(e) {
+    e.preventDefault();
+    destroyModalContents();
+    deleteGraphic();
+    if ("{{$tech->technology_id == 400}}") {
+        $("#fert-percent").val(0);
+    }
+    if ("{{$tech->technology_id == 401}}") {
+        $("#storm-percent").val(0);
+    }
+})
+
+// Hide relevant modal elements
+const destroyModalContents = () => {
+    $(".modal-wrapper").toggle();
+    $("#closeModal").toggle();
+    $(".modal-content").empty(function () {
+        return 1;
+    });
 }
 
 // Create and append appropriate tech icons to the selected treatments stack post-apply
-function addToStack (treatment_id, icon) {
+const addToStack = (treatment_id, icon) => {
     let newtreatment = '<li class="technology" data-route="/edit/' + treatment_id + '" data-treatment="' + treatment_id + '">' + '<a href="" title="' + treatment_id +'">' + '<img src="http://www.cch2o.org/Matrix/icons/' + icon + '" alt=""></a></li>';
     $('ul.selected-treatments').append(newtreatment);
     return 1;
@@ -42,7 +59,7 @@ $('#stackList').on('click', 'li.technology', function (e) {
 
 // Remove map graphic by associated treatment id
 // Graphics created mid-process, such as points or polygons, are given an id of 1 until applied
-function deleteGraphic (treatment_id = null) {
+const deleteGraphic = (treatment_id = null) => {
     for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
         if (map.graphics.graphics[i].attributes) {
             if (map.graphics.graphics[i].attributes.treatment_id == treatment_id || map.graphics.graphics[i].attributes.treatment_id == 1) {
@@ -54,7 +71,7 @@ function deleteGraphic (treatment_id = null) {
 
 // Update associated treatment id of point or polygon geometry created mid-process
 // Updated post-apply
-function addTreatmentIdToGraphic (treatment_id) {
+const addTreatmentIdToGraphic = (treatment_id) => {
     for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
         if (map.graphics.graphics[i].attributes) {
             if (map.graphics.graphics[i].attributes.treatment_id == 1) {

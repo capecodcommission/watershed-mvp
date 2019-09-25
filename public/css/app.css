@@ -7801,13 +7801,16 @@ nav.toolbar .tool {
   z-index: 6;
   top: 0;
   left: 0;
+  display: none;
 }
 
 .modal-content {
   position: relative;
   background: white;
-  margin: 0;
-  padding: 0;
+  margin: 0 auto;
+  top: 50%;
+  height: auto;
+  width: auto;
   max-height: 75%;
   max-width: 90%;
   z-index: 7;
@@ -7818,6 +7821,7 @@ nav.toolbar .tool {
   right: 1%;
   top: 1%;
   margin: 0.5em;
+  display: none;
 }
 
 .modal-loading {
@@ -7829,6 +7833,7 @@ nav.toolbar .tool {
   background-repeat: no-repeat;
   background-position: center;
   overflow: hidden;
+  display: none;
 }
 
 .blade_container {
