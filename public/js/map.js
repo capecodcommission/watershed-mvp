@@ -151,24 +151,28 @@ require([
         // Create and listen for polygon Edit events
         editToolbar = new Edit(map);
 
+        // Handler to activate edit toolbar for appropriate geometry
         on(dom.byId("edit_polygon"), "click", function(e) {
 
+            // If graphic is already in edit mode, deactivate toolbar else activate it
             map.graphics.on("click", function(evt) {
                 let attribs = evt.graphic.attributes;
-
-                if (attribs.editInProgress) {
-                    editToolbar.deactivate();
-                    event.stop(evt);
-                    attribs.editInProgress = 0;
-                } else {
-
-                    attribs.editInProgress = 1;
-                    $("#save_polygon").show();
-                    event.stop(evt);
-                    activateToolbar(evt.graphic);
+                if (attribs) {
+                    if (attribs.editInProgress == 1) {
+                        editToolbar.deactivate();
+                        event.stop(evt);
+                        attribs.editInProgress = 0;
+                    } else {
+                        attribs.editInProgress = 1;
+                        $("#save_polygon").show();
+                        event.stop(evt);
+                        activateToolbar(evt.graphic);
+                    }
                 }
             })
 
+            // Solution for removing edit toolbar if it doesn't work on initial click
+            // https://community.esri.com/thread/169436
             map.on("click", function(evt) {
                 editToolbar.deactivate();
                 event.stop(e);
@@ -698,7 +702,7 @@ require([
             // If map graphic has edited geometry
             if (attribs) {
 
-                if (attribs.editInProgress) {
+                if (attribs.editInProgress == 1) {
 
                     // Retreieve original treatment, remove edited geometry 
                     let editedTreatment = treatments.filter((row) => {
