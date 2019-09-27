@@ -75,9 +75,7 @@
 					url: url
 				})
 				.done(function(msg) {
-					msg = Math.round(msg);
-					$('#n_removed').text(msg);
-					$('#popdown-opacity').hide();
+					resetGraphicPropsAfterUpdate(msg);
 					$( "#update" ).trigger( "click" );
 				});
 			});
@@ -105,7 +103,9 @@
 
 		// Handle click-event for closing popdown
 		$('#closeWindow').on('click', function (e) {
-			$('#popdown-opacity').hide();
+			e.preventDefault();
+			destroyModalContents();
+			deleteGraphic();
 		})
 
 		// Handle click-event for deleting selected technology

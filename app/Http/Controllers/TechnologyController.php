@@ -46,6 +46,23 @@ class TechnologyController extends Controller
 		return $treatment;
 	}
 
+	// Remove geometry from session post-application of treatment
+	public function deleteSessionGeometry ($treatmentId)
+	{
+		if ( session()->has('pointX_' . $treatmentId) && session()->has('pointY_' . $treatmentId) ) 
+		{
+			session()->forget('pointX_' . $treatmentId);
+			session()->forget('pointY_' . $treatmentId);
+		}
+
+		if ( session()->has('polyString_' . $treatmentId) )
+		{
+			session()->forget('polyString_' . $treatmentId);
+		}
+
+		return 1;
+	}
+
 	// Retrieve technolgy-related data from tech matrix
 	public function getTech($id)
 	{
@@ -294,29 +311,31 @@ class TechnologyController extends Controller
 	}
 
 
-	/**
-	 * User has edited the polygon for a treatment
-	 *
-	 * @return void
-	 * @author 
-	 **/
-	// TODO: Apply proper 'apply_treatment' stored proc and pass in type, eg. 'septic' or 'groundwater'
-	public function updatePolygon(Request $data)
+	// Save edited point or polygon geometry to session
+	public function updateGeometry(Request $data)
 	{
+		// Retrieve POST data
 		$data = $data->all();
+		$treatmentId = $data['treatment'];
+		$polyType = $data['geoType'];
+		$geoObj = $data['geoObj'];
 
-		// TODO: Create switch to use proper stored proc based on $type
-		
-		// DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
-		// stored procedure needs to update the parcels in wiz_treatment_parcel to match the new polygon
-		// then update the polygon and parcel data/N total for this treatment in Treatment_Wiz
+		// Save geometry to session based on type
+		switch ($polyType)
+		{
+			case 'polygon':
+				session(['polyString_' . $treatmentId => $geoObj]);
+				break;
 
-		// TODO: Modify update_treatment stored proc to delete/fill parcelmaster instead of wiz_treatment_parcels
-		// TODO: Once update_treatment stored proc working, modify get_pointsfrompolygon to incorporate delete portion from update_treatment
-		$query = 'exec dbo.UPD_TreatmentPolygon ' . $data['treatment'] . ', \'' . $data['polystring'] . '\'';
-		Log::info($query);
-		$upd = DB::select('exec dbo.UPD_TreatmentPolygon ' . $data['treatment'] . ', \'' . $data['polystring'] . '\'');
-		return $upd;
+			case 'point':
+				$x = $geoObj[0];
+				$y = $geoObj[1];
+				session(['pointX_' . $treatmentId => $x]);
+				session(['pointY_' . $treatmentId => $y]);
+				break;
+		}
+
+		return 1;
 	}
 
 	// Disassociate and delete selected technology data from user's scenario
@@ -400,10 +419,27 @@ class TechnologyController extends Controller
 				}
 				return $this->updateNitrogenRemoved();
 				break;
+
 			// Stormwater non-management
 			case 'storm':
-				$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treat_id . ', ' . $treatmentValue );
-				return $this->updateNitrogenRemoved();
+				// Check for geometry edit
+				// Reassociate and reapply treatment to parcels
+				if ( session()->has('pointX_' . $treat_id) && session()->has('pointY_' . $treat_id) ) 
+				{
+					$del = DB::select('exec dbo.DELparcels '. $treat_id);
+					$x = session()->get('pointX_' . $treat_id);
+					$y = session()->get('pointY_' . $treat_id);
+					$point = DB::select("exec dbo.UPDcreditSubembayment @x='$x', @y='$y', @treatment=$treat_id");
+					$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treat_id . ', ' . $treatmentValue);
+					$this->deleteSessionGeometry($treat_id);
+				}
+				// Continue as normal
+				else
+				{
+					$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treat_id . ', ' . $treatmentValue );
+				}
+				$this->updateNitrogenRemoved();
+				return $treat_id;
 				break;
 			// CollectMove (first row)
 			case 'collect':
@@ -412,8 +448,25 @@ class TechnologyController extends Controller
 				break;
 			// CollectStay (second row)
 			case 'toilets':
-				$updated = DB::select('exec dbo.CALCapplyTreatmentSeptic '. $treat_id . ', '. $treatmentValue);
-				return $this->updateNitrogenRemoved();
+				// Check for geometry edit
+				if ( session()->has('polyString_' . $treat_id) )
+				{
+					// Reassociate and reapply treatment to parcels
+					$del = DB::select('exec dbo.DELparcels '. $treat_id);
+					$scenarioId = session()->get('scenarioid');
+					$scenario = Scenario::find($scenarioId);
+					$embay_id = $scenario->AreaID;
+					$polyString = session()->get('polyString_' . $treat_id);
+					$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioId . ', ' . $treat_id . ', \'' . $polyString . '\'');
+					$updated = DB::select('exec dbo.CALCapplyTreatmentSeptic ' . $treat_id . ', ' . $treatmentValue );
+					$this->deleteSessionGeometry($treat_id);
+				}
+				else
+				{
+					$updated = DB::select('exec dbo.CALCapplyTreatmentSeptic '. $treat_id . ', '. $treatmentValue);
+				}
+				$this->updateNitrogenRemoved();
+				return $treat_id;
 				break;
 			// Groundwater
 			case 'groundwater':
@@ -454,6 +507,8 @@ class TechnologyController extends Controller
 	public function delete($treat_id, $type = NULL)
 	{
 		$del = DB::select('exec dbo.DELtreatment '. $treat_id);
+
+		$this->deleteSessionGeometry($treat_id);
 
 		// Reset global variables to handle fert/storm clickability
 		if ($type == 'fert') {

@@ -150,19 +150,25 @@ require([
 
         // Create and listen for polygon Edit events
         editToolbar = new Edit(map);
-        on(dom.byId("edit_polygon"), "click", function(e) {
-            edit_active = 1;
 
-            // Start editing selected polygon
+        on(dom.byId("edit_polygon"), "click", function(e) {
+
             map.graphics.on("click", function(evt) {
-                if (edit_active > 0) {
+                let attribs = evt.graphic.attributes;
+
+                if (attribs.editInProgress) {
+                    editToolbar.deactivate();
+                    event.stop(evt);
+                    attribs.editInProgress = 0;
+                } else {
+
+                    attribs.editInProgress = 1;
                     $("#save_polygon").show();
                     event.stop(evt);
                     activateToolbar(evt.graphic);
                 }
-            });
+            })
 
-            // Deactivate tool on next map click
             map.on("click", function(evt) {
                 editToolbar.deactivate();
                 event.stop(e);
@@ -178,11 +184,11 @@ require([
             // On-deactivate, handle new polygon coordinates in separate function
             editToolbar.on("deactivate", function(evt) {
                 if (evt.info.isModified) {
+                    $("#save_polygon").hide();
                     handle_polygon_edit(evt.graphic);
-                    edit_active = 0;
                 }
             });
-        });
+        })
     }
 
     // Create and color polygon using passed rgba array
@@ -429,6 +435,19 @@ require([
         return;
     }
 
+    // Convert polygon coordinate array from ArcGIS API to SQL Spatial string
+    function parsePolyOnSelect (rings) {
+
+        // Remove comma separator from individual node pairs then join together comma-separated as string
+        let nodeString = rings
+            .map(coords => {
+                return coords.join(" ");
+            })
+            .join();
+
+        return nodeString;
+    }
+
     // Create and add polygon geometry to map on-selection
     function addPolygonOnSelect (evt) {
 
@@ -438,7 +457,7 @@ require([
         // Create and color polygon using technology id
         let polySymbol = selectPoly(techId);
 
-        // Deactivate the toolbar and clear existing graphics
+        // Deactivate the toolbar and enable map navigation
         tb.deactivate();
         map.enableMapNavigation();
 
@@ -449,14 +468,7 @@ require([
         map.graphics.add(new Graphic(evt.geometry, polySymbol, attr));
 
         // Retrieve coordinate arrays
-        let nodeArray = evt.geometry.rings[0];
-
-        // Remove comma separator from individual node pairs then join together comma-separated as string
-        let nodeString = nodeArray
-            .map(coords => {
-                return coords.join(" ");
-            })
-            .join();
+        let nodeString = parsePolyOnSelect(evt.geometry.rings[0])
 
         // Save coordinate string to session
         var url = "/map/poly";
@@ -492,31 +504,27 @@ require([
         }
     }
 
+    // Activate Edit polygon toolbar from ArcGIS API 
+    // Conditionally set tool based on graphic type 
     function activateToolbar(graphic) {
-        var tool = 0;
+        let tool;
 
-        if (registry.byId("tool_move").checked) {
-            tool = tool | Edit.MOVE;
+        switch (graphic.geometry.type) {
+
+            case 'polygon':
+                tool = Edit.EDIT_VERTICES;
+                break;
+            
+            case 'point':
+                tool = Edit.MOVE;
         }
-        if (registry.byId("tool_vertices").checked) {
-            tool = tool | Edit.EDIT_VERTICES;
-        }
-        if (registry.byId("tool_scale").checked) {
-            tool = tool | Edit.SCALE;
-        }
-        if (registry.byId("tool_rotate").checked) {
-            tool = tool | Edit.ROTATE;
-        }
-        // enable text editing if a graphic uses a text symbol
-        if (graphic.symbol.declaredClass === "esri.symbol.TextSymbol") {
-            tool = tool | Edit.EDIT_TEXT;
-        }
+
         //specify toolbar options
-        var options = {
-            allowAddVertices: true, //registry.byId("vtx_ca").checked,
-            allowDeleteVertices: true, //registry.byId("vtx_cd").checked,
-            uniformScaling: true //registry.byId("uniform_scaling").checked
-        };
+        let options = {
+            allowAddVertices: true,
+            allowDeleteVertices: true, 
+        }
+
         editToolbar.activate(tool, graphic, options);
     }
 
@@ -536,7 +544,8 @@ require([
         // Create graphic using geometry and symbology
         var pointGraphic = new Graphic(pointGeom, pointSymbol, {
             keeper: true,
-            treatment_id: treatmentid
+            treatment_id: treatmentid,
+            editInProgress: 0
         });
 
         // Create popup template containing treatment properties
@@ -577,7 +586,7 @@ require([
         // Create polygon geometry and symbology using treatment properties
         let geo = { rings: nodes, spatialReference: sr };
         let poly = new esri.geometry.Polygon(geo);
-        let attr = { treatment_id: treatmentid };
+        let attr = { treatment_id: treatmentid, editInProgress: 0};
 
         let polyGraphic = new esri.Graphic(poly, polySymbol, attr);
         let template = new InfoTemplate({
@@ -607,7 +616,8 @@ require([
 
             // Retrieve appropriate treatment properties to pass into point or polygon graphics loading
             const treatmentType = row.TreatmentType_Name;
-            const treatmentid = row.TreatmentID
+            const customPoly = row.Custom_POLY;
+            const treatmentid = row.TreatmentID;
             const imageURL = "http://www.cch2o.org/Matrix/icons/" + row.treatment_icon;
             const treatmentArea = Math.round(row.Treatment_Acreage);
             const parcels = row.Treatment_Parcels;
@@ -619,11 +629,11 @@ require([
             const geo_string = row.POLY_STRING;
 
             // Load point or polygon creation by geometry type
-            if ( row.Custom_POLY == 0 && row.POLY_STRING.startsWith("POINT") ) {
+            if ( customPoly == 0 && geo_string.startsWith("POINT") ) {
 
                 addPointOnLoad(treatmentid,treatmentArea,imageURL,parcels,n_removed,popupVal,sr,geo_string)
             }
-            else if ( row.Custom_POLY == 1 && row.POLY_STRING.startsWith("POLYGON") ) {
+            else if ( customPoly == 1 && geo_string.startsWith("POLYGON") ) {
 
                 addPolygonOnLoad(treatmentid,treatmentArea,imageURL,parcels,n_removed,popupVal,sr,geo_string,polySymbol)
             }
@@ -633,33 +643,38 @@ require([
     // Handle polygon edit once complete
     function handle_polygon_edit(evt) {
 
+        // Retrieve geometry properties
         let treatment_id = evt.attributes.treatment_id;
+        let type = evt.geometry.type;
+        let geometry;
 
-        // Retrieve coordinate arrays
-        let nodeArray = evt.geometry.rings[0];
+        // Parse geometry based on type
+        switch (type) {
 
-        // Remove comma separator from individual node pairs then join together comma-separated as string
-        let nodeString = nodeArray
-            .map(coords => {
-                return coords.join(" ");
-            })
-            .join();
+            case 'polygon':
+                geometry = parsePolyOnSelect(evt.geometry.rings[0])
+                break;
 
-        // Package coordinates as payload
-        var data = { treatment: treatment_id, polystring: nodeString };
-        var url = "/update_polygon";
+            case 'point':
+                let coords = [evt.geometry.x, evt.geometry.y];
+                geometry = coords;
+                break;
+        }
+
+        // Package geometry as payload
+        var data = { treatment: treatment_id, geoObj: geometry, geoType: type };
+        var url = "/update_geometry";
         $.ajax({
             method: "POST",
             data: data,
             url: url
         })
         .done(function(msg) {
-            // When complete, open update window of relevant applied treatment
-            $("li.technology[data-treatment='" + treatment_id + "'] a").trigger(
-                "click"
-            );
+
+            loadTechView('/edit/' + treatment_id)
         })
         .fail(function(msg) {
+
             // Alert user if save unsuccessful
             alert(
                 "There was a problem saving the polygon. Please send this error message to info@capecodcommission.org: <br />Response: " +
@@ -669,6 +684,35 @@ require([
             );
         });
     }
+
+    // Handler to reset edited geometry to its original position on-close of the modal
+    $(document).on("click", ".blade_container .modal-close", function(e) {
+        e.preventDefault();
+        
+        let layerGraphics = map.graphics.graphics;
+
+        layerGraphics.map((graphic) => {
+
+            let attribs = graphic.attributes;
+
+            // If map graphic has edited geometry
+            if (attribs) {
+
+                if (attribs.editInProgress) {
+
+                    // Retreieve original treatment, remove edited geometry 
+                    let editedTreatment = treatments.filter((row) => {
+
+                        return row.TreatmentID == attribs.treatment_id
+                    });
+                    map.graphics.remove(graphic);
+
+                    // Add original geometry to map
+                    addGraphicsOnLoad(editedTreatment)
+                }
+            }
+        })
+    });
 
     /*******************************
      *

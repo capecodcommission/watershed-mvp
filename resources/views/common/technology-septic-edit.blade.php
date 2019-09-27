@@ -64,8 +64,9 @@
 		});
 
 		$('#closeWindow').on('click', function (e) {
-
-			$('#popdown-opacity').hide();
+			e.preventDefault();
+			destroyModalContents();
+			deleteGraphic();
 		})
 		
 		$('#updatetreatment').on('click', function(e)
@@ -77,10 +78,10 @@
 				method: 'GET',
 				url: url
 			})
-				.done(function(msg){
-					$('#popdown-opacity').hide();
-					$( "#update" ).trigger( "click" );
-				});
+			.done(function(msg){
+				resetGraphicPropsAfterUpdate(msg);
+				$( "#update" ).trigger( "click" );
+			});
 
 		});		
 

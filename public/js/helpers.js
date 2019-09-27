@@ -80,3 +80,22 @@ const addTreatmentIdToGraphic = (treatment_id) => {
         }
     }
 }
+
+// Reset edit properties of graphic after treatment has been updated with new geometry
+const resetGraphicPropsAfterUpdate = (treatment_id) => {
+
+    let layerGraphics = map.graphics.graphics;
+
+    layerGraphics.map((graphic) => {
+
+        let attribs = graphic.attributes;
+
+        if (attribs) {
+
+            if (attribs.treatment_id === treatment_id) {
+
+                attribs.editInProgress = 0;
+            }
+        }
+    });
+}

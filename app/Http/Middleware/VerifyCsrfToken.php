@@ -14,6 +14,6 @@ class VerifyCsrfToken extends BaseVerifier
     protected $except = [
         //
     '/map/poly',
-    'update_polygon'
+    'update_geometry'
     ];
 }
