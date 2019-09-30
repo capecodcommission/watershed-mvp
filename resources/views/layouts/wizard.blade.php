@@ -16,8 +16,6 @@
   	<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>  
 </head>
 <body class="claro">
-	<!-- <div id="modal">
-		<div class="claro"> -->
 
 <div data-dojo-type="dijit/layout/BorderContainer" 
 	   data-dojo-props="design:'headline', gutters:false" 
@@ -182,8 +180,6 @@
 								$('#stormMan')
 									.css({'pointer-events': 'auto'});
 							}
-
-							destroyModalContents()
 						})
 			});
 		</script>

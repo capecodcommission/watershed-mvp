@@ -7,7 +7,7 @@ const loadTechView = (route) => {
         $("#closeModal").toggle();
         return 1;
     });
-}
+};
 
 // Attach click event listener to the modal-close class of the .blade_container class,
 // destroy modal contents, delete graphic if graphic exists and, if necessary, set percent values to 0
@@ -21,7 +21,7 @@ $(document).on('click', '.blade_container .modal-close', function(e) {
     if ("{{$tech->technology_id == 401}}") {
         $("#storm-percent").val(0);
     }
-})
+});
 
 // Hide relevant modal elements
 const destroyModalContents = () => {
@@ -30,32 +30,32 @@ const destroyModalContents = () => {
     $(".modal-content").empty(function () {
         return 1;
     });
-}
+};
 
 // Create and append appropriate tech icons to the selected treatments stack post-apply
 const addToStack = (treatment_id, icon) => {
     let newtreatment = '<li class="technology" data-route="/edit/' + treatment_id + '" data-treatment="' + treatment_id + '">' + '<a href="" title="' + treatment_id +'">' + '<img src="http://www.cch2o.org/Matrix/icons/' + icon + '" alt=""></a></li>';
     $('ul.selected-treatments').append(newtreatment);
     return 1;
-}
+};
 
 // Event handler for loading the appropriate view on-click of a technology in the accordion blade
 $('div.technology').on('click', function (e) {
     e.preventDefault();
-    let apiRoute = $(this).data('route')
+    let apiRoute = $(this).data('route');
     if (apiRoute) {
-        loadTechView(apiRoute)
+        loadTechView(apiRoute);
     }
-})
+});
 
 // Event handler for loading the appropriate view on-click of a technology in the selected treatments blade
-$('#stackList').on('click', 'li.technology', function (e) {
+$(document).on('click', '.selected-treatments .technology', function(e) {
     e.preventDefault();
-    let apiRoute = $(this).data('route')
+    let apiRoute = $(this).data('route');
     if (apiRoute) {
-        loadTechView(apiRoute)
+        loadTechView(apiRoute);
     }
-})
+});
 
 // Remove map graphic by associated treatment id
 // Graphics created mid-process, such as points or polygons, are given an id of 1 until applied
@@ -67,7 +67,7 @@ const deleteGraphic = (treatment_id = null) => {
             }
         }
     }
-}
+};
 
 // Update associated treatment id of point or polygon geometry created mid-process
 // Updated post-apply

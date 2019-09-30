@@ -40,6 +40,7 @@
 				url: url
 			})
 			.done(function(treatment_id) {
+				destroyModalContents();
 				$( "#update" ).trigger( "click" );
 				addTreatmentIdToGraphic(treatment_id);
 				addToStack(treatment_id, icon);

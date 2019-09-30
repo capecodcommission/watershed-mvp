@@ -22,7 +22,7 @@
 	<button title="Apply Strategy" class="blade_button" id="applytreatment">Apply</button>
 </div>
 
-<!-- Import the vue data and computed properties -->
+<!-- Import the vue data and computed properties and helpers -->
 <script src="{{url('/js/main.js')}}"></script>
 
 <script>
@@ -36,7 +36,10 @@
 		// reduction selection by user, set the url to use to send an ajax GET method to route the user input slider
 		// value for the technology percent
 		$('#applytreatment').on('click', function(e) {
+			let applyTreatmentButton = document.getElementById("applytreatment");
+			let setapplyTreatmentButtonStyling = applyTreatmentButton.setAttribute("style", "display:none;");
 			e.preventDefault();
+			setapplyTreatmentButtonStyling;
 			if ("{{$tech->technology_id == 400}}") {
 				let percent = $('#fert-percent').val();
 				let url = "{{url('/apply_percent')}}" + '/' + percent + '/' + 'fert' + '/' + techId;
@@ -47,6 +50,7 @@
 				// Once the GET method is complete, hide the modal, update the subembayments and embayment progresses,
 				// set the newtreatment variable and add it to the treatment stack using the popdown generator
 				.done(function(treatment_id) {
+					destroyModalContents();
 					$( "#update" ).trigger( "click" );
 					addToStack(treatment_id, '{{$tech->icon}}');
 				});
@@ -62,6 +66,7 @@
 				// Once the GET method is complete, hide the modal, update the subembayments and embayment progresses,
 				// set the newtreatment variable and add it to the treatment stack using the popdown generator
 				.done(function(treatment_id) {
+					destroyModalContents();
 					$( "#update" ).trigger( "click" );
 					addToStack(treatment_id, '{{$tech->icon}}');
 				});
