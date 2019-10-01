@@ -8,7 +8,7 @@
 		{{$tech->technology_strategy}}
 	</h4>
 	<a title="{{$tech->technology_strategy}} - Technology Matrix" class="blade_image" href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->TM_ID}}" target="_blank">
-		<img src="http://www.cch2o.org/Matrix/icons/{{$tech->icon}}">
+		<img src="/anchor.svg">
 	</a>
 	<div class="blade_slider" title="Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.">
 		<label>Nutrient Reduction Rate</label>

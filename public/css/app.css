@@ -7834,13 +7834,13 @@ nav.toolbar .tool {
   animation: 1s ease-out 0s 1 slideInFromLeft;
 }
 
-.modal-close {
+/* .modal-close {
   position: absolute;
   right: 1%;
   top: 1%;
   margin: 0.5em;
   display: none;
-}
+} */
 
 .modal-loading {
   display: block;
@@ -7869,9 +7869,17 @@ nav.toolbar .tool {
   margin: 0.5vw;
 }
 
+.modal-close {
+  grid-column: col-start 3 / span 1;
+  grid-row: 1;
+  font: 1.5vh bold;
+  justify-self: end;
+  display: none;
+}
+
 .blade_title {
   grid-column: col-start / span 3;
-  grid-row: 1;
+  grid-row: 2;
   cursor: default;
   font-variant: small-caps;
   margin: 0.25em;
@@ -7882,11 +7890,12 @@ nav.toolbar .tool {
   grid-row: 2;
   width: 50%;
   background: navy;
+  justify-self: center;
 }
 
 .blade_slider {
   grid-column: col-start 2 / span 1;
-  grid-row: 2;
+  grid-row: 3;
   width: 100%;
 }
 
@@ -7904,6 +7913,7 @@ nav.toolbar .tool {
   grid-row: 2;
   font: 1.5vh bold;
   text-transform: uppercase;
+  justify-self: center;
 }
 
 .blade_slider > input {
