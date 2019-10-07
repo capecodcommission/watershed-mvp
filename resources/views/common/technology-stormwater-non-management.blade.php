@@ -17,8 +17,8 @@
 		</a>
 		<div class="blade_slider" title="Enter number of {{$tech->unit_metric}} to be treated.">
 			<button title="Select Location" class="blade_button" id="select_area">Select Location</button>
-			<label id="unit_metric_label" v-if="{{(session()->has('pointX') && session()->has('pointY'))}}">Enter number of {{$tech->unit_metric}} to be treated:</label>
-			<input v-model="uMetric" type="number" id="unit_metric" v-if="{{(session()->has('pointX') && session()->has('pointY'))}}" name="unit_metric">
+			<label id="unit_metric_label" style="display:none;">Enter number of {{$tech->unit_metric}} to be treated:</label>
+			<input v-model="uMetric" type="number" id="unit_metric" name="unit_metric" style="display:none;">
 		</div>
 		<button title="Apply Strategy" class="blade_button" id="applytreatment" v-show="uMetric > 0" >Apply</button>
 	</div>
@@ -39,6 +39,8 @@
 		// value for the technology percent
 		$('#applytreatment').on('click', function(e) {
 			e.preventDefault();
+			let applyTreatmentButton = document.getElementById("applytreatment");
+			let setapplyTreatmentButtonStyling = applyTreatmentButton.setAttribute("style", "display:none;");
 			var units = $('#unit_metric').val();
 
 			// Create and trigger API route url from parsed properties

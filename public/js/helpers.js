@@ -21,6 +21,17 @@ $(document).on('click', '.blade_container .modal-close', function(e) {
     if ("{{$tech->technology_id == 401}}") {
         $("#storm-percent").val(0);
     }
+
+    var url = "/delete_session_geometry";
+    $.ajax({
+        method: 'GET',
+        url: url
+    })
+    .done(function(){
+    })
+    .fail(function(msg) {
+        alert('Please contact the cape Cod Commission.' + msg.statusText)
+    })
 });
 
 // Hide relevant modal elements

@@ -12,6 +12,7 @@ Route::group(['middleware' => 'auth'], function () {
 	// TODO: Fix 'delete_treatment' to delete/{treatment}/{type?}
 	Route::get('/delete_treatment/{treatment}/{type?}', 'TechnologyController@delete');
 	Route::get('/cancel/{treatment}/{type?}', 'TechnologyController@cancel');
+	Route::get('/delete_session_geometry/{treatmentId?}', 'TechnologyController@deleteSessionGeometry');
 	Route::get('/delete_scenario/{scenarioid}', 'ScenarioController@deleteScenario');
 	Route::get('/apply_percent/{rate}/{type}/{techId}', 'TechnologyController@ApplyTreatment_Percent');
 	Route::get('/apply_storm/{rate}/{techId}', 'TechnologyController@ApplyTreatment_Storm');

@@ -78,7 +78,7 @@ class TechnologyController extends Controller
 	}
 
 	// Remove geometry from session post-application of treatment
-	public function deleteSessionGeometry ($treatmentId)
+	public function deleteSessionGeometry ($treatmentId = null)
 	{
 		if ( session()->has('pointX') && session()->has('pointY') ) 
 		{

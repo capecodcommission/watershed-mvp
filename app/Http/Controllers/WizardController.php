@@ -141,7 +141,9 @@ class WizardController extends Controller
 				'treatments' => $treatments
 			]
 		);
-		
+
+		app('App\Http\Controllers\TechnologyController')->deleteSessionGeometry();
+
 		return view (
 			'layouts/wizard',
 			[ 
