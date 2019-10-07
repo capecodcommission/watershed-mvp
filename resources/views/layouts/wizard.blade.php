@@ -70,9 +70,9 @@
 			$('#closeACC').on('click', function(event){
 				$('.state').prop('checked', false);
 			});
+			$('.sliding-panel-content').toggleClass('is-visible');
 			$('.sliding-panel-button').on('click', function(e){
 				$('.sliding-panel-content').toggleClass('is-visible');
-				// console.log('button clicked');
 			});
 
 			// TODO: Is this real?

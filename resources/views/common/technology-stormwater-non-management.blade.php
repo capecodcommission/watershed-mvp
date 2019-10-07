@@ -1,18 +1,26 @@
 <!-- Set the title to 'technology_strategy' from the dbo.v_Technology_Matrix obtained by 'TechnologyController.php' -->
 <!-- Set up the HTML for the grid layout as specified in the css -->
 	<div class="blade_container">
-		<h3 class="blade_title" title="{{$tech->technology_strategy}}">
+		<button class="modal-close" id ="closeModal">
+			<i class="fa fa-times"></i>
+		</button>
+		<h4 class="blade_title" title="{{$tech->technology_strategy}}">
 			{{$tech->technology_strategy}}
-		</h3>
+		</h4>
 		<a title="{{$tech->technology_strategy}} - Technology Matrix" class="blade_image" href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->TM_ID}}" target="_blank">
-			<img src="http://www.cch2o.org/Matrix/icons/{{$tech->icon}}">
+			<!-- <img v-show="{{$tech->technology_id == 400}}" src="{{$_ENV['CCC_ICONS_SVG'].'$tech->icon'}}">  TODO: FUTURE SYNTAX -->
+			<img v-show="{{$tech->technology_id == 106}}" src="{{$_ENV['CCC_ICONS_SVG'].'Icon_Phytobuffers.svg'}}">
+			<img v-show="{{$tech->technology_id == 107}}" src="{{$_ENV['CCC_ICONS_SVG'].'Icon_VegetatedSwale.svg'}}">
+			<img v-show="{{$tech->technology_id == 108}}" src="{{$_ENV['CCC_ICONS_SVG'].'Icon_StormwaterGravelWetland.svg'}}">
+			<img v-show="{{$tech->technology_id == 109}}" src="{{$_ENV['CCC_ICONS_SVG'].'Icon_VegetatedSwale.svg'}}">
+			<img v-show="{{$tech->technology_id == 110}}" src="{{$_ENV['CCC_ICONS_SVG'].'Icon_ConstructedWetlands.svg'}}">
 		</a>
-		<div class="blade_slider" title="Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.">
+		<div class="blade_slider" title="Enter number of {{$tech->unit_metric}} to be treated.">
 			<button title="Select Location" class="blade_button" id="select_area">Select Location</button>
-			<label  style="display: none" for="unit_metric"  id="unit_metric_label">Enter number of {{$tech->Unit_Metric}} to be treated:</label>
-			<input style="display: none" type="text" id="unit_metric" name="unit_metric">
+			<label id="unit_metric_label" v-if="{{(session()->has('pointX') && session()->has('pointY'))}}">Enter number of {{$tech->unit_metric}} to be treated:</label>
+			<input v-model="uMetric" type="number" id="unit_metric" v-if="{{(session()->has('pointX') && session()->has('pointY'))}}" name="unit_metric">
 		</div>
-		<button title="Apply Strategy" class="blade_button" id="applytreatment">Apply</button>
+		<button title="Apply Strategy" class="blade_button" id="applytreatment" v-show="uMetric > 0" >Apply</button>
 	</div>
 
 <!-- Import the vue data and computed properties -->
