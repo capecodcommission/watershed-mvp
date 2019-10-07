@@ -406,8 +406,6 @@ require([
         }).done(function(msg) {
             $(".modal-wrapper").toggle();
             $("#popdown-opacity").show();
-            $("#unit_metric_label").show();
-            $("#unit_metric").show();
         });
 
         // Finish addGraphic function
