@@ -31,6 +31,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/sumTotalsWithinPolygon', 'WelcomeController@sumTotalsWithinPoly');
 	Route::post('/getIDArrayWithinPolygon', 'WelcomeController@getIDArrayWithinPoly');
 	Route::post('/update_geometry', 'TechnologyController@updateGeometry');
+	Route::get('/get_treatment/{id}', 'TechnologyController@getTreatment');
+	Route::get('/get_treatments', 'TechnologyController@getTreatments');
 });
 
 Route::auth();

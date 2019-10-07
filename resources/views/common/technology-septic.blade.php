@@ -57,6 +57,7 @@
 			deleteGraphic();
 			$('#popdown-opacity').hide()
 			$('.modal-wrapper').hide()
+			map.setInfoWindowOnClick(false);
 			tb.activate('polygon');
 		});
 
@@ -69,10 +70,17 @@
 				url: url
 			})
 			.done(function(treatment_id){
+				destroyModalContents();
 				$( "#update" ).trigger( "click" );
 				addTreatmentIdToGraphic(treatment_id);
-				addToStack(treatment_id, icon);
+				addToStack(treatment_id, icon, techId);
 			});
 		});
+
+		$('#closeWindow').on('click', function (e) {
+			e.preventDefault();
+			destroyModalContents();
+			deleteGraphic();
+		})
 	});
 </script>

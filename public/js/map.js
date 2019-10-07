@@ -1,5 +1,4 @@
 var map;
-
 var watershed;
 var embay_shape;
 var treatment;
@@ -14,7 +13,6 @@ require([
     "esri/layers/ImageParameters",
     "esri/layers/FeatureLayer",
     "esri/dijit/Legend",
-
     "esri/toolbars/draw",
     "esri/toolbars/edit",
     "esri/symbols/SimpleFillSymbol",
@@ -29,22 +27,12 @@ require([
     "esri/symbols/PictureMarkerSymbol",
     "esri/geometry/Point",
     "esri/graphic",
-
     "esri/tasks/query",
     "esri/tasks/QueryTask",
     "esri/tasks/identify",
     "esri/InfoTemplate",
-    // "esri/dijit/Popup",
-    //    "esri/dijit/PopupTemplate",
-    // "esri/tasks/infoWindow",
     "esri/dijit/LayerList",
     "esri/geometry/Extent",
-
-    // "esri/SpatialReference",
-    // "dijit/layout/BorderContainer",
-    // "dijit/layout/ContentPane",
-    // "dijit/TitlePane",
-
     "dojo/_base/event",
     "dojo/dom",
     "dojo/on",
@@ -55,7 +43,6 @@ require([
     "esri/geometry/geometryEngine"
 ], function(
     Map,
-    // Popup, PopupTemplate,
     BasemapGallery,
     arcgisUtils,
     parser,
@@ -63,7 +50,6 @@ require([
     ImageParameters,
     FeatureLayer,
     Legend,
-
     Draw,
     Edit,
     SimpleFillSymbol,
@@ -78,20 +64,16 @@ require([
     PictureMarkerSymbol,
     Point,
     Graphic,
-
     Query,
     QueryTask,
-
     identify,
     InfoTemplate,
-    // infoWindow,
     LayerList,
     Extent,
     event,
     dom,
     on,
     registry,
-
     geometryEngine,
     domConstruct
 ) {
@@ -108,12 +90,9 @@ require([
         center_x = -70.35;
         center_y = 41.68;
     }
-    // console.log('x: ' + center_x + ' and y: '+ center_y);
+
     map = new Map("map", {
-        // center: [-70.35, 41.68],
         center: [center_x, center_y],
-        // extent: initialExtent,
-        // infoWindow: subem_template,
         zoom: 14,
         basemap: "dark-gray",
         slider: true,
@@ -140,6 +119,7 @@ require([
         // Create and listen for polygon Draw events
         tb = new Draw(map);
         tb.on("draw-end", addGraphicOnSelect);
+
         on(dom.byId("info"), "click", function(evt) {
             if (evt.target.id === "info") {
                 return;
@@ -148,51 +128,47 @@ require([
             tb.activate(tool);
         });
 
-        // Create and listen for polygon Edit events
+        // Create and listen for geometry Edit events
         editToolbar = new Edit(map);
+        let editGeoClicked = 0;
 
         // Handler to activate edit toolbar for appropriate geometry
-        on(dom.byId("edit_polygon"), "click", function(e) {
+        $("#edit_geometry").on("click", function(e) {
+            e.preventDefault();
+            $(this).css("background-color", "red");
+            $("#editDesc").show();
+            map.disableDoubleClickZoom();
+            editGeoClicked = 1;
+        });
 
-            // If graphic is already in edit mode, deactivate toolbar else activate it
-            map.graphics.on("click", function(evt) {
+        // Activate geometry edit if edit button clicked
+        map.graphics.on("click", function(evt) {
+            if (editGeoClicked) {
+                event.stop(evt);
                 let attribs = evt.graphic.attributes;
                 if (attribs) {
-                    if (attribs.editInProgress == 1) {
-                        editToolbar.deactivate();
-                        event.stop(evt);
-                        attribs.editInProgress = 0;
-                    } else {
-                        attribs.editInProgress = 1;
-                        $("#save_polygon").show();
-                        event.stop(evt);
-                        activateToolbar(evt.graphic);
-                    }
+                    activateToolbar(evt.graphic);
                 }
-            })
+            }
+        });
 
-            // Solution for removing edit toolbar if it doesn't work on initial click
-            // https://community.esri.com/thread/169436
-            map.on("click", function(evt) {
+        // Save edited geometry on double-click
+        map.on("dbl-click", function(evt) {
+            if (editGeoClicked) {
                 editToolbar.deactivate();
-                event.stop(e);
-            });
+            }
+        });
 
-            // Also deactivate tool on button click
-            $("#save_polygon").on("click", function(evt) {
-                editToolbar.deactivate();
-                $("#save_polygon").hide();
-                event.stop(e);
-            });
-
-            // On-deactivate, handle new polygon coordinates in separate function
-            editToolbar.on("deactivate", function(evt) {
-                if (evt.info.isModified) {
-                    $("#save_polygon").hide();
-                    handle_polygon_edit(evt.graphic);
-                }
-            });
-        })
+        // On-deactivate, handle new geometry coordinates in separate function
+        editToolbar.on("deactivate", function(evt) {
+            editGeoClicked = 0;
+            map.enableDoubleClickZoom();
+            $("#edit_geometry").css("background-color", "#1565c0");
+            $("#editDesc").hide();
+            if (evt.info.isModified) {
+                saveGeometry(evt.graphic);
+            }
+        });
     }
 
     // Create and color polygon using passed rgba array
@@ -401,8 +377,7 @@ require([
 
     // Create and add point graphic to map
     // Save point coordinates to Laravel session
-    function addPointOnSelect (evt) {
-
+    function addPointOnSelect(evt) {
         // Create point graphic based on clicked-coordinates
         var icon = $("#select_area").data("icon");
         var imageURL = "http://www.cch2o.org/Matrix/icons/" + icon;
@@ -414,7 +389,8 @@ require([
         });
         var pointGraphic = new Graphic(pointGeometry, pointSymbology, {
             keeper: true,
-            treatment_id: 1
+            treatment_id: 1,
+            editInProgress: 0
         });
 
         // Add point graphic to the map, deactivate draw toolbar, enable map navigation
@@ -423,8 +399,7 @@ require([
         map.enableMapNavigation();
 
         // Save clicked coordinates to Laravel session
-        var url =
-            "/map/point" + "/" + evt.geometry.x + "/" + evt.geometry.y;
+        var url = "/map/point" + "/" + evt.geometry.x + "/" + evt.geometry.y;
         $.ajax({
             method: "GET",
             url: url
@@ -440,8 +415,7 @@ require([
     }
 
     // Convert polygon coordinate array from ArcGIS API to SQL Spatial string
-    function parsePolyOnSelect (rings) {
-
+    function parsePolyOnSelect(rings) {
         // Remove comma separator from individual node pairs then join together comma-separated as string
         let nodeString = rings
             .map(coords => {
@@ -453,26 +427,33 @@ require([
     }
 
     // Create and add polygon geometry to map on-selection
-    function addPolygonOnSelect (evt) {
-
+    function addPolygonOnSelect(evt) {
         // Obtain technology id from select polygon div
         let techId = $("#select_polygon").data("techId");
 
         // Create and color polygon using technology id
         let polySymbol = selectPoly(techId);
 
+        let sr = { wkid: 102100, latestWkid: 3857 };
+        let geo = { rings: evt.geometry.rings, spatialReference: sr };
+        let polyGeometry = new esri.geometry.Polygon(geo);
+
+        // Initialize treatment id attribute for polygon
+        let polyGraphic = new Graphic(polyGeometry, polySymbol, {
+            keeper: true,
+            treatment_id: 1,
+            editInProgress: 0,
+            techId: techId
+        });
+
+        // Add polygon and symbology to map with attached treatment id
+        map.graphics.add(polyGraphic);
         // Deactivate the toolbar and enable map navigation
         tb.deactivate();
         map.enableMapNavigation();
 
-        // Initialize treatment id attribute for polygon
-        let attr = { treatment_id: 1 };
-
-        // Add polygon and symbology to map with attached treatment id
-        map.graphics.add(new Graphic(evt.geometry, polySymbol, attr));
-
         // Retrieve coordinate arrays
-        let nodeString = parsePolyOnSelect(evt.geometry.rings[0])
+        let nodeString = parsePolyOnSelect(evt.geometry.rings[0]);
 
         // Save coordinate string to session
         var url = "/map/poly";
@@ -498,46 +479,52 @@ require([
 
     // Handle draw-end event by creating a point or polygon graphic on the map
     function addGraphicOnSelect(evt) {
-        
+        map.setInfoWindowOnClick(true);
         if (evt.geometry.type === "point") {
-            addPointOnSelect(evt)
-        }
-
-        else if (evt.geometry.type === "polygon") {
-            addPolygonOnSelect(evt)
+            addPointOnSelect(evt);
+        } else if (evt.geometry.type === "polygon") {
+            addPolygonOnSelect(evt);
         }
     }
 
-    // Activate Edit polygon toolbar from ArcGIS API 
-    // Conditionally set tool based on graphic type 
+    // Activate Edit polygon toolbar from ArcGIS API
+    // Conditionally set tool based on graphic type
     function activateToolbar(graphic) {
         let tool;
-
         switch (graphic.geometry.type) {
-
-            case 'polygon':
+            case "polygon":
                 tool = Edit.EDIT_VERTICES;
                 break;
-            
-            case 'point':
-                tool = Edit.MOVE;
-        }
 
+            case "point":
+                tool = Edit.MOVE;
+                break;
+        }
         //specify toolbar options
         let options = {
             allowAddVertices: true,
-            allowDeleteVertices: true, 
-        }
-
+            allowDeleteVertices: true
+        };
         editToolbar.activate(tool, graphic, options);
     }
 
     // Add point graphic with treatment properties to map
-    function addPointOnLoad (treatmentid, treatmentArea, imageURL, parcels, n_removed, popupVal, sr, geo_string) {
-        
+    function addPointOnLoad(
+        treatmentid,
+        treatmentArea,
+        imageURL,
+        parcels,
+        n_removed,
+        popupVal,
+        sr,
+        geo_string
+    ) {
         // Remove SQL Spatial type and spatial reference from the geometry string
         // Create point geometry and symbology
-        geo_string = geo_string.replace("POINT(", "").replace(", 3857)", "").split(", ");
+        geo_string = geo_string
+            .replace("POINT(", "")
+            .replace(", 3857)", "")
+            .split(", ");
         var pointGeom = new Point({
             x: parseFloat(geo_string[0]),
             y: parseFloat(geo_string[1]),
@@ -573,24 +560,35 @@ require([
         map.graphics.add(pointGraphic);
     }
 
-
     // Add polygon graphic with treatment properties to map
-    function addPolygonOnLoad (treatmentid, treatmentArea, imageURL, parcels, n_removed, popupVal, sr, geo_string, polySymbol) {
-
+    function addPolygonOnLoad(
+        treatmentid,
+        treatmentArea,
+        imageURL,
+        parcels,
+        n_removed,
+        popupVal,
+        sr,
+        geo_string,
+        polySymbol
+    ) {
         // Translate SQL Spatial geometry string to an array of polygon nodes consumable for polygon creation
-        let geoArray = geo_string.replace("POLYGON((", "").replace("))", "").split(",");
+        let geoArray = geo_string
+            .replace("POLYGON((", "")
+            .replace("))", "")
+            .split(",");
         let nodes = [];
-        geoArray.map((coords) => {
-            let splitCoords = coords.split(' ');
-            let node = [ parseFloat(splitCoords[0]), parseFloat(splitCoords[1]) ];
-            nodes.push(node)
+        geoArray.map(coords => {
+            let splitCoords = coords.split(" ");
+            let node = [parseFloat(splitCoords[0]), parseFloat(splitCoords[1])];
+            nodes.push(node);
         });
-        nodes = [nodes]
+        nodes = [nodes];
 
         // Create polygon geometry and symbology using treatment properties
         let geo = { rings: nodes, spatialReference: sr };
         let poly = new esri.geometry.Polygon(geo);
-        let attr = { treatment_id: treatmentid, editInProgress: 0};
+        let attr = { treatment_id: treatmentid, editInProgress: 0 };
 
         let polyGraphic = new esri.Graphic(poly, polySymbol, attr);
         let template = new InfoTemplate({
@@ -615,14 +613,13 @@ require([
 
     // Add point and polygon graphics based on treatment geometry on-load of map
     function addGraphicsOnLoad(treatments) {
-
-        treatments.map((row) => {
-
+        treatments.map(row => {
             // Retrieve appropriate treatment properties to pass into point or polygon graphics loading
             const treatmentType = row.TreatmentType_Name;
             const customPoly = row.Custom_POLY;
             const treatmentid = row.TreatmentID;
-            const imageURL = "http://www.cch2o.org/Matrix/icons/" + row.treatment_icon;
+            const imageURL =
+                "http://www.cch2o.org/Matrix/icons/" + row.treatment_icon;
             const treatmentArea = Math.round(row.Treatment_Acreage);
             const parcels = row.Treatment_Parcels;
             const n_removed = Math.round(row.Nload_Reduction);
@@ -633,35 +630,50 @@ require([
             const geo_string = row.POLY_STRING;
 
             // Load point or polygon creation by geometry type
-            if ( customPoly == 0 && geo_string.startsWith("POINT") ) {
-
-                addPointOnLoad(treatmentid,treatmentArea,imageURL,parcels,n_removed,popupVal,sr,geo_string)
+            if (customPoly == 0 && geo_string.startsWith("POINT")) {
+                addPointOnLoad(
+                    treatmentid,
+                    treatmentArea,
+                    imageURL,
+                    parcels,
+                    n_removed,
+                    popupVal,
+                    sr,
+                    geo_string
+                );
+            } else if (customPoly == 1 && geo_string.startsWith("POLYGON")) {
+                addPolygonOnLoad(
+                    treatmentid,
+                    treatmentArea,
+                    imageURL,
+                    parcels,
+                    n_removed,
+                    popupVal,
+                    sr,
+                    geo_string,
+                    polySymbol
+                );
             }
-            else if ( customPoly == 1 && geo_string.startsWith("POLYGON") ) {
-
-                addPolygonOnLoad(treatmentid,treatmentArea,imageURL,parcels,n_removed,popupVal,sr,geo_string,polySymbol)
-            }
-        })
+        });
     }
 
-    // Handle polygon edit once complete
-    function handle_polygon_edit(evt) {
+    // Save updated geometry coordinates to Laravel session
+    function saveGeometry(evt) {
+        evt.attributes.editInProgress = 1;
 
         // Retrieve geometry properties
         let treatment_id = evt.attributes.treatment_id;
         let type = evt.geometry.type;
         let geometry;
-
+        
         // Parse geometry based on type
         switch (type) {
-
-            case 'polygon':
-                geometry = parsePolyOnSelect(evt.geometry.rings[0])
+            case "polygon":
+                geometry = parsePolyOnSelect(evt.geometry.rings[0]);
                 break;
 
-            case 'point':
-                let coords = [evt.geometry.x, evt.geometry.y];
-                geometry = coords;
+            case "point":
+                geometry = [evt.geometry.x, evt.geometry.y];
                 break;
         }
 
@@ -673,50 +685,159 @@ require([
             data: data,
             url: url
         })
-        .done(function(msg) {
+            .done(function(msg) {
+                editToolbar.deactivate();
+                editGeoClicked = 0;
 
-            loadTechView('/edit/' + treatment_id)
-        })
-        .fail(function(msg) {
+                loadTechView("/edit/" + treatment_id);
+            })
+            .fail(function(msg) {
+                // Alert user if save unsuccessful
+                alert(
+                    "There was a problem saving the polygon. Please send this error message to info@capecodcommission.org: <br />Response: " +
+                        msg.status +
+                        " " +
+                        msg.statusText
+                );
+            });
+    };
 
-            // Alert user if save unsuccessful
-            alert(
-                "There was a problem saving the polygon. Please send this error message to info@capecodcommission.org: <br />Response: " +
-                    msg.status +
-                    " " +
-                    msg.statusText
-            );
+    // Global objects to house currently hightlighted graphic and icon URL from treatment stack
+    let treatmentGraphic = null;
+    let pointURL = "";
+
+    // Highlight symbololgy based on geometry type
+    function highlightSymbolOnEnter(treatment_id) {
+        // Retrieve graphic by treatment id id possible
+        let layerGraphics = map.graphics.graphics;
+        treatmentGraphic = layerGraphics.filter(graphic => {
+            let attribs = graphic.attributes;
+            if (attribs) {
+                return attribs.treatment_id == treatment_id;
+            }
         });
-    }
+
+        // If graphic exists, highlight it
+        if (treatmentGraphic.length) {
+            let geoType = treatmentGraphic[0].geometry.type;
+            let highlightColor = [252, 236, 3, 1.0];
+            let highlightSymbol = {};
+            switch (geoType) {
+                case "polygon":
+                    highlightSymbol = createPolySymbol(highlightColor);
+                    treatmentGraphic[0].setSymbol(highlightSymbol);
+                    break;
+
+                case "point":
+                    pointURL = treatmentGraphic[0].symbol.url;
+                    highlightSymbol = new SimpleMarkerSymbol(
+                        SimpleMarkerSymbol.STYLE_CIRCLE,
+                        30,
+                        null,
+                        new Color(highlightColor)
+                    );
+                    treatmentGraphic[0].setSymbol(highlightSymbol);
+                    break;
+            }
+        }
+    };
+
+    // Reset symbology based on geometry type
+    function resetSymbolOnLeave(techId) {
+        // If graphic exists, reset original symbology
+        if (treatmentGraphic.length) {
+            let geoType = treatmentGraphic[0].geometry.type;
+            let originalGraphic = {};
+            switch (geoType) {
+                case "polygon":
+                    originalGraphic = selectPoly(techId);
+                    treatmentGraphic[0].setSymbol(originalGraphic);
+                    break;
+
+                case "point":
+                    originalGraphic = new PictureMarkerSymbol(pointURL, 30, 30);
+                    treatmentGraphic[0].setSymbol(originalGraphic);
+                    break;
+            }
+            treatmentGraphic = null;
+            pointURL = null;
+        }
+    };
+
+    // Handle highlighting and resetting symbology of hovered treatment in stack
+    $(document)
+        .on("mouseover", "#stackList li.technology", function(e) {
+            e.preventDefault();
+            let treatment_id = $(this).data("treatment");
+            highlightSymbolOnEnter(treatment_id);
+        })
+        .on("mouseout", "#stackList li.technology", function(e) {
+            e.preventDefault();
+            let techId = $(this).data("techid")
+            if (techId) {
+                resetSymbolOnLeave(techId.toString());
+            }
+        });
 
     // Handler to reset edited geometry to its original position on-close of the modal
     $(document).on("click", ".blade_container .modal-close", function(e) {
         e.preventDefault();
-        
         let layerGraphics = map.graphics.graphics;
 
-        layerGraphics.map((graphic) => {
-
+        // Filter to edited graphics
+        let editedGraphic = layerGraphics.filter((graphic) => {
             let attribs = graphic.attributes;
-
-            // If map graphic has edited geometry
             if (attribs) {
-
-                if (attribs.editInProgress == 1) {
-
-                    // Retreieve original treatment, remove edited geometry 
-                    let editedTreatment = treatments.filter((row) => {
-
-                        return row.TreatmentID == attribs.treatment_id
-                    });
-                    map.graphics.remove(graphic);
-
-                    // Add original geometry to map
-                    addGraphicsOnLoad(editedTreatment)
-                }
+                return attribs.editInProgress;
             }
         })
+
+        // Obtain new treatment info, set popup
+        var url = "/get_treatment" + "/" + editedGraphic[0].attributes.treatment_id;
+        $.ajax({
+            method: 'GET',
+            url: url
+        })
+        .done(function(treatment){
+            
+            // Add original geometry to map through either the global treatments object or the graphic attribute
+            if (treatment) {
+                map.graphics.remove(editedGraphic[0]);
+                addGraphicsOnLoad(treatment);
+            }
+        })
+        .fail(function(msg) {
+            alert('error: geometry failed to reset, please contact info@capecodcommission for technical support. Thank you.' + msg.statusText)
+        })
     });
+
+    // Handles popup setting and updating for all graphics post-apply, update, or delete
+    // TODO: Debug 
+    // $('#update').on('click', function(e) {
+    //     e.preventDefault();
+    //     var url = "/get_treatments";
+    //     $.ajax({
+    //         method: 'GET',
+    //         url: url
+    //     })
+    //     .done(function(treatments){
+    //         if (treatments) {
+    //             let layerGraphics = map.graphics.graphics;
+    //             layerGraphics.filter((graphic) => {
+    //                 let attribs = graphic.attributes;
+    //                 if (attribs) {
+    //                     return attribs;
+    //                 }
+    //             }).map((graphic) => {
+    //                 map.graphics.remove(graphic)
+    //             })
+    //             addGraphicsOnLoad(treatments);
+    //         }
+    //     })
+    //     .fail(function(msg) {
+    //         alert('Error: Geometry failed to reset, please contact info@capecodcommission for technical support. Thank you.' + msg.statusText)
+    //     })
+    // });
 
     /*******************************
      *

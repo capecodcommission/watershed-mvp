@@ -43,7 +43,7 @@
 				destroyModalContents();
 				$( "#update" ).trigger( "click" );
 				addTreatmentIdToGraphic(treatment_id);
-				addToStack(treatment_id, icon);
+				addToStack(treatment_id, icon, techId);
 			});
 		});
 
@@ -52,6 +52,7 @@
 			f.preventDefault();
 			$('.modal-wrapper').hide();
 			deleteGraphic();
+			map.setInfoWindowOnClick(false);
 			tb.activate('point');
 		});
  	});

@@ -60,7 +60,6 @@
 			tb.activate('polygon');
 			$('#select_polygon').hide();
 			// $('#select_destination').show();
-
 		});
 
 		$('#closeWindow').on('click', function (e) {
@@ -79,58 +78,25 @@
 				url: url
 			})
 			.done(function(msg){
+				destroyModalContents();
 				resetGraphicPropsAfterUpdate(msg);
 				$( "#update" ).trigger( "click" );
 			});
-
-		});		
-
-	// $('#updatetreatment').on('click', function(e){
-	// 		e.preventDefault();
-	// 		var rate = $('#septic-rate').val();
-	// 		var url = "{{url('/apply_septic')}}" + '/' +  treatment + '/' + rate + '/septic';
-	// 		// console.log(url);
-	// 		$.ajax({
-	// 			method: 'GET',
-	// 			url: url
-	// 		})
-	// 			.done(function(msg){
-	// 				// console.log(msg);
-	// 				msg = Math.round(msg);
-	// 				$('#n_removed').text(msg);
-	// 				$('#popdown-opacity').hide();
-	// 				$( "#update" ).trigger( "click" );
-	// 			});
-
-	// 	});
+		});
 
 		$('#deletetreatment').on('click', function(e){
-		var url = "{{url('delete_treatment', $treatment->TreatmentID)}}";
-		$.ajax({
-			method: 'GET',
-			url: url
-		})
+			var url = "{{url('delete_treatment', $treatment->TreatmentID)}}";
+			$.ajax({
+				method: 'GET',
+				url: url
+			})
 			.done(function(msg){
 				$('#popdown-opacity').hide();
 				$("li[data-treatment='{{$treatment->TreatmentID}}']").remove();
-				
-				for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
-                
-	                if (map.graphics.graphics[i].attributes) {
-
-	                    if (map.graphics.graphics[i].attributes.treatment_id == treatment) {
-
-	                    	map.graphics.remove(map.graphics.graphics[i])
-	                    }
-	                }
-           		}
-
-           		$( "#update" ).trigger( "click" );
+				deleteGraphic(treatment)
+				destroyModalContents();
+				$( "#update" ).trigger( "click" );
 			});
-
 		});
-
-
-
 	});
 </script>

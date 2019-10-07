@@ -12,6 +12,37 @@ use View;
 
 class TechnologyController extends Controller
 {
+
+	public function getTreatment($id)
+	{
+		$treatment = Treatment::find($id);
+
+		if ($treatment)
+		{
+			return [$treatment];
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
+	public function getTreatments()
+	{
+		$scenarioid = session()->get('scenarioid');
+		$scenario = Scenario::find($scenarioid);
+		$treatments = $scenario->treatments;
+
+		if ($treatments)
+		{
+			return $treatments;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
 	// Retrieve scenario id from the session, find the scenario, use it to get the treatments, initialize n_removed_some
 	// integer, loop through treatments and take the sum of the Nload_Reduction from dbo.Treatment_Wiz & update the session
 	// n_removed with the value
@@ -49,6 +80,17 @@ class TechnologyController extends Controller
 	// Remove geometry from session post-application of treatment
 	public function deleteSessionGeometry ($treatmentId)
 	{
+		if ( session()->has('pointX') && session()->has('pointY') ) 
+		{
+			session()->forget('pointX');
+			session()->forget('pointY');
+		}
+
+		if ( session()->has('polyString') )
+		{
+			session()->forget('polyString');
+		}
+
 		if ( session()->has('pointX_' . $treatmentId) && session()->has('pointY_' . $treatmentId) ) 
 		{
 			session()->forget('pointX_' . $treatmentId);
@@ -188,6 +230,7 @@ class TechnologyController extends Controller
 		// Treat parcel using parameterized stored proc
 		$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treatment->TreatmentID . ', ' . $rate);
 		$this->updateNitrogenRemoved();
+		$this->deleteSessionGeometry($treatment->TreatmentID);
 
 		return $treatment->TreatmentID;
 	}
@@ -248,6 +291,7 @@ class TechnologyController extends Controller
 		$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment->TreatmentID . ', \'' . $polyString . '\'');
 		$updated = DB::select('exec dbo.CALCapplyTreatmentSeptic ' . $treatment->TreatmentID . ', ' . $rate );
 		$this->updateNitrogenRemoved();
+		$this->deleteSessionGeometry($treatment->TreatmentID);
 
 		return $treatment->TreatmentID;
 	}

@@ -7374,7 +7374,7 @@ include flash mixins
   border: 1px solid #999;
 }
 
-div.selected-treatments button#edit_polygon {
+div.selected-treatments button#edit_geometry {
   margin-left: 2%;
   float: left !important;
   visibility: visible;

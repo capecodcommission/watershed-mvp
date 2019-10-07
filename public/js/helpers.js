@@ -33,8 +33,8 @@ const destroyModalContents = () => {
 };
 
 // Create and append appropriate tech icons to the selected treatments stack post-apply
-const addToStack = (treatment_id, icon) => {
-    let newtreatment = '<li class="technology" data-route="/edit/' + treatment_id + '" data-treatment="' + treatment_id + '">' + '<a href="" title="' + treatment_id +'">' + '<img src="http://www.cch2o.org/Matrix/icons/' + icon + '" alt=""></a></li>';
+const addToStack = (treatment_id, icon, techId = null) => {
+    let newtreatment = '<li class="technology" data-route="/edit/' + treatment_id + '" data-treatment="' + treatment_id + '" data-techid="' + techId + '">' + '<a href="" title="' + treatment_id +'">' + '<img src="http://www.cch2o.org/Matrix/icons/' + icon + '" alt=""></a></li>';
     $('ul.selected-treatments').append(newtreatment);
     return 1;
 };
@@ -60,42 +60,40 @@ $(document).on('click', '.selected-treatments .technology', function(e) {
 // Remove map graphic by associated treatment id
 // Graphics created mid-process, such as points or polygons, are given an id of 1 until applied
 const deleteGraphic = (treatment_id = null) => {
-    for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
-        if (map.graphics.graphics[i].attributes) {
-            if (map.graphics.graphics[i].attributes.treatment_id == treatment_id || map.graphics.graphics[i].attributes.treatment_id == 1) {
-                map.graphics.remove(map.graphics.graphics[i])
-            }
+    let layerGraphics = map.graphics.graphics;
+    layerGraphics.filter((graphic) => {
+        return graphic.attributes;
+    }).map((graphic) => {
+        let attribs = graphic.attributes;
+        if (attribs.treatment_id == 1 || attribs.treatment_id == treatment_id) {
+            map.graphics.remove(graphic);
         }
-    }
+    })
 };
 
 // Update associated treatment id of point or polygon geometry created mid-process
 // Updated post-apply
 const addTreatmentIdToGraphic = (treatment_id) => {
-    for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
-        if (map.graphics.graphics[i].attributes) {
-            if (map.graphics.graphics[i].attributes.treatment_id == 1) {
-                map.graphics.graphics[i].attributes.treatment_id = treatment_id;
-            }
+    let layerGraphics = map.graphics.graphics;
+    layerGraphics.filter((graphic) => {
+        return graphic.attributes;
+    }).map((graphic) => {
+        let attribs = graphic.attributes;
+        if (attribs.treatment_id === 1) {
+            attribs.treatment_id = treatment_id;
         }
-    }
-}
+    })
+};
 
 // Reset edit properties of graphic after treatment has been updated with new geometry
 const resetGraphicPropsAfterUpdate = (treatment_id) => {
-
     let layerGraphics = map.graphics.graphics;
-
-    layerGraphics.map((graphic) => {
-
+    layerGraphics.filter((graphic) => {
+        return graphic.attributes;
+    }).map((graphic) => {
         let attribs = graphic.attributes;
-
-        if (attribs) {
-
-            if (attribs.treatment_id === treatment_id) {
-
-                attribs.editInProgress = 0;
-            }
+        if (attribs.treatment_id == treatment_id && attribs.editInProgress) {
+            attribs.editInProgress = 0;
         }
     });
-}
+};

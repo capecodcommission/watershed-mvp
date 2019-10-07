@@ -75,6 +75,7 @@
 					url: url
 				})
 				.done(function(msg) {
+					destroyModalContents();
 					resetGraphicPropsAfterUpdate(msg);
 					$( "#update" ).trigger( "click" );
 				});
@@ -117,6 +118,7 @@
 				url: url
 			})
 			.done(function(msg){
+				destroyModalContents();
 				$('#popdown-opacity').hide();
 				$("li[data-treatment='{{$treatment->TreatmentID}}']").remove();
 				deleteGraphic(treat)
