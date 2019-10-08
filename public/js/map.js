@@ -135,21 +135,24 @@ require([
         // Handler to activate edit toolbar for appropriate geometry
         $(document).on("click", ".blade_container #edit_geometry", function(e) {
             e.preventDefault();
+
+            // Hide the modal, activate edit toolbar for edit modal's relevant geometry
             $(".modal-wrapper").toggle();
-            $(this).css("background-color", "red");
             $("#editDesc").show();
             map.disableDoubleClickZoom();
             editGeoClicked = 1;
-        });
-
-        // Activate geometry edit if edit button clicked
-        map.graphics.on("click", function(evt) {
-            if (editGeoClicked) {
-                event.stop(evt);
-                let attribs = evt.graphic.attributes;
+            
+            // Activate toolbar for treatment geometry
+            let treatment_id = $(this).data('treatment');
+            let layers = map.graphics.graphics;
+            let treatmentGraphic = layers.filter(graphic => {
+                let attribs = graphic.attributes;
                 if (attribs) {
-                    activateToolbar(evt.graphic);
+                    return attribs.treatment_id == treatment_id;
                 }
+            });
+            if (treatmentGraphic) {
+                activateToolbar(treatmentGraphic[0]);
             }
         });
 

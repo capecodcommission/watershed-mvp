@@ -10,6 +10,4 @@
 			@endif
 		@endforeach	
 	</ul>
-	<button id="edit_geometry" style="float:left;"><p>Edit Geometry</p> <p style = 'display: none;' id = 'editDesc'>Double-click to finish editing</p></button>
-	<button id="save_polygon" style="display:none;float:left;">Save Geometry</button>
 </div>
