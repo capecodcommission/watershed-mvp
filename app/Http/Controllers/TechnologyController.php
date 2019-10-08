@@ -423,7 +423,7 @@ class TechnologyController extends Controller
 					return view('common/technology-management-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 					break;
 				case 'Stormwater':
-					return view('common/technology-stormwater-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+					return view('common/technology-stormwater-non-management-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 					break;
 				case 'Septic/Sewer':
 					return view('common/technology-collection-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);

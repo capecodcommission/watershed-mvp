@@ -133,8 +133,9 @@ require([
         let editGeoClicked = 0;
 
         // Handler to activate edit toolbar for appropriate geometry
-        $("#edit_geometry").on("click", function(e) {
+        $(document).on("click", ".blade_container #edit_geometry", function(e) {
             e.preventDefault();
+            $(".modal-wrapper").toggle();
             $(this).css("background-color", "red");
             $("#editDesc").show();
             map.disableDoubleClickZoom();
@@ -163,8 +164,6 @@ require([
         editToolbar.on("deactivate", function(evt) {
             editGeoClicked = 0;
             map.enableDoubleClickZoom();
-            $("#edit_geometry").css("background-color", "#1565c0");
-            $("#editDesc").hide();
             if (evt.info.isModified) {
                 saveGeometry(evt.graphic);
             }
@@ -689,7 +688,9 @@ require([
                 editToolbar.deactivate();
                 editGeoClicked = 0;
 
-                loadTechView("/edit/" + treatment_id);
+                $(".modal-wrapper").toggle();
+                $("#deletetreatment").hide();
+                $("#updateStormwaterNonManangement").show();
             })
             .fail(function(msg) {
                 // Alert user if save unsuccessful
