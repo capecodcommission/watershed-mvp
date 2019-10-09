@@ -36,6 +36,7 @@
 		@endif
 
 		<p>
+			<button title="Update geometry" class="blade_button" id="edit_geometry" data-treatment="{{$treatment->TreatmentID}}">Update Geometry</button>
 			<button id="updatetreatment">Update</button>
 			<button id="deletetreatment" class='button--cta right'><i class="fa fa-trash-o"></i> Delete</button>
 		</p>
@@ -62,17 +63,18 @@
 			// $('#select_destination').show();
 		});
 
-		$('#closeWindow').on('click', function (e) {
-			e.preventDefault();
-			destroyModalContents();
-			deleteGraphic();
-		})
+		// $('#closeWindow').on('click', function (e) {
+		// 	e.preventDefault();
+		// 	destroyModalContents();
+		// 	deleteGraphic();
+		// })
 		
 		$('#updatetreatment').on('click', function(e)
 		{
 			e.preventDefault();
 			var rate = $('#septic-rate').val();
-			var url = "{{url('/update/toilets', $treatment->TreatmentID)}}"  + '/' + rate;
+			console.log(rate)
+			var url = "{{url('/update/collectStay', $treatment->TreatmentID)}}"  + '/' + rate;
 			$.ajax({
 				method: 'GET',
 				url: url

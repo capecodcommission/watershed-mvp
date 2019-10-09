@@ -64,7 +64,7 @@
 			let setapplyTreatmentButtonStyling = applyTreatmentButton.setAttribute("style", "display:none;");
 			e.preventDefault();
 			var rate = $('#collect-rate').val();
-			var url = "{{url('/apply_septic')}}" + '/' + rate + '/' + techId;
+			var url = "{{url('/apply_collectStay')}}" + '/' + rate + '/' + techId;
 			$.ajax({
 				method: 'GET',
 				url: url

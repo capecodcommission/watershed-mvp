@@ -3,7 +3,7 @@ var watershed;
 var embay_shape;
 var treatment;
 var func;
-var edit_active;
+var editGeoClicked;
 require([
     "esri/map",
     "esri/dijit/BasemapGallery",
@@ -41,7 +41,7 @@ require([
     "dojo/dom-construct",
     "dojo/domReady!",
     "esri/geometry/geometryEngine"
-], function(
+], function (
     Map,
     BasemapGallery,
     arcgisUtils,
@@ -103,7 +103,7 @@ require([
 
     // map.on("load", createToolbar);
     // map.on("load", initToolbar);
-    map.on("load", function(e) {
+    map.on("load", function (e) {
         initToolbar();
         map.infoWindow.resize(375, 400);
 
@@ -120,7 +120,7 @@ require([
         tb = new Draw(map);
         tb.on("draw-end", addGraphicOnSelect);
 
-        on(dom.byId("info"), "click", function(evt) {
+        on(dom.byId("info"), "click", function (evt) {
             if (evt.target.id === "info") {
                 return;
             }
@@ -130,20 +130,21 @@ require([
 
         // Create and listen for geometry Edit events
         editToolbar = new Edit(map);
-        let editGeoClicked = 0;
+        editGeoClicked = 0;
 
         // Handler to activate edit toolbar for appropriate geometry
-        $(document).on("click", ".blade_container #edit_geometry", function(e) {
+        $(document).on("click", ".blade_container #edit_geometry", function (e) {
             e.preventDefault();
 
             // Hide the modal, activate edit toolbar for edit modal's relevant geometry
             $(".modal-wrapper").toggle();
             $("#editDesc").show();
             map.disableDoubleClickZoom();
+            map.setInfoWindowOnClick(false);
             editGeoClicked = 1;
-            
+
             // Activate toolbar for treatment geometry
-            let treatment_id = $(this).data('treatment');
+            let treatment_id = $(this).data("treatment");
             let layers = map.graphics.graphics;
             let treatmentGraphic = layers.filter(graphic => {
                 let attribs = graphic.attributes;
@@ -156,20 +157,44 @@ require([
             }
         });
 
+        // Legacy edit blade geometry update handler
+        $(".modal-content").on("click",".popdown-content #edit_geometry", function (e) {
+                // Hide the modal, activate edit toolbar for edit modal's relevant geometry
+                $(".modal-wrapper").toggle();
+                $(".popdown-opacity").hide();
+                $("#editDesc").show();
+                map.disableDoubleClickZoom();
+                editGeoClicked = 1;
+                map.setInfoWindowOnClick(false);
+
+                // Activate toolbar for treatment geometry
+                let treatment_id = $(this).data("treatment");
+                let layers = map.graphics.graphics;
+                let treatmentGraphic = layers.filter(graphic => {
+                    let attribs = graphic.attributes;
+                    if (attribs) {
+                        return attribs.treatment_id == treatment_id;
+                    }
+                });
+                if (treatmentGraphic) {
+                    activateToolbar(treatmentGraphic[0]);
+                }
+            }
+        );
+
         // Save edited geometry on double-click
-        map.on("dbl-click", function(evt) {
+        map.on("dbl-click", function (evt) {
             if (editGeoClicked) {
                 editToolbar.deactivate();
             }
         });
 
         // On-deactivate, handle new geometry coordinates in separate function
-        editToolbar.on("deactivate", function(evt) {
+        editToolbar.on("deactivate", function (evt) {
             editGeoClicked = 0;
             map.enableDoubleClickZoom();
-            if (evt.info.isModified) {
-                saveGeometry(evt.graphic);
-            }
+            map.setInfoWindowOnClick(true);
+            saveGeometry(evt.graphic);
         });
     }
 
@@ -405,10 +430,18 @@ require([
         $.ajax({
             method: "GET",
             url: url
-        }).done(function(msg) {
-            $(".modal-wrapper").toggle();
-            $("#unit_metric_label").show();
-            $("#unit_metric").show();
+        }).done(function (allClear) {
+            if (allClear == 1) {
+                $(".modal-wrapper").toggle();
+                $("#unit_metric_label").show();
+                $("#unit_metric").show();
+            } else {
+                alert(
+                    "Error: Geometry falls outside of Scenario Embayment. Please redraw geometry or contact info@capecodcommission.org for technical assistance. Thank you."
+                );
+                map.graphics.remove(pointGraphic);
+                tb.activate("point");
+            }
         });
 
         // Finish addGraphic function
@@ -472,12 +505,9 @@ require([
             $(".modal-wrapper").toggle();
         })
         .fail(function(msg) {
-            alert(
-                "There was a problem saving the polygon. Please send this error message info@capecodcommission.org: <br />Response: " +
-                    msg.status +
-                    " " +
-                    msg.statusText
-            );
+            alert('Error: Geometry falls outside of Scenario Embayment. Please redraw geometry or contact info@capecodcommission.org for technical assistance. Thank you.')
+            map.graphics.remove(polyGraphic);
+            tb.activate('polygon')
         });
     }
 
@@ -669,7 +699,7 @@ require([
         let treatment_id = evt.attributes.treatment_id;
         let type = evt.geometry.type;
         let geometry;
-        
+
         // Parse geometry based on type
         switch (type) {
             case "polygon":
@@ -688,25 +718,26 @@ require([
             method: "POST",
             data: data,
             url: url
-        })
-            .done(function(msg) {
+        }).done(function (allClear) {
+            if (allClear == 1) {
                 editToolbar.deactivate();
                 editGeoClicked = 0;
-
+                $(".popdown-opacity").show();
                 $(".modal-wrapper").toggle();
                 $("#deletetreatment").hide();
                 $("#updateStormwaterNonManangement").show();
-            })
-            .fail(function(msg) {
+            } else {
                 // Alert user if save unsuccessful
                 alert(
-                    "There was a problem saving the polygon. Please send this error message to info@capecodcommission.org: <br />Response: " +
-                        msg.status +
-                        " " +
-                        msg.statusText
+                    "Error: Geometry falls outside of Scenario Embayment. Please redraw geometry or contact info@capecodcommission.org for technical assistance. Thank you."
                 );
-            });
-    };
+                map.disableDoubleClickZoom();
+                map.setInfoWindowOnClick(false);
+                editGeoClicked = 1;
+                activateToolbar(evt);
+            }
+        });
+    }
 
     // Global objects to house currently hightlighted graphic and icon URL from treatment stack
     let treatmentGraphic = null;
@@ -746,7 +777,7 @@ require([
                     break;
             }
         }
-    };
+    }
 
     // Reset symbology based on geometry type
     function resetSymbolOnLeave(techId) {
@@ -768,82 +799,134 @@ require([
             treatmentGraphic = null;
             pointURL = null;
         }
-    };
+    }
 
     // Handle highlighting and resetting symbology of hovered treatment in stack
     $(document)
-        .on("mouseover", "#stackList li.technology", function(e) {
+        .on("mouseover", "#stackList li.technology", function (e) {
             e.preventDefault();
             let treatment_id = $(this).data("treatment");
             highlightSymbolOnEnter(treatment_id);
         })
-        .on("mouseout", "#stackList li.technology", function(e) {
+        .on("mouseout", "#stackList li.technology", function (e) {
             e.preventDefault();
-            let techId = $(this).data("techid")
+            let techId = $(this).data("techid");
             if (techId) {
                 resetSymbolOnLeave(techId.toString());
             }
         });
 
-    // Handler to reset edited geometry to its original position on-close of the modal
-    $(document).on("click", ".blade_container .modal-close", function(e) {
+    // Handler to reset edited geometry to its original position on-close of a new edit modal
+    $(document).on("click", ".blade_container .modal-close", function (e) {
         e.preventDefault();
         let layerGraphics = map.graphics.graphics;
 
         // Filter to edited graphics
-        let editedGraphic = layerGraphics.filter((graphic) => {
+        let editedGraphic = layerGraphics.filter(graphic => {
             let attribs = graphic.attributes;
             if (attribs) {
                 return attribs.editInProgress;
             }
-        })
+        });
 
-        // Obtain new treatment info, set popup
-        var url = "/get_treatment" + "/" + editedGraphic[0].attributes.treatment_id;
-        $.ajax({
-            method: 'GET',
-            url: url
-        })
-        .done(function(treatment){
-            
-            // Add original geometry to map through either the global treatments object or the graphic attribute
-            if (treatment) {
-                map.graphics.remove(editedGraphic[0]);
-                addGraphicsOnLoad(treatment);
-            }
-        })
-        .fail(function(msg) {
-            alert('error: geometry failed to reset, please contact info@capecodcommission for technical support. Thank you.' + msg.statusText)
-        })
+        if (editedGraphic.length) {
+            // Obtain new treatment info, set popup
+            var url = "/get_treatment" + "/" + editedGraphic[0].attributes.treatment_id;
+            $.ajax({
+                method: "GET",
+                url: url
+            })
+                .done(function (treatment) {
+                    // Add original geometry to map through either the global treatments object or the graphic attribute
+                    if (treatment) {
+                        map.graphics.remove(editedGraphic[0]);
+                        addGraphicsOnLoad(treatment);
+                    }
+                })
+                .fail(function (msg) {
+                    alert(
+                        "error: geometry failed to reset, please contact info@capecodcommission for technical support. Thank you." +
+                        msg.statusText
+                    );
+                });
+        }
     });
 
-    // Handles popup setting and updating for all graphics post-apply, update, or delete
-    // TODO: Debug 
-    // $('#update').on('click', function(e) {
-    //     e.preventDefault();
-    //     var url = "/get_treatments";
-    //     $.ajax({
-    //         method: 'GET',
-    //         url: url
-    //     })
-    //     .done(function(treatments){
-    //         if (treatments) {
-    //             let layerGraphics = map.graphics.graphics;
-    //             layerGraphics.filter((graphic) => {
-    //                 let attribs = graphic.attributes;
-    //                 if (attribs) {
-    //                     return attribs;
-    //                 }
-    //             }).map((graphic) => {
-    //                 map.graphics.remove(graphic)
-    //             })
-    //             addGraphicsOnLoad(treatments);
-    //         }
-    //     })
-    //     .fail(function(msg) {
-    //         alert('Error: Geometry failed to reset, please contact info@capecodcommission for technical support. Thank you.' + msg.statusText)
-    //     })
-    // });
+    // Handler to reset edited geometry to its original position on-close of a legacy edit modal
+    $(".modal-content").on("click", ".popdown-content #closeWindow", function (e) {
+        e.preventDefault();
+        let layerGraphics = map.graphics.graphics;
+
+        destroyModalContents();
+        deleteGraphic();
+
+        // Filter to edited graphics
+        let editedGraphic = layerGraphics.filter(graphic => {
+            let attribs = graphic.attributes;
+            if (attribs) {
+                return attribs.editInProgress;
+            }
+        });
+
+        if (editedGraphic.length) {
+            // Obtain new treatment info, set popup
+            var url = "/get_treatment" + "/" + editedGraphic[0].attributes.treatment_id;
+            $.ajax({
+                method: "GET",
+                url: url
+            })
+                .done(function (treatment) {
+                    // Add original geometry to map through either the global treatments object or the graphic attribute
+                    if (treatment) {
+                        map.graphics.remove(editedGraphic[0]);
+                        addGraphicsOnLoad(treatment);
+                    }
+                })
+                .fail(function (msg) {
+                    alert(
+                        "error: geometry failed to reset, please contact info@capecodcommission for technical support. Thank you." +
+                        msg.statusText
+                    );
+                });
+        }
+    });
+
+    // Handles popup setting and updating for all graphics post-apply or delete
+    $("#update").on("click", function (e) {
+        e.preventDefault();
+
+        // Obtain latest treatment info from API
+        var url = "/get_treatments";
+        $.ajax({
+            method: "GET",
+            url: url
+        })
+            .done(function (treatments) {
+                if (treatments) {
+                    // Obtain and remove treatment graphics from map
+                    let layerGraphics = map.graphics.graphics;
+                    layerGraphics
+                        .filter(graphic => {
+                            let attribs = graphic.attributes;
+                            if (attribs) {
+                                return attribs;
+                            }
+                        })
+                        .map(graphic => {
+                            map.graphics.remove(graphic);
+                        });
+
+                    // Recreate graphics and popups with new treatment data
+                    addGraphicsOnLoad(treatments);
+                }
+            })
+            .fail(function (msg) {
+                alert(
+                    "Error: Geometry failed to reset, please contact info@capecodcommission for technical support. Thank you." +
+                    msg.statusText
+                );
+            });
+    });
 
     /*******************************
      *
@@ -860,7 +943,7 @@ require([
     );
     basemapGallery.startup();
 
-    basemapGallery.on("error", function(msg) {
+    basemapGallery.on("error", function (msg) {
         console.log("basemap gallery error:  ", msg);
     });
 
@@ -1362,7 +1445,7 @@ require([
     );
     legendDijit.startup();
 
-    $("#nitrogen").on("click", function(e) {
+    $("#nitrogen").on("click", function (e) {
         e.preventDefault();
         // console.log(NitrogenLayer);
         if ($(this).attr("data-visible") == "off") {
@@ -1380,7 +1463,7 @@ require([
         //
     });
 
-    $("#subembayments").on("click", function(e) {
+    $("#subembayments").on("click", function (e) {
         e.preventDefault();
 
         if ($(this).attr("data-visible") == "off") {
@@ -1394,7 +1477,7 @@ require([
         //
     });
 
-    $("#subwatersheds").on("click", function(e) {
+    $("#subwatersheds").on("click", function (e) {
         e.preventDefault();
 
         if ($(this).attr("data-visible") == "off") {
@@ -1407,7 +1490,7 @@ require([
         //
     });
 
-    $("#wastewater").on("click", function(e) {
+    $("#wastewater").on("click", function (e) {
         e.preventDefault();
 
         if ($(this).attr("data-visible") == "off") {
@@ -1422,7 +1505,7 @@ require([
         //
     });
 
-    $("#towns").on("click", function(e) {
+    $("#towns").on("click", function (e) {
         e.preventDefault();
 
         if ($(this).attr("data-visible") == "off") {
@@ -1435,7 +1518,7 @@ require([
         //
     });
 
-    $("#treatmenttype").on("click", function(e) {
+    $("#treatmenttype").on("click", function (e) {
         e.preventDefault();
 
         if ($(this).attr("data-visible") == "off") {
@@ -1452,7 +1535,7 @@ require([
         //
     });
 
-    $("#treatmentfacilities").on("click", function(e) {
+    $("#treatmentfacilities").on("click", function (e) {
         e.preventDefault();
 
         if ($(this).attr("data-visible") == "off") {
@@ -1465,7 +1548,7 @@ require([
         //
     });
 
-    $("#ecologicalindicators").on("click", function(e) {
+    $("#ecologicalindicators").on("click", function (e) {
         e.preventDefault();
 
         if ($(this).attr("data-visible") == "off") {
@@ -1481,7 +1564,7 @@ require([
         //
     });
 
-    $("#shallowgroundwater").on("click", function(e) {
+    $("#shallowgroundwater").on("click", function (e) {
         e.preventDefault();
 
         if ($(this).attr("data-visible") == "off") {
@@ -1494,7 +1577,7 @@ require([
         //
     });
 
-    $("#landuse").on("click", function(e) {
+    $("#landuse").on("click", function (e) {
         e.preventDefault();
 
         if ($(this).attr("data-visible") == "off") {
@@ -1511,7 +1594,7 @@ require([
         //
     });
 
-    $("#flowthrough").on("click", function(e) {
+    $("#flowthrough").on("click", function (e) {
         e.preventDefault();
 
         if ($(this).attr("data-visible") == "off") {
@@ -1527,7 +1610,7 @@ require([
         //
     });
 
-    $("#contours").on("click", function(e) {
+    $("#contours").on("click", function (e) {
         e.preventDefault();
 
         if ($(this).attr("data-visible") == "off") {
@@ -1541,7 +1624,7 @@ require([
         //
     });
 
-    $(".subembayment").on("click", function(e) {
+    $(".subembayment").on("click", function (e) {
         // console.log('subembayment clicked');
         var sub = $(this).data("layer");
 
@@ -1549,7 +1632,7 @@ require([
         Subembayments.show();
     });
 
-    $("#disable-popups").on("click", function(e) {
+    $("#disable-popups").on("click", function (e) {
         var layers = [
             NitrogenLayer,
             Subembayments,

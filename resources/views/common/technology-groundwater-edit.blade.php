@@ -18,7 +18,7 @@
 <p>{{$treatment->Treatment_Class}}</p>
 			<div class="technology">
 				<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
-					<img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" width="75">
+					<img src="http://www.cch2o.org/Matrix/icons/{{$treatment->treatment_icon}}" width="75">
 				 {{$tech->Technology_Strategy}}&nbsp;<i class="fa fa-question-circle"></i>
 				</a>			
 			</div>
@@ -76,6 +76,7 @@
 				<input type="range" id="ground-percent" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="ground_percent" value="{{$treatment->Treatment_Value}}" style="display:inline;"> @{{ground_percent}}%
 			</p>
 			<p>
+				<button title="Update geometry" class="blade_button" id="edit_geometry" data-treatment="{{$treatment->TreatmentID}}">Update Geometry</button>
 				<button id="updatetreatment">Update</button>
 				<button id="deletetreatment" class='button--cta right'><i class="fa fa-trash-o"></i> Delete</button>
 			</p>
@@ -140,26 +141,14 @@
 				{
 					e.preventDefault();
 					var rate = $('#ground-percent').val();
-					var units = 1;
-					if ('{{$tech->Show_In_wMVP}}' != '2')
-					{
-						units = $('#unit_metric').val();
-					}
-					else if ('{{$tech->Unit_Metric}}' == 'Each')
-					{
-						units = 1;
-					}
-					else
-					{
-						units = 0.00000000;
-					}
-					var url = "{{url('/update/groundwater', $treatment->TreatmentID)}}"  + '/' + rate + '/' + units;
+					var url = "{{url('/update/collectStay', $treatment->TreatmentID)}}"  + '/' + rate;
 					$.ajax({
 						method: 'GET',
 						url: url
 					})
 						.done(function(msg){
-							$('#popdown-opacity').hide();
+							destroyModalContents();
+							resetGraphicPropsAfterUpdate(msg);
 							$( "#update" ).trigger( "click" );
 						});
 
@@ -175,19 +164,9 @@
 			.done(function(msg){
 				$('#popdown-opacity').hide();
 				$("li[data-treatment='{{$treatment->TreatmentID}}']").remove();
-				
-				for (var i = map.graphics.graphics.length - 1; i >= 0; i--) {
-                
-	                if (map.graphics.graphics[i].attributes) {
-
-	                    if (map.graphics.graphics[i].attributes.treatment_id == treatment) {
-
-	                    	map.graphics.remove(map.graphics.graphics[i])
-	                    }
-	                }
-           		}
-
-           		$( "#update" ).trigger( "click" );
+				deleteGraphic(treatment)
+				destroyModalContents();
+				$( "#update" ).trigger( "click" );
 			});
 		});
 

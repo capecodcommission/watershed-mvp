@@ -1,4 +1,4 @@
-<title>{{$tech->Technology_Strategy}}</title>
+<title>{{$tech->technology_strategy}}</title>
 <link rel="stylesheet" href="{{url('/css/jquery.popdown.css')}}">
 <meta name="csrf-token" id="token" content="{{ csrf_token() }}">
 
@@ -7,7 +7,7 @@
 		<div class = 'row'>
 			<div class = 'col'>
 				<h2>
-					{{$tech->Technology_Strategy}}
+					{{$tech->technology_strategy}}
 					<button style = 'position: absolute; right: 20; top: 10' id = "closeWindow">
 						<i class = 'fa fa-times'></i>
 					</button>
@@ -19,7 +19,7 @@
 		<div class="technology">
 			<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
 				<img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" width="75">
-				<br />{{$tech->Technology_Strategy}}&nbsp;<i class="fa fa-question-circle"></i>
+				<br />{{$tech->technology_strategy}}&nbsp;<i class="fa fa-question-circle"></i>
 			</a>			
 		</div>
 

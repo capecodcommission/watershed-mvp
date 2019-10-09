@@ -16,7 +16,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/delete_scenario/{scenarioid}', 'ScenarioController@deleteScenario');
 	Route::get('/apply_percent/{rate}/{type}/{techId}', 'TechnologyController@ApplyTreatment_Percent');
 	Route::get('/apply_storm/{rate}/{techId}', 'TechnologyController@ApplyTreatment_Storm');
-	Route::get('/apply_septic/{rate}/{techId}', 'TechnologyController@ApplyTreatment_Septic');
+	Route::get('/apply_collectStay/{rate}/{techId}', 'TechnologyController@ApplyTreatment_CollectStay');
 	Route::get('/apply_embayment/{treatment}/{rate}/{units}/{subemid?}', 'TechnologyController@ApplyTreatment_Embayment');
 	Route::get('/apply_groundwater/{treatment}/{rate}/{units}', 'TechnologyController@ApplyTreatment_Groundwater');
 	Route::get('/map/point/{x}/{y}', 'MapController@setPointCoords');

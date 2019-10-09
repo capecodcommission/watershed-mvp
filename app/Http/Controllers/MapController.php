@@ -8,28 +8,63 @@ use App\Http\Requests;
 use DB;
 use JavaScript;
 use App\Treatment;
+use App\Scenario;
 
 class MapController extends Controller
 {
+
+	// Check if geometry lies partially or fully within scenario embayment geometry
+	public function checkGeometryInEmbay($type, $polyString)
+	{
+		// Obtain embayment id from scenario
+		$scenarioid = session('scenarioid');
+		$scenario = Scenario::find($scenarioid);
+		$embay_id = $scenario->AreaID;
+		
+		// Check if point falls within, or polygon falls partially within, embayment geometry using embayment id
+		$checkGeometry = DB::select("exec dbo.CHKgeoInEmbayment @polyString='$polyString', @embay_id='$embay_id', @type='$type'");
+
+		return $checkGeometry[0]->inEmbay;
+	}
+
 	// Save map click geometry to session
 	public function setPointCoords($x, $y)
 	{
-		session(['pointX' => $x]);
-		session(['pointY' => $y]);
-		return 1;
+		$polyString = $x . ' ' . $y;
+		$isInEmbay = $this->checkGeometryInEmbay('point', $polyString);
+		
+		// Save coordinates to session
+		if ($isInEmbay) 
+		{
+			session(['pointX' => $x]);
+			session(['pointY' => $y]);
+			return 1;
+		}
+		else 
+		{
+			return 0;
+		}
 	}
 
 	// Save custom polygon coordinate array to session
 	public function setCoordArray(Request $data)
 	{
-		// Retrieve coordinate string from post data
+		// Obtain request data
 		$data = $data->all();
-		$stringCoordArray = $data['coordString'];
+		$polyString = $data['coordString'];
 
-		// Save to session
-		session(['polyString' => $stringCoordArray]);
+		$isInEmbay = $this->checkGeometryInEmbay('polygon', $polyString);
 
-		return 1;
+		if ($isInEmbay)
+		{
+			// Save to session
+			session(['polyString' => $polyString]);
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
 	}
 
 	// Find selected subembayment using coordinates from map-click
