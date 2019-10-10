@@ -77,10 +77,10 @@
 			});
 		});
 
-		$('#closeWindow').on('click', function (e) {
-			e.preventDefault();
-			destroyModalContents();
-			deleteGraphic();
-		})
+		// $('#closeWindow').on('click', function (e) {
+		// 	e.preventDefault();
+		// 	destroyModalContents();
+		// 	deleteGraphic();
+		// })
 	});
 </script>
