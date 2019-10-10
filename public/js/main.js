@@ -11882,7 +11882,7 @@
         atmosphere_att: parseFloat(nitrogen_att.Total_Att_Atmosphere),
         embayment_percent: 0,
         uMetric: 0,
-        // isActive: false
+        collect_rate: 0,
       },
 
       computed: {

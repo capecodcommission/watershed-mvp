@@ -136,7 +136,8 @@ class TechnologyController extends Controller
 		$scenarioid = session('scenarioid');
 
 		// Technologies to be bypassed during treatment creation
-		$treatBypassArray = ['400', '401', '106', '107', '108', '109', '110', '300', '301', '302', '303', '601', '602'];
+		$treatBypassArray = ['101', '102', '103', '104', '105', '204', '207', '208', '400', '401', '106',
+		'107', '108', '109', '110', '300', '301', '302', '303', '601', '602'];
 
 		// Create and query Treatment through ORM
 		if (!in_array($id, $treatBypassArray))
@@ -160,6 +161,9 @@ class TechnologyController extends Controller
 			case 'stormwater-non-management':
 				return view('common/technology-stormwater-non-management', ['tech'=>$tech, 'type'=>$type]);
 				break;
+			case 'technology-collect-stay':
+				return view('common/technology-collect-stay', ['tech'=>$tech, 'type'=>$type]);
+				break;
 			case 'collect':
 				return view('common/technology-collection', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 				break;		
@@ -175,9 +179,8 @@ class TechnologyController extends Controller
 			default:
 				return view('common/technology', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 				break;
-		}		
+		}
 	}
-
 
 	// Apply Fertilizer and Stormwater management technologies based on type
 	public function ApplyTreatment_Percent($rate, $type, $techId)
