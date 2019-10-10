@@ -53,7 +53,7 @@
 			</p>
 			<hr>
 			<!-- <div  v-on:click="updateClickedValue($event)" v-class="active: isActive" id = 'fertMan' class="technology"> -->
-			<div id = 'fertMan' class="technology" data-route = "/tech/management/400">
+			<div id = 'fertMan' class="technology" data-route = "/tech/400">
 				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/FertilizerManagement.svg">
 				</a>
@@ -81,38 +81,38 @@
 				<hr>
 
 				<div class="technology_list">
-					<div id = "stormMan" class="technology" data-route = "/tech/management/401">
+					<div id = "stormMan" class="technology" data-route = "/tech/401">
 						<a>
 							<img src="http://www.watershedmvp.org/images/SVG/StormwaterManagement.svg"><br />
 							 Stormwater Management
 						</a>
 					</div>
-					<div class="technology" data-route = "/tech/stormwater-non-management/108">
+					<div class="technology" data-route = "/tech/108">
 						<a>
 							<img src="http://www.watershedmvp.org/images/SVG/StormwaterGravelWetland.svg"><br />
 							 Gravel Wetland
 						</a>
 					</div>
-					<div data-route = "/tech/stormwater-non-management/109" class="technology">
+					<div data-route = "/tech/109" class="technology">
 						<a>
 							<img src="http://www.watershedmvp.org/images/SVG/StormwaterBioretentionSoilMediaFilters.svg"><br />
 							 Bioretention/Soil Media Filters
 						</a>
 					</div>
 
-					<div data-route = "/tech/stormwater-non-management/106" class="technology">
+					<div data-route = "/tech/106" class="technology">
 						<a>
 							<img src="http://www.watershedmvp.org/images/SVG/StormwaterBMPs.svg"><br />
 							Phytobuffers
 						</a>
 					</div>
-					<div data-route = "/tech/stormwater-non-management/107" class="technology">
+					<div data-route = "/tech/107" class="technology">
 						<a>
 							<img src="http://www.watershedmvp.org/images/SVG/StormwaterBMPs.svg"><br />
 							Vegetated Swale
 						</a>
 					</div>
-					<div data-route = "/tech/stormwater-non-management/110" class="technology">
+					<div data-route = "/tech/110" class="technology">
 						<a>
 							<img src="http://www.watershedmvp.org/images/SVG/StormwaterBMPs.svg"><br />
 							Constructed Wetlands
@@ -142,67 +142,67 @@
 			<span class="remaining"><strong>Nitrogen Remaining to Threshold:</strong> <span></span>kg</span>
 			</p>
 			<hr>
-			<div class="technology">
-				<a href="{{url('/tech/collect/40')}}" class="popdown">
+			<div class="technology" data-route="/tech/603">
+				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/SingleStageCluster.svg" alt="" ><br />
 					Single-Stage Cluster</a>
 			</div>
-			<div class="technology">
-				<a href="{{url('/tech/collect/41')}}" class="popdown">
+			<div class="technology" data-route="/tech/604">
+				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/TwoStageCluster.svg" alt="" ><br />
 					Two-Stage Cluster</a>
 			</div>
-			<div class="technology">
-				<a href="{{url('/tech/collect/42')}}" class="popdown">
+			<div class="technology" data-route="/tech/605">
+				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/ConventionalTreatment.svg" alt="" ><br />
 					Conventional Treatment</a>
 			</div>
-			<div class="technology">
-				<a href="{{url('/tech/collect/43')}}" class="popdown">
+			<div class="technology" data-route="/tech/606">
+				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/AdvancedTreatment.svg" alt="" ><br />
 					Advanced Treatment</a>
 			</div>
-			<div class="technology">
-				<a href="{{url('/tech/collect/44')}}" class="popdown">
+			<div class="technology" data-route="/tech/607">
+				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/SatelliteTreatment.svg" alt="" ><br />
 					Satellite Treatment</a>
 			</div>
-			<div class="technology">
-				<a href="{{url('/tech/collect/45')}}" class="popdown">
+			<div class="technology" data-route="/tech/608">
+				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/SatelliteTreatmentEnhanced.svg" alt="" ><br />
 					Satellite Treatment - Enahnced</a>
 			</div>
-			<div data-route = "/tech/technology-collect-stay/300" class="technology">
+			<div data-route = "/tech/300" class="technology">
 				<a>
 					<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_CompostingToilet.svg'}}"><br />
 					Composting Toilets
 				</a>
 			</div>
-			<div data-route = "/tech/technology-collect-stay/301" class="technology">
+			<div data-route = "/tech/301" class="technology">
 				<a>
 					<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_IncineratingToilet.svg'}}"><br />
 					Incinerating Toilets
 				</a>
 			</div>
-			<div data-route = "/tech/technology-collect-stay/302" class="technology">
+			<div data-route = "/tech/302" class="technology">
 				<a>
 					<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_PackagingToilet.svg'}}"><br />
 					Packaging Toilets
 				</a>
 			</div>
-			<div data-route = "/tech/technology-collect-stay/303" class="technology">
+			<div data-route = "/tech/303" class="technology">
 				<a>
 					<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_UrineDivertingToilet.svg'}}"><br />
 					Urine Diverting Toilets
 				</a>
 			</div>
-			<div data-route = "/tech/technology-collect-stay/601" class="technology">
+			<div data-route = "/tech/601" class="technology">
 				<a>
 					<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_IA.svg'}}"><br />
 					Innovative/Alternative (I/A) Systems
 				</a>
 			</div>
-			<div data-route = "/tech/technology-collect-stay/602" class="technology">
+			<div data-route = "/tech/602" class="technology">
 				<a>
 					<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_EnhancedIA.svg'}}"><br />
 					Innovative/Alternative (I/A) Enhanced Systems
@@ -229,62 +229,62 @@
 
 			<div class="technology_list">
 				<!-- <div class="technology"> -->
-					<div data-route = "/tech/technology-collect-stay/101" class="technology">
+					<div data-route = "/tech/101" class="technology">
 						<a>
 							<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_SurfaceWaterRemediationWetlands.svg'}}"><br />
 							Constructed Wetlands - Surface Flow
 						</a>
 					</div>
-					<div data-route = "/tech/technology-collect-stay/102" class="technology">
+					<div data-route = "/tech/102" class="technology">
 						<a>
 							<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_SurfaceWaterRemediationWetlands.svg'}}"><br />
 							Constructed Wetlands - Subsurface Flow
 						</a>
 					</div>
-					<div data-route = "/tech/technology-collect-stay/103" class="technology">
+					<div data-route = "/tech/103" class="technology">
 						<a>
 							<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_SurfaceWaterRemediationWetlands.svg'}}"><br />
 							Constructed Wetlands - Groundwater Flow
 						</a>
 					</div>
-					<div data-route = "/tech/technology-collect-stay/104" class="technology">
+					<div data-route = "/tech/104" class="technology">
 						<a>
 							<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_HydroponicTreatment.svg'}}"><br />
 							Hydroponic Treatment
 						</a>
 					</div>
-					<div data-route = "/tech/technology-collect-stay/105" class="technology">
+					<div data-route = "/tech/105" class="technology">
 						<a>
 							<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_Phytoremediation.svg'}}"><br />
 							Phytoirrigation
 						</a>
 					</div>
-					<div data-route = "/tech/technology-collect-stay/204" class="technology">
+					<div data-route = "/tech/204" class="technology">
 						<a>
 							<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_Phytoremediation.svg'}}"><br />
 							Phytoremediation
 						</a>
 					</div>
-					<div data-route = "/tech/technology-collect-stay/207" class="technology">
+					<div data-route = "/tech/207" class="technology">
 						<a>
 							<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_FertigationWellsTurf.svg'}}"><br />
 							Fertigation Wells (Turf)
 						</a>
 					</div>
-					<div data-route = "/tech/technology-collect-stay/208" class="technology">
+					<div data-route = "/tech/208" class="technology">
 						<a>
 							<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_FertigationWellsTurf.svg'}}"><br />
 							Fertigation Wells (Cranberry Bogs)
 						</a>
 					</div>
-				<div class="technology">
-					<a href="{{url('/tech/groundwater/15')}}"  class="popdown">
+				<div class="technology" data-route="/tech/15">
+					<a>
 						<img src="http://www.watershedmvp.org/images/SVG/PRBTrench.svg" alt=""><br />
 						PRB - Trench
 					</a>
 				</div>
-				<div class="technology">
-					<a href="{{url('/tech/groundwater/16')}}"  class="popdown">
+				<div class="technology" data-route="/tech/16">
+					<a>
 						<img src="http://www.watershedmvp.org/images/SVG/PRBInjectionWell30.svg" alt=""><br />
 						PRB - Injection Well (30')
 					</a>
@@ -307,38 +307,38 @@
 			<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="wmvp_results_{{session('scenarioid')}}">View Scenario Summary</a>
 			</p>
 			<hr>
-			<div class="technology">
-				<a href="{{url('/tech/embayment/12')}}"  class="popdown">
+			<div class="technology" data-route="/tech/202">
+				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/AquacultureAboveEstuaryBed.svg" alt=""><br />
 					Aquaculture Above Estuary Bed
 				</a>
 			</div>
-			<div class="technology">
-				<a href="{{url('/tech/embayment/13')}}"  class="popdown">
+			<div class="technology" data-route="/tech/203">
+				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/AquacultureMariculture.svg" alt=""><br />
 					Aquaculture - Mariculture
 				</a>
 			</div>
-			<div class="technology">
-				<a href="{{url('/tech/embayment/30')}}"  class="popdown">
+			<div class="technology" data-route="/tech/500">
+				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/InletCulvertWidening.svg" alt=""><br />
 					Inlet/Culvert Widening
 				</a>
 			</div>
-			<div class="technology">
-				<a href="{{url('/tech/embayment/31')}}"  class="popdown">
+			<div class="technology" data-route="/tech/501">
+				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/CoastalHabitatRestoration.svg" alt=""><br />
 					Coastal Habitat Restoration
 				</a>
 			</div>
-			<div class="technology">
-				<a href="{{url('/tech/embayment/32')}}"  class="popdown">
+			<div class="technology" data-route="/tech/502">
+				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/FloatingConstructedWetlands.svg" alt=""><br />
 					Floating Constructed Wetlands
 				</a>
 			</div>
-			<div class="technology">
-				<a href="{{url('/tech/groundwater/34')}}"  class="popdown">
+			<div class="technology" data-route="/tech/504">
+				<a>
 					<img src="http://www.watershedmvp.org/images/SVG/SurfaceWaterRemediationWetlands.svg" alt=""><br />
 					Surface Water Remediation Wetlands
 				</a>

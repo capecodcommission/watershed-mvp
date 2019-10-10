@@ -29,9 +29,9 @@
 		</a>
 		<div class="blade_slider" title="Enter number of {{$tech->unit_metric}} to be treated.">
 			<button title="Draw Collection" class="blade_button" id="draw_collection">Draw Collection</button>
-			<label style="display:none;">Select a valid reduction rate between {{$tech->Nutri_Reduc_N_Low_ppm}} and {{$tech->Nutri_Reduc_N_High_ppm}} ppm.</label>
-			<input type="range" id="septic-rate" min="{{$tech->Nutri_Reduc_N_Low_ppm}}" max="{{$tech->Nutri_Reduc_N_High_ppm}}" v-model="collect_rate" value="{{$tech->Nutri_Reduc_N_Low}}" step="1" style="display:none;">
-			<label style="display:none;">@{{collect_rate}} ppm</label>
+			<label id = "collect-label-reduc" style="display:none;">Select a valid reduction rate between {{$tech->Nutri_Reduc_N_Low_ppm}} and {{$tech->Nutri_Reduc_N_High_ppm}} ppm.</label>
+			<input type="range" id="collect-rate" min="{{$tech->Nutri_Reduc_N_Low_ppm}}" max="{{$tech->Nutri_Reduc_N_High_ppm}}" v-model="collect_rate" value="{{$tech->Nutri_Reduc_N_Low}}" step="1" style="display:none;">
+			<label id = "collect-label-rate" style="display:none;">@{{collect_rate}} ppm</label>
 		</div>
 		<button title="Apply Strategy" class="blade_button" id="applytreatment" style="display:none;">Apply</button>
 </div>
@@ -45,11 +45,11 @@
 
 		// Append technology id to div to be parsed for polygon creation
 		// Obtain icon filename and technology id from props
-		$('#select_polygon').data('techId','{{$tech->technology_id}}')
+		$('#draw_collection').data('techId','{{$tech->technology_id}}')
 		icon = '{{$tech->icon}}'
 		techId = '{{$tech->technology_id}}'
 
-		$('#select_polygon').on('click', function(f){
+		$('#draw_collection').on('click', function(f){
 			f.preventDefault();
 			map.disableMapNavigation();
 			deleteGraphic();
@@ -59,9 +59,11 @@
 			tb.activate('polygon');
 		});
 
-		$('#apply_treatment').on('click', function(e){
+		$('#applytreatment').on('click', function(e){
+			let applyTreatmentButton = document.getElementById("applytreatment");
+			let setapplyTreatmentButtonStyling = applyTreatmentButton.setAttribute("style", "display:none;");
 			e.preventDefault();
-			var rate = $('#septic-rate').val();
+			var rate = $('#collect-rate').val();
 			var url = "{{url('/apply_septic')}}" + '/' + rate + '/' + techId;
 			$.ajax({
 				method: 'GET',

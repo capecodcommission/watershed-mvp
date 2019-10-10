@@ -129,51 +129,33 @@ class TechnologyController extends Controller
 
 	// Retrieve and initialize selected technology data
 	// Pass technology data to respective blade based on type
-	public function associateTech($type, $id)
+	public function associateTech($id)
 	{
-
-		// Retrieve Scenario ID from Laravel session
-		$scenarioid = session('scenarioid');
-
-		// Technologies to be bypassed during treatment creation
-		$treatBypassArray = ['101', '102', '103', '104', '105', '204', '207', '208', '400', '401', '106',
-		'107', '108', '109', '110', '300', '301', '302', '303', '601', '602'];
-
-		// Create and query Treatment through ORM
-		if (!in_array($id, $treatBypassArray))
-		{
-			$tech = $this->getTech($id);
-			$treatment = $this->createTreatment($scenarioid, $tech);
-		}
-		else 
-		{
-			// Mock Treatment object for bypassed technologies
-			$tech = Technology::find($id);
-			$treatment = new \stdClass();
-   			$treatment->TreatmentID = 0;
-		}
+		// Obtain technology object, create mock Treatment object for legacy blades through the new modal
+		$tech = Technology::find($id);
+		$type = $tech->Technology_Sys_Type;
+		$treatment = new \stdClass();
+		$treatment->TreatmentID = 0;
+		
 
 		// Show relevant technology blade, pass retrieved technology data to blade
 		switch ($type) {
-			case 'management':
+			case 'Management':
 				return View('common/technology-management', ['tech'=>$tech, 'type'=>$type]);
 				break;
-			case 'stormwater-non-management':
+			case 'Stormwater':
 				return view('common/technology-stormwater-non-management', ['tech'=>$tech, 'type'=>$type]);
 				break;
-			case 'technology-collect-stay':
+			case 'CollectStay':
 				return view('common/technology-collect-stay', ['tech'=>$tech, 'type'=>$type]);
 				break;
-			case 'collect':
+			case 'CollectMove':
 				return view('common/technology-collection', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
-				break;		
-			case 'septic':
-				return view('common/technology-septic', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
-				break;
-			case 'groundwater':
+				break;	
+			case 'PRB':
 				return view('common/technology-groundwater', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 				break;
-			case 'embayment':
+			case 'In-Embayment':
 				return view('common/technology-embayment', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 				break;
 			default:
@@ -408,39 +390,31 @@ class TechnologyController extends Controller
 		$tech = Technology::find($treatment->TreatmentType_ID);
 		$type = $tech->Technology_Sys_Type;
 		
-		// Create ID route filters for septic technologies
-		$toiletsIdArray = ['300', '301', '302', '303', '601', '602'];
-
-		// Load septic edit blade if associated Technology_ID matches the septic id array
-		if ( in_array($tech->technology_id, $toiletsIdArray) ) 
+		
+		// Switch and load edit blade based on Technology System Type
+		switch ($type) 
 		{
-			return view('common/technology-septic-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
-			break;
-		}
-		else 
-		{
-			// Switch and load edit blade based on Technology System Type
-			switch ($type) 
-			{
-				case 'Management':
-					return view('common/technology-management-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
-					break;
-				case 'Stormwater':
-					return view('common/technology-stormwater-non-management-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
-					break;
-				case 'Septic/Sewer':
-					return view('common/technology-collection-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
-					break;
-				case 'Groundwater':
-					return view('common/technology-groundwater-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
-					break;
-				case 'In-Embayment':
-					return view('common/technology-embayment-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
-					break;
-				default:
-					return view('common/technology', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
-					break;
-			}
+			case 'Management':
+				return view('common/technology-management-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				break;
+			case 'Stormwater':
+				return view('common/technology-stormwater-non-management-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				break;
+			case 'CollectStay':
+				return view('common/technology-septic-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				break;
+			case 'CollectMove':
+				return view('common/technology-collection-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				break;
+			case 'PRB':
+				return view('common/technology-groundwater-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				break;
+			case 'In-Embayment':
+				return view('common/technology-embayment-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				break;
+			default:
+				return view('common/technology', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				break;
 		}
 	}
 

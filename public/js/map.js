@@ -431,7 +431,7 @@ require([
     // Create and add polygon geometry to map on-selection
     function addPolygonOnSelect(evt) {
         // Obtain technology id from select polygon div
-        let techId = $("#select_polygon").data("techId");
+        let techId = $("#draw_collection").data("techId");
 
         // Create and color polygon using technology id
         let polySymbol = selectPoly(techId);
@@ -467,6 +467,10 @@ require([
         })
         .done(function(msg) {
             $("#popdown-opacity").show();
+            $("#collect-label-reduc").show();
+            $("#collect-label-rate").show();
+            $("#collect-rate").show();
+            $("#applytreatment").show();
             $(".modal-wrapper").toggle();
         })
         .fail(function(msg) {
