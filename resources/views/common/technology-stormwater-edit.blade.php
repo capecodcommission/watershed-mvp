@@ -69,7 +69,7 @@
 			$('#updateNonManangement').on('click', function(e) {
 				e.preventDefault();
 				var units = $('#unit_metric').val();
-				var url = "{{url('/update/storm', $treatment->TreatmentID)}}" + '/' + units;
+				var url = "{{url('/update', $treatment->TreatmentID)}}" + '/' + units;
 				$.ajax({
 					method: 'GET',
 					url: url
@@ -89,7 +89,7 @@
 			$('#updateManagement').on('click', function(e) {
 				e.preventDefault();
 				var percent = $('#storm-percent').val();
-				var url = "{{url('/update/storm-percent', $treatment->TreatmentID)}}"  + '/' + percent;
+				var url = "{{url('/update', $treatment->TreatmentID)}}"  + '/' + percent;
 				$.ajax({
 					method: 'GET',
 					url: url

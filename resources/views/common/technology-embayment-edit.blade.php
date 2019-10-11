@@ -122,7 +122,7 @@
 					e.preventDefault();
 					var rate = $('#embayment-percent').val();
 					var units = $('#unit_metric').val();
-					var url = "{{url('/update/embay', $treatment->TreatmentID)}}"  + '/' + rate + '/' + units
+					var url = "{{url('/update', $treatment->TreatmentID)}}"  + '/' + rate + '/' + units
 					$.ajax({
 						method: 'GET',
 						url: url

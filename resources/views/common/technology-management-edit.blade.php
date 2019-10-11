@@ -44,7 +44,7 @@
             e.preventDefault();
             if ("{{$tech->technology_id == 400}}") {
                 let treatmentValue = $('#fert-percent').val();
-                let url = "{{url('/update/management', $treatment->TreatmentID)}}" + '/' + treatmentValue;
+                let url = "{{url('/update', $treatment->TreatmentID)}}" + '/' + treatmentValue;
                 $.ajax({
                     method: 'GET',
                     url: url
@@ -58,7 +58,7 @@
             }
             else {
                 let treatmentValue = $('#storm-percent').val();
-                let url = "{{url('/update/management', $treatment->TreatmentID)}}" + '/' + treatmentValue;
+                let url = "{{url('/update', $treatment->TreatmentID)}}" + '/' + treatmentValue;
                 $.ajax({
                     method: 'GET',
                     url: url

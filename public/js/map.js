@@ -497,18 +497,20 @@ require([
             data: data,
             url: url
         })
-        .done(function(msg) {
-            $("#collect-label-reduc").show();
-            $("#collect-label-rate").show();
-            $("#collect-rate").show();
-            $("#applytreatment").show();
-            $(".modal-wrapper").toggle();
+        .done(function(allClear) {
+            if (allClear == 1) {
+                $("#collect-label-reduc").show();
+                $("#collect-label-rate").show();
+                $("#collect-rate").show();
+                $("#applytreatment").show();
+                $(".modal-wrapper").toggle();
+            }
+            else {
+                alert('Error: Geometry falls outside of Scenario Embayment. Please redraw geometry or contact info@capecodcommission.org for technical assistance. Thank you.');
+                map.graphics.remove(polyGraphic);
+                tb.activate('polygon');
+            }
         })
-        .fail(function(msg) {
-            alert('Error: Geometry falls outside of Scenario Embayment. Please redraw geometry or contact info@capecodcommission.org for technical assistance. Thank you.')
-            map.graphics.remove(polyGraphic);
-            tb.activate('polygon')
-        });
     }
 
     // Handle draw-end event by creating a point or polygon graphic on the map

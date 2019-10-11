@@ -40,7 +40,7 @@
 			let updateTreatmentButton = document.getElementById("updateStormwaterNonManangement");
 			let setDeleteTreatmentButtonStyling = updateTreatmentButton.setAttribute("style", "display:none;");
 			let treatmentValue = $('#unit_metric').val();
-			let url = "{{url('/update/storm', $treatment->TreatmentID)}}" + '/' + treatmentValue;
+			let url = "{{url('/update', $treatment->TreatmentID)}}" + '/' + treatmentValue;
 			$.ajax({
 				method: 'GET',
 				url: url

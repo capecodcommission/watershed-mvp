@@ -166,60 +166,101 @@ class TechnologyController extends Controller
 		}
 	}
 
+	// Handle activation of either fert or storm management stored procedure
+	public function handleManagementApply ($treat_id, $rate, $techId)
+	{
+		switch($techId)
+		{
+			case 400:
+				session(['fert_applied' => 1]);
+				$updated = DB::select('exec dbo.CALCapplyTreatmentPercent ' . $treat_id . ', ' . $rate . ', ' . 'fert');
+				break;
+
+			case 401:
+				session(['storm_applied' => 1]);
+				$updated = DB::select('exec dbo.CALCapplyTreatmentPercent ' . $treat_id . ', ' . $rate . ', ' . 'storm');
+				break;
+		}
+		$this->updateNitrogenRemoved();
+		return $treat_id;
+	}
+
 	// Apply Fertilizer and Stormwater management technologies based on type
-	public function ApplyTreatment_Percent($rate, $type, $techId)
+	public function ApplyTreatment_Management($rate, $techId, $treat_id=null)
 	{
 		// Retrieve scenario id and removed nitrogen global variables, passed rate from user input percent slider on popdown
 		$scenarioid = session('scenarioid');
+		$scenario = Scenario::find($scenarioid);
+		$embay_id = $scenario->AreaID;
 		$rate = round($rate, 2);
 		$n_removed = session('n_removed');
 
-		// Retrieve Scenario data from SQL, parse embayment id
-		$scenario = Scenario::find($scenarioid);
-		$embay_id = $scenario->AreaID;
+		if (!$treat_id)
+		{
+			// Retrieve / associate all parcels within embayment with user's scenario 
+			$tech = Technology::find($techId);
+			$treatment = $this->createTreatment($scenarioid, $tech);
+			$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment->TreatmentID . ', \'embayment\'');
+			return $this->handleManagementApply($treatment->TreatmentID, $rate, $techId);
+		}
+		else
+		{
+			return $this->handleManagementApply($treat_id, $rate, $techId);
+		}
+	}
 
-		// Set applied session variable to disable icon clickability
-		session([$type . '_applied' => 1]);
-
-		// Create treatment based on selected Technology ID
-		$tech = Technology::find($techId);
-		$treatment = $this->createTreatment($scenarioid, $tech);
-
-		// Retrieve / associate all parcels within embayment with user's scenario 
-		$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment->TreatmentID . ', \'embayment\'');
-
-		// Apply treatment with passed function parameters
-		// Run the updateNitrogenRemoved public function to update the n_removed session variable
-		$updated = DB::select('exec dbo.CALCapplyTreatmentPercent ' . $treatment->TreatmentID . ', ' . $rate . ', ' . $type);
+	// Handle activation of storm non-management stored procedure
+	public function handleStormApply($treat_id, $rate)
+	{
+		$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treat_id . ', ' . $rate);
 		$this->updateNitrogenRemoved();
+		$this->deleteSessionGeometry($treat_id);
 
-		return $treatment->TreatmentID;
+		return $treat_id;
 	}
 
 
-
 	// Apply non-management Stormwater technology
-	public function ApplyTreatment_Storm($rate, $techId)
+	public function ApplyTreatment_Storm($rate, $techId, $treat_id=null)
 	{
 		// Retrieve scenario id, removed nitrogen, and point XY coordinates from session
 		$scenarioid = session('scenarioid');
-		$n_removed = session('n_removed');
-		$x = session()->get('pointX');
-		$y = session()->get('pointY');
 		$tech = Technology::find($techId);
+		$n_removed = session('n_removed');
 
-		// Create new treatment
-		$treatment = $this->createTreatment($scenarioid, $tech);
+		// Handle new treatment
+		if (!$treat_id) 
+		{
+			if ( session()->has('pointX') && session()->has('pointY') )
+			{
+				$x = session()->get('pointX');
+				$y = session()->get('pointY');
 
-		// Associate parcel with treatment aand scenario
-		$point = DB::select("exec dbo.UPDcreditSubembayment @x='$x', @y='$y', @treatment=$treatment->TreatmentID");
+				// Create new treatment
+				$treatment = $this->createTreatment($scenarioid, $tech);
 
-		// Treat parcel using parameterized stored proc
-		$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treatment->TreatmentID . ', ' . $rate);
-		$this->updateNitrogenRemoved();
-		$this->deleteSessionGeometry($treatment->TreatmentID);
+				// Associate parcel with treatment aand scenario
+				$point = DB::select("exec dbo.UPDcreditSubembayment @x='$x', @y='$y', @treatment=$treatment->TreatmentID");
 
-		return $treatment->TreatmentID;
+				return $this->handleStormApply($treatment->TreatmentID, $rate);
+			}
+		}
+		// Update treatment with new rate and/or geometry
+		else
+		{
+			if ( session()->has('pointX_' . $treat_id) && session()->has('pointY_' . $treat_id) )
+			{
+				$x = session()->get('pointX_' . $treat_id);
+				$y = session()->get('pointY_' . $treat_id);
+				$del = DB::select('exec dbo.DELparcels '. $treat_id);
+				$point = DB::select("exec dbo.UPDcreditSubembayment @x='$x', @y='$y', @treatment=$treat_id");
+				return $this->handleStormApply($treat_id, $rate);
+			}
+			else
+			{
+				return $this->handleStormApply($treat_id, $rate);
+			}
+		}
 	}
 
 	/**
@@ -261,9 +302,31 @@ class TechnologyController extends Controller
 	}
 
 
+	// Handle activation of either septic or groundwater stored procedure based on technology type
+	public function handleCollectStayApply($treat_id, $rate, $techType) 
+	{
+		$septicTypes = ['Waste Reduction Toilets','On-Site Treatment Systems'];
+		$groundwaterTypes = ['Green Infrastructure', 'Innovative and Resource-Management Technologies'];
+
+		if ( in_array($techType, $septicTypes) )
+		{
+			$updated = DB::select('exec dbo.CALCapplyTreatmentSeptic ' . $treat_id . ', ' . $rate );
+		}
+		
+		if ( in_array($techType, $groundwaterTypes) )
+		{
+			$updated = DB::select('exec dbo.CALCapplyTreatmentGroundwater ' . $treat_id . ', ' . $rate);
+		}
+
+		$this->updateNitrogenRemoved();
+		$this->deleteSessionGeometry($treat_id);
+		return $treat_id;
+	}
+
+
 	// Apply CollectStay technologies based on its system type and technology type
 	// Update nitrogen load and delete session geometry post-treatment
-	public function ApplyTreatment_CollectStay($rate, $techId)
+	public function ApplyTreatment_CollectStay($rate, $techId, $treat_id=null)
 	{
 		// Retrieve Scenario and technology, create treatment
 		// Parse technology properties to conditionally activate septic or groundwater treatment application
@@ -271,30 +334,35 @@ class TechnologyController extends Controller
 		$scenario = Scenario::find($scenarioid);
 		$tech = Technology::find($techId);
 		$techType = $tech->technology_type;
-		$treatment = $this->createTreatment($scenarioid, $tech);
 		$embay_id = $scenario->AreaID;
-		$polyString = session()->get('polyString');
-		$septicTypes = ['Waste Reduction Toilets','On-Site Treatment Systems'];
-		$groundwaterTypes = ['Green Infrastructure', 'Innovative and Resource-Management Technologies'];
 
-		// Retrieve / associate all parcels within custom polygon with user's scenario 
-		// Apply treatment to parcels with associated polygon
-		$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment->TreatmentID . ', \'' . $polyString . '\'');
-
-		if ( in_array($techType, $septicTypes) )
+		// New treatment
+		if ( !$treat_id )
 		{
-			$updated = DB::select('exec dbo.CALCapplyTreatmentSeptic ' . $treatment->TreatmentID . ', ' . $rate );
-		}
-		
-		if ( in_array($techType, $groundwaterTypes) )
-		{
-			$updated = DB::select('exec dbo.CALCapplyTreatmentGroundwater ' . $treatment->TreatmentID . ', ' . $rate);
+			if ( session()->has('polyString') ) 
+			{
+				$polyString = session()->get('polyString');
+				$treatment = $this->createTreatment($scenarioid, $tech);
+				$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment->TreatmentID . ', \'' . $polyString . '\'');
+				return $this->handleCollectStayApply($treatment->TreatmentID, $rate, $techType);
+			}
 		}
 
-		$this->updateNitrogenRemoved();
-		$this->deleteSessionGeometry($treatment->TreatmentID);
-
-		return $treatment->TreatmentID;
+		// Update treatment with new rate and/or new geometry
+		else
+		{
+			if ( session()->has('polyString_' . $treat_id) ) 
+			{
+				$polyString = session()->get('polyString_' . $treat_id);
+				$del = DB::select('exec dbo.DELparcels '. $treat_id);
+				$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treat_id . ', \'' . $polyString . '\'');
+				return $this->handleCollectStayApply($treat_id, $rate, $techType);
+			}
+			else
+			{
+				return $this->handleCollectStayApply($treat_id, $rate, $techType);
+			}
+		}
 	}
 
 
@@ -357,7 +425,7 @@ class TechnologyController extends Controller
 		return 1;
 	}
 
-	// Return html of relevant tech-edit blade based on various tech-matrix id's
+	// Return html of relevant tech-edit blade based on treatment id
 	public function edit($treat_id)
 	{
 		// Obtain treatment and tech objects using relevant id's
@@ -403,103 +471,33 @@ class TechnologyController extends Controller
 	}
 
 	// Handle treatment reapplication by type
-	public function update($type, $treat_id, $treatmentValue, $units=null, $subemid=null)
+	public function update($treat_id, $treatmentValue, $units=null, $subemid=null)
 	{
+		$treatment = Treatment::find($treat_id);
+		$tech = Technology::find($treatment->TreatmentType_ID);
+		$type = $tech->Technology_Sys_Type;
+
 		// Trigger parameterized stored proc based on passed type
 		switch ($type) 
 		{
-			// Management
-			case 'management':
-				// Trigger fert or storm by technology id from treatment object
-				$treatment = Treatment::find($treat_id);
-				switch($treatment->TreatmentType_ID)
-				{
-					case 400:
-						$updated = DB::select('exec dbo.CALCapplyTreatmentPercent ' . $treat_id . ', ' . $treatmentValue . ', ' . 'fert');
-						break;
-
-					case 401:
-						$updated = DB::select('exec dbo.CALCapplyTreatmentPercent ' . $treat_id . ', ' . $treatmentValue . ', ' . 'storm');
-						break;
-				}
-				return $this->updateNitrogenRemoved();
+			case 'Management':
+				$this->ApplyTreatment_Management($treatmentValue, $treatment->TreatmentType_ID, $treat_id);
 				break;
-
-			// Stormwater non-management
-			case 'storm':
-				// Check for geometry edit
-				// Reassociate and reapply treatment to parcels
-				if ( session()->has('pointX_' . $treat_id) && session()->has('pointY_' . $treat_id) ) 
-				{
-					$del = DB::select('exec dbo.DELparcels '. $treat_id);
-					$x = session()->get('pointX_' . $treat_id);
-					$y = session()->get('pointY_' . $treat_id);
-					$point = DB::select("exec dbo.UPDcreditSubembayment @x='$x', @y='$y', @treatment=$treat_id");
-					$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treat_id . ', ' . $treatmentValue);
-					$this->deleteSessionGeometry($treat_id);
-				}
-				// Continue as normal
-				else
-				{
-					$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treat_id . ', ' . $treatmentValue );
-				}
-				$this->updateNitrogenRemoved();
-				return $treat_id;
+			case 'Stormwater':
+				$this->ApplyTreatment_Storm($treatmentValue, $treatment->TreatmentType_ID, $treat_id);
 				break;
-			// CollectMove (first row)
-			case 'collect':
+			case 'CollectMove':
 				$updated = DB::select('exec dbo.CALCapplyTreatmentSeptic '. $treat_id . ', '. $treatmentValue);
 				return $this->updateNitrogenRemoved();
 				break;
-			// CollectStay (second row)
-			case 'collectStay':
-				$treatment = Treatment::find($treat_id);
-				$tech = Technology::find($treatment->TreatmentType_ID);
-				$subType = $tech->technology_type;
-				$septicTypes = ['Waste Reduction Toilets','On-Site Treatment Systems'];
-				$groundwaterTypes = ['Green Infrastructure', 'Innovative and Resource-Management Technologies'];
-				// Check for geometry edit
-				if ( session()->has('polyString_' . $treat_id) )
-				{
-					// Reassociate and reapply treatment to parcels
-					$del = DB::select('exec dbo.DELparcels '. $treat_id);
-					$scenarioId = session()->get('scenarioid');
-					$scenario = Scenario::find($scenarioId);
-					$embay_id = $scenario->AreaID;
-					$polyString = session()->get('polyString_' . $treat_id);
-					$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioId . ', ' . $treat_id . ', \'' . $polyString . '\'');
-					if ( in_array($subType, $septicTypes) )
-					{
-						$updated = DB::select('exec dbo.CALCapplyTreatmentSeptic ' . $treat_id . ', ' . $treatmentValue );
-					}
-					if ( in_array($subType, $groundwaterTypes) )
-					{
-						$updated = DB::select('exec dbo.CALCapplyTreatmentGroundwater ' . $treat_id . ', ' . $treatmentValue);
-					}
-					
-					$this->deleteSessionGeometry($treat_id);
-				}
-				else
-				{
-					if ( in_array($subType, $septicTypes) )
-					{
-						$updated = DB::select('exec dbo.CALCapplyTreatmentSeptic ' . $treat_id . ', ' . $treatmentValue );
-					}
-					if ( in_array($subType, $groundwaterTypes) )
-					{
-						$updated = DB::select('exec dbo.CALCapplyTreatmentGroundwater ' . $treat_id . ', ' . $treatmentValue);
-					}
-				}
-				$this->updateNitrogenRemoved();
-				return $treat_id;
+			case 'CollectStay':
+				$this->ApplyTreatment_CollectStay($treatmentValue, $treatment->TreatmentType_ID, $treat_id);
 				break;
-			// Groundwater
-			case 'groundwater':
+			case 'PRB':
 				$updated = DB::select('exec dbo.CALC_ApplyTreatment_Groundwater1 '. $treat_id . ', '. $treatmentValue . ', ' . $units);
 				return $this->updateNitrogenRemoved();
 				break;	
-			// Embayment
-			case 'embay':
+			case 'In-Embayment':
 				// Retrieve scenario id and subembayment id from session, initialize nitrogen load and parcel totals
 				// TODO: return $this->updateNitrogenRemoved();
 				$scenarioid = session('scenarioid');

@@ -141,7 +141,7 @@
 				{
 					e.preventDefault();
 					var rate = $('#ground-percent').val();
-					var url = "{{url('/update/collectStay', $treatment->TreatmentID)}}"  + '/' + rate;
+					var url = "{{url('/update', $treatment->TreatmentID)}}"  + '/' + rate;
 					$.ajax({
 						method: 'GET',
 						url: url

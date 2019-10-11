@@ -73,8 +73,7 @@
 		{
 			e.preventDefault();
 			var rate = $('#septic-rate').val();
-			console.log(rate)
-			var url = "{{url('/update/collectStay', $treatment->TreatmentID)}}"  + '/' + rate;
+			var url = "{{url('/update', $treatment->TreatmentID)}}"  + '/' + rate;
 			$.ajax({
 				method: 'GET',
 				url: url

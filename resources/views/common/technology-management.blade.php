@@ -44,7 +44,7 @@
 			setapplyTreatmentButtonStyling;
 			if ("{{$tech->technology_id == 400}}") {
 				let percent = $('#fert-percent').val();
-				let url = "{{url('/apply_percent')}}" + '/' + percent + '/' + 'fert' + '/' + techId;
+				let url = "{{url('/apply_management')}}" + '/' + percent + '/' + techId;
 				$.ajax({
 					method: 'GET',
 					url: url
@@ -60,7 +60,7 @@
 
 			else {
 				let percent = $('#storm-percent').val();
-				let url = "{{url('/apply_percent')}}" + '/' + percent + '/' + 'storm' + '/' + techId;
+				let url = "{{url('/apply_management')}}" + '/' + percent + '/' + techId;
 				$.ajax({
 					method: 'GET',
 					url: url
