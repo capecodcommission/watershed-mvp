@@ -32,9 +32,9 @@
 
 <script>
 	$(document).ready(function() {
-		let treatment = {{$treatment->TreatmentID}};
 
-		// Handle click event for updating stormwater non-management technologies
+		// Handle click event for updating stormwater non-management technologies utilizing the 'update/storm' API route,
+		// reseting the map graphic properties and updating the scenario data
 		$('#updateStormwaterNonManangement').on('click', function(e) {
 			e.preventDefault();
 			let updateTreatmentButton = document.getElementById("updateStormwaterNonManangement");
@@ -52,12 +52,15 @@
 			});
 		});
 
-		// Handle click-event for deleting selected technology
+		// Handle click event for deleting selected technology utilizing the 'delete_treatment'
+		// API route, deleting the treatment from the treatment sack, deleting the treatment graphic
+		// from the map and updating the scenario data
 		$('#deletetreatment').on('click', function(e) {
+			e.preventDefault();
 			let deleteTreatmentButton = document.getElementById("deletetreatment");
 		    let setDeleteTreatmentButtonStyling = deleteTreatmentButton.setAttribute("style", "display:none;");
-			var treat = $(this).data('treatment');
-			var url = "{{url('delete_treatment')}}" + '/' + treat
+			let treat = $(this).data('treatment');
+			let url = "{{url('delete_treatment')}}" + '/' + treat;
 			$.ajax({
 				method: 'GET',
 				url: url

@@ -7882,14 +7882,16 @@ nav.toolbar .tool {
 }
 
 .blade_slider > label {
-  font: 2vh bold;
+  font: 1.5vh bold;
   font-variant: small-caps;
 }
 
 .blade_slider > input {
   font: 1vh;
   align-self: center;
-  margin-bottom: 0.25em;
+  margin: 0 auto;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 .blade_button {
@@ -7901,9 +7903,8 @@ nav.toolbar .tool {
 }
 
 .blade_slider > input {
-  margin-top: 0.5em;
   -webkit-appearance: none;
-  margin: 0 auto;
+  align-self: center;
   float: none;
   text-align: center;
   width: auto;

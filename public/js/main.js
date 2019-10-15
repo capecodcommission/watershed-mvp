@@ -11886,9 +11886,6 @@
       },
 
       computed: {
-        // updateClickedValue: function(e) {
-        //   this.isActive = !this.isActive
-        // },
         fert_unatt_treated: function fert_unatt_treated() {
           return this.fert_unatt * ((100 - this.fert_percent) / 100);
         },
