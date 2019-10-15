@@ -105,15 +105,10 @@
 		// treatment graphic to the map and add the treatment graphic to the treatment stack
 		$('#applytreatment').on('click', function(e) {
 			e.preventDefault();
-<<<<<<< HEAD
-			var rate = $('#collect-rate').val();
-			var url = "{{url('/apply_collectStay')}}" + '/' + rate + '/' + techId;
-=======
 			let applyTreatmentButton = document.getElementById("applytreatment");
 			let setApplyTreatmentButtonStyling = applyTreatmentButton.setAttribute("style", "display:none;");
 			let rate = $('#collect-rate').val();
-			let url = "{{url('/apply_septic')}}" + '/' + rate + '/' + techId;
->>>>>>> 7979bfd... Added 'collect-stay-edit' blade and updated 'TechnologyController' to use it, updated 'app.css' with new styling, removed commented computed property from 'main.js', updated comments in 'collect-stay' and 'technology-stormwater-non-management' blades.
+			let url = "{{url('/apply_collectStay')}}" + '/' + rate + '/' + techId;
 			$.ajax({
 				method: 'GET',
 				url: url
