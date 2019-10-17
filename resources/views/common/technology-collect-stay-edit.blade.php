@@ -89,7 +89,6 @@
 			let updateTreatmentButton = document.getElementById("updateCollectStay");
 			let setUpdateTreatmentButtonStyling = updateTreatmentButton.setAttribute("style", "display:none;");
 			let treatmentValue = $('#collect-rate').val();
-			console.log('collect-rate val' , $('#collect-rate').val());
 			let url = "{{url('/update', $treatment->TreatmentID)}}"  + '/' + treatmentValue;
 			$.ajax({
 				method: 'GET',
