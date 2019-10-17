@@ -195,6 +195,7 @@ class TechnologyController extends Controller
 		$rate = round($rate, 2);
 		$n_removed = session('n_removed');
 
+		// New treatment
 		if (!$treat_id)
 		{
 			// Retrieve / associate all parcels within embayment with user's scenario 
@@ -203,6 +204,7 @@ class TechnologyController extends Controller
 			$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment->TreatmentID . ', \'embayment\'');
 			return $this->handleManagementApply($treatment->TreatmentID, $rate, $techId);
 		}
+		// Existing treatment
 		else
 		{
 			return $this->handleManagementApply($treat_id, $rate, $techId);
@@ -245,7 +247,7 @@ class TechnologyController extends Controller
 				return $this->handleStormApply($treatment->TreatmentID, $rate);
 			}
 		}
-		// Update treatment with new rate and/or geometry
+		// Update existing treatment with new rate and/or geometry
 		else
 		{
 			if ( session()->has('pointX_' . $treat_id) && session()->has('pointY_' . $treat_id) )
@@ -328,15 +330,15 @@ class TechnologyController extends Controller
 	// Update nitrogen load and delete session geometry post-treatment
 	public function ApplyTreatment_CollectStay($rate, $techId, $treat_id=null)
 	{
-		// Retrieve Scenario and technology, create treatment
-		// Parse technology properties to conditionally activate septic or groundwater treatment application
+		// Retrieve and parse Scenario and Technology properties 
 		$scenarioid = session()->get('scenarioid');
 		$scenario = Scenario::find($scenarioid);
 		$tech = Technology::find($techId);
 		$techType = $tech->technology_type;
 		$embay_id = $scenario->AreaID;
 
-		// New treatment
+		// Create new Treatment, associate parcels within custom geometry
+		// Apply Septic or Groundwater by Technology type
 		if ( !$treat_id )
 		{
 			if ( session()->has('polyString') ) 
@@ -348,9 +350,11 @@ class TechnologyController extends Controller
 			}
 		}
 
-		// Update treatment with new rate and/or new geometry
+		// Refresh and reassociate parcels prior to reapplication
+		// Update existing treatment with either new rate, new geometry, or both
 		else
 		{
+			// Reassociate parcels using new session geometry
 			if ( session()->has('polyString_' . $treat_id) ) 
 			{
 				$polyString = session()->get('polyString_' . $treat_id);
@@ -358,8 +362,13 @@ class TechnologyController extends Controller
 				$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treat_id . ', \'' . $polyString . '\'');
 				return $this->handleCollectStayApply($treat_id, $rate, $techType);
 			}
+
+			// Reassociate parcels using existing Treatment geometry
 			else
 			{
+				$treatment = Treatment::find($treat_id);
+				$del = DB::select('exec dbo.DELparcels '. $treat_id);
+				$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treat_id . ', \'' . $treatment->POLY_STRING . '\'');
 				return $this->handleCollectStayApply($treat_id, $rate, $techType);
 			}
 		}
