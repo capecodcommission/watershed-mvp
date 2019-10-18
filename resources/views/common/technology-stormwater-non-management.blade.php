@@ -8,12 +8,7 @@
 			{{$tech->technology_strategy}}
 		</h4>
 		<a title="{{$tech->technology_strategy}} - Technology Matrix" class="blade_image" href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->TM_ID}}" target="_blank">
-			<!-- <img v-show="{{$tech->technology_id == 400}}" src="{{$_ENV['CCC_ICONS_SVG'].'$tech->icon'}}">  TODO: FUTURE SYNTAX -->
-			<img v-show="{{$tech->technology_id == 106}}" src="{{$_ENV['CCC_ICONS_SVG'].'Icon_Phytobuffers.svg'}}">
-			<img v-show="{{$tech->technology_id == 107}}" src="{{$_ENV['CCC_ICONS_SVG'].'Icon_VegetatedSwale.svg'}}">
-			<img v-show="{{$tech->technology_id == 108}}" src="{{$_ENV['CCC_ICONS_SVG'].'Icon_StormwaterGravelWetland.svg'}}">
-			<img v-show="{{$tech->technology_id == 109}}" src="{{$_ENV['CCC_ICONS_SVG'].'Icon_VegetatedSwale.svg'}}">
-			<img v-show="{{$tech->technology_id == 110}}" src="{{$_ENV['CCC_ICONS_SVG'].'Icon_ConstructedWetlands.svg'}}">
+			<img src="{{$_ENV['CCC_ICONS_SVG'].$tech->icon}}">
 		</a>
 		<div class="blade_slider" title="Enter number of {{$tech->unit_metric}} to be treated.">
 			<button title="Select Location" class="blade_button" id="select_area">Select Location</button>

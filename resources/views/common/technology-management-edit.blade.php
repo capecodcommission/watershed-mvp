@@ -11,9 +11,7 @@
         {{$tech->technology_strategy}}
     </h4>
     <a title="{{$tech->technology_strategy}} - Technology Matrix" class="blade_image" href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->TM_ID}}" target="_blank">
-		<!-- <img v-show="{{$tech->technology_id == 400}}" src="{{$_ENV['CCC_ICONS_SVG'].'$tech->icon'}}">  TODO: FUTURE SYNTAX -->
-		<img v-show="{{$tech->technology_id == 400}}" src="{{$_ENV['CCC_ICONS_SVG'].'Icon_FertilizerManagement.svg'}}">
-		<img v-show="{{$tech->technology_id == 401}}" src="{{$_ENV['CCC_ICONS_SVG'].'Icon_StormwaterManagement.svg'}}">
+		<img src="{{$_ENV['CCC_ICONS_SVG'].$tech->icon}}">  
     </a>
     <div class="blade_slider" title="Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.">
         <label>Nutrient Reduction Rate</label>

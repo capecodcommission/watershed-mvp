@@ -45,7 +45,7 @@ const destroyModalContents = () => {
 
 // Create and append appropriate tech icons to the selected treatments stack post-apply
 const addToStack = (treatment_id, icon, techId = null) => {
-    let newtreatment = '<li class="technology" data-route="/edit/' + treatment_id + '" data-treatment="' + treatment_id + '" data-techid="' + techId + '">' + '<a href="" title="' + treatment_id +'">' + '<img src="http://www.cch2o.org/Matrix/icons/' + icon + '" alt=""></a></li>';
+    let newtreatment = '<li class="technology" data-route="/edit/' + treatment_id + '" data-treatment="' + treatment_id + '" data-techid="' + techId + '">' + '<a href="" title="' + treatment_id +'">' + '<img src="http://www.cch2o.org/assets/icons/SVG/' + icon + '" alt=""></a></li>';
     $('ul.selected-treatments').append(newtreatment);
     return 1;
 };

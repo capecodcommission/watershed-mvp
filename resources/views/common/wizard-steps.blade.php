@@ -44,7 +44,7 @@
 	<article class="acc_cBox">
 		<div class="acc_cImg">
 		<header>
-			<h3>Fertilizer</h3><img src="http://www.watershedmvp.org/images/reduction.svg" alt="" width="60" style="display: inline;">
+			<h3>Fertilizer</h3><img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_reduction.svg'}}" alt="" width="60" style="display: inline;">
 		</header>
 		</div>
 		<div class="acc_cCont">
@@ -55,7 +55,7 @@
 			<!-- <div  v-on:click="updateClickedValue($event)" v-class="active: isActive" id = 'fertMan' class="technology"> -->
 			<div id = 'fertMan' class="technology" data-route = "/tech/400">
 				<a>
-					<img src="http://www.watershedmvp.org/images/SVG/FertilizerManagement.svg">
+					<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_FertilizerManagement.svg'}}">
 				</a>
 				<br />
 				Fertilizer Management
@@ -70,7 +70,7 @@
 		<article class="acc_cBox">
 			<div class="acc_cImg">
 				<header>
-					<h3>Stormwater</h3><img src="http://www.watershedmvp.org/images/remediation.svg" alt="">
+					<h3>Stormwater</h3><img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_remediation.svg'}}" alt="">
 				</header>
 			</div>
 			<div class="acc_cCont">
@@ -83,38 +83,38 @@
 				<div class="technology_list">
 					<div id = "stormMan" class="technology" data-route = "/tech/401">
 						<a>
-							<img src="http://www.watershedmvp.org/images/SVG/StormwaterManagement.svg"><br />
+							<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_StormwaterManagement.svg'}}"><br />
 							 Stormwater Management
 						</a>
 					</div>
 					<div class="technology" data-route = "/tech/108">
 						<a>
-							<img src="http://www.watershedmvp.org/images/SVG/StormwaterGravelWetland.svg"><br />
+							<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_StormwaterGravelWetland.svg'}}"><br />
 							 Gravel Wetland
 						</a>
 					</div>
 					<div data-route = "/tech/109" class="technology">
 						<a>
-							<img src="http://www.watershedmvp.org/images/SVG/StormwaterBioretentionSoilMediaFilters.svg"><br />
+							<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_StormwaterBioretentionSoilMediaFilters.svg'}}"><br />
 							 Bioretention/Soil Media Filters
 						</a>
 					</div>
 
 					<div data-route = "/tech/106" class="technology">
 						<a>
-							<img src="http://www.watershedmvp.org/images/SVG/StormwaterBMPs.svg"><br />
+							<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_StormwaterBMPs.svg'}}"><br />
 							Phytobuffers
 						</a>
 					</div>
 					<div data-route = "/tech/107" class="technology">
 						<a>
-							<img src="http://www.watershedmvp.org/images/SVG/StormwaterBMPs.svg"><br />
+							<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_StormwaterBMPs.svg'}}"><br />
 							Vegetated Swale
 						</a>
 					</div>
 					<div data-route = "/tech/110" class="technology">
 						<a>
-							<img src="http://www.watershedmvp.org/images/SVG/StormwaterBMPs.svg"><br />
+							<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_StormwaterBMPs.svg'}}"><br />
 							Constructed Wetlands
 						</a>
 					</div>
@@ -134,7 +134,7 @@
 		<div class="acc_cImg">
 
 		<header>
-			<h3>Septic</h3><img src="http://www.cch2o.org/Matrix/icons/reduction.svg" alt="" width="60" style="display: inline;">
+			<h3>Septic</h3><img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_reduction.svg'}}" alt="" width="60" style="display: inline;">
 		</header>
 		</div>
 		<div class="acc_cCont">
@@ -144,32 +144,32 @@
 			<hr>
 			<div class="technology" data-route="/tech/603">
 				<a>
-					<img src="http://www.watershedmvp.org/images/SVG/SingleStageCluster.svg" alt="" ><br />
+					<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_SingleStageCluster.svg'}}" alt="" ><br />
 					Single-Stage Cluster</a>
 			</div>
 			<div class="technology" data-route="/tech/604">
 				<a>
-					<img src="http://www.watershedmvp.org/images/SVG/TwoStageCluster.svg" alt="" ><br />
+					<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_TwoStageCluster.svg'}}" alt="" ><br />
 					Two-Stage Cluster</a>
 			</div>
 			<div class="technology" data-route="/tech/605">
 				<a>
-					<img src="http://www.watershedmvp.org/images/SVG/ConventionalTreatment.svg" alt="" ><br />
+					<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_ConventionalTreatment.svg'}}" alt="" ><br />
 					Conventional Treatment</a>
 			</div>
 			<div class="technology" data-route="/tech/606">
 				<a>
-					<img src="http://www.watershedmvp.org/images/SVG/AdvancedTreatment.svg" alt="" ><br />
+					<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_AdvancedTreatment.svg'}}" alt="" ><br />
 					Advanced Treatment</a>
 			</div>
 			<div class="technology" data-route="/tech/607">
 				<a>
-					<img src="http://www.watershedmvp.org/images/SVG/SatelliteTreatment.svg" alt="" ><br />
+					<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_SatelliteTreatment.svg'}}" alt="" ><br />
 					Satellite Treatment</a>
 			</div>
 			<div class="technology" data-route="/tech/608">
 				<a>
-					<img src="http://www.watershedmvp.org/images/SVG/SatelliteTreatmentEnhanced.svg" alt="" ><br />
+					<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_SatelliteTreatmentEnhanced.svg'}}" alt="" ><br />
 					Satellite Treatment - Enahnced</a>
 			</div>
 			<div data-route = "/tech/300" class="technology">
@@ -219,7 +219,7 @@
 		<div class="acc_cImg">
 		<header>
 			<h3>Groundwater</h3>
-			<img src="http://www.cch2o.org/Matrix/icons/remediation.svg" alt="">
+			<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_remediation.svg'}}" alt="">
 		</header>
 		</div>
 		<div class="acc_cCont">
@@ -279,13 +279,13 @@
 					</div>
 				<div class="technology" data-route="/tech/15">
 					<a>
-						<img src="http://www.watershedmvp.org/images/SVG/PRBTrench.svg" alt=""><br />
+						<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_PRBTrench.svg'}}" alt=""><br />
 						PRB - Trench
 					</a>
 				</div>
 				<div class="technology" data-route="/tech/16">
 					<a>
-						<img src="http://www.watershedmvp.org/images/SVG/PRBInjectionWell30.svg" alt=""><br />
+						<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_PRBInjectionWell30.svg'}}" alt=""><br />
 						PRB - Injection Well (30')
 					</a>
 				</div>
@@ -300,7 +300,7 @@
 		<div class="acc_cImg">
 		<header>
 			<h3>Embayment</h3>
-			<img src="http://www.cch2o.org/Matrix/icons/restoration.svg" alt="">
+			<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_restoration.svg'}}" alt="">
 		</header>
 		</div>
 		<div class="acc_cCont">
@@ -309,37 +309,37 @@
 			<hr>
 			<div class="technology" data-route="/tech/202">
 				<a>
-					<img src="http://www.watershedmvp.org/images/SVG/AquacultureAboveEstuaryBed.svg" alt=""><br />
+					<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_AquacultureAboveEstuaryBed.svg'}}" alt=""><br />
 					Aquaculture Above Estuary Bed
 				</a>
 			</div>
 			<div class="technology" data-route="/tech/203">
 				<a>
-					<img src="http://www.watershedmvp.org/images/SVG/AquacultureMariculture.svg" alt=""><br />
+					<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_AquacultureMariculture.svg'}}" alt=""><br />
 					Aquaculture - Mariculture
 				</a>
 			</div>
 			<div class="technology" data-route="/tech/500">
 				<a>
-					<img src="http://www.watershedmvp.org/images/SVG/InletCulvertWidening.svg" alt=""><br />
+					<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_InletCulvertWidening.svg'}}" alt=""><br />
 					Inlet/Culvert Widening
 				</a>
 			</div>
 			<div class="technology" data-route="/tech/501">
 				<a>
-					<img src="http://www.watershedmvp.org/images/SVG/CoastalHabitatRestoration.svg" alt=""><br />
+					<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_CoastalHabitatRestoration.svg'}}" alt=""><br />
 					Coastal Habitat Restoration
 				</a>
 			</div>
 			<div class="technology" data-route="/tech/502">
 				<a>
-					<img src="http://www.watershedmvp.org/images/SVG/FloatingConstructedWetlands.svg" alt=""><br />
+					<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_FloatingConstructedWetlands.svg'}}" alt=""><br />
 					Floating Constructed Wetlands
 				</a>
 			</div>
 			<div class="technology" data-route="/tech/504">
 				<a>
-					<img src="http://www.watershedmvp.org/images/SVG/SurfaceWaterRemediationWetlands.svg" alt=""><br />
+					<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_SurfaceWaterRemediationWetlands.svg'}}" alt=""><br />
 					Surface Water Remediation Wetlands
 				</a>
 			</div>
