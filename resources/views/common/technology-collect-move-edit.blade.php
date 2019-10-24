@@ -11,26 +11,28 @@
 			{{$tech->technology_strategy}}
 		</h4>
 		<a title="{{$tech->technology_strategy}} - Technology Matrix" class="blade_image" href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->TM_ID}}" target="_blank">
-			<img src="{{$_ENV['CCC_ICONS_SVG'].$tech->icon}}"> 
+			<img src="{{$_ENV['CCC_ICONS_SVG'].$tech->icon}}">
 		</a>
 		<div class="blade_slider" title="Update the amount to be treated.">
-			<label v-if = "{{in_array($tech->technology_type,['Green Infrastructure', 'Innovative and Resource-Management Technologies'])}}" id = "collect-label-reduc">Update the reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}}%.</label>
-			<label v-if = "{{in_array($tech->technology_type,['Waste Reduction Toilets','On-Site Treatment Systems'])}}" id = "collect-label-reduc">Update the reduction rate between {{$tech->Nutri_Reduc_N_Low_ppm}} ppm and {{$tech->Nutri_Reduc_N_High_ppm}} ppm.</label>
-			<input v-if = "{{in_array($tech->technology_type,['Green Infrastructure', 'Innovative and Resource-Management Technologies'])}}" type="range" id="collect-rate" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="collect_rate" value="{{$treatment->Treatment_Value}}" step="1">
-			<input v-if = "{{in_array($tech->technology_type,['Waste Reduction Toilets','On-Site Treatment Systems'])}}" type="range" id="collect-rate" min="{{$tech->Nutri_Reduc_N_Low_ppm}}" max="{{$tech->Nutri_Reduc_N_High_ppm}}" v-model="collect_rate" value="{{$treatment->Treatment_Value}}" step=".25">
-			<label v-if = "{{in_array($tech->technology_type,['Green Infrastructure', 'Innovative and Resource-Management Technologies'])}}" id = "collect-label-rate">@{{collect_rate}}%</label>
-			<label v-if = "{{in_array($tech->technology_type,['Waste Reduction Toilets','On-Site Treatment Systems'])}}" id = "collect-label-rate">@{{collect_rate}} ppm</label>
+			<button title="Update Collection" class="blade_button" id="draw_collection">Update Collection</button>
+			<button title="Update Move Site" class="blade_button" id="select_area">Update Move Site</button>
+			<label id = "collect-label-reduc">Update the valid reduction rate between {{$tech->Nutri_Reduc_N_Low_ppm}} and {{$tech->Nutri_Reduc_N_High_ppm}} ppm.</label>
+			<input type="range" id="collect-rate" min="{{$tech->Nutri_Reduc_N_Low_ppm}}" max="{{$tech->Nutri_Reduc_N_High_ppm}}" v-model="collect_rate" value="{{$treatment->Treatment_Value}}" step="1">
+			<label id = "collect-label-rate">@{{collect_rate}} ppm</label>
 		</div>
-		<button title="Update Strategy" data-treatment="{{$treatment->TreatmentID}}" class="blade_button" v-show="{{$treatment->Treatment_Value}} != collect_rate" id="updateCollectStay">Update</button>
+		<!-- TODO: Switch style="display:none;" on the API response after selecting the dump site OR add a v-if="{{$tech->move_site}}" if we need to save to db -->
+		<button title="Update Strategy" data-treatment="{{$treatment->TreatmentID}}" class="blade_button" v-show="{{$treatment->Treatment_Value}} != collect_rate" id="updateCollectMove">Update</button>
 		<button title="Delete Strategy" data-treatment="{{$treatment->TreatmentID}}" class="blade_button" v-show="{{$treatment->Treatment_Value}} == collect_rate" id="deletetreatment">Delete</button>
 </div>
+
+<!-- TODO: Add warning that sewered parcels will not be affected -->
 
 <script src="{{url('/js/main.js')}}"></script>
 
 <script>
 	$(document).ready(function() {
 
-		// Handle click event for updating collect-stay technologies utilizing the 'update' API route,
+		// Handle click event for updating collect-move technologies utilizing the 'update' API route,
 		// reseting the map graphic properties and updating the scenario data
 		$('#updateCollectStay').on('click', function(e) {
 			e.preventDefault();

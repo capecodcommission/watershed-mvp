@@ -21,7 +21,7 @@
 			<label id = "collect-label-rate" style="display:none;">@{{collect_rate}} ppm</label>
 		</div>
 		<!-- TODO: Switch style="display:none;" on the API response after selecting the dump site OR add a v-if="{{$tech->move_site}}" if we need to save to db -->
-		<button title="Apply Strategy" class="blade_button" id="applyCollectMoveTreatment" style="display:none;">Apply</button>
+		<button title="Apply Strategy" class="blade_button" id="applytreatment" style="display:none;">Apply</button>
 </div>
 
 <!-- TODO: Add warning that sewered parcels will not be affected -->
