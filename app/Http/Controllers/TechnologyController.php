@@ -152,7 +152,7 @@ class TechnologyController extends Controller
 				return view('common/technology-collect-stay', ['tech'=>$tech, 'type'=>$type]);
 				break;
 			case 'CollectMove':
-				return view('common/technology-collection', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				return view('common/technology-collect-move', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 				break;	
 			case 'PRB':
 				return view('common/technology-groundwater', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);

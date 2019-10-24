@@ -1,9 +1,6 @@
-	<style>
-		#closeACC { padding: .5em; background-color:  }
-	</style>
 
-	<div class="accordion">
-		<span id="closeACC" class="button--cta">X</span>
+<div class="accordion">
+	<span id="closeACC" class="button--cta">X</span>
 
 <section class="row accHorizontal">
 	<aside class="accHorizontal__item">
@@ -18,7 +15,6 @@
 		<div class="acc_cCont">
 
 		<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="wmvp_results_{{session('scenarioid')}}">View Scenario Summary</a>
-			<span class="remaining"><strong>Nitrogen Remaining to Threshold:</strong> <span></span>kg</span>
 			</p>
 			<hr>
 			<fieldset class="right"><p>Want to choose a create a new scenario <br />or select a different embayment? <br /><a href="{{url('/')}}" class="button--cta">Start Over</a></p></fieldset>
@@ -48,11 +44,8 @@
 		</header>
 		</div>
 		<div class="acc_cCont">
-			<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="wmvp_results_{{session('scenarioid')}}">View Scenario Summary</a>
-			<span class="remaining"><strong>Nitrogen Remaining to Threshold:</strong> <span></span>kg</span>
-			</p>
+			<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="wmvp_results_{{session('scenarioid')}}">View Scenario Summary</a></p>
 			<hr>
-			<!-- <div  v-on:click="updateClickedValue($event)" v-class="active: isActive" id = 'fertMan' class="technology"> -->
 			<div id = 'fertMan' class="technology" data-route = "/tech/400">
 				<a>
 					<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_FertilizerManagement.svg'}}">
@@ -76,7 +69,6 @@
 			<div class="acc_cCont">
 				<p>
 				<a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="wmvp_results_{{session('scenarioid')}}">View Scenario Summary</a>
-				<span class="remaining"><strong>Nitrogen Remaining to Threshold:</strong> <span></span>kg</span>
 				</p>
 				<hr>
 
@@ -139,7 +131,6 @@
 		</div>
 		<div class="acc_cCont">
 		<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="wmvp_results_{{session('scenarioid')}}">View Scenario Summary</a>
-			<span class="remaining"><strong>Nitrogen Remaining to Threshold:</strong> <span></span>kg</span>
 			</p>
 			<hr>
 			<div class="technology" data-route="/tech/603">
@@ -224,11 +215,9 @@
 		</div>
 		<div class="acc_cCont">
 			<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="wmvp_results_{{session('scenarioid')}}">View Scenario Summary</a>
-			<span class="remaining"><strong>Nitrogen Remaining to Threshold:</strong> <span></span>kg</span></p>
 			<hr>
 
 			<div class="technology_list">
-				<!-- <div class="technology"> -->
 					<div data-route = "/tech/101" class="technology">
 						<a>
 							<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_SurfaceWaterRemediationWetlands.svg'}}"><br />
@@ -348,28 +337,24 @@
 	</aside>
 
 	<aside class="accHorizontal__item">
-	<input type="radio" name="group-1" class="state" id="acc-6" />
-	<label class="backdrop" for="acc-6"><!-- <i class="fa fa-times"></i> --></label>
-	<article class="acc_cBox">
-		<div class="acc_cImg">
+		<input type="radio" name="group-1" class="state" id="acc-6" />
+		<label class="backdrop" for="acc-6"><!-- <i class="fa fa-times"></i> --></label>
+		<article class="acc_cBox">
+			<div class="acc_cImg">
+				<header>
+					<h3>Summary</h3>
 
-		<header>
-			<h3>Summary</h3>
-
-		</header>
-		</div>
-		<div class="acc_cCont">
-		<p><span class="remaining"><strong>Nitrogen Remaining to Threshold:</strong> <span></span>kg</span></p>
-
-		<!-- <p>Overall Nitrogen Reduction: </p> -->
-
-			<p><a href="{{url('download', session('scenarioid'))}}">Download Results (.xls)</a></p>
-			<p><a href="{{url('results', session('scenarioid'))}}" class="button" target="wmvp_results_{{session('scenarioid')}}">View detailed results</a></p>
-			<p><a id = 'fim' class = 'button'>Open Scenario in Financial Impact Model (FIM)</a></p>
-			<p><a id = 'sam' class = 'button'>Open Scenario in Scenario Assessment Model (SAM)</a></p>
-			<p><a id = 'saved' class="save button">Save Changes</a></p>
-		</div>
-	</article>
+				</header>
+			</div>
+			<div class="acc_cCont">
+				<p><span class="remaining"><strong>Nitrogen Remaining to Threshold:</strong> <span></span>kg</span></p>
+				<p><a href="{{url('download', session('scenarioid'))}}">Download Results (.xls)</a></p>
+				<p><a href="{{url('results', session('scenarioid'))}}" class="button" target="wmvp_results_{{session('scenarioid')}}">View detailed results</a></p>
+				<p><a id = 'fim' class = 'button'>Open Scenario in Financial Impact Model (FIM)</a></p>
+				<p><a id = 'sam' class = 'button'>Open Scenario in Scenario Assessment Model (SAM)</a></p>
+				<p><a id = 'saved' class="save button">Save Changes</a></p>
+			</div>
+		</article>
 	</aside>
 </section>
 </div>

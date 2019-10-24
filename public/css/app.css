@@ -7760,6 +7760,10 @@ nav.toolbar .tool {
   width: 100px;
 }
 
+#closeACC {
+  padding: .5em; 
+}
+
 .results_download thead tr th {
   font-weight: bold;
   color: #000066;
