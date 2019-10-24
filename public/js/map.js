@@ -480,7 +480,7 @@ require([
             techId: techId
         });
 
-        // Add polygon and symbology to map with attached treatment id
+        // Add polygon and symbology to map with attached treatment id 
         map.graphics.add(polyGraphic);
         // Deactivate the toolbar and enable map navigation
         tb.deactivate();
@@ -502,6 +502,8 @@ require([
                 $("#collect-label-reduc").show();
                 $("#collect-label-rate").show();
                 $("#collect-rate").show();
+                $('#select_area').show();
+                $('#applyCollectMoveTreatment').show();
                 $("#applytreatment").show();
                 $(".modal-wrapper").toggle();
             }
