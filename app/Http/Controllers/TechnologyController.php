@@ -325,6 +325,41 @@ class TechnologyController extends Controller
 		return $treat_id;
 	}
 
+	// Handle nitrogen move using either new or existing point coordinates for either new or existing treatment
+	public function handleCollectMoveDump($scenarioid, $treat_id)
+	{
+		// New treatment with new move site
+		if ( session()->has('pointX') && session()->has('pointY') )
+		{
+			$x = session()->get('pointX');
+			$y = session()->get('pointY');
+			return $move = DB::select("exec dbo.CALCmoveNitrogen '$x $y', $treat_id, $scenarioid");
+		}
+
+		// Existing treatment with either updated or existing move site
+		else
+		{
+			$dumpTreatment = Treatment::where('Parent_TreatmentId', $treat_id)->first();
+			if ($dumpTreatment)
+			{
+				$dumpTreatmentID = $dumpTreatment->TreatmentID;
+				if ( session()->has('pointX_' . $dumpTreatmentID) && session()->has('pointY_' . $dumpTreatmentID) )
+				{
+					$x = session()->get('pointX_' . $dumpTreatmentID);
+					$y = session()->get('pointY_' . $dumpTreatmentID);
+					$dumpTreatment->delete();
+					return $move = DB::select("exec dbo.CALCmoveNitrogen '$x $y', $treat_id, $scenarioid");
+				}
+				else
+				{
+					$originalXY = $dumpTreatment->POLY_STRING;
+					$dumpTreatment->delete();
+					return $move = DB::select("exec dbo.CALCmoveNitrogen '$originalXY', $treat_id, $scenarioid");
+				}
+			}
+		}
+	}
+
 
 	// Apply CollectStay technologies based on its system type and technology type
 	// Update nitrogen load and delete session geometry post-treatment
@@ -337,8 +372,7 @@ class TechnologyController extends Controller
 		$techType = $tech->technology_type;
 		$embay_id = $scenario->AreaID;
 
-		// Create new Treatment, associate parcels within custom polygon and optional point geometry
-		// Apply Septic or Groundwater by Technology type
+		// Apply new Treatment with new geometry
 		if ( !$treat_id )
 		{
 			if ( session()->has('polyString') ) 
@@ -346,60 +380,32 @@ class TechnologyController extends Controller
 				$polyString = session()->get('polyString');
 				$treatment = $this->createTreatment($scenarioid, $tech);
 				$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment->TreatmentID . ', \'' . $polyString . '\'');
-				if ( session()->has('pointX') && session()->has('pointY') )
-				{
-					$x = session()->get('pointX');
-					$y = session()->get('pointY');
-					$move = DB::select("exec dbo.CALCmoveNitrogen '$x . ' ' . $y', $treatment->TreatmentID, $scenarioid");
-				}
+				$this->handleCollectMoveDump($scenarioid, $treatment->TreatmentID);
 				return $this->handleCollectStayApply($treatment->TreatmentID, $rate, $techType);
 			}
 		}
 
-		// Refresh and reassociate parcels prior to reapplication
-		// Update existing treatment with either new rate, new geometry, or both
+		// Update existing treatment with new rate and/or new geometry
 		else
 		{
-			// Reassociate parcels using new polygon and optional point session geometry
+			// New geometry
 			if ( session()->has('polyString_' . $treat_id) ) 
 			{
 				$polyString = session()->get('polyString_' . $treat_id);
 				$del = DB::select('exec dbo.DELparcels '. $treat_id);
 				$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treat_id . ', \'' . $polyString . '\'');
-				if ( session()->has('pointX_' . $treat_id) && session()->has('pointY_' . $treat_id) )
-				{
-					$x = session()->get('pointX_' . $treat_id);
-					$y = session()->get('pointY_' . $treat_id);
-					$removeDump = Treatment::where('Parent_TreatmentId', $treat_id)->first()->delete();
-					$move = DB::select("exec dbo.CALCmoveNitrogen '$x . ' ' . $y', $treat_id, $scenarioid");
-				}
-				else
-				{
-					$dumpTreatment = Treatment::where('Parent_TreatmentId', $treat_id)->first();
-					if ($dumpTreatment)
-					{
-						$originalXY = $dumpTreatment->POLY_STRING;
-						$dumpTreatment->delete();
-						$move = DB::select("exec dbo.CALCmoveNitrogen '$originalXY', $treat_id, $scenarioid");
-					}
-				}
+				$this->handleCollectMoveDump($scenarioid, $treat_id);
 				return $this->handleCollectStayApply($treat_id, $rate, $techType);
 			}
 
-			// Reassociate parcels using existing Treatment polygon and optional point geometry
+			// Existing geometry
 			else
 			{
 				$treatment = Treatment::find($treat_id);
 				$originalPoly = $treatment->POLY_STRING;
-				$dumpTreatment = Treatment::where('Parent_TreatmentId', $treat_id)->first();
 				$del = DB::select('exec dbo.DELparcels '. $treat_id);
 				$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treat_id . ', \'' . $originalPoly . '\'');
-				if ($dumpTreatment)
-				{
-					$originalXY = $dumpTreatment->POLY_STRING;
-					$dumpTreatment->delete();
-					$move = DB::select("exec dbo.CALCmoveNitrogen '$originalXY', $treat_id, $scenarioid");
-				}
+				$this->handleCollectMoveDump($scenarioid, $treat_id);
 				return $this->handleCollectStayApply($treat_id, $rate, $techType);
 			}
 		}
@@ -487,7 +493,13 @@ class TechnologyController extends Controller
 				return view('common/technology-collect-stay-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 				break;
 			case 'CollectMove':
-				return view('common/technology-collect-move-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				$dumpTreatment = Treatment::where('Parent_TreatmentId', $treat_id)->first();
+				if (!$dumpTreatment)
+				{
+					$dumpTreatment = new \stdClass();
+					$dumpTreatment->TreatmentID = 0;	
+				}
+				return view('common/technology-collect-move-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type, 'dumpTreatment'=>$dumpTreatment]);
 				break;
 			case 'PRB':
 				return view('common/technology-groundwater-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);

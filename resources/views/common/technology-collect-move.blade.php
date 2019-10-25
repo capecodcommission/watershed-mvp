@@ -33,9 +33,10 @@
 		
 		// Append technology id to div to be parsed for polygon creation
 		// Obtain the technology ID from the Technology Matrix
-		$('#draw_collection').data('techId','{{$tech->technology_id}}')
 		icon = '{{$tech->icon}}'
 		techId = '{{$tech->technology_id}}'
+		$('#draw_collection').data('techId', techId)
+		$('#select_area').data('icon', icon.toString());
 
 		// Disable the map navigation, delete the graphic if re-doing collection drawn, hide the modal,
 		// disable the showing of the map's infoWindow when a map click event occurs, activate the map
@@ -53,7 +54,7 @@
 		$('#select_area').on('click', function(f) {
 			f.preventDefault();
 			$('.modal-wrapper').hide();
-			deleteGraphic();
+			// deleteGraphic();
 			map.setInfoWindowOnClick(false);
 			tb.activate('point');
 		});

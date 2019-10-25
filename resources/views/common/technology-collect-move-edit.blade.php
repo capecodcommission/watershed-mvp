@@ -14,8 +14,8 @@
 			<img src="{{$_ENV['CCC_ICONS_SVG'].$tech->icon}}">
 		</a>
 		<div class="blade_slider" title="Update the amount to be treated.">
-			<button title="Update Collection" class="blade_button" id="draw_collection">Update Collection</button>
-			<button title="Update Move Site" class="blade_button" id="select_area">Update Move Site</button>
+			<button title="Update geometry" class="blade_button" id="edit_geometry" data-treatment="{{$treatment->TreatmentID}}">Update Collection</button>
+			<button v-show="{{$dumpTreatment->TreatmentID}} > 0" title="Update Move Site" class="blade_button" id="edit_geometry" data-treatment="{{$dumpTreatment->TreatmentID}}">Update Move Site</button>
 			<label id = "collect-label-reduc">Update the valid reduction rate between {{$tech->Nutri_Reduc_N_Low_ppm}} and {{$tech->Nutri_Reduc_N_High_ppm}} ppm.</label>
 			<input type="range" id="collect-rate" min="{{$tech->Nutri_Reduc_N_Low_ppm}}" max="{{$tech->Nutri_Reduc_N_High_ppm}}" v-model="collect_rate" value="{{$treatment->Treatment_Value}}" step="1">
 			<label id = "collect-label-rate">@{{collect_rate}} ppm</label>
@@ -34,9 +34,9 @@
 
 		// Handle click event for updating collect-move technologies utilizing the 'update' API route,
 		// reseting the map graphic properties and updating the scenario data
-		$('#updateCollectStay').on('click', function(e) {
+		$('#updateCollectMove').on('click', function(e) {
 			e.preventDefault();
-			let updateTreatmentButton = document.getElementById("updateCollectStay");
+			let updateTreatmentButton = document.getElementById("updateCollectMove");
 			let setUpdateTreatmentButtonStyling = updateTreatmentButton.setAttribute("style", "display:none;");
 			let treatmentValue = $('#collect-rate').val();
 			let url = "{{url('/update', $treatment->TreatmentID)}}"  + '/' + treatmentValue;

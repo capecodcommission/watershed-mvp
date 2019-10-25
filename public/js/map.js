@@ -503,7 +503,6 @@ require([
                 $("#collect-label-rate").show();
                 $("#collect-rate").show();
                 $('#select_area').show();
-                $('#applyCollectMoveTreatment').show();
                 $("#applytreatment").show();
                 $(".modal-wrapper").toggle();
             }
@@ -559,10 +558,20 @@ require([
     ) {
         // Remove SQL Spatial type and spatial reference from the geometry string
         // Create point geometry and symbology
-        geo_string = geo_string
-            .replace("POINT(", "")
-            .replace(", 3857)", "")
-            .split(", ");
+        if (geo_string.includes("POINT(")) {
+            geo_string = geo_string
+                .replace("POINT(", "")
+                .replace(", 3857)", "")
+                .split(", ");
+        }
+        
+        // Handle move-site dump points
+        if (geo_string.includes("POINT (")) {
+            geo_string = geo_string
+                .replace("POINT (", "")
+                .replace(")", "")
+                .split(" ");
+        }
         var pointGeom = new Point({
             x: parseFloat(geo_string[0]),
             y: parseFloat(geo_string[1]),
@@ -668,7 +677,7 @@ require([
             const geo_string = row.POLY_STRING;
 
             // Load point or polygon creation by geometry type
-            if (customPoly == 0 && geo_string.startsWith("POINT")) {
+            if (geo_string.startsWith("POINT")) {
                 addPointOnLoad(
                     treatmentid,
                     treatmentArea,
@@ -679,7 +688,7 @@ require([
                     sr,
                     geo_string
                 );
-            } else if (customPoly == 1 && geo_string.startsWith("POLYGON")) {
+            } else if (geo_string.startsWith("POLYGON")) {
                 addPolygonOnLoad(
                     treatmentid,
                     treatmentArea,
@@ -730,6 +739,7 @@ require([
                 $(".modal-wrapper").toggle();
                 $("#deletetreatment").hide();
                 $("#updateStormwaterNonManangement").show();
+                $('#updateCollectMove').show();
             } else {
                 // Alert user if save unsuccessful
                 alert(
@@ -826,24 +836,25 @@ require([
         let layerGraphics = map.graphics.graphics;
 
         // Filter to edited graphics
-        let editedGraphic = layerGraphics.filter(graphic => {
+        let editedGraphics = layerGraphics.filter(graphic => {
             let attribs = graphic.attributes;
             if (attribs) {
                 return attribs.editInProgress;
             }
         });
 
-        if (editedGraphic.length) {
-            // Obtain new treatment info, set popup
-            var url = "/get_treatment" + "/" + editedGraphic[0].attributes.treatment_id;
-            $.ajax({
-                method: "GET",
-                url: url
-            })
+        if (editedGraphics.length) {
+            editedGraphics.map((editedGraphic) => {
+                // Obtain new treatment info, set popup
+                var url = "/get_treatment" + "/" + editedGraphic.attributes.treatment_id;
+                $.ajax({
+                    method: "GET",
+                    url: url
+                })
                 .done(function (treatment) {
                     // Add original geometry to map through either the global treatments object or the graphic attribute
                     if (treatment) {
-                        map.graphics.remove(editedGraphic[0]);
+                        map.graphics.remove(editedGraphic);
                         addGraphicsOnLoad(treatment);
                     }
                 })
@@ -853,6 +864,7 @@ require([
                         msg.statusText
                     );
                 });
+            })
         }
     });
 
