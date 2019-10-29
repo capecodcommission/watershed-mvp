@@ -348,13 +348,15 @@ class TechnologyController extends Controller
 					$x = session()->get('pointX_' . $dumpTreatmentID);
 					$y = session()->get('pointY_' . $dumpTreatmentID);
 					$dumpTreatment->delete();
-					return $move = DB::select("exec dbo.CALCmoveNitrogen '$x $y', $treat_id, $scenarioid");
+					$move = DB::select("exec dbo.CALCmoveNitrogen '$x $y', $treat_id, $scenarioid");
+					return $this->deleteSessionGeometry($dumpTreatmentID);
 				}
 				else
 				{
 					$originalXY = $dumpTreatment->POLY_STRING;
 					$dumpTreatment->delete();
-					return $move = DB::select("exec dbo.CALCmoveNitrogen '$originalXY', $treat_id, $scenarioid");
+					$move = DB::select("exec dbo.CALCmoveNitrogen '$originalXY', $treat_id, $scenarioid");
+					return $this->deleteSessionGeometry($dumpTreatmentID);
 				}
 			}
 		}
