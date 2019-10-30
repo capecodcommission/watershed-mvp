@@ -76,8 +76,13 @@ const deleteGraphic = (treatment_id = null) => {
         return graphic.attributes;
     }).map((graphic) => {
         let attribs = graphic.attributes;
-        if (attribs.treatment_id == 1 || attribs.treatment_id == treatment_id) {
-            map.graphics.remove(graphic);
+        if (treatment_id == 'dump') {
+            if (graphic.geometry.type == 'point' && attribs.treatment_id == 1) {
+                return map.graphics.remove(graphic);
+            }
+        }
+        else if (attribs.treatment_id == 1 || attribs.treatment_id == treatment_id) {
+            return map.graphics.remove(graphic);
         }
     })
 };

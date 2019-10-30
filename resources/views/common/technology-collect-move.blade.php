@@ -54,7 +54,7 @@
 		$('#select_area').on('click', function(f) {
 			f.preventDefault();
 			$('.modal-wrapper').hide();
-			// deleteGraphic();
+			deleteGraphic('dump');
 			map.setInfoWindowOnClick(false);
 			tb.activate('point');
 		});
