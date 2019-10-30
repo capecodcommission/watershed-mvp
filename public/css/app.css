@@ -7904,6 +7904,7 @@ nav.toolbar .tool {
   font: 1.5vh bold;
   text-transform: uppercase;
   align-self: center;
+  margin-bottom: 0.5em;
 }
 
 .blade_slider > input {

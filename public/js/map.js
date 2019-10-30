@@ -101,8 +101,6 @@ require([
         showAttribution: false
     });
 
-    // map.on("load", createToolbar);
-    // map.on("load", initToolbar);
     map.on("load", function (e) {
         initToolbar();
         map.infoWindow.resize(375, 400);
@@ -402,7 +400,7 @@ require([
         return polySymbol;
     }
 
-    // Create and add point graphic to map
+    // Create and add point graphic with properties to map
     // Save point coordinates to Laravel session
     function addPointOnSelect(evt) {
         // Create point graphic based on clicked-coordinates
@@ -417,7 +415,8 @@ require([
         var pointGraphic = new Graphic(pointGeometry, pointSymbology, {
             keeper: true,
             treatment_id: 1,
-            editInProgress: 0
+            editInProgress: 0,
+            parent_id: 0
         });
 
         // Add point graphic to the map, deactivate draw toolbar, enable map navigation
@@ -554,7 +553,8 @@ require([
         n_removed,
         popupVal,
         sr,
-        geo_string
+        geo_string,
+        parentid
     ) {
         // Remove SQL Spatial type and spatial reference from the geometry string
         // Create point geometry and symbology
@@ -579,11 +579,13 @@ require([
         });
         var pointSymbol = new PictureMarkerSymbol(imageURL, 30, 30);
 
-        // Create graphic using geometry and symbology
+        // Create graphic using geometry and symbology, adding properties
         var pointGraphic = new Graphic(pointGeom, pointSymbol, {
             keeper: true,
             treatment_id: treatmentid,
-            editInProgress: 0
+            editInProgress: 0,
+            parent_id: parentid,
+            image_URL: imageURL
         });
 
         // Create popup template containing treatment properties
@@ -675,6 +677,7 @@ require([
             const treatmentTypeId = row.TreatmentType_ID;
             const polySymbol = selectPoly(treatmentTypeId);
             const geo_string = row.POLY_STRING;
+            const parentid = row.Parent_TreatmentId
 
             // Load point or polygon creation by geometry type
             if (geo_string.startsWith("POINT")) {
@@ -686,7 +689,8 @@ require([
                     n_removed,
                     popupVal,
                     sr,
-                    geo_string
+                    geo_string,
+                    parentid
                 );
             } else if (geo_string.startsWith("POLYGON")) {
                 addPolygonOnLoad(
@@ -759,59 +763,63 @@ require([
 
     // Highlight symbololgy based on geometry type
     function highlightSymbolOnEnter(treatment_id) {
-        // Retrieve graphic by treatment id id possible
+        // Retrieve graphic by treatment id, matching to graphic treatment id or graphic parent id
         let layerGraphics = map.graphics.graphics;
-        treatmentGraphic = layerGraphics.filter(graphic => {
+        treatmentGraphics = layerGraphics.filter(graphic => {
             let attribs = graphic.attributes;
             if (attribs) {
-                return attribs.treatment_id == treatment_id;
+                return attribs.treatment_id == treatment_id || attribs.parent_id == treatment_id;
             }
         });
 
-        // If graphic exists, highlight it
-        if (treatmentGraphic.length) {
-            let geoType = treatmentGraphic[0].geometry.type;
-            let highlightColor = [252, 236, 3, 1.0];
-            let highlightSymbol = {};
-            switch (geoType) {
-                case "polygon":
-                    highlightSymbol = createPolySymbol(highlightColor);
-                    treatmentGraphic[0].setSymbol(highlightSymbol);
-                    break;
-
-                case "point":
-                    pointURL = treatmentGraphic[0].symbol.url;
-                    highlightSymbol = new SimpleMarkerSymbol(
-                        SimpleMarkerSymbol.STYLE_CIRCLE,
-                        30,
-                        null,
-                        new Color(highlightColor)
-                    );
-                    treatmentGraphic[0].setSymbol(highlightSymbol);
-                    break;
-            }
+        // If parent & (optional) child treatments exist, highlight them
+        if (treatmentGraphics.length) {
+            treatmentGraphics.map ((graphic => {
+                let geoType = graphic.geometry.type;
+                let highlightColor = [252, 236, 3, 1.0];
+                let highlightSymbol = {};
+                switch (geoType) {
+                    case "polygon":
+                        highlightSymbol = createPolySymbol(highlightColor);
+                        graphic.setSymbol(highlightSymbol);
+                        break;
+    
+                    case "point":
+                        pointURL = graphic.symbol.url;
+                        highlightSymbol = new SimpleMarkerSymbol(
+                            SimpleMarkerSymbol.STYLE_CIRCLE,
+                            30,
+                            null,
+                            new Color(highlightColor)
+                        );
+                        graphic.setSymbol(highlightSymbol);
+                        break;
+                }
+            }))
         }
     }
 
-    // Reset symbology based on geometry type
+    // Reset symbology for parent & (optional) child treatments based on geometry type
     function resetSymbolOnLeave(techId) {
         // If graphic exists, reset original symbology
-        if (treatmentGraphic.length) {
-            let geoType = treatmentGraphic[0].geometry.type;
-            let originalGraphic = {};
-            switch (geoType) {
-                case "polygon":
-                    originalGraphic = selectPoly(techId);
-                    treatmentGraphic[0].setSymbol(originalGraphic);
-                    break;
+        if (treatmentGraphics.length) {
+                treatmentGraphics.map ((graphic => {
+                let geoType = graphic.geometry.type;
+                let originalGraphic = {};
+                switch (geoType) {
+                    case "polygon":
+                        originalGraphic = selectPoly(techId);
+                        graphic.setSymbol(originalGraphic);
+                        break;
 
-                case "point":
-                    originalGraphic = new PictureMarkerSymbol(pointURL, 30, 30);
-                    treatmentGraphic[0].setSymbol(originalGraphic);
-                    break;
-            }
-            treatmentGraphic = null;
-            pointURL = null;
+                    case "point":
+                        originalGraphic = new PictureMarkerSymbol(graphic.attributes.image_URL, 30, 30);
+                        graphic.setSymbol(originalGraphic);
+                        break;
+                }
+                treatmentGraphics = null;
+                pointURL = null;
+            }))
         }
     }
 
@@ -944,11 +952,7 @@ require([
             });
     });
 
-    /*******************************
-     *
-     *	This is the ArcGIS Basemap Gallery which (used to) break everything
-     *
-     *********************************/
+// ArcGIS Basemap Gallery
 
     var basemapGallery = new BasemapGallery(
         {
@@ -970,16 +974,12 @@ require([
         {
             mode: FeatureLayer.MODE_ONDEMAND,
             outFields: ["*"],
-            // maxAllowableOffset: map.extent,
             opacity: 1
         }
     );
     embayments.setDefinitionExpression("EMBAY_ID = " + selectlayer);
 
     map.addLayer(embayments);
-    // var point = (embayments.X_Centroid, embayments.Y_Centroid);
-    // map.centerAndZoom(point, 11);
-    // map.setExtent(embayments.fullExtent);
 
     var subwater_template = new InfoTemplate({
         title: "<b>Subwatershed</b>",
@@ -998,15 +998,12 @@ require([
     Subwatersheds.setDefinitionExpression("EMBAY_ID = " + selectlayer);
 
     Subwatersheds.hide();
-    // Subwatersheds.setExtent(extent);
     map.addLayer(Subwatersheds);
 
     var subem_template = new InfoTemplate({
         title: "<b>Subembayment</b>",
         content: "${SUBEM_DISP}"
     });
-    // subem_template.setTitle("<b>${SUBEM_DISP}</b>");
-    // subem_template.setContent("${SUBEM_DISP}");
 
     var Subembayments = new FeatureLayer(
         "http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/11",
@@ -1018,9 +1015,7 @@ require([
         }
     );
     Subembayments.setDefinitionExpression("EMBAY_ID = " + selectlayer);
-    // Subembayments.show();
     Subembayments.hide();
-    // console.log(Subembayments);
     map.addLayer(Subembayments);
 
     var nitro_template = new InfoTemplate({
@@ -1117,35 +1112,12 @@ require([
     symbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE);
     symbol.setOutline(null);
     symbol.setColor(new Color([255, 153, 0]));
-    // symbol.setSize("8")
 
     var renderer = new SimpleRenderer(symbol);
     renderer.setSizeInfo({
         field: "Nload_Full",
         minSize: 2,
-        // {
-        //     type: 'sizeInfo',
-        //     expression: 'view.scale',
-        //     stops: [
-        //         {value: 5, size: 20},
-        //         {value: 10, size: 10},
-        //         {value: 20, size: 8},
-        //         {value: 50, size: 5},
-        //         {value: 100, size: 4}
-        //     ]
-        // },
         maxSize: 20,
-        // {
-        //     type: 'sizeInfo',
-        //     expression: 'view.scale',
-        //     stops: [
-        //         {value: 5, size: 20},
-        //         {value: 10, size: 15},
-        //         {value: 20, size: 10},
-        //         {value: 50, size: 5},
-        //         {value: 100, size: 4}
-        //     ]
-        // },
         minDataValue: 1,
         maxDataValue: 25,
         legendOptions: {
@@ -1418,7 +1390,6 @@ require([
     Contours.hide();
     map.addLayer(Contours);
 
-    // console.log('testing');
     // Turn on/off each layer when the user clicks the link in the sidebar.
 
     var inBuffer = [];
@@ -1440,8 +1411,6 @@ require([
 
         queryString =
             queryString.substring(0, queryString.lastIndexOf("OR")) + "";
-
-        // console.log(queryString)
     }
 
     var legendDijit = new Legend(
@@ -1463,14 +1432,12 @@ require([
 
     $("#nitrogen").on("click", function (e) {
         e.preventDefault();
-        // console.log(NitrogenLayer);
         if ($(this).attr("data-visible") == "off") {
             legendDijit.refresh([
                 { layer: NitrogenLayer, title: "Nitrogen Load" }
             ]);
             NitrogenLayer.setDefinitionExpression(queryString.toString());
             NitrogenLayer.show();
-            // legendDijit.refresh([{layer: NitrogenLayer, title: "Nitrogen Load"}])
             $(this).attr("data-visible", "on");
         } else {
             NitrogenLayer.hide();
@@ -1484,7 +1451,6 @@ require([
 
         if ($(this).attr("data-visible") == "off") {
             Subembayments.show();
-            // console.log(Subembayments);
             $(this).attr("data-visible", "on");
         } else {
             Subembayments.hide();
@@ -1641,7 +1607,6 @@ require([
     });
 
     $(".subembayment").on("click", function (e) {
-        // console.log('subembayment clicked');
         var sub = $(this).data("layer");
 
         Subembayments.setDefinitionExpression("SUBEM_ID = " + sub);
@@ -1696,55 +1661,4 @@ require([
         return evt;
         getDestinationPoint.remove();
     }
-
-    // function map_click(e) {
-    //       editToolbar.deactivate();
-
-    //           clickQuery(e);
-
-    //       }
-
-    // 		// Adding info window
-    // 		function getIdentifyParams(point) {
-    // 			  var p = new esri.tasks.IdentifyParameters();
-    // 			  p.dpi = 96;
-    // 			  p.geometry = map.toMap(point);
-    // 			  p		  p.layerIds = [0];
-    // 			  p.spatialReference = spatialReference;
-    // 			  p.layerOption = esri.tasks.IdentifyParameters.LAYER_OPTION_VISIBLE;
-    // 			  p.mapExtent = map.extent;
-    // 			  p.tolerance = 8;
-    // 			  p.returnGeometry = false;
-    // 			  p.width = map.width;
-    // 			  return p;
-    // 			}
-
-    // 	function clickQuery(e) {
-    //       var identify = new esri.tasks.IdentifyTask(mapService);
-    //       var deferred = identify.execute(getIdentifyParams(clickPoint));
-    //       deferred.addCallback(function (response) {
-    //         // We're just gonna display the first result
-    //         var attributes = response[0].feature.attributes;
-
-    //         // Setup a template to be used by dojo.string.substitute (found in Default.aspx)
-    //         var template = $("#featureInfoTemplate").html();
-    //         var content = dojo.string.substitute(template, attributes, null, {
-    //           round: function (value, key) {
-    //             return dojo.number.format(value, { places: 2 });
-    //           },
-    //           integer: function (value, key) {
-    //             return dojo.number.format(value, { places: 0 });
-    //           }
-    //         });
-
-    //         // Set our info window content manually
-    //         map.infoWindow.setContent(content);
-    //         map.infoWindow.setTitle("Property Info");
-
-    //         map.infoWindow.show(clickPoint);
-
-    //         // Striping to table rows
-    //         $(".esriPopup .contentPane tr:odd td").css("background-color", "#eee");
-    //       });
-    //     }
 });
