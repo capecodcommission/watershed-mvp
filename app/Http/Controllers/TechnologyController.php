@@ -79,29 +79,29 @@ class TechnologyController extends Controller
 		return $treatment;
 	}
 
-	// Remove geometry from session post-application of treatment
-	public function deleteSessionGeometry ($treatmentId = null)
+	// Remove geometry from session
+	public function deleteSessionGeometry()
 	{
-		if ( session()->has('pointX') && session()->has('pointY') ) 
+		$sessionKeys = array_keys(session()->all());
+		$terms = ['point','polyString'];
+		
+		// Loop through terms
+		foreach ($terms as $term)
 		{
-			session()->forget('pointX');
-			session()->forget('pointY');
-		}
-
-		if ( session()->has('polyString') )
-		{
-			session()->forget('polyString');
-		}
-
-		if ( session()->has('pointX_' . $treatmentId) && session()->has('pointY_' . $treatmentId) ) 
-		{
-			session()->forget('pointX_' . $treatmentId);
-			session()->forget('pointY_' . $treatmentId);
-		}
-
-		if ( session()->has('polyString_' . $treatmentId) )
-		{
-			session()->forget('polyString_' . $treatmentId);
+			// Filter to goemetry session keys containing term
+			$results = array_filter($sessionKeys, function ($key) use ($term) 
+			{
+				return strpos($key, $term) !== false;
+			});
+	
+			// If geometry session keys exist, delete from session by key
+			if ( !empty($results) )
+			{
+				foreach ($results as $result)
+				{
+					session()->forget($result);
+				}
+			}
 		}
 
 		return 1;
@@ -216,7 +216,7 @@ class TechnologyController extends Controller
 	{
 		$updated = DB::select('exec dbo.CALCapplyTreatmentStorm ' . $treat_id . ', ' . $rate);
 		$this->updateNitrogenRemoved();
-		$this->deleteSessionGeometry($treat_id);
+		$this->deleteSessionGeometry();
 
 		return $treat_id;
 	}
@@ -321,7 +321,7 @@ class TechnologyController extends Controller
 		}
 
 		$this->updateNitrogenRemoved();
-		$this->deleteSessionGeometry($treat_id);
+		$this->deleteSessionGeometry();
 		return $treat_id;
 	}
 
@@ -349,14 +349,14 @@ class TechnologyController extends Controller
 					$y = session()->get('pointY_' . $dumpTreatmentID);
 					$dumpTreatment->delete();
 					$move = DB::select("exec dbo.CALCmoveNitrogen '$x $y', $treat_id, $scenarioid");
-					return $this->deleteSessionGeometry($dumpTreatmentID);
+					return $this->deleteSessionGeometry();
 				}
 				else
 				{
 					$originalXY = $dumpTreatment->POLY_STRING;
 					$dumpTreatment->delete();
 					$move = DB::select("exec dbo.CALCmoveNitrogen '$originalXY', $treat_id, $scenarioid");
-					return $this->deleteSessionGeometry($dumpTreatmentID);
+					return $this->deleteSessionGeometry();
 				}
 			}
 		}
@@ -575,7 +575,7 @@ class TechnologyController extends Controller
 	{
 		$del = DB::select('exec dbo.DELtreatment '. $treat_id);
 
-		$this->deleteSessionGeometry($treat_id);
+		$this->deleteSessionGeometry();
 
 		// Reset global variables to handle fert/storm clickability
 		if ($type == 'fert') {
