@@ -30,24 +30,28 @@
 					4 => user does not enter a treatment area (Fertilizer Mgmt or Stormwater BMPs)
 			 -->
 
-				@if($tech->Show_In_wMVP == 1)
+				<!-- @if($tech->Show_In_wMVP == 1) -->
 					<!-- <p class="select"><button id="select_area">Select a location</button> <span>@{{subembayment}}</span></p> -->
-					<p>
+					<!-- <p>
 						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated:
 						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;"></label>
 					</p>
-				@elseif($tech->Show_In_wMVP == 2)
+				@elseif($tech->Show_In_wMVP == 2) -->
 					<!-- <div id="info">Select a polygon for the treatment area:  -->
-						<button id="select_polygon">Draw Polygon</button>
+						<!-- <button id="select_polygon">Draw Polygon</button> -->
 					<!-- </div> -->
 					<!-- <p class="select"><button id="select_area">Select a polygon</button> <span>@{{subembayment}}</span></p> -->
-				@elseif($tech->Show_In_wMVP == 3)
+				<!-- @elseif($tech->Show_In_wMVP == 3)
 					<p class="select"><button id="select_area">Select a location</button> <span>@{{subembayment}}</span></p>
 					<p>
 						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated:
 						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;"></label>
 					</p>
-				@endif
+				@endif -->
+				<p>
+						<label for="unit_metric">Enter number of {{$tech->Unit_Metric}} to be treated:
+						<input type="text" id="unit_metric" name="unit_metric" size="3" style="width: auto;"></label>
+					</p>
 <p class="select"><button id="select_area">Select a Subembayment</button> <span></span></p>
 			<p>
 				Enter a valid reduction rate between {{round($tech->Absolu_Reduc_perMetric_Low)}} and {{round($tech->Absolu_Reduc_perMetric_High)}}kg per {{$tech->Unit_Metric}}.<br />
@@ -70,44 +74,22 @@
 <script>
 	$(document).ready(function(){
 
+		// TO BE DELETED
 		$('div.fa.fa-spinner.fa-spin').remove()
 		var subem_id = ''
-	 	treatment = {{$treatment->TreatmentID}};
+		treatment = {{$treatment->TreatmentID}};
 
-		$('#select_area').on('click', function(f){
+
+		icon = '{{$tech->icon}}'
+		$('#select_area').data('icon', icon.toString());
+		techId = '{{$tech->technology_id}}'
+		 
+		$('#select_area').on('click', function(f) {
 			f.preventDefault();
-			destination_active = 1;
-			// console.log('button clicked');
-				$('#popdown-opacity').hide();
-				map.on('click', function(e){
-				// TODO: Check if preventDefault function will take care of saved map clicks referencing #applytreatment issue
-				// e.preventDefault();
-
-				// TODO: Handle second click which closes modal FOR ALL tech blades
-				if (destination_active > 0)
-				{
-					// console.log(e.mapPoint.x, e.mapPoint.y);
-
-					var url = "{{url('/map/point/')}}"+'/'+e.mapPoint.x+'/'+ e.mapPoint.y + '/'+treatment;
-					$.ajax({
-						method: 'GET',
-						url: url
-					})
-						.done(function(msg){
-							msg = $.parseJSON(msg);
-							// console.log(msg.SUBEM_DISP);
-							// console.log(msg);
-							$('#'+msg.SUBEM_NAME+'> .stats').show();
-							subem_id = msg.SUBEM_ID
-							// $('.notification_count').remove();
-							$('#select_area').hide();
-							$('#popdown-opacity').show();
-							$('.select > span').text('Selected: '+msg.SUBEM_DISP);
-							$('.select > span').show();
-							destination_active = 0;
-						})
-				}
-			});
+			$('.modal-wrapper').hide();
+			deleteGraphic('dump');
+			map.setInfoWindowOnClick(false);
+			tb.activate('point');
 		});
 
 		$('#closeWindow').on('click', function (e) {
@@ -140,25 +122,18 @@
 			e.preventDefault();
 			var percent = $('#embayment_percent').val();
 			var units = $('#unit_metric').val();
-			// TODO: Session duplicating map clicks which insert x point rows into parcelmaster. Check session workflow pertaining to /map/point route
-			var url = "{{url('apply_embayment')}}" + '/' +  treatment + '/' + percent + '/' + units + '/' + subem_id
+			var url = "{{url('apply_embayment')}}" + '/' + percent + '/' + units + '/' + techId;
 			// console.log(url);
 			$.ajax({
 				method: 'GET',
 				url: url
 			})
-				.done(function(msg){
-					// console.log(msg);
-					msg = Math.round(msg);
-					// TODO: Is #n_removed real? If not, remove all references
-					$('#n_removed').text(msg);
-					$('#popdown-opacity').hide();
-					$( "#update" ).trigger( "click" );
-					var newtreatment = '<li class="technology" data-treatment="{{$treatment->TreatmentID}}"><a href="{{url('/edit', $treatment->TreatmentID)}}" class="popdown"><img src="http://www.watershedmvp.org/images/SVG/{{$tech->Icon}}" alt=""></a></li>';
-					$('ul.selected-treatments').append(newtreatment);
-					$('ul.selected-treatments li[data-treatment="{{$treatment->TreatmentID}}"] a').popdown();
-					// location.reload()
-				});
+			.done(function(treatment_id) {
+				destroyModalContents();
+				$( "#update" ).trigger( "click" );
+				addTreatmentIdToGraphic(treatment_id);
+				addToStack(treatment_id, icon, techId);
+			});
 		});
 
 		$('#canceltreatment').on('click', function(e){

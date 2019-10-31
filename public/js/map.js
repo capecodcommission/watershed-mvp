@@ -430,10 +430,15 @@ require([
             method: "GET",
             url: url
         }).done(function (allClear) {
-            if (allClear == 1) {
+            if (allClear.length) {
                 $(".modal-wrapper").toggle();
                 $("#unit_metric_label").show();
                 $("#unit_metric").show();
+                $("#subembayment-rate-label").show();
+                $("#subembayment-rate").show();
+                $("#subembayment-rate-selected").show();
+                $('#selected-subembayment').text('Selected: ' + allClear[0].SUBEM_DISP);
+                $('#applyTreatmentInEmbayment').show();
             } else {
                 alert(
                     "Error: Geometry falls outside of Scenario Embayment. Please redraw geometry or contact info@capecodcommission.org for technical assistance. Thank you."
@@ -624,11 +629,16 @@ require([
         // Translate SQL Spatial geometry string to an array of polygon nodes consumable for polygon creation
         let geoArray = geo_string
             .replace("POLYGON((", "")
+            .replace("POLYGON ((", "")
             .replace("))", "")
             .split(",");
+
         let nodes = [];
         geoArray.map(coords => {
             let splitCoords = coords.split(" ");
+            if (splitCoords.length > 2) {
+                splitCoords.splice(0,1)
+            }
             let node = [parseFloat(splitCoords[0]), parseFloat(splitCoords[1])];
             nodes.push(node);
         });
@@ -677,7 +687,8 @@ require([
             const treatmentTypeId = row.TreatmentType_ID;
             const polySymbol = selectPoly(treatmentTypeId);
             const geo_string = row.POLY_STRING;
-            const parentid = row.Parent_TreatmentId
+            const parentid = row.Parent_TreatmentId;
+            const treatClass = row.Treatment_Class;
 
             // Load point or polygon creation by geometry type
             if (geo_string.startsWith("POINT")) {
@@ -692,7 +703,7 @@ require([
                     geo_string,
                     parentid
                 );
-            } else if (geo_string.startsWith("POLYGON")) {
+            } else if (geo_string.startsWith("POLYGON") && treatClass != 'Management') {
                 addPolygonOnLoad(
                     treatmentid,
                     treatmentArea,
@@ -758,7 +769,7 @@ require([
     }
 
     // Global objects to house currently hightlighted graphic and icon URL from treatment stack
-    let treatmentGraphic = null;
+    let treatmentGraphics = null;
     let pointURL = "";
 
     // Highlight symbololgy based on geometry type

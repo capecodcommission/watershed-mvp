@@ -107,28 +107,6 @@ class TechnologyController extends Controller
 		return 1;
 	}
 
-	// Retrieve technolgy-related data from tech matrix
-	public function getTech($id)
-	{
-		$tech = DB::table('dbo.v_Technology_Matrix')
-			->select(
-				'technology_id',
-				'Unit_Metric',
-				'Technology_Sys_Type',
-				'Technology_Strategy',
-				'TM_ID as id',
-				'icon',
-				'Nutri_Reduc_N_High_ppm',
-				'Nutri_Reduc_N_Low_ppm',
-				'Nutri_Reduc_N_Low',
-				'Nutri_Reduc_N_High'
-			)
-			->where('TM_ID', $id)
-			->first();
-
-		return $tech;
-	}
-
 	// Retrieve and initialize selected technology data
 	// Pass technology data to respective blade based on type
 	public function associateTech($id)
@@ -152,7 +130,7 @@ class TechnologyController extends Controller
 				return view('common/technology-collect-stay', ['tech'=>$tech, 'type'=>$type]);
 				break;
 			case 'CollectMove':
-				return view('common/technology-collect-move', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				return view('common/technology-collect-move', ['tech'=>$tech, 'type'=>$type]);
 				break;	
 			case 'PRB':
 				return view('common/technology-groundwater', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
@@ -265,30 +243,80 @@ class TechnologyController extends Controller
 		}
 	}
 
-	/**
-	 * Apply Embayment Treatment
-	 *
-	 * @return void
-	 * @author 
-	 **/
-	// TODO: Rename to ApplyTreatment_Subembayment
-	public function ApplyTreatment_Embayment($treat_id, $rate, $units, $subemid = null)
+	// Handle activation of In-Embayment stored procedure
+	public function handleInEmbayApply($treat_id, $rate, $units, $total_parcels)
 	{
-		$scenarioid = session('scenarioid');
-		$n_parcels = 0;
+		$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Embayment1] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $total_parcels);
+		$this->updateNitrogenRemoved();
+		$this->deleteSessionGeometry();
 
-		if ($subemid) 
-		{
-			$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $subemid . ', ' . $scenarioid . ', ' . $treat_id . ', \'subembayment\'');
-			session(['subemid' => $subemid]);
-		} 
+		return $treat_id;
+	}
 
-		foreach ($parcels as $parcel) 
+	// Associate parcels within selected subembayment
+	public function handleInEmbayParcelAssoc($embay_id, $scenarioid, $treat_id, $pointCoords)
+	{
+		$total_parcels = 0;
+
+		$subembayment = DB::select("exec dbo.GETsubembaymentFromPoint @pointCoords='$pointCoords', @embay_id=$embay_id");
+		$parcelsByTown = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treat_id . ', \'subembayment\'' . ', ' . $subembayment[0]->SUBEM_ID);
+		foreach ($parcelsByTown as $town) 
 		{
-			$n_parcels += $parcel->NumParcels;
+			$total_parcels += $town->NumParcels;
 		}
 
-		$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Embayment1] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $n_parcels);
+		return $total_parcels;
+	}
+
+	// Apply In-Embayment technology using passed rate. units, and technology id
+	public function ApplyTreatment_Embayment($rate, $units, $techId, $treat_id=null)
+	{
+		// Retrieve Scenario and Technology objects from ORM
+		$scenarioid = session('scenarioid');
+		$scenario = Scenario::find($scenarioid);
+		$embay_id = $scenario->AreaID;
+		$tech = Technology::find($techId);
+
+		// Handle new treatment
+		if (!$treat_id) 
+		{
+			if ( session()->has('pointX') && session()->has('pointY') )
+			{
+				// Retrieve XY coordinates from session
+				$x = session()->get('pointX');
+				$y = session()->get('pointY');
+				$pointCoords = $x . ' ' . $y;
+
+				// Create new treatment
+				$treatment = $this->createTreatment($scenarioid, $tech);
+
+				// Associate parcels within selected subembayment with treatment and scenario
+				$total_parcels = $this->handleInEmbayParcelAssoc($embay_id, $scenarioid, $treatment->TreatmentID, $pointCoords);
+				return $this->handleInEmbayApply($treatment->TreatmentID, $rate, $units, $total_parcels);
+			}
+		}
+		// Reassociate parcels within existing or newly selected subembayment
+		// Update existing treatment with new rate and/or geometry
+		else
+		{
+			if ( session()->has('pointX_' . $treat_id) && session()->has('pointY_' . $treat_id) )
+			{
+				$x = session()->get('pointX_' . $treat_id);
+				$y = session()->get('pointY_' . $treat_id);
+				$pointCoords = $x . ' ' . $y;
+				$del = DB::select('exec dbo.DELparcels '. $treat_id);
+				$total_parcels = $this->handleInEmbayParcelAssoc($embay_id, $scenarioid, $treatment->TreatmentID, $pointCoords);
+				return $this->handleInEmbayApply($treat_id, $rate, $units, $total_parcels);
+			}
+			else
+			{
+				$treatment = Treatment::find($treat_id);
+				$pointCoords = $treatment->POLY_STRING;
+				$del = DB::select('exec dbo.DELparcels '. $treat_id);
+				$total_parcels = $this->handleInEmbayParcelAssoc($embay_id, $scenarioid, $treatment->TreatmentID, $pointCoords);
+				return $this->handleInEmbayApply($treat_id, $rate, $units, $total_parcels);
+			}
+		}
 	}
 
 

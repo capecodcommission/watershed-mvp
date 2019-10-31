@@ -32,13 +32,18 @@ class MapController extends Controller
 	{
 		$polyString = $x . ' ' . $y;
 		$isInEmbay = $this->checkGeometryInEmbay('point', $polyString);
+		$scenarioid = session('scenarioid');
+		$scenario = Scenario::find($scenarioid);
+		$embay_id = $scenario->AreaID;
 		
 		// Save coordinates to session
+		// Check subembayment
 		if ($isInEmbay) 
 		{
 			session(['pointX' => $x]);
 			session(['pointY' => $y]);
-			return 1;
+			$subembayment = DB::select("exec dbo.GETsubembaymentFromPoint @pointCoords='$x $y', @embay_id=$embay_id");
+			return $subembayment;
 		}
 		else 
 		{
