@@ -158,7 +158,7 @@ class TechnologyController extends Controller
 				return view('common/technology-groundwater', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 				break;
 			case 'In-Embayment':
-				return view('common/technology-embayment', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				return view('common/technology-in-embayment', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 				break;
 			default:
 				return view('common/technology', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
@@ -507,7 +507,7 @@ class TechnologyController extends Controller
 				return view('common/technology-groundwater-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 				break;
 			case 'In-Embayment':
-				return view('common/technology-embayment-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				return view('common/technology-in-embayment-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 				break;
 			default:
 				return view('common/technology', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);

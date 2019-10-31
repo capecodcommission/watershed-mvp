@@ -11880,7 +11880,7 @@
         septic_rate: 0,
         atmosphere_unatt: parseFloat(nitrogen_unatt.Total_UnAtt_Atmosphere),
         atmosphere_att: parseFloat(nitrogen_att.Total_Att_Atmosphere),
-        embayment_percent: 0,
+        subembayment_amount: 0,
         uMetric: 0,
         collect_rate: 0,
       },
@@ -11915,7 +11915,7 @@
           return this.groundwater_att * ((100 - this.ground_percent) / 100);
         },
         embayment_treated: function embayment_treated() {
-          return this.total_treated * ((100 - this.embayment_percent) / 100);
+          return this.total_treated * ((100 - this.subembayment_amount) / 100);
         },
         embayment_difference: function embayment_difference() {
           return this.total_treated - this.embayment_treated;
