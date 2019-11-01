@@ -22,7 +22,7 @@
 			<input id="subembayment-rate" style="display:none;" type="range" min="{{round($tech->Absolu_Reduc_perMetric_Low, 2)}}" max="{{round($tech->Absolu_Reduc_perMetric_High, 2)}}" v-model="subembayment_amount" value='{{round($tech->Absolu_Reduc_perMetric_Low, 2)}}' step="1">
 			<label id="subembayment-rate-selected" style="display:none;">@{{subembayment_amount}}</label>
 		</div>
-		<button title="Apply Strategy" class="blade_button" id="applytreatment" style="display:none;">Apply</button>
+		<button title="Apply Strategy" class="blade_button" id="applyTreatmentInEmbayment" style="display:none;">Apply</button>
 </div>
 
 <!-- TODO: Add warning that sewered parcels will not be affected -->
@@ -32,7 +32,9 @@
 <script>
 	$(document).ready(function() {
 
-		treatment = {{$treatment->TreatmentID}};
+		icon = '{{$tech->icon}}'
+		techId = '{{$tech->technology_id}}'
+		$('#select_area').data('icon', icon.toString());
 
 		// Handle on-click event for selecting a location
 		$('#select_area').on('click', function(f) {
@@ -46,12 +48,13 @@
 		// Apply the treatment getting the collection rate and using that and the technology matrix's technology ID
 		// using the 'apply_septic' API route. Once done, destroy the modal contents, update scenario data, add the
 		// treatment graphic to the map and add the treatment graphic to the treatment stack
-		$('#applytreatment').on('click', function(e) {
+		$('#applyTreatmentInEmbayment').on('click', function(e) {
 			e.preventDefault();
-			let applyTreatmentButton = document.getElementById("applytreatment");
-			let setApplyTreatmentButtonStyling = applyTreatmentButton.setAttribute("style", "display:none;");
-			let rate = $('#collect-rate').val();
-			let url = "{{url('/apply_collectStay')}}" + '/' + rate + '/' + techId;
+			let applyTreatmentButton = document.getElementById("applyTreatmentInEmbayment");
+			applyTreatmentButton.setAttribute("style", "display:none;");
+			let rate = $('#subembayment-rate').val();
+			let units = $('#unit_metric').val();
+			let url = "{{url('apply_embayment')}}" + '/' + rate + '/' + units + '/' + techId;
 			$.ajax({
 				method: 'GET',
 				url: url

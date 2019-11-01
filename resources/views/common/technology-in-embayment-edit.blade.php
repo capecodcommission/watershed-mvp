@@ -22,8 +22,8 @@
 			<input id="subembayment-rate" type="range" min="{{round($tech->Absolu_Reduc_perMetric_Low, 2)}}" max="{{round($tech->Absolu_Reduc_perMetric_High, 2)}}" v-model="subembayment_amount" value="{{$treatment->Treatment_Value}}" step="1">
 			<label id="subembayment-rate-selected">@{{subembayment_amount}}</label>
 		</div>
-		<button title="Update Strategy" data-treatment="{{$treatment->TreatmentID}}" class="blade_button" v-show="{{$treatment->Treatment_Value}} != subembayment_amount" id="updateTreatmentInEmbayment">Update</button>
-		<button title="Delete Strategy" data-treatment="{{$treatment->TreatmentID}}" class="blade_button" v-show="{{$treatment->Treatment_Value}} == subembayment_amount" id="deletetreatment">Delete</button>
+		<button title="Update Strategy" data-treatment="{{$treatment->TreatmentID}}" class="blade_button" style = 'display:none;' v-show="{{$treatment->Treatment_Value}} != subembayment_amount || {{$treatment->Treatment_MetricValue}} != uMetric" id="updateTreatmentInEmbayment">Update</button>
+		<button title="Delete Strategy" data-treatment="{{$treatment->TreatmentID}}" class="blade_button" v-show="{{$treatment->Treatment_Value}} == subembayment_amount && {{$treatment->Treatment_MetricValue}} == uMetric" id="deletetreatment">Delete</button>
 </div>
 
 <!-- TODO: Add warning that sewered parcels will not be affected -->
@@ -34,12 +34,15 @@
 	$(document).ready(function() {
 
 		treatment = {{$treatment->TreatmentID}};
+		icon = '{{$tech->icon}}'
+		techId = '{{$tech->technology_id}}'
+		$('#select_area').data('icon', icon.toString());
 
 		// Handle on-click event for selecting a location
 		$('#select_area').on('click', function(f) {
 			f.preventDefault();
 			$('.modal-wrapper').hide();
-			deleteGraphic();
+			// deleteGraphic(treatment);
 			map.setInfoWindowOnClick(false);
 			tb.activate('point');
 		});
@@ -49,19 +52,19 @@
 		// treatment graphic to the map and add the treatment graphic to the treatment stack
 		$('#updateTreatmentInEmbayment').on('click', function(e) {
 			e.preventDefault();
-			let applyTreatmentButton = document.getElementById("applytreatment");
-			let setApplyTreatmentButtonStyling = applyTreatmentButton.setAttribute("style", "display:none;");
-			let rate = $('#collect-rate').val();
-			let url = "{{url('/apply_collectStay')}}" + '/' + rate + '/' + techId;
+			let applyTreatmentButton = document.getElementById("updateTreatmentInEmbayment");
+			applyTreatmentButton.setAttribute("style", "display:none;");
+			let rate = $('#subembayment-rate').val();
+			let units = $('#unit_metric').val();
+			let url = "{{url('/update', $treatment->TreatmentID)}}"  + '/' + rate + '/' + units;
 			$.ajax({
 				method: 'GET',
 				url: url
 			})
 			.done(function(treatment_id){
 				destroyModalContents();
+				resetGraphicPropsAfterUpdate(treatment_id);
 				$( "#update" ).trigger( "click" );
-				addTreatmentIdToGraphic(treatment_id);
-				addToStack(treatment_id, icon, techId);
 			});
 		});
 

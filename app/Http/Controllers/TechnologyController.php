@@ -299,13 +299,13 @@ class TechnologyController extends Controller
 		// Update existing treatment with new rate and/or geometry
 		else
 		{
-			if ( session()->has('pointX_' . $treat_id) && session()->has('pointY_' . $treat_id) )
+			if ( session()->has('pointX') && session()->has('pointY') )
 			{
-				$x = session()->get('pointX_' . $treat_id);
-				$y = session()->get('pointY_' . $treat_id);
+				$x = session()->get('pointX');
+				$y = session()->get('pointY');
 				$pointCoords = $x . ' ' . $y;
 				$del = DB::select('exec dbo.DELparcels '. $treat_id);
-				$total_parcels = $this->handleInEmbayParcelAssoc($embay_id, $scenarioid, $treatment->TreatmentID, $pointCoords);
+				$total_parcels = $this->handleInEmbayParcelAssoc($embay_id, $scenarioid, $treat_id, $pointCoords);
 				return $this->handleInEmbayApply($treat_id, $rate, $units, $total_parcels);
 			}
 			else
@@ -313,7 +313,7 @@ class TechnologyController extends Controller
 				$treatment = Treatment::find($treat_id);
 				$pointCoords = $treatment->POLY_STRING;
 				$del = DB::select('exec dbo.DELparcels '. $treat_id);
-				$total_parcels = $this->handleInEmbayParcelAssoc($embay_id, $scenarioid, $treatment->TreatmentID, $pointCoords);
+				$total_parcels = $this->handleInEmbayParcelAssoc($embay_id, $scenarioid, $treat_id, $pointCoords);
 				return $this->handleInEmbayApply($treat_id, $rate, $units, $total_parcels);
 			}
 		}
@@ -570,23 +570,7 @@ class TechnologyController extends Controller
 				return $this->updateNitrogenRemoved();
 				break;	
 			case 'In-Embayment':
-				// Retrieve scenario id and subembayment id from session, initialize nitrogen load and parcel totals
-				// TODO: return $this->updateNitrogenRemoved();
-				$scenarioid = session('scenarioid');
-				$subemid = session('subemid');
-				$n_total = 0;
-				$n_parcels = 0;
-
-				// Query and total number of parcels treated from wiz_treatment_towns
-				// Trigger parameterized stored proc using function params and number of parcels
-				$parcels = DB::table("dbo.wiz_treatment_towns")->select("wtt_tot_parcels")->where("wtt_treatment_id", "=", $treat_id)->get();
-				foreach ($parcels as $parcel) 
-				{
-					$n_parcels += $parcel->wtt_tot_parcels;
-				}
-				$updated = DB::select('exec dbo.CALC_ApplyTreatment_Embayment1 ' . $treat_id . ', ' . $treatmentValue . ', ' . $units . ', ' . $n_parcels);
-				$n_removed += $updated[0]->removed;
-				session(['n_removed' => $n_removed]);
+				$this->ApplyTreatment_Embayment($treatmentValue, $units, $treatment->TreatmentType_ID, $treat_id);
 				break;
 			default:
 				break;

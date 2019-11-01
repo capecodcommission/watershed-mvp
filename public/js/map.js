@@ -439,6 +439,8 @@ require([
                 $("#subembayment-rate-selected").show();
                 $('#selected-subembayment').text('Selected: ' + allClear[0].SUBEM_DISP);
                 $('#applyTreatmentInEmbayment').show();
+                $('#updateTreatmentInEmbayment').show();
+                $("#deletetreatment").hide();
             } else {
                 alert(
                     "Error: Geometry falls outside of Scenario Embayment. Please redraw geometry or contact info@capecodcommission.org for technical assistance. Thank you."
@@ -755,6 +757,7 @@ require([
                 $("#deletetreatment").hide();
                 $("#updateStormwaterNonManangement").show();
                 $('#updateCollectMove').show();
+                $('#updateCollectStay').show();
             } else {
                 // Alert user if save unsuccessful
                 alert(
@@ -854,37 +857,7 @@ require([
         e.preventDefault();
         let layerGraphics = map.graphics.graphics;
 
-        // Filter to edited graphics
-        let editedGraphics = layerGraphics.filter(graphic => {
-            let attribs = graphic.attributes;
-            if (attribs) {
-                return attribs.editInProgress;
-            }
-        });
-
-        if (editedGraphics.length) {
-            editedGraphics.map((editedGraphic) => {
-                // Obtain new treatment info, set popup
-                var url = "/get_treatment" + "/" + editedGraphic.attributes.treatment_id;
-                $.ajax({
-                    method: "GET",
-                    url: url
-                })
-                .done(function (treatment) {
-                    // Add original geometry to map through either the global treatments object or the graphic attribute
-                    if (treatment) {
-                        map.graphics.remove(editedGraphic);
-                        addGraphicsOnLoad(treatment);
-                    }
-                })
-                .fail(function (msg) {
-                    alert(
-                        "error: geometry failed to reset, please contact info@capecodcommission for technical support. Thank you." +
-                        msg.statusText
-                    );
-                });
-            })
-        }
+        $( "#update" ).trigger( "click" );
     });
 
     // Handler to reset edited geometry to its original position on-close of a legacy edit modal
