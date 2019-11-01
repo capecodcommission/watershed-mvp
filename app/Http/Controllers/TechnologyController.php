@@ -244,9 +244,9 @@ class TechnologyController extends Controller
 	}
 
 	// Handle activation of In-Embayment stored procedure
-	public function handleInEmbayApply($treat_id, $rate, $units, $total_parcels)
+	public function handleInEmbayApply($treat_id, $rate, $units, $total_parcels, $pointCoords)
 	{
-		$updated = DB::select('exec [dbo].[CALC_ApplyTreatment_Embayment1] ' . $treat_id . ', ' . $rate . ', ' . $units . ', ' . $total_parcels);
+		$updated = DB::select("exec [dbo].[CALC_ApplyTreatment_Embayment1] $treat_id, $rate, $units, $total_parcels, '$pointCoords'");
 		$this->updateNitrogenRemoved();
 		$this->deleteSessionGeometry();
 
@@ -292,7 +292,7 @@ class TechnologyController extends Controller
 
 				// Associate parcels within selected subembayment with treatment and scenario
 				$total_parcels = $this->handleInEmbayParcelAssoc($embay_id, $scenarioid, $treatment->TreatmentID, $pointCoords);
-				return $this->handleInEmbayApply($treatment->TreatmentID, $rate, $units, $total_parcels);
+				return $this->handleInEmbayApply($treatment->TreatmentID, $rate, $units, $total_parcels, $pointCoords);
 			}
 		}
 		// Reassociate parcels within existing or newly selected subembayment
@@ -306,7 +306,7 @@ class TechnologyController extends Controller
 				$pointCoords = $x . ' ' . $y;
 				$del = DB::select('exec dbo.DELparcels '. $treat_id);
 				$total_parcels = $this->handleInEmbayParcelAssoc($embay_id, $scenarioid, $treat_id, $pointCoords);
-				return $this->handleInEmbayApply($treat_id, $rate, $units, $total_parcels);
+				return $this->handleInEmbayApply($treat_id, $rate, $units, $total_parcels, $pointCoords);
 			}
 			else
 			{
@@ -314,7 +314,7 @@ class TechnologyController extends Controller
 				$pointCoords = $treatment->POLY_STRING;
 				$del = DB::select('exec dbo.DELparcels '. $treat_id);
 				$total_parcels = $this->handleInEmbayParcelAssoc($embay_id, $scenarioid, $treat_id, $pointCoords);
-				return $this->handleInEmbayApply($treat_id, $rate, $units, $total_parcels);
+				return $this->handleInEmbayApply($treat_id, $rate, $units, $total_parcels, $pointCoords);
 			}
 		}
 	}

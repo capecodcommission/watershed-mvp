@@ -430,13 +430,14 @@ require([
             method: "GET",
             url: url
         }).done(function (allClear) {
-            if (allClear.length) {
+            if (allClear != 0) {
                 $(".modal-wrapper").toggle();
                 $("#unit_metric_label").show();
                 $("#unit_metric").show();
                 $("#subembayment-rate-label").show();
                 $("#subembayment-rate").show();
                 $("#subembayment-rate-selected").show();
+                $('#selected-subembayment').show();
                 $('#selected-subembayment').text('Selected: ' + allClear[0].SUBEM_DISP);
                 $('#applyTreatmentInEmbayment').show();
                 $('#updateTreatmentInEmbayment').show();
