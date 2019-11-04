@@ -246,7 +246,7 @@ class TechnologyController extends Controller
 	// Handle activation of In-Embayment stored procedure
 	public function handleInEmbayApply($treat_id, $rate, $units, $total_parcels, $pointCoords)
 	{
-		$updated = DB::select("exec [dbo].[CALC_ApplyTreatment_Embayment1] $treat_id, $rate, $units, $total_parcels, '$pointCoords'");
+		$updated = DB::select("exec dbo.CALCapplyTreatmentEmbayment $treat_id, $rate, $units, $total_parcels, '$pointCoords'");
 		$this->updateNitrogenRemoved();
 		$this->deleteSessionGeometry();
 
