@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/update_geometry', 'TechnologyController@updateGeometry');
 	Route::get('/get_treatment/{id}', 'TechnologyController@getTreatment');
 	Route::get('/get_treatments', 'TechnologyController@getTreatments');
+	Route::get('/get_subembayment/{pointCoords}', 'TechnologyController@getSubembayment');
 });
 
 Route::auth();

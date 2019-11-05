@@ -33,10 +33,23 @@
 <script>
 	$(document).ready(function() {
 
+		// Set global variables to use in functionality below
 		treatment = {{$treatment->TreatmentID}};
-		icon = '{{$tech->icon}}'
-		techId = '{{$tech->technology_id}}'
+		icon = '{{$tech->icon}}';
+		techId = '{{$tech->technology_id}}';
 		$('#select_area').data('icon', icon.toString());
+		pointCoords = '{{$treatment->POLY_STRING}}';
+		let subembaymentUrl = "{{url('/get_subembayment')}}"  + '/' + pointCoords;
+
+		// Display the subembayment name and ID on modal load
+		$.ajax({
+				method: 'GET',
+				url: subembaymentUrl
+			})
+			.done(function(subembayment){
+				$('#selected-subembayment').show();
+				$('#selected-subembayment').text('Selected Subembayment: ' + subembayment[0].SUBEM_DISP + ' | ID:' + subembayment[0].SUBEM_ID);
+			});
 
 		// Handle on-click event for selecting a location
 		$('#select_area').on('click', function(f) {

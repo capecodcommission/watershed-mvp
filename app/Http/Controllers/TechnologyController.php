@@ -268,6 +268,16 @@ class TechnologyController extends Controller
 		return $total_parcels;
 	}
 
+	// Get subembayment name and ID for modal display
+	public function getSubembayment($pointCoords)
+	{
+		$scenarioid = session('scenarioid');
+		$scenario = Scenario::find($scenarioid);
+		$embay_id = $scenario->AreaID;
+		$subembayment = DB::select("exec dbo.GETsubembaymentFromPoint @pointCoords='$pointCoords', @embay_id=$embay_id");
+		return $subembayment;
+	}
+
 	// Apply In-Embayment technology using passed rate. units, and technology id
 	public function ApplyTreatment_Embayment($rate, $units, $techId, $treat_id=null)
 	{

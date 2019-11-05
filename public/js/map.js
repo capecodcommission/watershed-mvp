@@ -438,7 +438,7 @@ require([
                 $("#subembayment-rate").show();
                 $("#subembayment-rate-selected").show();
                 $('#selected-subembayment').show();
-                $('#selected-subembayment').text('Selected: ' + allClear[0].SUBEM_DISP);
+                $('#selected-subembayment').text('Selected Subembayment: ' + allClear[0].SUBEM_DISP + ' | ID:' + allClear[0].SUBEM_ID);
                 $('#applyTreatmentInEmbayment').show();
                 $('#updateTreatmentInEmbayment').show();
                 $("#deletetreatment").hide();
