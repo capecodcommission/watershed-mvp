@@ -18,8 +18,8 @@
 			<label id="selected-subembayment" style="display:none;">@{{subembayment}}</label>
 			<label id="unit_metric_label" style="display:none;">Enter number of {{$tech->unit_metric}} to be treated:</label>
 			<input id="unit_metric" style="display:none;" v-model="uMetric" type="number" name="unit_metric" value='1'>
-			<label id="subembayment-rate-label" style="display:none;" >Select a reduction rate between {{round($tech->Absolu_Reduc_perMetric_Low)}} and {{round($tech->Absolu_Reduc_perMetric_High)}}kg per {{$tech->Unit_Metric}}.</label>
-			<input id="subembayment-rate" style="display:none;" type="range" min="{{round($tech->Absolu_Reduc_perMetric_Low, 2)}}" max="{{round($tech->Absolu_Reduc_perMetric_High, 2)}}" v-model="subembayment_amount" value='{{round($tech->Absolu_Reduc_perMetric_Low, 2)}}' step="1">
+			<label id="subembayment-rate-label" style="display:none;" >Select a reduction rate between {{round($tech->Absolu_Reduc_perMetric_Low, 2)}} and {{round($tech->Absolu_Reduc_perMetric_High, 2)}}kg per {{$tech->unit_metric}}.</label>
+			<input id="subembayment-rate" style="display:none;" type="range" min="{{round($tech->Absolu_Reduc_perMetric_Low, 2)}}" max="{{round($tech->Absolu_Reduc_perMetric_High, 2)}}" v-model="subembayment_amount" value='{{round($tech->Absolu_Reduc_perMetric_Low, 2)}}' step=".1">
 			<label id="subembayment-rate-selected" style="display:none;">@{{subembayment_amount}}</label>
 		</div>
 		<button title="Apply Strategy" class="blade_button" id="applyTreatmentInEmbayment" style="display:none;">Apply</button>

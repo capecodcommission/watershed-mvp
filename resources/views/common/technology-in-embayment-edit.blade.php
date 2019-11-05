@@ -18,8 +18,8 @@
 			<label id="selected-subembayment">@{{subembayment}}</label>
 			<label id="unit_metric_label">Update the number of {{$tech->unit_metric}} to be treated:</label>
 			<input id="unit_metric" v-model="uMetric" type="number" name="unit_metric" value='{{$treatment->Treatment_MetricValue}}'>
-			<label id="subembayment-rate-label" >Update the selected reduction rate between {{round($tech->Absolu_Reduc_perMetric_Low)}} and {{round($tech->Absolu_Reduc_perMetric_High)}}kg per {{$tech->Unit_Metric}}.</label>
-			<input id="subembayment-rate" type="range" min="{{round($tech->Absolu_Reduc_perMetric_Low, 2)}}" max="{{round($tech->Absolu_Reduc_perMetric_High, 2)}}" v-model="subembayment_amount" value="{{$treatment->Treatment_Value}}" step="1">
+			<label id="subembayment-rate-label" >Update the selected reduction rate between {{round($tech->Absolu_Reduc_perMetric_Low, 2)}} and {{round($tech->Absolu_Reduc_perMetric_High, 2)}}kg per {{$tech->Unit_Metric}}.</label>
+			<input id="subembayment-rate" type="range" min="{{round($tech->Absolu_Reduc_perMetric_Low, 2)}}" max="{{round($tech->Absolu_Reduc_perMetric_High, 2)}}" v-model="subembayment_amount" value="{{$treatment->Treatment_Value}}" step=".1">
 			<label id="subembayment-rate-selected">@{{subembayment_amount}}</label>
 		</div>
 		<button title="Update Strategy" data-treatment="{{$treatment->TreatmentID}}" class="blade_button" style = 'display:none;' v-show="{{$treatment->Treatment_Value}} != subembayment_amount || {{$treatment->Treatment_MetricValue}} != uMetric" id="updateTreatmentInEmbayment">Update</button>

@@ -336,7 +336,7 @@ class TechnologyController extends Controller
 	public function handleCollectStayApply($treat_id, $rate, $techType) 
 	{
 		$septicTypes = ['Waste Reduction Toilets', 'On-Site Treatment Systems', 'Treatment Systems'];
-		$groundwaterTypes = ['Green Infrastructure', 'Innovative and Resource-Management Technologies'];
+		$groundwaterTypes = ['Green Infrastructure', 'Innovative and Resource-Management Technologies', 'System Alterations'];
 
 		if ( in_array($techType, $septicTypes) )
 		{

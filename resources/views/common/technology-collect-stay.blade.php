@@ -15,11 +15,11 @@
 		</a>
 		<div class="blade_slider" title="Select the amount to be treated.">
 			<button title="Draw Treatment" class="blade_button" id="draw_collection">Draw Collection</button>
-			<label v-if = "{{in_array($tech->technology_type,['Green Infrastructure', 'Innovative and Resource-Management Technologies'])}}" id = "collect-label-reduc" style="display:none;">Select a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}}% and {{$tech->Nutri_Reduc_N_High}}%.</label>
+			<label v-if = "{{in_array($tech->technology_type,['Green Infrastructure', 'Innovative and Resource-Management Technologies', 'System Alterations'])}}" id = "collect-label-reduc" style="display:none;">Select a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}}% and {{$tech->Nutri_Reduc_N_High}}%.</label>
 			<label v-if = "{{in_array($tech->technology_type,['Waste Reduction Toilets','On-Site Treatment Systems'])}}" id = "collect-label-reduc" style="display:none;">Select a valid reduction rate between {{$tech->Nutri_Reduc_N_Low_ppm}} ppm and {{$tech->Nutri_Reduc_N_High_ppm}} ppm.</label>
-			<input v-if = "{{in_array($tech->technology_type,['Green Infrastructure', 'Innovative and Resource-Management Technologies'])}}" type="range" id="collect-rate" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="collect_rate" value="{{$tech->Nutri_Reduc_N_Low}}" step="1" style="display:none;">
+			<input v-if = "{{in_array($tech->technology_type,['Green Infrastructure', 'Innovative and Resource-Management Technologies', 'System Alterations'])}}" type="range" id="collect-rate" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="collect_rate" value="{{$tech->Nutri_Reduc_N_Low}}" step="1" style="display:none;">
 			<input v-if = "{{in_array($tech->technology_type,['Waste Reduction Toilets','On-Site Treatment Systems'])}}" type="range" id="collect-rate" min="{{$tech->Nutri_Reduc_N_Low_ppm}}" max="{{$tech->Nutri_Reduc_N_High_ppm}}" v-model="collect_rate" value="{{$tech->Nutri_Reduc_N_Low_ppm}}" step=".25" style="display:none;">
-			<label v-if = "{{in_array($tech->technology_type,['Green Infrastructure', 'Innovative and Resource-Management Technologies'])}}" id = "collect-label-rate" style="display:none;">@{{collect_rate}}%</label>
+			<label v-if = "{{in_array($tech->technology_type,['Green Infrastructure', 'Innovative and Resource-Management Technologies', 'System Alterations'])}}" id = "collect-label-rate" style="display:none;">@{{collect_rate}}%</label>
 			<label v-if = "{{in_array($tech->technology_type,['Waste Reduction Toilets','On-Site Treatment Systems'])}}" id = "collect-label-rate" style="display:none;">@{{collect_rate}} ppm</label>
 		</div>
 		<button title="Apply Strategy" class="blade_button" id="applytreatment" style="display:none;">Apply</button>
