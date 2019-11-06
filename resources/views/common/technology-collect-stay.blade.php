@@ -60,7 +60,7 @@
 			let applyTreatmentButton = document.getElementById("applytreatment");
 			let setApplyTreatmentButtonStyling = applyTreatmentButton.setAttribute("style", "display:none;");
 			let rate = $('#collect-rate').val();
-			let linearFeet = $('#unit-metric').val();
+			let linearFeet = $('#unit_metric').val() || null;
 			let url = "{{url('/apply_collectStay')}}" + '/' + rate + '/' + techId + '/' + linearFeet;
 			$.ajax({
 				method: 'GET',

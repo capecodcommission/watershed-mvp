@@ -510,8 +510,8 @@ require([
                 $("#collect-label-rate").show();
                 $("#collect-rate").show();
                 $('#select_area').show();
-                $('#unit-metric').show();
-                $('#unit-metric-label').show();
+                $('#unit_metric').show();
+                $('#unit_metric_label').show();
                 $("#applytreatment").show();
                 $(".modal-wrapper").toggle();
             }
