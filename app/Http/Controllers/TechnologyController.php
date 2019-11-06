@@ -343,19 +343,20 @@ class TechnologyController extends Controller
 
 
 	// Handle activation of either septic or groundwater stored procedure based on technology type
-	public function handleCollectStayApply($treat_id, $rate, $techType) 
+	public function handleCollectStayApply($treat_id, $rate, $techType, $units) 
 	{
 		$septicTypes = ['Waste Reduction Toilets', 'On-Site Treatment Systems', 'Treatment Systems'];
 		$groundwaterTypes = ['Green Infrastructure', 'Innovative and Resource-Management Technologies', 'System Alterations'];
 
 		if ( in_array($techType, $septicTypes) )
 		{
-			$updated = DB::select('exec dbo.CALCapplyTreatmentSeptic ' . $treat_id . ', ' . $rate );
+			$updated = DB::select("exec dbo.CALCapplyTreatmentSeptic $treat_id, $rate");
 		}
 		
 		if ( in_array($techType, $groundwaterTypes) )
 		{
-			$updated = DB::select('exec dbo.CALCapplyTreatmentGroundwater ' . $treat_id . ', ' . $rate);
+			
+			$updated = DB::select("exec dbo.CALCapplyTreatmentGroundwater $treat_id, $rate, $units");	
 		}
 
 		$this->updateNitrogenRemoved();
@@ -403,7 +404,7 @@ class TechnologyController extends Controller
 
 	// Apply CollectStay technologies based on its system type and technology type
 	// Update nitrogen load and delete session geometry post-treatment
-	public function ApplyTreatment_CollectStay($rate, $techId, $treat_id=null)
+	public function ApplyTreatment_CollectStay($rate, $techId, $units=null, $treat_id=null)
 	{
 		// Retrieve and parse Scenario and Technology properties 
 		$scenarioid = session()->get('scenarioid');
@@ -421,7 +422,7 @@ class TechnologyController extends Controller
 				$treatment = $this->createTreatment($scenarioid, $tech);
 				$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment->TreatmentID . ', \'' . $polyString . '\'');
 				$this->handleCollectMoveDump($scenarioid, $treatment->TreatmentID);
-				return $this->handleCollectStayApply($treatment->TreatmentID, $rate, $techType);
+				return $this->handleCollectStayApply($treatment->TreatmentID, $rate, $techType, $units);
 			}
 		}
 
@@ -435,7 +436,7 @@ class TechnologyController extends Controller
 				$del = DB::select('exec dbo.DELparcels '. $treat_id);
 				$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treat_id . ', \'' . $polyString . '\'');
 				$this->handleCollectMoveDump($scenarioid, $treat_id);
-				return $this->handleCollectStayApply($treat_id, $rate, $techType);
+				return $this->handleCollectStayApply($treat_id, $rate, $techType, $units);
 			}
 
 			// Existing geometry
@@ -446,7 +447,7 @@ class TechnologyController extends Controller
 				$del = DB::select('exec dbo.DELparcels '. $treat_id);
 				$parcels = DB::select('exec dbo.GETpointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treat_id . ', \'' . $originalPoly . '\'');
 				$this->handleCollectMoveDump($scenarioid, $treat_id);
-				return $this->handleCollectStayApply($treat_id, $rate, $techType);
+				return $this->handleCollectStayApply($treat_id, $rate, $techType, $units);
 			}
 		}
 	}
@@ -554,7 +555,7 @@ class TechnologyController extends Controller
 	}
 
 	// Handle treatment reapplication by type
-	public function update($treat_id, $treatmentValue, $units=null, $subemid=null)
+	public function update($treat_id, $treatmentValue, $units=null)
 	{
 		$treatment = Treatment::find($treat_id);
 		$tech = Technology::find($treatment->TreatmentType_ID);
@@ -570,14 +571,13 @@ class TechnologyController extends Controller
 				$this->ApplyTreatment_Storm($treatmentValue, $treatment->TreatmentType_ID, $treat_id);
 				break;
 			case 'CollectMove':
-				$this->ApplyTreatment_CollectStay($treatmentValue, $treatment->TreatmentType_ID, $treat_id);
+				$this->ApplyTreatment_CollectStay($treatmentValue, $treatment->TreatmentType_ID, $units, $treat_id);
 				break;
 			case 'CollectStay':
-				$this->ApplyTreatment_CollectStay($treatmentValue, $treatment->TreatmentType_ID, $treat_id);
+				$this->ApplyTreatment_CollectStay($treatmentValue, $treatment->TreatmentType_ID, $units, $treat_id);
 				break;
 			case 'PRB':
-				$updated = DB::select('exec dbo.CALC_ApplyTreatment_Groundwater1 '. $treat_id . ', '. $treatmentValue . ', ' . $units);
-				return $this->updateNitrogenRemoved();
+				$this->ApplyTreatment_CollectStay($treatmentValue, $treatment->TreatmentType_ID, $units, $treat_id);
 				break;	
 			case 'In-Embayment':
 				$this->ApplyTreatment_Embayment($treatmentValue, $units, $treatment->TreatmentType_ID, $treat_id);
