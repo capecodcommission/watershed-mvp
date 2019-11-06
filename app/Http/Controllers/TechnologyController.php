@@ -543,7 +543,7 @@ class TechnologyController extends Controller
 				return view('common/technology-collect-move-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type, 'dumpTreatment'=>$dumpTreatment]);
 				break;
 			case 'PRB':
-				return view('common/technology-groundwater-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
+				return view('common/technology-collect-stay-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
 				break;
 			case 'In-Embayment':
 				return view('common/technology-in-embayment-edit', ['tech'=>$tech, 'treatment'=>$treatment, 'type'=>$type]);
