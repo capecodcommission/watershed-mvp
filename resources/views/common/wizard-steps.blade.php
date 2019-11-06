@@ -266,13 +266,13 @@
 							Fertigation Wells (Cranberry Bogs)
 						</a>
 					</div>
-				<div class="technology" data-route="/tech/15">
+				<div data-route="/tech/205" class="technology" >
 					<a>
 						<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_PRBTrench.svg'}}" alt=""><br />
 						PRB - Trench
 					</a>
 				</div>
-				<div class="technology" data-route="/tech/16">
+				<div data-route="/tech/206" class="technology">
 					<a>
 						<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_PRBInjectionWell30.svg'}}" alt=""><br />
 						PRB - Injection Well (30')
