@@ -15,10 +15,12 @@
 		</a>
 		<div class="blade_slider" title="Select the amount to be treated.">
 			<button title="Draw Treatment" class="blade_button" id="draw_collection">Draw Collection</button>
+			<label v-if = "{{in_array($tech->technology_type,['Innovative and Resource-Management Technologies']) && $tech->unit_metric=='Linear Foot'}}" id="unit_metric_label" style="display:none;">Enter number of {{$tech->unit_metric}} to be treated:</label>
+			<input v-if = "{{in_array($tech->technology_type,['Innovative and Resource-Management Technologies']) && $tech->unit_metric=='Linear Foot'}}" id="unit_metric" style="display:none;" v-model="uMetric" type="number" name="unit_metric" value='1'>
 			<label v-if = "{{in_array($tech->technology_type,['Green Infrastructure', 'Innovative and Resource-Management Technologies', 'System Alterations'])}}" id = "collect-label-reduc" style="display:none;">Select a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}}% and {{$tech->Nutri_Reduc_N_High}}%.</label>
 			<label v-if = "{{in_array($tech->technology_type,['Waste Reduction Toilets','On-Site Treatment Systems'])}}" id = "collect-label-reduc" style="display:none;">Select a valid reduction rate between {{$tech->Nutri_Reduc_N_Low_ppm}} ppm and {{$tech->Nutri_Reduc_N_High_ppm}} ppm.</label>
 			<input v-if = "{{in_array($tech->technology_type,['Green Infrastructure', 'Innovative and Resource-Management Technologies', 'System Alterations'])}}" type="range" id="collect-rate" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="collect_rate" value="{{$tech->Nutri_Reduc_N_Low}}" step="1" style="display:none;">
-			<input v-if = "{{in_array($tech->technology_type,['Waste Reduction Toilets','On-Site Treatment Systems'])}}" type="range" id="collect-rate" min="{{$tech->Nutri_Reduc_N_Low_ppm}}" max="{{$tech->Nutri_Reduc_N_High_ppm}}" v-model="collect_rate" value="{{$tech->Nutri_Reduc_N_Low_ppm}}" step=".25" style="display:none;">
+			<input v-if = "{{in_array($tech->technology_type,['Waste Reduction Toilets','On-Site Treatment Systems'])}}" type="range" id="collect-rate" min="{{$tech->Nutri_Reduc_N_Low_ppm}}" max="{{$tech->Nutri_Reduc_N_High_ppm}}" v-model="collect_rate" value="{{$tech->Nutri_Reduc_N_Low_ppm}}" step=".05" style="display:none;">
 			<label v-if = "{{in_array($tech->technology_type,['Green Infrastructure', 'Innovative and Resource-Management Technologies', 'System Alterations'])}}" id = "collect-label-rate" style="display:none;">@{{collect_rate}}%</label>
 			<label v-if = "{{in_array($tech->technology_type,['Waste Reduction Toilets','On-Site Treatment Systems'])}}" id = "collect-label-rate" style="display:none;">@{{collect_rate}} ppm</label>
 		</div>
@@ -58,7 +60,8 @@
 			let applyTreatmentButton = document.getElementById("applytreatment");
 			let setApplyTreatmentButtonStyling = applyTreatmentButton.setAttribute("style", "display:none;");
 			let rate = $('#collect-rate').val();
-			let url = "{{url('/apply_collectStay')}}" + '/' + rate + '/' + techId;
+			let linearFeet = $('#unit-metric').val();
+			let url = "{{url('/apply_collectStay')}}" + '/' + rate + '/' + techId + '/' + linearFeet;
 			$.ajax({
 				method: 'GET',
 				url: url
