@@ -96,7 +96,7 @@ class WizardController extends Controller
 		$removed = 0;
 		$n_load_orig = 0;
 		// $subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
-		$subembayments = DB::select('exec dbo.Calc_ScenarioNitrogen_Subembayments1 ' . $scenarioid);
+		$subembayments = DB::select('exec dbo.CALCscenarioNitrogenSubembayments ' . $scenarioid);
 		$total_goal = 0;
 
 		foreach ($subembayments as $key) 

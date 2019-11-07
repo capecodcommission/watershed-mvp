@@ -44,7 +44,7 @@ class ScenarioController extends Controller
 		$total_goal = 0;
 		// $subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
 
-		$subembayments = DB::select('exec dbo.Calc_ScenarioNitrogen_Subembayments1 ' . $scenarioid);
+		$subembayments = DB::select('exec dbo.CALCscenarioNitrogenSubembayments ' . $scenarioid);
 		// $subembayments = DB::select('exec CapeCodMA.GET_SubembaymentNitrogen ' . $id);
 		$total_goal = 0;
 		foreach ($subembayments as $key) 
@@ -123,7 +123,7 @@ class ScenarioController extends Controller
 		// $subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
 
 		// TODO: Check if we can remove stored proc and get $subembayments global variable to pass into view
-		$subembayments = DB::select('exec dbo.Calc_ScenarioNitrogen_Subembayments1 ' . $scenarioid);
+		$subembayments = DB::select('exec dbo.CALCscenarioNitrogenSubembayments ' . $scenarioid);
 
 		//  'subembayments' => session('subembayments')
 		return view('layouts/results', ['scenario'=>$scenario, 'towns'=>$towns, 'subembayments'=>$subembayments]);
@@ -175,7 +175,7 @@ class ScenarioController extends Controller
 		// 	->groupBy('CapeCodMA.MAtowns.TOWN','CapeCodMA.parcelMaster.treatment_id')
 		// 	->get();
 		// $subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
-		$subembayments = DB::select('exec dbo.Calc_ScenarioNitrogen_Subembayments1 ' . $scenarioid);
+		$subembayments = DB::select('exec dbo.CALCscenarioNitrogenSubembayments ' . $scenarioid);
 		$filename = 'scenario_' . $scenarioid;
 		Excel::create($filename, function($excel) use($scenario, $towns, $subembayments) 
 		{
