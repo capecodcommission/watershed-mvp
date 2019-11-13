@@ -20,6 +20,10 @@ body {
   overflow: hidden;
 }
 
+.results-page {
+  overflow: scroll;
+}
+
 /* HTML5 display definitions
    ========================================================================== */
 
