@@ -4242,6 +4242,28 @@ table {
   width: 100%;
 }
 
+.treatmentsTable {
+  width: 100%;
+}
+
+.treatmentsTable tr {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.treatmentsTable th,td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.treatmentsTable img {
+  width: 150px;
+  height: 125px;
+  text-align: center;
+  vertical-align: middle;
+  padding-top: 2.5%;
+}
+
 th {
   border-bottom: 1px solid #a6a6a6;
   font-weight: 600;
