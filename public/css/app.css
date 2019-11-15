@@ -4251,7 +4251,12 @@ table {
   vertical-align: middle;
 }
 
-.treatmentsTable th,td {
+.treatmentsTable th {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.treatmentsTable td {
   text-align: center;
   vertical-align: middle;
 }
