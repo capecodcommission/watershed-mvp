@@ -4242,26 +4242,27 @@ table {
   width: 100%;
 }
 
-.treatmentsTable {
+.resultsTable {
   width: 100%;
+  table-layout: fixed;
 }
 
-.treatmentsTable tr {
+.resultsTable tr {
   text-align: center;
   vertical-align: middle;
 }
 
-.treatmentsTable th {
+.resultsTable th {
   text-align: center;
   vertical-align: middle;
 }
 
-.treatmentsTable td {
+.resultsTable td {
   text-align: center;
   vertical-align: middle;
 }
 
-.treatmentsTable img {
+.resultsTable img {
   width: 150px;
   height: 125px;
   text-align: center;

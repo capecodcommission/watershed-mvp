@@ -37,7 +37,7 @@
 
 
 			<h2>Applied Treatments</h2>
-			<table class = 'treatmentsTable'>
+			<table class = 'resultsTable'>
 				<thead>
 					<tr>
 						<th>Technology</th>
@@ -48,17 +48,17 @@
 					@foreach($scenario->treatments as $treatment)
 						@if(!$treatment->Parent_TreatmentId)
 							<tr>
-								<td style = 'padding-bottom: 1%'>
-										<img src="{{$_ENV['CCC_ICONS_SVG'].$treatment->treatment_icon}}" alt="">
-										<p>{{$treatment->TreatmentType_Name}} ({{$treatment->TreatmentID}}) </p>
+								<td>
+									<img src="{{$_ENV['CCC_ICONS_SVG'].$treatment->treatment_icon}}" alt="">
+									<p>{{$treatment->TreatmentType_Name}} ({{$treatment->TreatmentID}}) </p>
 								</td>
 								<td>
-									<table id = 'townsTable'>
+									<table class = 'resultsTable' id = 'townsTable'>
 										<thead>
 											<tr>
 												<th>Town</th>
 												<th>Parcels Affected</th>
-												<th>Nitrogen Removed (Unatt)</th>
+												<th>Nitrogen Removed (Unattenuated)</th>
 												<th>Total Cost</th>
 												<th>Cost per kg N removed</th>
 											</tr>
@@ -84,7 +84,7 @@
 												<td>
 													<strong><?php echo '$'.number_format($scenario_cost_town,0,'.',',');?></strong>
 												</td>
-												<td colspan="2">
+												<td>
 													<strong><?php echo '$'.number_format(($scenario_cost_town/$n_removed_town),0,'.',','); ?></strong>
 												</td>
 												<?php $n_removed_town = 0; $scenario_cost_town = 0 ?>
@@ -98,23 +98,27 @@
 					<tr style = 'padding-top: 2%' id = 'totals'>
 						<td><strong>Scenario Totals:</strong></td>
 						<td>
-							<table id = 'scenarioTotalsTable'>
+							<table class = 'resultsTable' id = 'scenarioTotalsTable'>
 								<thead>
 									<tr>
-										<th>Nitrogen Removed (Unatt)</th>
+										<th></th>
+										<th></th>
+										<th>Nitrogen Removed (Unattenuated)</th>
 										<th>Total Cost</th>
 										<th>Cost per kg N removed</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
+										<td></td>
+										<td></td>
 										<td>
 											<strong><?php echo number_format(round($n_removed));?>kg</strong>
 										</td>
 										<td>
 											<strong><?php echo '$'.number_format($scenario_cost,0,'.',',');?></strong>
 										</td>
-										<td colspan="2">
+										<td>
 											<strong><?php echo '$'.number_format(($scenario_cost/$n_removed),0,'.',','); ?></strong>
 										</td>
 									</tr>
@@ -125,7 +129,7 @@
 				</tbody>
 			</table>
 			<h2>Subembayments</h2>
-			<table class = 'treatmentsTable'>
+			<table style = 'margin-bottom: 20px' class = 'resultsTable'>
 				<thead>
 					<tr>
 						<th>Subembayment</th>

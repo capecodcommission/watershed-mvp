@@ -78,10 +78,10 @@
 						<td>{{money_format('%10.0n', $result->Cost_Total)}}</td>
 						<td>@if($result->Nload_Reduction > 0) {{($result->Cost_Total/$result->Nload_Reduction)/12.46}} @endif <?php $row++; ?></td>
 						<td>{{$result->Treatment_UnitMetric}}</td>
-						<td>{{$result->Treatment_MetricValue}}</td>
+						<td>{{round($result->Treatment_MetricValue)}}</td>
 						<td>{{$result->Treatment_Wastewater_Flow}}</td>
 						<td>{{$result->Treatment_WaterUse}}</td>
-						<td>{{$result->Clipped_Rds_LinFeet}}</td>
+						<td>@if($result->Treatment_Class == 'CollectMove') {{$result->Clipped_Rds_LinFeet}} @else 0 @endif</td>
 					</tr>
 					@endforeach
 					<tr style="border-top: 2px double #000000;">
