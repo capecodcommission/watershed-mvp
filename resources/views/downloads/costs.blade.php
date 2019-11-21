@@ -43,7 +43,7 @@
 						<td>{{round($result->Cost_NonConstruction, 2)}}</td>
 						<td>{{round($result->Cost_Monitor, 2)}}</td>
 						<td>{{money_format('%10.0n', $result->Cost_Total)}}</td>
-						<td>@if($result->Nload_Reduction > 0) {{($result->Cost_Total/$result->Nload_Reduction)/12.46}} @endif <?php $row++; ?></td>
+						<td>@if($result->Nload_Reduction > 0) {{($result->Cost_Total/$result->Nload_Reduction)}} @endif <?php $row++; ?></td>
 					</tr>
 					@endforeach
 					<tr style="border-top: 2px double #000000;">
@@ -86,7 +86,7 @@
 						<td>=SUM(I8:I{{$row}})</td>
 						<td>=SUM(J8:J{{$row}})</td>
 						<td class="total_cost">=SUM(K8:K{{$row }})</td>
-						<td class="avg_cost_per_kg">=((SUM(K8:K{{$row}})/SUM(D8:D{{$row}}))/12.46)</td>
+						<td class="avg_cost_per_kg">=((SUM(K8:K{{$row}})/SUM(D8:D{{$row}})))</td>
 					</tr>
 				</tbody>
 			</table>
