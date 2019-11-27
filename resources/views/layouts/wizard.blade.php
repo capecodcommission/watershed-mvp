@@ -39,6 +39,7 @@
 		{{--	@include('common/embayment-progress')	--}}
 			@include('common/progress-svg')
 			@include('common/wizard-steps')
+			@include('common/wizard-steps-working')
 		</div>
 	</div>
 	@include('common/modal')

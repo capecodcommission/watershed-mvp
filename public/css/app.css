@@ -7544,6 +7544,7 @@ nav.toolbar .tool {
 }
 #progress .subembayment .sub-progress-container h3 span {
   display: inline;
+  height: 2em;
   padding-left: 0.5em;
   color: #ffffff;
   font-size: 0.9em;
@@ -7811,7 +7812,6 @@ nav.toolbar .tool {
   position: absolute;
   bottom: 5px;
   right: 0;
-  opacity: 0.0; /* TOGGLE */
 }
 
 .accordion .accHorizontal {
@@ -7823,7 +7823,6 @@ nav.toolbar .tool {
   display: flex;
   -webkit-flex-flow: row nowrap;
   -ms-flex-flow: row nowrap;
-  flex-flow: row nowrap;
   -ms-flex-pack: center;
   justify-content: center;
   -webkit-justify-content: center;
