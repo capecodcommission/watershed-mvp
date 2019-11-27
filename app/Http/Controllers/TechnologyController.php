@@ -70,7 +70,7 @@ class TechnologyController extends Controller
 				'ScenarioID' => $scenarioid, 
 				'TreatmentType_ID'=>$tech->technology_id, 
 				'TreatmentType_Name'=>substr($tech->technology_strategy, 0, 50), 
-				'Treatment_UnitMetric'=>$tech->Unit_Metric, 
+				'Treatment_UnitMetric'=>$tech->unit_metric, 
 				'Treatment_Class'=>$tech->Technology_Sys_Type, 
 				'treatment_icon'=>$tech->icon
 			]

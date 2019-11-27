@@ -110,56 +110,41 @@ class ScenarioController extends Controller
 
 
 
-	/**
-	 * Download Scenario as .xls
-	 *
-	 * @return void
-	 * @author 
-	 **/
+	// Export subembayment, town, and scenario-wide totals into Excel (laravel-excel https://docs.laravel-excel.com/2.1/export/)
 	public function downloadScenarioResults($scenarioid)
 	{
-		$scenario = Scenario::find($scenarioid);
-		// $embayment = DB::select('select * from capecodma.embayments where embay_id = ' . $scenario->AreaID);
-		// $embay_id = $scenario->AreaID;
-		Log::info($scenario->treatments);
-		// $results = DB::select('exec CapeCodMA.Get_ScenarioResults '. $scenarioid);
-		$towns = DB::select('select wtt.*, t.town from dbo.wiz_treatment_towns wtt inner join dbo.matowns t on t.town_id = wtt.wtt_town_id where wtt.wtt_scenario_id = ' . $scenarioid);
-
-		// $towns = DB::table('CapeCodMA.parcelMaster')
-		// 	->join('CapeCodMA.MAtowns','CapeCodMA.MAtowns.TOWN_ID', '=', 'CapeCodMA.parcelMaster.town_id')
-		// 	->select(
-		// 		DB::raw('CapeCodMA.MATowns.TOWN as town'), 
-		// 		DB::raw('CapeCodMA.parcelMaster.treatment_id as wtt_treatment_id'),
-		// 		DB::raw('count(CapeCodMA.parcelMaster.parcel_id) as wtt_tot_parcels'),
-		// 		DB::raw('sum(CapeCodMA.parcelMaster.running_nload_removed) as wtt_unatt_n_removed')
-		// 	)
-		// 	->where('CapeCodMA.parcelMaster.scenario_id', '=', $scenarioid)
-		// 	->groupBy('CapeCodMA.MAtowns.TOWN','CapeCodMA.parcelMaster.treatment_id')
-		// 	->get();
-		// $subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
+		// Retrieve scenario, town, and subembayment arrays from ORM, query and stored proc
 		$subembayments = DB::select('exec dbo.CALCscenarioNitrogenSubembayments ' . $scenarioid);
-		$filename = 'scenario_' . $scenarioid;
-		Excel::create($filename, function($excel) use($scenario, $towns, $subembayments) 
-		{
+		$towns = DB::select('select wtt.*, t.town from dbo.wiz_treatment_towns wtt inner join dbo.matowns t on t.town_id = wtt.wtt_town_id where wtt.wtt_scenario_id = ' . $scenarioid);
+		$scenario = Scenario::find($scenarioid);
+		
+		$filename = 'wMVP_Export_' . $scenarioid;
 
-			$excel->sheet('Scenario Results', function($sheet) use ($scenario, $towns){
-				$sheet->setColumnFormat(array('C:D' => '#,##0_-', 'E' => '"$"#,##0_-', 'F' => '"$"#,##0.00_-'));
-				$sheet->loadView('downloads.treatments', array( 'scenario'=>$scenario,  'towns'=>$towns));
+		// Create subsheets for each breakdown
+		// Use comma-separation and currency formatting on relevant columns for cost and nitrogen outputs
+		// Export sheet as '.xls' format
+		Excel::create(
+			$filename, 
+			function($excel) use($scenario, $towns, $subembayments) 
+			{
+				$excel->sheet('Scenario Results', function($sheet) use ($scenario, $towns){
+					$sheet->setColumnFormat(array('C:D' => '#,##0_-', 'E' => '"$"#,##0_-', 'F' => '"$"#,##0.00_-'));
+					$sheet->loadView('downloads.treatments', array( 'scenario'=>$scenario,  'towns'=>$towns));
 
-			});
+				});
 
-			$excel->sheet('Subembayment Results', function($sheet) use ($scenario, $subembayments){
-				$sheet->setColumnFormat(array('B:F' => '#,##0_-'));
-				$sheet->loadView('downloads.subembayments', array( 'scenario'=>$scenario, 'subembayments'=>$subembayments));
-			});
+				$excel->sheet('Subembayment Results', function($sheet) use ($scenario, $subembayments){
+					$sheet->setColumnFormat(array('B:F' => '#,##0_-'));
+					$sheet->loadView('downloads.subembayments', array( 'scenario'=>$scenario, 'subembayments'=>$subembayments));
+				});
 
-			$excel->sheet('Cost Breakdown', function($sheet) use ($scenario){
-				$sheet->setColumnFormat(array('C:D' => '#,##0_-', 'E:L' => '"$"#,##0_-'));
-				$sheet->loadView('downloads.costs', array('scenario'=>$scenario));
+				$excel->sheet('Cost Breakdown', function($sheet) use ($scenario){
+					$sheet->setColumnFormat(array('C:D' => '#,##0_-', 'E:L' => '"$"#,##0_-'));
+					$sheet->loadView('downloads.costs', array('scenario'=>$scenario));
 
-			});			
-
-		})->export('xls');
+				});			
+			}
+		)->export('xls');
 	}
 
 	/**
