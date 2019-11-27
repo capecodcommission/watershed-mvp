@@ -134,7 +134,7 @@ class ScenarioController extends Controller
 				});
 
 				$excel->sheet('Subembayment Results', function($sheet) use ($scenario, $subembayments){
-					$sheet->setColumnFormat(array('B:F' => '#,##0_-'));
+					$sheet->setColumnFormat(array('B:H' => '#,##0_-'));
 					$sheet->loadView('downloads.subembayments', array( 'scenario'=>$scenario, 'subembayments'=>$subembayments));
 				});
 
