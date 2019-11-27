@@ -1,3 +1,4 @@
+/* public/css/app.css */
 /*! normalize.css v4.0.0 | MIT License | github.com/necolas/normalize.css */
 
 /**
@@ -5,7 +6,7 @@
  * 2. Prevent adjustments of font size after orientation changes in IE and iOS.
  */
 
-html {
+ html {
   font-family: sans-serif; /* 1 */
   -ms-text-size-adjust: 100%; /* 2 */
   -webkit-text-size-adjust: 100%; /* 2 */
@@ -7543,7 +7544,6 @@ nav.toolbar .tool {
 }
 #progress .subembayment .sub-progress-container h3 span {
   display: inline;
-  height: 2em;
   padding-left: 0.5em;
   color: #ffffff;
   font-size: 0.9em;
@@ -7619,6 +7619,187 @@ nav.toolbar .tool {
   text-align: center;
 }
 
+#new_accordion {
+  padding: 0 1em 1em;
+  border-radius: 0.5em;
+  display: flex 12;
+  max-height: 75%;
+  height: auto;
+  width: 25%;
+  right: 1%;
+  bottom: 1%;
+  position: absolute;
+  background: #ecf0f1;
+  overflow: auto;
+}
+
+#new_accordion_title {
+  margin: 0.5em 0 0 0;
+  text-align: center;
+  font: 2.5vh bold Arial, Helvetica, sans-serif;
+}
+
+/* Accordion styles */
+.accordion_item_input {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+}
+
+.accordion_container {
+  display: grid;
+  grid-template-columns: 2fr;
+  /* overflow: auto; */
+}
+
+.accordion_item {
+  margin: 0.25em 0 0.25em 0;
+  width: 100%;
+  height: auto;
+  color: white;
+  overflow: hidden;
+}
+
+.accordion_top_row {
+  color: white;
+  display: grid;
+  grid-template-columns: 1fr 11fr;
+  height: 100%;
+  vertical-align: bottom;
+}
+
+/* https://plot.ly/javascript/responsive-fluid-layout/ */
+/* #plotlyDiv {
+  margin: 0;
+  border: 0.02em solid black;
+  height: 100%;
+  width: 75%; */
+  /* display: flex; */
+  /* justify-content: right; */
+  /* min-height: 50%;
+} */
+
+#the_progress {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: black solid 0.15em;
+}
+
+#the_progress .progress-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+#the_progress .progress-container div {
+  position: absolute;
+  width: 100%;
+  display: inline-block;
+  bottom: 0;
+  margin: 0;
+}
+
+#the_progress .progress-container div.target {
+  background-color: #525319;
+  height: 100%;
+  width: 100%;
+}
+
+#the_progress .progress-container div.progress {
+  background-color: #2caae4;
+  bottom: 0;
+}
+
+#the_progress .progress-container div.progress h6 {
+  height: 100%;
+  width: 100%;
+  vertical-align: top;
+  text-align: top;
+  color: #ffffff;
+}
+
+/* #the_progress .progress-container div.progress h6 {
+  height: 100%;
+  width: 100%;
+  color: #fff;
+  text-align: top;
+} */
+
+.accordion_item_label {
+  border-radius: 0.5em;
+  width: 100%;
+  max-height: 10%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5em;
+  background: rgb(10, 40, 51);
+  font: 1.75 bold Arial, Helvetica, sans-serif;
+  cursor: pointer;
+}
+.accordion_item_label > img {
+  height: 3em;
+  width: 3em;
+  padding-left: 1em;
+  vertical-align: middle;
+}
+.accordion_item_label:hover {
+  background: #0b1116;
+}
+.accordion_item_content {
+  width: 100%;
+  height: 0;
+  max-height: 50em;
+  cursor: default;
+  font: 0.75rem Arial, Helvetica, sans-serif;
+  padding: 0 0.5vw;
+  color: #2c3e50;
+  background: white;
+  transition: all .35s ease;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-row-gap: 1em;
+}
+.accordion_item_content > .span-6 {
+  grid-column: 1 / 6;
+  text-align: justify;
+}
+.accordion_item_content > .technology {
+  height: 100%;
+  width: auto;
+}
+.accordion_item_close {
+  vertical-align: center;
+  padding: 0.25vw;
+  font-size: 1.5vh;
+  background: rgb(255, 182, 18);
+  cursor: pointer;
+  border-radius: 100em;
+  max-height: 70%;
+}
+.accordion_item_close:hover {
+  color: black;
+}
+.accordion_item_close:checked ~ .accordion_item_content {
+  transition: all .35s;
+}
+.accordion_item_input:checked + .accordion_item_label {
+  background:rgb(83, 168, 172);
+}
+.accordion_item_input:checked + .accordion_item_label::after {
+  transform: rotate(90deg);
+}
+.accordion_item_input:checked ~ .accordion_item_content {
+  font: 1vh;
+  justify-content: space-evenly;
+  padding: 0.25em;
+  height: auto;
+  width: 100%;
+}
+
 .accordion {
   max-width: 2000px;
   box-sizing: content-box;
@@ -7630,7 +7811,9 @@ nav.toolbar .tool {
   position: absolute;
   bottom: 5px;
   right: 0;
+  opacity: 0.0; /* TOGGLE */
 }
+
 .accordion .accHorizontal {
   max-width: 100%;
   overflow: hidden;
@@ -7640,6 +7823,7 @@ nav.toolbar .tool {
   display: flex;
   -webkit-flex-flow: row nowrap;
   -ms-flex-flow: row nowrap;
+  flex-flow: row nowrap;
   -ms-flex-pack: center;
   justify-content: center;
   -webkit-justify-content: center;
@@ -7793,7 +7977,7 @@ nav.toolbar .tool {
 }
 
 #closeACC {
-  padding: .5em; 
+  padding: .5em;
 }
 
 .results_download thead tr th {
@@ -7843,7 +8027,6 @@ nav.toolbar .tool {
     transform: translateX(-100%);
   }
 }
-
 
 .modal-content {
   position: relative;
