@@ -1,3 +1,4 @@
+<!-- resources/views/layouts/wizard.blade -->
 <!DOCTYPE html>
 
 <html>
@@ -13,7 +14,8 @@
 	<link rel="stylesheet" href="https://js.arcgis.com/3.16/esri/css/esri.css">
 	<script src="https://js.arcgis.com/3.16/"></script>
   	<link rel="stylesheet" href="https://js.arcgis.com/3.16/dijit/themes/claro/claro.css">  
-  	<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>  
+	<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+	<!-- <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> -->
 </head>
 <body class="claro">
 
@@ -37,6 +39,7 @@
 		{{--	@include('common/embayment-progress')	--}}
 			@include('common/progress-svg')
 			@include('common/wizard-steps')
+			@include('common/wizard-steps-working')
 		</div>
 	</div>
 	@include('common/modal')
@@ -49,7 +52,6 @@
 		window.name = 'wmvp_scenario_{{session('scenarioid')}}';
 	</script>
 
-<!-- <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script> -->
 <script src="{{url('/js/map.js')}}"></script>
 <script src="{{url('/js/main.js')}}"></script>
 <script src="{{url('/js/jquery.popdown.js')}}"></script>
