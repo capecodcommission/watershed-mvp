@@ -116,7 +116,7 @@
 						<td class="total_nitrogen">=SUM(C{{$start_row}}:C{{$row}})</td>
 						<td class="total_nitrogen">=SUM(D{{$start_row}}:D{{$row}})</td>
 						<td class="total_cost">=SUM(E{{$start_row}}:E{{$row}})</td>
-						<td class="avg_cost_per_kg">=((SUM(E{{$start_row}}:E{{$row}})/SUM(D{{$start_row}}:D{{$row}}))/12.46)</td>
+						<td class="avg_cost_per_kg">=((SUM(E{{$start_row}}:E{{$row}})/SUM(D{{$start_row}}:D{{$row}})))</td>
 						<td></td>
 						<td></td>
 						<td></td>

@@ -1417,181 +1417,99 @@ require([
     );
     legendDijit.startup();
 
-    $("#nitrogen").on("click", function (e) {
-        e.preventDefault();
-        if ($(this).attr("data-visible") == "off") {
-            legendDijit.refresh([
-                { layer: NitrogenLayer, title: "Nitrogen Load" }
-            ]);
-            NitrogenLayer.setDefinitionExpression(queryString.toString());
-            NitrogenLayer.show();
-            $(this).attr("data-visible", "on");
+
+    // Show/hide legend dropdown from activated Map Layers
+    function toggleLegend() {
+
+        // Toggle legend dropdown display by checking 'visible' hyperlink prop in each list element of the map layer panel
+        $('#layers li.inLegend').each(function() {
+            let childA = $(this).find('a');
+            if ( childA.attr("data-visible") == "on" ) {
+                $('#legendWrapper').css("display", "block");
+                return false;
+            } else {
+                $('#legendWrapper').css("display", "none");
+            }
+        })
+    }
+
+
+    // Toggle layer visilbility properties on map and layer panel
+    function toggleLayer(tag, layer, title=null, defExp=null) {
+
+        let vizSwitch = tag.attr('data-visible');
+
+        if ( vizSwitch == 'off' ) {
+
+            // Repopulate legend contents and filter map layer
+            if (title) {
+                legendDijit.refresh([
+                    { layer: layer, title: title }
+                ]);
+            }
+            if (defExp) {
+                layer.setDefinitionExpression(queryString.toString());
+            }
+
+            // Show layer and toggle visibility prop
+            layer.show();
+            tag.attr("data-visible", "on");
         } else {
-            NitrogenLayer.hide();
-            $(this).attr("data-visible", "off");
+            layer.hide()
+            tag.attr("data-visible", "off");
         }
-        //
-    });
+    }
 
-    $("#subembayments").on("click", function (e) {
-        e.preventDefault();
-
-        if ($(this).attr("data-visible") == "off") {
-            Subembayments.show();
-            $(this).attr("data-visible", "on");
-        } else {
-            Subembayments.hide();
-            $(this).attr("data-visible", "off");
-        }
-        //
-    });
-
-    $("#subwatersheds").on("click", function (e) {
-        e.preventDefault();
-
-        if ($(this).attr("data-visible") == "off") {
-            Subwatersheds.show();
-            $(this).attr("data-visible", "on");
-        } else {
-            Subwatersheds.hide();
-            $(this).attr("data-visible", "off");
-        }
-        //
-    });
-
-    $("#wastewater").on("click", function (e) {
-        e.preventDefault();
-
-        if ($(this).attr("data-visible") == "off") {
-            legendDijit.refresh([{ layer: WasteWater, title: "Wastewater" }]);
-            WasteWater.setDefinitionExpression(queryString.toString());
-            WasteWater.show();
-            $(this).attr("data-visible", "on");
-        } else {
-            WasteWater.hide();
-            $(this).attr("data-visible", "off");
-        }
-        //
-    });
-
-    $("#towns").on("click", function (e) {
+    // Handler for all toggleable Map layers
+    $(document).on('click', '#layers li', function(e) {
         e.preventDefault();
 
-        if ($(this).attr("data-visible") == "off") {
-            Towns.show();
-            $(this).attr("data-visible", "on");
-        } else {
-            Towns.hide();
-            $(this).attr("data-visible", "off");
+        // Parse child <a> tag properties from each list element
+        let childA = $(this).find("a");
+        let layerListName = $(childA).attr('id');
+
+        // Pass tag and props to toggleLayer() based on layer name
+        switch (layerListName) {
+            case 'nitrogen':
+                toggleLayer(childA, NitrogenLayer, "Nitrogen Load", true);
+                break;
+            case 'subembayments':
+                toggleLayer(childA, Subembayments);
+                break;
+            case 'subwatersheds':
+                toggleLayer(childA, Subwatersheds);
+                break;
+            case 'wastewater':
+                toggleLayer(childA, WasteWater, "Wastewater Load", true);
+                break;
+            case 'towns':
+                toggleLayer(childA, Towns);
+                break;
+            case 'treatmenttype':
+                toggleLayer(childA, TreatmentType, "Wastewater Treatment Type", true);
+                break;
+            case 'treatmentfacilities':
+                toggleLayer(childA, TreatmentFacilities);
+                break;
+            case 'ecologicalindicators':
+                toggleLayer(childA, EcologicalIndicators, "Ecological Indicators");
+                break;
+            case 'shallowgroundwater':
+                toggleLayer(childA, ShallowGroundwater);
+                break;
+            case 'landuse':
+                toggleLayer(childA, LandUse, "Land Use Category", true);
+                break;
+            case 'flowthrough':
+                toggleLayer(childA, FlowThrough, "Flowthough Coefficient");
+                break;
+            case 'contours':
+                toggleLayer(childA, Contours, "2ft Contours");
+                break;
         }
-        //
-    });
 
-    $("#treatmenttype").on("click", function (e) {
-        e.preventDefault();
-
-        if ($(this).attr("data-visible") == "off") {
-            legendDijit.refresh([
-                { layer: TreatmentType, title: "Treatment Type" }
-            ]);
-            TreatmentType.setDefinitionExpression(queryString.toString());
-            TreatmentType.show();
-            $(this).attr("data-visible", "on");
-        } else {
-            TreatmentType.hide();
-            $(this).attr("data-visible", "off");
-        }
-        //
-    });
-
-    $("#treatmentfacilities").on("click", function (e) {
-        e.preventDefault();
-
-        if ($(this).attr("data-visible") == "off") {
-            TreatmentFacilities.show();
-            $(this).attr("data-visible", "on");
-        } else {
-            TreatmentFacilities.hide();
-            $(this).attr("data-visible", "off");
-        }
-        //
-    });
-
-    $("#ecologicalindicators").on("click", function (e) {
-        e.preventDefault();
-
-        if ($(this).attr("data-visible") == "off") {
-            legendDijit.refresh([
-                { layer: EcologicalIndicators, title: "Ecological Indicators" }
-            ]);
-            EcologicalIndicators.show();
-            $(this).attr("data-visible", "on");
-        } else {
-            EcologicalIndicators.hide();
-            $(this).attr("data-visible", "off");
-        }
-        //
-    });
-
-    $("#shallowgroundwater").on("click", function (e) {
-        e.preventDefault();
-
-        if ($(this).attr("data-visible") == "off") {
-            ShallowGroundwater.show();
-            $(this).attr("data-visible", "on");
-        } else {
-            ShallowGroundwater.hide();
-            $(this).attr("data-visible", "off");
-        }
-        //
-    });
-
-    $("#landuse").on("click", function (e) {
-        e.preventDefault();
-
-        if ($(this).attr("data-visible") == "off") {
-            legendDijit.refresh([
-                { layer: LandUse, title: "Land Use Category" }
-            ]);
-            LandUse.setDefinitionExpression(queryString.toString());
-            LandUse.show();
-            $(this).attr("data-visible", "on");
-        } else {
-            LandUse.hide();
-            $(this).attr("data-visible", "off");
-        }
-        //
-    });
-
-    $("#flowthrough").on("click", function (e) {
-        e.preventDefault();
-
-        if ($(this).attr("data-visible") == "off") {
-            legendDijit.refresh([
-                { layer: FlowThrough, title: "FlowThrough Coefficients" }
-            ]);
-            FlowThrough.show();
-            $(this).attr("data-visible", "on");
-        } else {
-            FlowThrough.hide();
-            $(this).attr("data-visible", "off");
-        }
-        //
-    });
-
-    $("#contours").on("click", function (e) {
-        e.preventDefault();
-
-        if ($(this).attr("data-visible") == "off") {
-            legendDijit.refresh([{ layer: Contours, title: "2ft Contours" }]);
-            Contours.show();
-            $(this).attr("data-visible", "on");
-        } else {
-            Contours.hide();
-            $(this).attr("data-visible", "off");
-        }
-        //
-    });
+        toggleLegend();
+    })
 
     $(".subembayment").on("click", function (e) {
         var sub = $(this).data("layer");

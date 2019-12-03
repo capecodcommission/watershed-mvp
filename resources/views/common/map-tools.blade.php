@@ -14,7 +14,7 @@
         </div>
         <div id="basemaps-wrapper" class="leaflet-bar"></div>
     </div>
-    <div style="position:absolute; right:250px; top:20px; z-index: 2;">
+    <div id = 'legendWrapper' style="position:absolute; right:250px; top:20px; z-index: 2; display:none">
         <div data-dojo-type="dijit/TitlePane" data-dojo-props="title:'Legend', closable:false, open:false">
             <div data-dojo-type="dijit/layout/ContentPane" style="width:200px; height:420px; overflow:auto; ">
                 <div id="legendDiv"></div>
@@ -45,28 +45,28 @@
 					<li>
 						<a href="" id="treatmentfacilities" data-visible="off"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Wastewater Treatment Facilities</a>
 					</li>
-					<li>
+					<li class='inLegend'>
 						<a href="" id="ecologicalindicators" data-visible="off"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Ecological Indicators</a>
 					</li>
 					<li>
 						<a href="" id="shallowgroundwater" data-visible="off"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Depth to Groundwater < 20ft</a>
 					</li>
-					<li>
+					<li class='inLegend'>
 						<a href="" id="nitrogen" data-visible="off"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Existing Nitrogen Load</a>				
 					</li>
-					<li>
+					<li class='inLegend'>
 						<a href="" id="wastewater" data-visible="off"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Wastewater</a>
 					</li>
-					<li>
+					<li class='inLegend'>
 						<a href="" id="treatmenttype" data-visible="off"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Wastewater by Treatment Type</a>
 					</li>
-					<li>
+					<li class='inLegend'>
 						<a href="" id="landuse" data-visible="off"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Land Use Category</a>
 					</li>
-					<li>
+					<li class='inLegend'>
 						<a href="" id="flowthrough" data-visible="off"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> FlowThrough Co-efficient</a>
 					</li>
-					<li>
+					<li class='inLegend'>
 						<a href="" id="contours" data-visible="off"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Water Table 2ft Contours</a>
 					</li>					
 

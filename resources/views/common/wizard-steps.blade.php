@@ -46,7 +46,7 @@
 			<div class="acc_cCont">
 				<p><a class="button--cta right" href="{{url('results', session('scenarioid'))}}" target="wmvp_results_{{session('scenarioid')}}">View Scenario Summary</a></p>
 				<hr>
-				<div id = 'fertMan' class="technology" data-route = "/tech/400">
+				<div id = 'fertManDEPRECATED' class="technology" data-route = "/tech/400">
 					<a>
 						<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_FertilizerManagement.svg'}}">
 					</a>
@@ -73,7 +73,7 @@
 					<hr>
 	
 					<div class="technology_list">
-						<div id = "stormMan" class="technology" data-route = "/tech/401">
+						<div id = "stormManDEPRECATED" class="technology" data-route = "/tech/401">
 							<a>
 								<img src="{{$_ENV['CCC_ICONS_SVG'].'Icon_StormwaterManagement.svg'}}"><br />
 								 Stormwater Management
