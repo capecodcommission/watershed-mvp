@@ -22,9 +22,6 @@
         </div>
     </div>
 		<div class="js-menu sliding-panel-content is-visible" style = "z-Index: 2;">
-<!-- 		<div id="info">
-			<button id="Polygon">Draw Polygon</button>
-		</div> -->
 		
 			<div class="info"  data-dojo-type="dijit/layout/ContentPane">
 				

@@ -2,9 +2,13 @@
         <h2 id="new_accordion_title"><b>SCENARIO CONTROLLER</b></h2>
         <section class="accordion_container">
             <div class="accordion_top_row">
-                <div class="accordion-close-button">
                     <input type="radio" class="accordion_item_input" id="close_accordion_items" name="rd">
                     <label for="close_accordion_items" class="accordion_item_close">&times;</label>
+                <div id="plotlyDiv"></div>
+                <div id="accordion_top_row_button">
+                    <a href="{{url('results', session('scenarioid'))}}" class="fa fa-external-link button" title="Results" target="wmvp_results_{{session('scenarioid')}}"></a>
+                    <a id = 'saved' class="fa fa-save save button" title="Save"></a>
+                    <a href="{{url('download', session('scenarioid'))}}" class="fa fa-download button" aria-hidden="true" title="Download"></a>
                 </div>
             </div>
             <div class="accordion_item">
@@ -25,6 +29,9 @@
                         <p>
                             For each of these stages, you can select technologies to remove Nitrogen from the embayment. For some, you can select the area that will be treated by drawing a polygon on the map. Your progress towards the embayment's Target Nitrogen Removal will be displayed in the graph to the left. In addition to the overall target, each sub-embayment will have its own individual Nitrogen load and target, which you can track using the graphs in the left sidebar.
                         </p>
+                        <div>
+                            <a id="fim" class="button">Financial Impact Model</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -233,24 +240,6 @@
                     </div>
                 </div>
             </div>
-            <div class="accordion_item">
-                <input type="radio" class="accordion_item_input" id="scenario_summary" name="rd">
-                <label class="accordion_item_label" for="scenario_summary">SUMMARY</label>
-                <div class="accordion_item_content">
-                    <div>
-                        <a href="{{url('download', session('scenarioid'))}}">Download</a>
-                    </div>
-                    <div>
-                        <a href="{{url('results', session('scenarioid'))}}" class="button" target="wmvp_results_{{session('scenarioid')}}">Results</a>
-                    </div>
-                    <div>
-                        <a id = 'fim' class = 'button'>Financial Impact Model</a>
-                    </div>
-                    <div>
-                        <a id = 'saved' class="save button">Save</a>
-                    </div>
-                </div>
-            </div>
         </section>
     </div>
     
@@ -260,10 +249,12 @@
             scenario = {{session('scenarioid')}};
             fertApplied = {{session('fert_applied')}};
             stormApplied = {{session('storm_applied')}};
+            
             $('#fim').on('click', function(e) {
                 // if below doesn't work, add to fim button above ----> href = "http://2016.watershedmvp.org/fim/scenario/{{session('scenarioid')}}/treatmentsDetails"
                 window.open("http://www.watershedmvp.org/fim/scenario/" + scenario + "/treatmentsDetails")
             });
+
             // $('#sam').on('click', function(e) {
             // 	var path = "http://www.watershedmvp.org/sam/#/home";
             // 	var samSite = window.open(path + "/" + scenario);
@@ -272,6 +263,7 @@
             // 		localStorage.setItem("scenarioID",scenarioID);
             // 	};
             // });
+
             $('.save').on('click', function(e){
                 e.preventDefault();
                 var url = "{{url('save')}}" + '/' + scenario;

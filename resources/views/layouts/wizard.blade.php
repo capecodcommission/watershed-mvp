@@ -15,7 +15,7 @@
 	<script src="https://js.arcgis.com/3.16/"></script>
   	<link rel="stylesheet" href="https://js.arcgis.com/3.16/dijit/themes/claro/claro.css">  
 	<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
-	<!-- <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> -->
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body class="claro">
 
