@@ -10,12 +10,11 @@
 	<?php else :?>
 		<link rel="stylesheet" href="{{url('/css/app.css')}}">
 	<?php endif; ?>
-	<!-- <link href="{{secure_url('/css/app.css')}}" rel="stylesheet" type="text/css"> -->
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 	<link rel="stylesheet" href="https://js.arcgis.com/3.16/esri/css/esri.css">
 	<script src="https://js.arcgis.com/3.16/"></script>
   	<link rel="stylesheet" href="https://js.arcgis.com/3.16/dijit/themes/claro/claro.css">  
 	<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
-	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body class="claro">
 
