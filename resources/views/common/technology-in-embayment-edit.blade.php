@@ -54,7 +54,7 @@
 		// Handle on-click event for selecting a location
 		$('#select_area').on('click', function(f) {
 			f.preventDefault();
-			$('.modal-wrapper').hide();
+			toggleUI();
 			deleteGraphic(treatment);
 			map.setInfoWindowOnClick(false);
 			tb.activate('point');
