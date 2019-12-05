@@ -47,7 +47,7 @@
 			f.preventDefault();
 			map.disableMapNavigation();
 			deleteGraphic();
-			$('.modal-wrapper').hide();
+			toggleUI();
 			map.setInfoWindowOnClick(false);
 			tb.activate('polygon');
 		});

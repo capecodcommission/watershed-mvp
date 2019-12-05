@@ -135,7 +135,7 @@ require([
             e.preventDefault();
 
             // Hide the modal, activate edit toolbar for edit modal's relevant geometry
-            $(".modal-wrapper").toggle();
+            toggleUI();
             $("#editDesc").show();
             map.disableDoubleClickZoom();
             map.setInfoWindowOnClick(false);
@@ -154,31 +154,6 @@ require([
                 activateToolbar(treatmentGraphic[0]);
             }
         });
-
-        // Legacy edit blade geometry update handler
-        $(".modal-content").on("click",".popdown-content #edit_geometry", function (e) {
-                // Hide the modal, activate edit toolbar for edit modal's relevant geometry
-                $(".modal-wrapper").toggle();
-                $(".popdown-opacity").hide();
-                $("#editDesc").show();
-                map.disableDoubleClickZoom();
-                editGeoClicked = 1;
-                map.setInfoWindowOnClick(false);
-
-                // Activate toolbar for treatment geometry
-                let treatment_id = $(this).data("treatment");
-                let layers = map.graphics.graphics;
-                let treatmentGraphic = layers.filter(graphic => {
-                    let attribs = graphic.attributes;
-                    if (attribs) {
-                        return attribs.treatment_id == treatment_id;
-                    }
-                });
-                if (treatmentGraphic) {
-                    activateToolbar(treatmentGraphic[0]);
-                }
-            }
-        );
 
         // Save edited geometry on double-click
         map.on("dbl-click", function (evt) {
@@ -431,7 +406,7 @@ require([
             url: url
         }).done(function (allClear) {
             if (allClear != 0) {
-                $(".modal-wrapper").toggle();
+                toggleUI(true);
                 $("#unit_metric_label").show();
                 $("#unit_metric").show();
                 $("#subembayment-rate-label").show();
@@ -513,7 +488,7 @@ require([
                 $('#unit_metric').show();
                 $('#unit_metric_label').show();
                 $("#applytreatment").show();
-                $(".modal-wrapper").toggle();
+                toggleUI(true);
             }
             else {
                 alert('Error: Geometry falls outside of Scenario Embayment. Please redraw geometry or contact info@capecodcommission.org for technical assistance. Thank you.');
@@ -756,7 +731,7 @@ require([
                 editToolbar.deactivate();
                 editGeoClicked = 0;
                 $(".popdown-opacity").show();
-                $(".modal-wrapper").toggle();
+                toggleUI(true);
                 $("#deletetreatment").hide();
                 $("#updateStormwaterNonManangement").show();
                 $('#updateCollectMove').show();
@@ -861,45 +836,6 @@ require([
         let layerGraphics = map.graphics.graphics;
 
         $( "#update" ).trigger( "click" );
-    });
-
-    // Handler to reset edited geometry to its original position on-close of a legacy edit modal
-    $(".modal-content").on("click", ".popdown-content #closeWindow", function (e) {
-        e.preventDefault();
-        let layerGraphics = map.graphics.graphics;
-
-        destroyModalContents();
-        deleteGraphic();
-
-        // Filter to edited graphics
-        let editedGraphic = layerGraphics.filter(graphic => {
-            let attribs = graphic.attributes;
-            if (attribs) {
-                return attribs.editInProgress;
-            }
-        });
-
-        if (editedGraphic.length) {
-            // Obtain new treatment info, set popup
-            var url = "/get_treatment" + "/" + editedGraphic[0].attributes.treatment_id;
-            $.ajax({
-                method: "GET",
-                url: url
-            })
-                .done(function (treatment) {
-                    // Add original geometry to map through either the global treatments object or the graphic attribute
-                    if (treatment) {
-                        map.graphics.remove(editedGraphic[0]);
-                        addGraphicsOnLoad(treatment);
-                    }
-                })
-                .fail(function (msg) {
-                    alert(
-                        "error: geometry failed to reset, please contact info@capecodcommission for technical support. Thank you." +
-                        msg.statusText
-                    );
-                });
-        }
     });
 
     // Handles popup setting and updating for all graphics post-apply or delete

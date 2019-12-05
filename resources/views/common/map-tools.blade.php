@@ -24,49 +24,45 @@
 		<div class="js-menu sliding-panel-content is-visible" style = "z-Index: 2;">
 		
 			<div class="info"  data-dojo-type="dijit/layout/ContentPane">
-				
 			<h4>Map Layers</h4>
-
-
 				<ul id="layers">
-					<li>
+					<li title = 'Town Boundaries (Cape-wide)'>
 						<a id="towns" data-visible="off"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Towns</a>
 					</li>
-					<li>
+					<li title = 'Subembayment Boundaries (Embayment-wide)'>
 						<a id="subembayments" data-visible="off"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Subembayments</a>
 					</li>
-					<li>
+					<li title = 'Subwatershed Boundaries (Embayment-wide)'>
 						<a href="" id="subwatersheds" data-visible="off"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Subwatersheds</a>
 					</li>					
 
-					<li>
+					<li title = 'Wastewater Treatment Facilities (Cape-wide)'>
 						<a href="" id="treatmentfacilities" data-visible="off"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Wastewater Treatment Facilities</a>
 					</li>
-					<li class='inLegend'>
+					<li class='inLegend' title = 'Qualitative description related to measured water quality indications within Barnstable County embayments. (Cape-wide)'>
 						<a href="" id="ecologicalindicators" data-visible="off"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Ecological Indicators</a>
 					</li>
-					<li>
+					<li title = 'Depth to Groundwater < 20ft (Cape-wide)'>
 						<a href="" id="shallowgroundwater" data-visible="off"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Depth to Groundwater < 20ft</a>
 					</li>
-					<li class='inLegend'>
+					<li class='inLegend' title = 'Parcel centroids visualized by nitrogen load (Embayment-wide)'>
 						<a href="" id="nitrogen" data-visible="off"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Existing Nitrogen Load</a>				
 					</li>
-					<li class='inLegend'>
+					<li class='inLegend' title = 'Parcel centroids visualized by wastewater load (Embayment-wide)'>
 						<a href="" id="wastewater" data-visible="off"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Wastewater</a>
 					</li>
-					<li class='inLegend'>
+					<li class='inLegend' title = 'Parcel centroids visualized by wastewater treatment type (Embayment-wide)'>
 						<a href="" id="treatmenttype" data-visible="off"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Wastewater by Treatment Type</a>
 					</li>
-					<li class='inLegend'>
+					<li class='inLegend' title = 'Parcel centroids visualized by land use category (Embayment-wide)'>
 						<a href="" id="landuse" data-visible="off"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Land Use Category</a>
 					</li>
-					<li class='inLegend'>
+					<li class='inLegend' title = 'Parcel centroids visualized by flow-through coefficients (Cape-wide)'>
 						<a href="" id="flowthrough" data-visible="off"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> FlowThrough Co-efficient</a>
 					</li>
-					<li class='inLegend'>
+					<li class='inLegend' title = 'Water table contours (Cape-wide)'>
 						<a href="" id="contours" data-visible="off"><i class="fa fa-eye-slash"></i> <i class="fa fa-eye"></i> Water Table 2ft Contours</a>
 					</li>					
-
 				</ul>
 			</div>
 		</div>

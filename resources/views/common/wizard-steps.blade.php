@@ -350,9 +350,9 @@
 					<p><span class="remaining"><strong>Nitrogen Remaining to Threshold:</strong> <span></span>kg</span></p>
 					<p><a href="{{url('download', session('scenarioid'))}}">Download Results (.xls)</a></p>
 					<p><a href="{{url('results', session('scenarioid'))}}" class="button" target="wmvp_results_{{session('scenarioid')}}">View detailed results</a></p>
-					<p><a id = 'fim' class = 'button'>Open Scenario in Financial Impact Model (FIM)</a></p>
-					<p><a id = 'sam' class = 'button'>Open Scenario in Scenario Assessment Model (SAM)</a></p>
-					<p><a id = 'saved' class="save button">Save Changes</a></p>
+					<p><a id = 'fimDEPRECATED' class = 'button'>Open Scenario in Financial Impact Model (FIM)</a></p>
+					<p><a id = 'samDEPRECATED' class = 'button'>Open Scenario in Scenario Assessment Model (SAM)</a></p>
+					<p><a id = 'savedDEPRECATED' class="save button">Save Changes</a></p>
 				</div>
 			</article>
 		</aside>
@@ -367,12 +367,12 @@
 			fertApplied = {{session('fert_applied')}};
 			stormApplied = {{session('storm_applied')}};
 	
-			$('#fim').on('click', function(e) {
+			$('#fimDEPRECATED').on('click', function(e) {
 				// if below doesn't work, add to fim button above ----> href = "http://2016.watershedmvp.org/fim/scenario/{{session('scenarioid')}}/treatmentsDetails"
 				window.open("http://www.watershedmvp.org/fim/scenario/" + scenario + "/treatmentsDetails")
 			});
 	
-			$('#sam').on('click', function(e) {
+			$('#samDEPRECATED').on('click', function(e) {
 	
 				var path = "http://www.watershedmvp.org/sam/#/home";
 				var samSite = window.open(path + "/" + scenario);
@@ -384,7 +384,7 @@
 	
 			});
 	
-			$('.save').on('click', function(e){
+			$('.saveDEPRECATED').on('click', function(e){
 	
 				e.preventDefault();
 				var url = "{{url('save')}}" + '/' + scenario;

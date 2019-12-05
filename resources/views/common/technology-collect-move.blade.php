@@ -45,7 +45,7 @@
 			f.preventDefault();
 			map.disableMapNavigation();
 			deleteGraphic();
-			$('.modal-wrapper').hide();
+			toggleUI();
 			map.setInfoWindowOnClick(false);
 			tb.activate('polygon');
 		});
@@ -53,7 +53,7 @@
 		// Handle on-click event for selecting a location for the move site
 		$('#select_area').on('click', function(f) {
 			f.preventDefault();
-			$('.modal-wrapper').hide();
+			toggleUI();
 			deleteGraphic('dump');
 			map.setInfoWindowOnClick(false);
 			tb.activate('point');
