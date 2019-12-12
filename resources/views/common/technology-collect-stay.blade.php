@@ -15,7 +15,7 @@
 		</a>
 		<div class="blade_slider" title="Select the amount to be treated.">
 			<button title="Draw Treatment" class="blade_button" id="draw_collection">Draw Collection</button>
-			<label v-if = "{{in_array($tech->technology_type,['Innovative and Resource-Management Technologies']) && $tech->unit_metric=='Linear Foot'}}" id="unit_metric_label" style="display:none;">Enter number of {{$tech->unit_metric}} to be treated:</label>
+			<label v-if = "{{in_array($tech->technology_type,['Innovative and Resource-Management Technologies']) && $tech->unit_metric=='Linear Foot'}}" id="unit_metric_label" style="display:none;">Enter length (Linear Feet) of PRB to be treated:</label>
 			<input v-if = "{{in_array($tech->technology_type,['Innovative and Resource-Management Technologies']) && $tech->unit_metric=='Linear Foot'}}" id="unit_metric" style="display:none;" v-model="uMetric" type="number" name="unit_metric" value='1'>
 			<label v-if = "{{in_array($tech->technology_type,['Green Infrastructure', 'Innovative and Resource-Management Technologies', 'System Alterations'])}}" id = "collect-label-reduc" style="display:none;">Select a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}}% and {{$tech->Nutri_Reduc_N_High}}%.</label>
 			<label v-if = "{{in_array($tech->technology_type,['Waste Reduction Toilets','On-Site Treatment Systems'])}}" id = "collect-label-reduc" style="display:none;">Select a valid reduction rate between {{$tech->Nutri_Reduc_N_Low_ppm}} ppm and {{$tech->Nutri_Reduc_N_High_ppm}} ppm.</label>

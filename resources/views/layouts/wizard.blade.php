@@ -59,6 +59,8 @@
 <script type="text/javascript">
 
 		$(document).ready(function(){
+			// Remove scrolling from body if routed from login to map
+			$('#app-layout').removeClass('scrollable');
 			
 			$('#fertMan')
 				.css({'cursor': 'pointer'});

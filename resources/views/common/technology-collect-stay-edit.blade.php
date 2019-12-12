@@ -15,7 +15,7 @@
 			<img src="{{$_ENV['CCC_ICONS_SVG'].$tech->icon}}"> 
 		</a>
 		<div class="blade_slider" title="Update the amount to be treated.">
-			<label v-if = "{{in_array($tech->technology_type,['Innovative and Resource-Management Technologies']) && $tech->unit_metric=='Linear Foot'}}" id="unit_metric_label">Update the number of {{$tech->unit_metric}} to be treated:</label>
+			<label v-if = "{{in_array($tech->technology_type,['Innovative and Resource-Management Technologies']) && $tech->unit_metric=='Linear Foot'}}" id="unit_metric_label">Enter length (Linear Feet) of PRB to be treated:</label>
 			<input v-if = "{{in_array($tech->technology_type,['Innovative and Resource-Management Technologies']) && $tech->unit_metric=='Linear Foot'}}" id="unit_metric" v-model="uMetric" type="number" name="unit_metric" value='{{$treatment->Treatment_MetricValue}}'>
 			<label v-if = "{{in_array($tech->technology_type,['Green Infrastructure', 'Innovative and Resource-Management Technologies', 'System Alterations'])}}" id = "collect-label-reduc">Update the reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}}%.</label>
 			<label v-if = "{{in_array($tech->technology_type,['Waste Reduction Toilets','On-Site Treatment Systems'])}}" id = "collect-label-reduc">Update the reduction rate between {{$tech->Nutri_Reduc_N_Low_ppm}} ppm and {{$tech->Nutri_Reduc_N_High_ppm}} ppm.</label>

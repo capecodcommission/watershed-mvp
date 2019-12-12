@@ -7195,6 +7195,7 @@ p span.wizard-span {
 }
 .content.full-width h2.section-title {
   font-size: 1.5em;
+  text-align: center;
 }
 .content.full-width h2.section-subtitle {
   font-size: 1.25em;
@@ -8181,4 +8182,15 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 
   margin: 0; 
+}
+
+.login-image {
+  display: block;
+  margin: 0 auto;
+  max-width: 30%;
+  min-width: 8%;
+}
+
+.scrollable {
+  overflow: scroll !important;
 }

@@ -407,6 +407,7 @@ require([
         }).done(function (allClear) {
             if (allClear != 0) {
                 toggleUI(true);
+                $('#select_area').text('Reselect')
                 $("#unit_metric_label").show();
                 $("#unit_metric").show();
                 $("#subembayment-rate-label").show();
@@ -487,6 +488,7 @@ require([
                 $('#select_area').show();
                 $('#unit_metric').show();
                 $('#unit_metric_label').show();
+                $('#draw_collection').text('Redraw');
                 $("#applytreatment").show();
                 toggleUI(true);
             }
@@ -893,7 +895,7 @@ require([
     var extent;
 
     var embayments = new FeatureLayer(
-        "http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/4",
+        "https://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/4",
         {
             mode: FeatureLayer.MODE_ONDEMAND,
             outFields: ["*"],
@@ -910,7 +912,7 @@ require([
     });
 
     var Subwatersheds = new FeatureLayer(
-        "http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/6",
+        "https://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/6",
         {
             mode: FeatureLayer.MODE_ONDEMAND,
             outFields: ["*"],
@@ -929,7 +931,7 @@ require([
     });
 
     var Subembayments = new FeatureLayer(
-        "http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/11",
+        "https://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/11",
         {
             mode: FeatureLayer.MODE_ONDEMAND,
             outFields: ["*"],
@@ -1022,7 +1024,7 @@ require([
 
     // Layer 13 is now used for all point layers
     var NitrogenLayer = new FeatureLayer(
-        "http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13",
+        "https://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13",
         {
             mode: FeatureLayer.MODE_ONDEMAND,
             outFields: ["*"],
@@ -1060,7 +1062,7 @@ require([
 
     // Layer 13 is now used for all point layers
     var WasteWater = new FeatureLayer(
-        "http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13",
+        "https://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13",
         {
             mode: FeatureLayer.MODE_ONDEMAND,
             outFields: ["*"],
@@ -1093,7 +1095,7 @@ require([
     map.addLayer(WasteWater);
 
     var Towns = new FeatureLayer(
-        "http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/5",
+        "https://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/5",
         {
             mode: FeatureLayer.MODE_ONDEMAND,
             outFields: ["*"],
@@ -1108,7 +1110,7 @@ require([
 
     // Layer 13 is now used for all point layers
     var TreatmentType = new FeatureLayer(
-        "http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13",
+        "https://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13",
         {
             mode: FeatureLayer.MODE_ONDEMAND,
             outFields: ["*"],
@@ -1155,7 +1157,7 @@ require([
     map.addLayer(TreatmentType);
 
     var TreatmentFacilities = new FeatureLayer(
-        "http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/9",
+        "https://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/9",
         {
             mode: FeatureLayer.MODE_ONDEMAND,
             outFields: ["*"],
@@ -1166,7 +1168,7 @@ require([
     map.addLayer(TreatmentFacilities);
 
     var EcologicalIndicators = new FeatureLayer(
-        "http://gis-services.capecodcommission.org/arcgis/rest/services/Projects/208_Plan/MapServer/10",
+        "https://gis-services.capecodcommission.org/arcgis/rest/services/Projects/208_Plan/MapServer/10",
         {
             mode: FeatureLayer.MODE_ONDEMAND,
             outFields: ["*"],
@@ -1177,7 +1179,7 @@ require([
     map.addLayer(EcologicalIndicators);
 
     var ShallowGroundwater = new FeatureLayer(
-        "http://gis-services.capecodcommission.org/arcgis/rest/services/Projects/208_Plan/MapServer/32",
+        "https://gis-services.capecodcommission.org/arcgis/rest/services/Projects/208_Plan/MapServer/32",
         {
             mode: FeatureLayer.MODE_ONDEMAND,
             outFields: ["*"],
@@ -1189,7 +1191,7 @@ require([
 
     // Layer 13 is now used for all point layers
     var LandUse = new FeatureLayer(
-        "http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13",
+        "https://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13",
         {
             mode: FeatureLayer.MODE_ONDEMAND,
             outFields: ["*"],
@@ -1288,7 +1290,7 @@ require([
     map.addLayer(LandUse);
 
     var FlowThrough = new FeatureLayer(
-        "http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/12",
+        "https://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/12",
         {
             mode: FeatureLayer.MODE_ONDEMAND,
             outFields: ["*"],
@@ -1301,7 +1303,7 @@ require([
     map.addLayer(FlowThrough);
 
     var Contours = new FeatureLayer(
-        "http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/14",
+        "https://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/14",
         {
             mode: FeatureLayer.MODE_ONDEMAND,
             outFields: ["*"],

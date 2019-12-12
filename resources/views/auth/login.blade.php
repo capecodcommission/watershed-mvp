@@ -4,6 +4,7 @@
 <div class="wrapper">
     <div class="centered">
         <div class="login-register">
+            <img class = 'login-image' src = 'https://user-images.githubusercontent.com/16725828/70354678-3e457600-183e-11ea-8a95-6baf544ec121.jpg'/>
             <h2 class="section-title">Welcome to the new and improved WatershedMVP 3.1!</h2>
             <p>The Cape Cod Commission developed the WatershedMVP application for professionals, municipal officials and community members in order to assist in creating the most cost-effective and efficient solutions to Cape Cod’s wastewater problem.</p>
 
@@ -12,7 +13,7 @@
             <p>This new version of the application allows users to save and re-edit their scenarios. To facilitate this, we needed to create individual user accounts.</p>
 
 
-            <p>Please enter your email address and password, or <a href="{{ url('/register') }}">Register</a> if you don't have an account.</p>  
+            <p style = 'padding-bottom: 10px'>Please enter your email address and password, or <a href="{{ url('/register') }}">Register</a> if you don't have an account.</p>  
 
             @include('common.errors')
             
@@ -34,9 +35,15 @@
                 <p>
                     <button type="submit" class="button round"><i class="fa fa-check"></i> Login</button> <span>&nbsp;<a href="{{ url('/password/reset') }}">Forgot Password?</a></span>
                 </p>
-            </form><br><br>
-            <p>If you are looking for the old watershedMVP, it can still be found <a href="http://2014.watershedmvp.org" target="_blank">here.</a></p>
+            </form>
+            <p style = 'padding-top: 10px'>If you are looking for the old watershedMVP, it can still be found <a href="http://2014.watershedmvp.org" target="_blank">here.</a></p>
         </div>  
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        // Add scrolling to main body on login only
+        $('#app-layout').addClass('scrollable');
+    })
+</script>
 @endsection
