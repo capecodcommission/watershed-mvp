@@ -7630,14 +7630,15 @@ nav.toolbar .tool {
   right: 1%;
   bottom: 1%;
   position: absolute;
-  background: #ecf0f1;
+  background: black;
   overflow: auto;
 }
 
 #new_accordion_title {
   margin: 0.5em 0 0 0;
   text-align: center;
-  font: 2.5vh bold Arial, Helvetica, sans-serif;
+  font: 3vh bolder Arial, Helvetica, sans-serif;
+  font-variant: small-caps;
 }
 
 /* Accordion styles */
@@ -7947,12 +7948,20 @@ nav.toolbar .tool {
 }
 
 /* https://plot.ly/javascript/responsive-fluid-layout/ */
-#plotlyDiv {
-  margin: 8% 2% 0 2%;
-  background: darkgrey;
-  border: 0.02em solid black;
+/* single bar chart layout */
+/* #plotlyDiv {
+  margin: 8% 1% 0 1%;
   height: 50%;
-  min-height: 50%;
+  font-variant: small-caps;
+  font: 4vh;
+} */
+
+#scenario_progress_text {
+  margin-top: 2em;
+  vertical-align: middle;
+  text-align: center;
+  font-variant: small-caps;
+  font-weight: bolder;
 }
 
 #accordion_top_row_button {
@@ -7974,11 +7983,12 @@ nav.toolbar .tool {
 .accordion_item_close {
   text-align: center;
   padding: 3%;
-  margin-top: 55%;
+  margin-top: 100%;
   font-size: 1.5em;
   background: rgb(255, 182, 18);
   cursor: pointer;
-  border-radius: 50%;
+  border-radius: 20%;
+  height: 40%;
 }
 .accordion_item_close:hover {
   color: black;

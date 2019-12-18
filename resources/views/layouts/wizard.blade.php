@@ -10,7 +10,7 @@
 		<?php else :?>
 			<link rel="stylesheet" href="{{url('/css/app.css')}}">
 		<?php endif; ?>
-		<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+		<script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 		<link rel="stylesheet" href="https://js.arcgis.com/3.16/esri/css/esri.css">
 		<script src="https://js.arcgis.com/3.16/"></script>
 		<link rel="stylesheet" href="https://js.arcgis.com/3.16/dijit/themes/claro/claro.css">  
@@ -38,6 +38,7 @@
 			var center_y = {{$embayment->latitude}};
 			window.name = 'wmvp_scenario_{{session('scenarioid')}}';
 		</script>
+		<script src="{{url('/js/plotly.js')}}"></script>
 		<script src="{{url('/js/map.js')}}"></script>
 		<script src="{{url('/js/main.js')}}"></script>
 		<script src="{{url('/js/jquery.popdown.js')}}"></script>
@@ -46,7 +47,8 @@
 			$(document).ready(function(){
 				// Remove scrolling from body if routed from login to map
 				$('#app-layout').removeClass('scrollable');
-				
+				// $('#update').trigger("click");
+
 				$('#fertMan')
 					.css({'cursor': 'pointer'});
 
@@ -103,6 +105,76 @@
 			});
 		</script>
 		<script>
+			function colorItWhite(progress) {
+				console.log('white');
+				$('div.plotlyDiv p').text('Scenario Progress: ' + progress + '%');
+				$('div.plotlyDiv p').css({'color': 'white'});
+			};
+			
+			function colorItBlueLow(progress) {
+				console.log('bluelow');
+				$('div.plotlyDiv p').text('Scenario Progress: ' + progress + '%');
+				$('div.plotlyDiv p').css({'color': '#eff3ff'});
+			};
+
+			function colorItBlueLowMid(progress) {
+				console.log('bluelowmid');
+				$('div.plotlyDiv p').text('Scenario Progress: ' + progress + '%');
+				$('div.plotlyDiv p').css({'color': '#bdd7e7'});
+			};
+
+			function colorItBlueHighMid(progress) {
+				console.log('bluehimid');
+				$('div.plotlyDiv p').text('Scenario Progress: ' + progress + '%');
+				$('div.plotlyDiv p').css({'color': '#6baed6'});
+			};
+
+			function colorItBlueHigh(progress) {
+				console.log('bluehi');
+				$('div.plotlyDiv p').text('Scenario Progress: ' + progress + '%');
+				$('div.plotlyDiv p').css({'color': '#3182bd'});		
+			};
+
+			function colorItBlueFull(progress) {
+				console.log('bluefull');
+				$('div.plotlyDiv p').text('Scenario Progress: ' + progress + '%');
+				$('div.plotlyDiv p').css({'color': '#08519c'});
+			};
+
+			function colorProgress(progress) {
+				if (progress < 0) {
+					alert("Somehow you ended up with a negative scenario progress percentage. That seems curious!")
+				}
+				else if (progress == 0) {
+					console.log('=0');
+					colorItWhite(progress);
+				}
+				else if (progress > 0 && progress <= 25) {
+					console.log('progress<=25');
+					colorItBlueLow(progress);
+				}
+				else if (progress > 25 && progress <= 50) {
+					console.log('progress<=50');
+					colorItBlueLowMid(progress);
+				}
+				else if (progress > 50 && progress <= 75) {
+					console.log('progress<=75');
+					colorItBlueHighMid(progress);
+				}
+				else if (progress > 75 && progress < 100) {
+					console.log('<100');
+					colorItBlueHigh(progress);
+				}
+				else if (progress == 100) {
+					console.log('=100');
+					colorItBlueFull(progress);
+				}
+				else {
+					alert("Something unexcpected is happening with your scenario progress percentage. Let's try that again!");
+				}
+			};
+
+							
 			var progress;
 			progress = {{$progress}};
 			remaining = Math.round({{$remaining}});
@@ -113,6 +185,8 @@
 			{
 				progress = 100;
 			}
+
+			colorProgress(progress);
 			
 			$('div.progress').css('height', progress+'%');
 
@@ -135,6 +209,8 @@
 					$('div.progress h3').text(progress + '%');
 					$('.remaining span').text(remaining);
 					$('div.progress').animate({'height': progress+'%'}, 500);
+
+					colorProgress(progress)
 
 					subembayments = msg.subembayments;
 					$.each(subembayments, function(key, value)

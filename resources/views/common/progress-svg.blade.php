@@ -1,4 +1,4 @@
-		<div id="overall_progress">
+		<div style = "display:none" id="overall_progress">
 			
 			<!-- TODO: Rename update div to 'update scenario progrses' -->
 			<!-- TODO: Change all references from '#update' to new div id -->
