@@ -1,6 +1,5 @@
 <!-- resources/views/layouts/wizard.blade -->
 <!DOCTYPE html>
-
 <html>
 	<head>
 		<title>WatershedMVP 3.0 Wizard</title>
@@ -27,7 +26,6 @@
 					@include('common/selected-treatments')
 				</nav>
 				@include('common/subembayment-progress')
-				@include('common/progress-svg')
 				@include('common/wizard-steps')
 			</div>
 		</div>
@@ -44,20 +42,15 @@
 		<script src="{{url('/js/jquery.popdown.js')}}"></script>
 		<script src="{{url('/js/helpers.js')}}"></script>
 		<script type="text/javascript">
-			$(document).ready(function(){
+			$(document).ready(function() {
 				// Remove scrolling from body if routed from login to map
 				$('#app-layout').removeClass('scrollable');
-				// $('#update').trigger("click");
 
-				$('#fertMan')
-					.css({'cursor': 'pointer'});
+				$('#fertMan').css({'cursor': 'pointer'});
 
-				$('#stormMan')
-					.css({'cursor': 'pointer'});
+				$('#stormMan').css({'cursor': 'pointer'});
 
-				// Disable during testing
-				$('.popdown').popdown();
-				$('#closeACC').on('click', function(event){
+				$('#closeACC').on('click', function(event) {
 					$('.state').prop('checked', false);
 				});
 				$('.sliding-panel-content').toggleClass('is-visible');
@@ -66,15 +59,14 @@
 				});
 
 				// TODO: Is this real?
-				$('#getNitrogen').on('click', function(e){
+				$('#getNitrogen').on('click', function(e) {
 					e.preventDefault();
 					var url = "{{url('/getScenarioNitrogen')}}";
 					$.ajax({
 						method: 'GET',
 						url: url
 					})
-					.done(function(msg){
-						// console.log(msg);
+					.done(function(msg) {
 						var nitrogen = Math.round(msg[0].N_Original - msg[0].N_Removed);
 						$('#getNitrogen').text(nitrogen + 'kg');
 					})
@@ -86,57 +78,47 @@
 
 				// If fert management applied, disable clickability for icon
 				if (fertApplied) {
-					$('#fertMan')
-						.css({'pointer-events': 'none'});
+					$('#fertMan').css({'pointer-events': 'none'});
 				} else {
-					$('#fertMan')
-						.css({'pointer-events': 'auto'});
+					$('#fertMan').css({'pointer-events': 'auto'});
 				}
 
 				// If storm management applied, disable clickability for icon
 				if (stormApplied) {
-					$('#stormMan')
-						.css({'pointer-events': 'none'});
+					$('#stormMan').css({'pointer-events': 'none'});
 				} else {
-					$('#stormMan')
-						.css({'pointer-events': 'auto'});
+					$('#stormMan').css({'pointer-events': 'auto'});
 				}
 
 			});
 		</script>
 		<script>
 			function colorItWhite(progress) {
-				console.log('white');
 				$('div.plotlyDiv p').text('Scenario Progress: ' + progress + '%');
 				$('div.plotlyDiv p').css({'color': 'white'});
 			};
 			
 			function colorItBlueLow(progress) {
-				console.log('bluelow');
 				$('div.plotlyDiv p').text('Scenario Progress: ' + progress + '%');
 				$('div.plotlyDiv p').css({'color': '#eff3ff'});
 			};
 
 			function colorItBlueLowMid(progress) {
-				console.log('bluelowmid');
 				$('div.plotlyDiv p').text('Scenario Progress: ' + progress + '%');
 				$('div.plotlyDiv p').css({'color': '#bdd7e7'});
 			};
 
 			function colorItBlueHighMid(progress) {
-				console.log('bluehimid');
 				$('div.plotlyDiv p').text('Scenario Progress: ' + progress + '%');
 				$('div.plotlyDiv p').css({'color': '#6baed6'});
 			};
 
 			function colorItBlueHigh(progress) {
-				console.log('bluehi');
 				$('div.plotlyDiv p').text('Scenario Progress: ' + progress + '%');
 				$('div.plotlyDiv p').css({'color': '#3182bd'});		
 			};
 
 			function colorItBlueFull(progress) {
-				console.log('bluefull');
 				$('div.plotlyDiv p').text('Scenario Progress: ' + progress + '%');
 				$('div.plotlyDiv p').css({'color': '#08519c'});
 			};
@@ -146,27 +128,21 @@
 					alert("Somehow you ended up with a negative scenario progress percentage. That seems curious!")
 				}
 				else if (progress == 0) {
-					console.log('=0');
 					colorItWhite(progress);
 				}
 				else if (progress > 0 && progress <= 25) {
-					console.log('progress<=25');
 					colorItBlueLow(progress);
 				}
 				else if (progress > 25 && progress <= 50) {
-					console.log('progress<=50');
 					colorItBlueLowMid(progress);
 				}
 				else if (progress > 50 && progress <= 75) {
-					console.log('progress<=75');
 					colorItBlueHighMid(progress);
 				}
 				else if (progress > 75 && progress < 100) {
-					console.log('<100');
 					colorItBlueHigh(progress);
 				}
 				else if (progress == 100) {
-					console.log('=100');
 					colorItBlueFull(progress);
 				}
 				else {
@@ -190,14 +166,14 @@
 			
 			$('div.progress').css('height', progress+'%');
 
-			$('#update').on('click', function(e){
+			$('#update').on('click', function(e) {
 				var url= '/getScenarioProgress';
 
 				$.ajax({
 					method: 'GET',
 					url: url
 				})
-				.done(function(msg){
+				.done(function(msg) {
 					progress = msg.embayment;
 					remaining = Math.round(msg.remaining);
 
@@ -210,14 +186,12 @@
 					$('.remaining span').text(remaining);
 					$('div.progress').animate({'height': progress+'%'}, 500);
 
-					colorProgress(progress)
+					colorProgress(progress);
 
 					subembayments = msg.subembayments;
-					$.each(subembayments, function(key, value)
-					{
+					$.each(subembayments, function(key, value) {
 						var sub_progress = value.n_load_target / (value.n_load_att - value.n_load_att_removed);
 						if (sub_progress < 1 & sub_progress > 0) {
-
 							sub_progress = sub_progress * 100;
 						} else {
 							sub_progress = 100;
@@ -229,20 +203,16 @@
 					
 					// If fert management applied, disable clickability on fert icon
 					if (msg.fertapplied) {
-						$('#fertMan')
-							.css({'pointer-events': 'none'});
+						$('#fertMan').css({'pointer-events': 'none'});
 					} else {
-						$('#fertMan')
-							.css({'pointer-events': 'auto'});
+						$('#fertMan').css({'pointer-events': 'auto'});
 					}
 
 					// If storm management applied, disable clickability on storm icon
 					if (msg.stormapplied) {
-						$('#stormMan')
-							.css({'pointer-events': 'none'});
+						$('#stormMan').css({'pointer-events': 'none'});
 					} else {
-						$('#stormMan')
-							.css({'pointer-events': 'auto'});
+						$('#stormMan').css({'pointer-events': 'auto'});
 					}
 				})
 			});

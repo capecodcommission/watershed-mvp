@@ -1,15 +1,15 @@
 <div class="accordion" id="new_accordion">
-        <p id="new_accordion_title"><b>Scenario Controller</b></p>
-        <section class="accordion_container">
-            <div class="accordion_top_row">
-                    <input type="radio" class="accordion_item_input" id="close_accordion_items" name="rd">
-                    <label for="close_accordion_items" class="accordion_item_close">&times;</label>
-                <div class="plotlyDiv"><p id="scenario_progress_text"></p></div>
-                <div id="accordion_top_row_button">
-                    <a href="{{url('results', session('scenarioid'))}}" class="fa fa-external-link button" title="Results" target="wmvp_results_{{session('scenarioid')}}"></a>
-                    <a id = 'saved' class="fa fa-save save button" title="Save"></a>
-                    <a href="{{url('download', session('scenarioid'))}}" class="fa fa-download button" aria-hidden="true" title="Download"></a>
-                </div>
+    <p id="new_accordion_title"><b>Scenario Controller</b></p>
+    <section class="accordion_container">
+        <div class="accordion_top_row"  id="update">
+            <input type="radio" class="accordion_item_input" id="close_accordion_items" name="rd">
+            <label for="close_accordion_items" class="accordion_item_close">&times;</label>
+            <div class="plotlyDiv"><p id="scenario_progress_text"></p></div>
+            <div id="accordion_top_row_button">
+                <a href="{{url('results', session('scenarioid'))}}" class="fa fa-external-link button" title="Results" target="wmvp_results_{{session('scenarioid')}}"></a>
+                <a id = 'saved' class="fa fa-save save button" title="Save"></a>
+                <a href="{{url('download', session('scenarioid'))}}" class="fa fa-download button" aria-hidden="true" title="Download"></a>
+            </div>
             </div>
             <div class="accordion_item">
                 <input type="radio" class="accordion_item_input" id="scenario_overview" name="rd">
@@ -239,42 +239,41 @@
                         </a>
                     </div>
                 </div>
-            </div>
-            <div id="info"></div>
-        </section>
-    </div>
+        </div>
+        <div id="info"></div>
+    </section>
+</div>
     
-    <script>
-        $(document).ready(function(){
-            // Retrieve session data values
-            scenario = {{session('scenarioid')}};
-            fertApplied = {{session('fert_applied')}};
-            stormApplied = {{session('storm_applied')}};
+<script>
+    $(document).ready(function() {
+        // Retrieve session data values
+        scenario = {{session('scenarioid')}};
+        fertApplied = {{session('fert_applied')}};
+        stormApplied = {{session('storm_applied')}};
             
-            $('#fim').on('click', function(e) {
-                // if below doesn't work, add to fim button above ----> href = "http://2016.watershedmvp.org/fim/scenario/{{session('scenarioid')}}/treatmentsDetails"
-                window.open("http://www.watershedmvp.org/fim/scenario/" + scenario + "/treatmentsDetails")
-            });
+        $('#fim').on('click', function(e) {
+            // if below doesn't work, add to fim button above ----> href = "http://2016.watershedmvp.org/fim/scenario/{{session('scenarioid')}}/treatmentsDetails"
+            window.open("http://www.watershedmvp.org/fim/scenario/" + scenario + "/treatmentsDetails")
+        });
 
-            // $('#sam').on('click', function(e) {
-            // 	var path = "http://www.watershedmvp.org/sam/#/home";
-            // 	var samSite = window.open(path + "/" + scenario);
-            // 	samSite.onload = function() {
-            // 		var scenarioID = scenario;
-            // 		localStorage.setItem("scenarioID",scenarioID);
-            // 	};
-            // });
+        // $('#sam').on('click', function(e) {
+        // 	var path = "http://www.watershedmvp.org/sam/#/home";
+        // 	var samSite = window.open(path + "/" + scenario);
+        // 	samSite.onload = function() {
+        // 		var scenarioID = scenario;
+        // 		localStorage.setItem("scenarioID",scenarioID);
+        // 	};
+        // });
 
-            $('.save').on('click', function(e){
-                e.preventDefault();
-                var url = "{{url('save')}}" + '/' + scenario;
-                $.ajax({
-                    method: 'GET',
-                    url: url
-                }).done(function(msg){
-                    $('#saved').addClass('button--cta')
-                });
+        $('.save').on('click', function(e) {
+            e.preventDefault();
+            var url = "{{url('save')}}" + '/' + scenario;
+            $.ajax({
+                method: 'GET',
+                url: url
+            }).done(function(msg){
+                $('#saved').addClass('button--cta')
             });
         });
-    </script>
-    
+    });
+</script>

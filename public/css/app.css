@@ -7639,6 +7639,7 @@ nav.toolbar .tool {
   text-align: center;
   font: 3vh bolder Arial, Helvetica, sans-serif;
   font-variant: small-caps;
+  color: #ddd;
 }
 
 /* Accordion styles */
