@@ -6,6 +6,7 @@
             <label for="close_accordion_items" class="accordion_item_close">&times;</label>
             <div class="plotlyDiv"><p id="scenario_progress_text"></p></div>
             <div id="accordion_top_row_button">
+                <a class="button" href="{{ url('/start') }}" title="Start New Scenario" target="_blank"><i class="fa fa-undo"></i></a>
                 <a href="{{url('results', session('scenarioid'))}}" class="fa fa-external-link button" title="Results" target="wmvp_results_{{session('scenarioid')}}"></a>
                 <a id = 'saved' class="fa fa-save save button" title="Save"></a>
                 <a href="{{url('download', session('scenarioid'))}}" class="fa fa-download button" aria-hidden="true" title="Download"></a>
