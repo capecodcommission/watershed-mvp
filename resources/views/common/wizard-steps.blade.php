@@ -1,7 +1,7 @@
 <div class="accordion" id="new_accordion">
     <p id="new_accordion_title"><b>Scenario Controller</b></p>
     <section class="accordion_container">
-        <div class="accordion_top_row"  id="update">
+        <div class="accordion_top_row">
             <input type="radio" class="accordion_item_input" id="close_accordion_items" name="rd">
             <label for="close_accordion_items" class="accordion_item_close">&times;</label>
             <div class="plotlyDiv"><p id="scenario_progress_text"></p></div>
@@ -242,6 +242,7 @@
         </div>
         <div id="info"></div>
     </section>
+    <div id="update"></div>
 </div>
     
 <script>
