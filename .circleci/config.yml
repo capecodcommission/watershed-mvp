@@ -29,6 +29,7 @@ jobs:
             echo MAIL_PORT=${MAIL_PORT} >> .env
             echo LARAVEL_DEBUGBAR=${LARAVEL_DEBUGBAR} >> .env
             echo CCC_ICONS_SVG=${CCC_ICONS_SVG} >> .env
+            echo CCC_ICONS_PNG=${CCC_ICONS_PNG} >> .env
             echo -e "text\n" >> .env
             docker build . -t ${registryName}.azurecr.io/wmvp:latest
             docker login ${registryName}.azurecr.io -u ${registryName} -p ${registryPassword}
@@ -62,6 +63,7 @@ jobs:
             echo MAIL_PORT=${MAIL_PORT} >> .env
             echo LARAVEL_DEBUGBAR=${LARAVEL_DEBUGBAR} >> .env
             echo CCC_ICONS_SVG=${CCC_ICONS_SVG} >> .env
+            echo CCC_ICONS_PNG=${CCC_ICONS_PNG} >> .env
             echo -e "text\n" >> .env
             docker build . -t ${registryName}.azurecr.io/wmvp:dev
             docker login ${registryName}.azurecr.io -u ${registryName} -p ${registryPassword}

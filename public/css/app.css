@@ -7647,13 +7647,22 @@ nav.toolbar .tool {
   animation: 1s ease-out 0s 1 slideInFromBottom;
 }
 
+/* #title_top {
+  width: 100%;
+} */
+
 #new_accordion_title {
   margin: 0.5em 0 0 0;
   text-align: center;
   font: 3vh bolder Arial, Helvetica, sans-serif;
   font-variant: small-caps;
   color: #ddd;
+  display: inline-flex;
 }
+
+/* #angle_down_button {
+
+} */
 
 /* Accordion styles */
 .accordion_item_input {

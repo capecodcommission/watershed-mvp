@@ -1,5 +1,8 @@
 <div class="accordion" id="new_accordion">
-    <p id="new_accordion_title"><b>Scenario Controller</b></p>
+    <!-- <div id="title_top"> -->
+        <p id="new_accordion_title"><b>Scenario Controller</b></p>
+        <a id="angle_down_button" class="fa fa-angle-down button" title="Hide Scenario Controller"></a>
+    <!-- </div> -->
     <section class="accordion_container">
         <div class="accordion_top_row">
             <input type="radio" class="accordion_item_input" id="close_accordion_items" name="rd">
