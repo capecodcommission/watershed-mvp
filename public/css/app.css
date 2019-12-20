@@ -7634,6 +7634,19 @@ nav.toolbar .tool {
   overflow: auto;
 }
 
+.FIM_icon {
+  width: 15%;
+  cursor: pointer;
+}
+
+.hide_accordion {
+  animation: 1s ease-out 0s 1 slideOutToBottom;
+}
+
+.show_accordion {
+  animation: 1s ease-out 0s 1 slideInFromBottom;
+}
+
 #new_accordion_title {
   margin: 0.5em 0 0 0;
   text-align: center;
@@ -8043,6 +8056,24 @@ nav.toolbar .tool {
   }
   100% {
     transform: translateX(-100%);
+  }
+}
+
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(300%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideOutToBottom {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(300%);
   }
 }
 

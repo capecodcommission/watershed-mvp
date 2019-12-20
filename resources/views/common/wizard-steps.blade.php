@@ -31,7 +31,9 @@
                             For each of these stages, you can select technologies to remove Nitrogen from the embayment. For some, you can select the area that will be treated by drawing a polygon on the map. Your progress towards the embayment's Target Nitrogen Removal will be displayed in the graph to the left. In addition to the overall target, each sub-embayment will have its own individual Nitrogen load and target, which you can track using the graphs in the left sidebar.
                         </p>
                         <div>
-                            <a id="fim" class="button">Financial Impact Model</a>
+                            <a>
+                                <img src="{{$_ENV['CCC_ICONS_PNG']}}FIM.png" class="FIM_icon" id="fim" title="Open Scenario in the Financial Impact Model (FIM)">
+                            </a>
                         </div>
                     </div>
                 </div>
