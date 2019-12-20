@@ -73,7 +73,7 @@
             var template = new InfoTemplate();
             template.setTitle("<b>${EMBAY_DISP}</b>");
             template.setContent("<a href='{{url('map')}}/${EMBAY_ID}'>Create a scenario for ${EMBAY_DISP}</a>");  
-            var embayLayer = new FeatureLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/4", {
+            var embayLayer = new FeatureLayer("https://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP4/MapServer/1", {
                 mode: FeatureLayer.MODE_ONDEMAND,
                 infoTemplate:template,
                 outFields: ["EMBAY_DISP", "EMBAY_ID"]
@@ -98,7 +98,7 @@
               });
 
               // Layer 13 is now used for all point layers
-              var NitrogenLayer = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/13', {
+              var NitrogenLayer = new FeatureLayer('https://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP4/MapServer/0', {
                   mode: FeatureLayer.MODE_ONDEMAND,
                   outFields: ["*"],
                   opacity: 1,
@@ -136,7 +136,7 @@
               });
 
 
-              var Subwatersheds = new FeatureLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/6", {
+              var Subwatersheds = new FeatureLayer("https://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP4/MapServer/3", {
                 mode: FeatureLayer.MODE_ONDEMAND,
                 outFields: ["*"],
                 infoTemplate: subwater_template,
