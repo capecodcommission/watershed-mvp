@@ -2,7 +2,7 @@
 <!-- This is the starting page for the WMVP3 Wizard where the user logs in or selects a watershed to run a scenario -->
 <html>
 <head>
-    <title>WatershedMVP 3.0</title>
+    <title>WatershedMVP 4.0</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <?php if( env('APP_ENV') == 'production' ) : ?>
 		<link rel="stylesheet" href="{{secure_url('/css/app.css')}}">
@@ -284,7 +284,7 @@
 <body class="start">
     <div id="map" class="map"></div>
         <div class="secondary start">
-        <img src="http://www.watershedmvp.org/images/mvplogo.png" alt="WatershedMVP 3.0 by Cape Cod Commission">
+        <img src="http://www.watershedmvp.org/images/mvplogo.png" alt="WatershedMVP 4.0 by Cape Cod Commission">
         
 
 

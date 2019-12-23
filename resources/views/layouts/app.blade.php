@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>  
-    <title>WatershedMVP 3.0</title>
+    <title>WatershedMVP 4.0</title>
     <?php if( env('APP_ENV') == 'production' ) : ?>
 		<link rel="stylesheet" href="{{secure_url('/css/app.css')}}">
 	<?php else :?>

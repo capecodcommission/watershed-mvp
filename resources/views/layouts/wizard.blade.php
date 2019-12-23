@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>WatershedMVP 3.0 Wizard</title>
+		<title>WatershedMVP 4.0 Wizard</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<?php if( env('APP_ENV') == 'production' ) : ?>
 			<link rel="stylesheet" href="{{secure_url('/css/app.css')}}">

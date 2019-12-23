@@ -1,6 +1,6 @@
 <nav>
     <ul>
-        <li class="left"><img src="http://www.watershedmvp.org/images/mvplogo.png" alt="WatershedMVP 3.0 by Cape Cod Commission"></li>
+        <li class="left"><img src="http://www.watershedmvp.org/images/mvplogo.png" alt="WatershedMVP 4.0 by Cape Cod Commission"></li>
         <li class="right"><a href="{{url('/help')}}" class="button"><i class="fa fa-btn fa-question-circle"></i> Help</a></li>
         @if (Auth::guest())
             <li class="right"><a href="{{ url('/register') }}" class="button"><i class="fa fa-btn fa-user-plus"></i> Register</a></li>

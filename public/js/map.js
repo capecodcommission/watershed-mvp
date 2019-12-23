@@ -4,6 +4,7 @@ var embay_shape;
 var treatment;
 var func;
 var editGeoClicked;
+var popupsDisabled;
 require([
     "esri/map",
     "esri/dijit/BasemapGallery",
@@ -1022,6 +1023,29 @@ require([
             "</tbody></table>"
     });
 
+    var flowThroughTemplate = new InfoTemplate({
+        title: "Info",
+        content:
+            "<table class = 'table'><tbody>" +
+            "<tr style = 'height: 2px'>" +
+            "<td style = 'padding: 0px; margin: 0px;'>" +
+            "Subwatershed Name: " +
+            "</td>" +
+            "<td style = 'padding: 0px; margin: 0px;'>" +
+            "${SUBWATER_DISP}" +
+            "</td>" +
+            "</tr>" +
+            "<tr style = 'height: 2px'>" +
+            "<td style = 'padding: 0px; margin: 0px;'>" +
+            "Subwatershed Flowthough Total: " +
+            "</td>" +
+            "<td style = 'padding: 0px; margin: 0px;'>" +
+            "${SUBWATER_TOTAL:NumberFormat(places:2)}" +
+            "</td>" +
+            "</tr>" +
+            "</tbody></table>"
+    });
+
     // Layer 13 is now used for all point layers
     var NitrogenLayer = new FeatureLayer(
         "https://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP4/MapServer/0",
@@ -1302,7 +1326,7 @@ require([
             mode: FeatureLayer.MODE_ONDEMAND,
             outFields: ["*"],
             opacity: 1,
-            infoTemplate: nitro_template
+            infoTemplate: flowThroughTemplate
         }
     );
 
@@ -1403,6 +1427,12 @@ require([
             layer.hide()
             tag.attr("data-visible", "off");
         }
+
+        if (popupsDisabled) {
+            map.setInfoWindowOnClick(false);
+        } else {
+            map.setInfoWindowOnClick(true);
+        }
     }
 
     // Handler for all toggleable Map layers
@@ -1463,52 +1493,15 @@ require([
         Subembayments.show();
     });
 
-    $("#disable-popups").on("click", function (e) {
-        var layers = [
-            NitrogenLayer,
-            Subembayments,
-            Subwatersheds,
-            WasteWater,
-            Towns,
-            TreatmentType,
-            TreatmentFacilities,
-            EcologicalIndicators,
-            ShallowGroundwater,
-            LandUse,
-            FlowThrough,
-            Contours
-        ];
-
+    $(document).on("click", "#disable-popups", function (e) {
         if ($(this).hasClass("enabled")) {
-            for (var i = 0; i < layers.length; i++) {
-                if (layers[i].visible) {
-                    layers[i].setInfoTemplate(null);
-                }
-            }
-
+            popupsDisabled = true;
+            map.setInfoWindowOnClick(false);
             $(this).toggleClass("enabled fa-eye-slash");
         } else {
-            for (var i = 0; i < layers.length; i++) {
-                if (layers[i].visible) {
-                    layers[i].setInfoTemplate(nitro_template);
-                }
-            }
-
+            popupsDisabled = false;
+            map.setInfoWindowOnClick(true);
             $(this).toggleClass("enabled fa-eye-slash");
         }
     });
-
-    var getDestinationPoint = map.on("select-destination", getDestination);
-
-    function getDestination(evt) {
-        return evt;
-        getDestinationPoint.remove();
-    }
-
-    var getDestinationPoint = map.on("select-destination", getDestination);
-
-    function getDestination(evt) {
-        return evt;
-        getDestinationPoint.remove();
-    }
 });

@@ -5,7 +5,7 @@
     <div class="centered">
         <div class="login-register">
             <img class = 'login-image' src = 'https://user-images.githubusercontent.com/16725828/70354678-3e457600-183e-11ea-8a95-6baf544ec121.jpg'/>
-            <h2 class="section-title">Welcome to the new and improved WatershedMVP 3.1!</h2>
+            <h2 class="section-title">Welcome to the new and improved WatershedMVP 4.0!</h2>
             <p>The Cape Cod Commission developed the WatershedMVP application for professionals, municipal officials and community members in order to assist in creating the most cost-effective and efficient solutions to Cape Cod’s wastewater problem.</p>
 
             <p>The application is an informational resource intended to provide regional estimates for planning purposes. WatershedMVP is an initiative of the Cape Cod Commission’s Strategic Information Office (SIO). To learn more about the WatershedMVP application and the Cape Cod Commission and its SIO, please <a href="http://www.capecodcommission.org/index.php?id=205" target="_blank">contact us</a>.</p>
