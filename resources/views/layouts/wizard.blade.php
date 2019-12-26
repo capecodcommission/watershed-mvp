@@ -27,6 +27,7 @@
 				</nav>
 				@include('common/subembayment-progress')
 				@include('common/wizard-steps')
+				@include('common/wizard-steps-open-arrow')
 			</div>
 		</div>
 		@include('common/modal')

@@ -245,13 +245,14 @@
                         </a>
                     </div>
                 </div>
-        </div>
+            </div>
         <div id="info"></div>
     </section>
     <div id="update"></div>
+    <!-- <a id="angle_up_button" class="fa fa-angle-up button" title="Show Scenario Controller" style="display:none;"></a> -->
 </div>
     
-<script>
+<script type="application/javascript">
     $(document).ready(function() {
         // Retrieve session data values
         scenario = {{session('scenarioid')}};
@@ -281,6 +282,11 @@
             }).done(function(msg){
                 $('#saved').addClass('button--cta')
             });
+        });
+
+        $('#angle_down_button').on('click', function(e) {
+            e.preventDefault();
+            hideControlPannel();
         });
     });
 </script>

@@ -131,3 +131,21 @@ const toggleUI = (show) => {
         $('#overall_progress').hide();
     }
 };
+
+const hideControlPannel = () => {
+    document.getElementById("angle_down_button").style.opacity = "0";
+    document.getElementById("new_accordion").style.animation = "1s ease-out 0s 1 slideOutToBottom";
+    setTimeout(function() {
+        document.getElementById("new_accordion").style.opacity = "0";
+      }, 900);
+    setTimeout(function() {
+      document.getElementById("angle_up_button").style.display = "flex";
+    }, 1100);
+};
+
+const showControlPannel = () => {
+    document.getElementById("angle_up_button").style.display = "none";
+    document.getElementById("new_accordion").style.opacity = "1";
+    document.getElementById("new_accordion").style.animation = "1s ease-in 0s 1 slideInFromBottom";
+    document.getElementById("angle_down_button").style.opacity = "1";
+};

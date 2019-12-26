@@ -7639,17 +7639,9 @@ nav.toolbar .tool {
   cursor: pointer;
 }
 
-.hide_accordion {
-  animation: 1s ease-out 0s 1 slideOutToBottom;
-}
-
 .show_accordion {
   animation: 1s ease-out 0s 1 slideInFromBottom;
 }
-
-/* #title_top {
-  width: 100%;
-} */
 
 #new_accordion_title {
   margin: 0.5em 0 0 0;
@@ -7660,9 +7652,33 @@ nav.toolbar .tool {
   display: inline-flex;
 }
 
-/* #angle_down_button {
+#angle_up_button {
+  right: 1%;
+  bottom: 1%;
+  height: auto;
+  width: auto;
+  position: absolute;
+  display: flex;
+  display: none;
+}
 
-} */
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(300%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes slideOutToBottom {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(300%);
+  }
+}
 
 /* Accordion styles */
 .accordion_item_input {
@@ -8065,24 +8081,6 @@ nav.toolbar .tool {
   }
   100% {
     transform: translateX(-100%);
-  }
-}
-
-@keyframes slideInFromBottom {
-  0% {
-    transform: translateY(300%);
-  }
-  100% {
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideOutToBottom {
-  0% {
-    transform: translateY(0%);
-  }
-  100% {
-    transform: translateY(300%);
   }
 }
 
