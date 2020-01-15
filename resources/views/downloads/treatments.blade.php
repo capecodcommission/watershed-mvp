@@ -45,6 +45,10 @@
 					<td>Unattenuated Existing Nitrogen - Stormwater</td>
 					<td>{{round($scenario->Nload_Storm)}}</td>
 				</tr>
+				<tr>
+					<td>Unattenuated Existing Nitrogen - Atmosphere</td>
+					<td>{{round($scenario->Nload_Atmosphere)}}</td>
+				</tr>
 			</table>
 
 			<h2>Technology Stack</h2>

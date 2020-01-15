@@ -55,7 +55,8 @@ class Scenario extends Model
 		'Nload_Reduction_InEmbay',
 		'ScenarioProgress',
 		'ScenarioComplete',
-		'user_id'
+		'user_id',
+		'Nload_Atmosphere'
 
 	];
 	
