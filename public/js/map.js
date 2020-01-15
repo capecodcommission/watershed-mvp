@@ -1428,7 +1428,8 @@ require([
             tag.attr("data-visible", "off");
         }
 
-        if (popupsDisabled) {
+        // Disable popups if layer toggled during geometry creation
+        if (editGeoClicked || popupsDisabled) {
             map.setInfoWindowOnClick(false);
         } else {
             map.setInfoWindowOnClick(true);

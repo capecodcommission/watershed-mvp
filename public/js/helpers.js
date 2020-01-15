@@ -119,13 +119,11 @@ const toggleUI = (show) => {
 
     if (show) {
         $('.modal-wrapper').show();
-        $('.toolbar').show();
         $('#new_accordion').show();
         $('#progress').show();
         $('#overall_progress').show();
     } else {
         $('.modal-wrapper').hide();
-        $('.toolbar').hide();
         $('#new_accordion').hide();
         $('#progress').hide();
         $('#overall_progress').hide();

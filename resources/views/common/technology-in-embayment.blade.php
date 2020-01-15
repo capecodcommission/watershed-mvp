@@ -42,6 +42,7 @@
 			toggleUI();
 			deleteGraphic();
 			map.setInfoWindowOnClick(false);
+			editGeoClicked = 1;
 			tb.activate('point');
 		});
 		
