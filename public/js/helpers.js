@@ -122,11 +122,13 @@ const toggleUI = (show) => {
         $('#new_accordion').show();
         $('#progress').show();
         $('#overall_progress').show();
+        $('.selected-treatments').show();
     } else {
         $('.modal-wrapper').hide();
         $('#new_accordion').hide();
         $('#progress').hide();
         $('#overall_progress').hide();
+        $('.selected-treatments').hide();
     }
 };
 

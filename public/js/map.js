@@ -985,7 +985,7 @@ require([
             "Unattn Nitrogen Load (Septic) (Kg/Yr): " +
             "</td>" +
             "<td style = 'padding: 0px; margin: 0px;'>" +
-            "${NLoad_Septic_Existing:NumberFormat(places:2)}" +
+            "${Nload_Septic_Existing:NumberFormat(places:2)}" +
             "</td>" +
             "</tr>" +
             "<tr style = 'height: 2px'>" +
@@ -993,7 +993,7 @@ require([
             "Unattn Nitrogen Load (Fertilization) (Kg/Yr): " +
             "</td>" +
             "<td style = 'padding: 0px; margin: 0px;'>" +
-            "${Nload_Fert:NumberFormat(places:2)}" +
+            "${Nload_Fertilizer:NumberFormat(places:2)}" +
             "</td>" +
             "</tr>" +
             "<tr style = 'height: 2px'>" +
