@@ -421,7 +421,7 @@ require([
                 $("#deletetreatment").hide();
             } else {
                 alert(
-                    "Error: Geometry falls outside of Scenario Embayment. Please redraw geometry or contact info@capecodcommission.org for technical assistance. Thank you."
+                    "Error: Geometry falls outside of Scenario Embayment or lies within previous Septic treatment. Please redraw geometry or contact info@capecodcommission.org for technical assistance. Thank you."
                 );
                 map.graphics.remove(pointGraphic);
                 tb.activate("point");
@@ -494,7 +494,7 @@ require([
                 toggleUI(true);
             }
             else {
-                alert('Error: Geometry falls outside of Scenario Embayment. Please redraw geometry or contact info@capecodcommission.org for technical assistance. Thank you.');
+                alert('Error: Geometry falls outside of Scenario Embayment or lies within previous Septic treatment. Please redraw geometry or contact info@capecodcommission.org for technical assistance. Thank you.');
                 map.graphics.remove(polyGraphic);
                 tb.activate('polygon');
             }
@@ -742,7 +742,7 @@ require([
             } else {
                 // Alert user if save unsuccessful
                 alert(
-                    "Error: Geometry falls outside of Scenario Embayment. Please redraw geometry or contact info@capecodcommission.org for technical assistance. Thank you."
+                    "Error: Geometry falls outside of Scenario Embayment or lies within previous Septic treatment. Please redraw geometry or contact info@capecodcommission.org for technical assistance. Thank you."
                 );
                 map.disableDoubleClickZoom();
                 map.setInfoWindowOnClick(false);
