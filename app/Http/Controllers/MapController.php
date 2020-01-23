@@ -22,7 +22,7 @@ class MapController extends Controller
 		$embay_id = $scenario->AreaID;
 		
 		// Check if point falls within, or polygon falls partially within, embayment geometry using embayment id
-		$checkGeometry = DB::select("exec dbo.CHKgeoInEmbayment @polyString='$polyString', @embay_id='$embay_id', @type='$type', @scenario_id='$scenarioid'");
+		$checkGeometry = DB::select("exec dbo.CHKgeoInEmbayment @polyString='$polyString', @embay_id='$embay_id', @type='$type'");
 
 		return $checkGeometry[0]->inEmbay;
 	}
