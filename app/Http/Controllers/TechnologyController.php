@@ -461,12 +461,24 @@ class TechnologyController extends Controller
 		$treatmentId = $data['treatment'];
 		$polyType = $data['geoType'];
 		$geoObj = $data['geoObj'];
+		$treatment = Treatment::find($treatmentId);
+		$parentTreatmentId = $treatment->Parent_TreatmentId;
+
+		if ($parentTreatmentId)
+		{
+			$parentTreatment = Treatment::find($parentTreatmentId);
+			$techId = $parentTreatment->TreatmentType_ID;
+		} 
+		else 
+		{
+			$techId = $treatment->TreatmentType_ID;
+		}
 
 		// Save geometry to session based on type
 		switch ($polyType)
 		{
 			case 'polygon':
-				$isInEmbay = app('App\Http\Controllers\MapController')->checkGeometryInEmbay('polygon', $geoObj);
+				$isInEmbay = app('App\Http\Controllers\MapController')->checkGeometryInEmbay('polygon', $geoObj, $techId);
 				if ($isInEmbay)
 				{
 					session(['polyString_' . $treatmentId => $geoObj]);
@@ -482,7 +494,7 @@ class TechnologyController extends Controller
 				$x = $geoObj[0];
 				$y = $geoObj[1];
 				$polyString = $x . ' ' . $y;
-				$isInEmbay = app('App\Http\Controllers\MapController')->checkGeometryInEmbay('point', $polyString);
+				$isInEmbay = app('App\Http\Controllers\MapController')->checkGeometryInEmbay('point', $polyString, $techId);
 				if ($isInEmbay)
 				{
 					session(['pointX_' . $treatmentId => $x]);

@@ -19,7 +19,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/apply_collectStay/{rate}/{techId}/{units?}/{treat_id?}', 'TechnologyController@ApplyTreatment_CollectStay');
 	Route::get('/apply_embayment/{rate}/{units}/{techId}/{treat_id?}', 'TechnologyController@ApplyTreatment_Embayment');
 	Route::get('/apply_groundwater/{treatment}/{rate}/{units}', 'TechnologyController@ApplyTreatment_Groundwater');
-	Route::get('/map/point/{x}/{y}', 'MapController@setPointCoords');
+	Route::get('/map/point/{x}/{y}/{techId?}', 'MapController@setPointCoords');
 	Route::post('/map/poly', 'MapController@setCoordArray');
 	Route::get('/map/move/{x}/{y}/{treatment}', 'MapController@moveNitrogen');
 	Route::get('/getScenarioNitrogen', 'ScenarioController@GetScenarioNitrogen');

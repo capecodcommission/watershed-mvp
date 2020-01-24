@@ -400,8 +400,10 @@ require([
         tb.deactivate();
         map.enableMapNavigation();
 
+        var techId = $('#select_area').data('techId');
+
         // Save clicked coordinates to Laravel session
-        var url = "/map/point" + "/" + evt.geometry.x + "/" + evt.geometry.y;
+        var url = "/map/point" + "/" + evt.geometry.x + "/" + evt.geometry.y + "/" + techId;
         $.ajax({
             method: "GET",
             url: url
@@ -475,7 +477,7 @@ require([
 
         // Save coordinate string to session
         var url = "/map/poly";
-        var data = { coordString: nodeString };
+        var data = { coordString: nodeString, tech_id: techId };
         $.ajax({
             method: "POST",
             data: data,

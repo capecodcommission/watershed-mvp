@@ -28,6 +28,7 @@
 		icon = '{{$tech->icon}}';
 		techId = '{{$tech->technology_id}}';
 		$('#select_area').data('icon', icon.toString());
+		$('#select_area').data('techId', techId);
 		
 		// On click of the 'Apply' button, wrap the logic in a fert/storm conditional, set the percent variable for
 		// reduction selection by user, set the url to use to send an ajax GET method to route the user input slider

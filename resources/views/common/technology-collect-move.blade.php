@@ -35,8 +35,9 @@
 		// Obtain the technology ID from the Technology Matrix
 		icon = '{{$tech->icon}}'
 		techId = '{{$tech->technology_id}}'
-		$('#draw_collection').data('techId', techId)
+		$('#draw_collection').data('techId', techId);
 		$('#select_area').data('icon', icon.toString());
+		$('#select_area').data('techId', techId);
 
 		// Disable the map navigation, delete the graphic if re-doing collection drawn, hide the modal,
 		// disable the showing of the map's infoWindow when a map click event occurs, activate the map

@@ -35,6 +35,7 @@
 		icon = '{{$tech->icon}}'
 		techId = '{{$tech->technology_id}}'
 		$('#select_area').data('icon', icon.toString());
+		$('#select_area').data('techId', techId);
 
 		// Handle on-click event for selecting a location
 		$('#select_area').on('click', function(f) {

@@ -14,7 +14,7 @@ class MapController extends Controller
 {
 
 	// Check if geometry lies partially or fully within scenario embayment geometry
-	public function checkGeometryInEmbay($type, $polyString)
+	public function checkGeometryInEmbay($type, $polyString, $tech_id=null)
 	{
 		// Obtain embayment id from scenario
 		$scenarioid = session('scenarioid');
@@ -22,16 +22,16 @@ class MapController extends Controller
 		$embay_id = $scenario->AreaID;
 		
 		// Check if point falls within, or polygon falls partially within, embayment geometry using embayment id
-		$checkGeometry = DB::select("exec dbo.CHKgeoInEmbayment @polyString='$polyString', @embay_id='$embay_id', @type='$type'");
+		$checkGeometry = DB::select("exec dbo.CHKgeoInEmbayment @polyString='$polyString', @embay_id='$embay_id', @type='$type', @scenario_id='$scenarioid', @tech_id='$tech_id'");
 
 		return $checkGeometry[0]->inEmbay;
 	}
 
 	// Save map click geometry to session
-	public function setPointCoords($x, $y)
+	public function setPointCoords($x, $y, $techId= null)
 	{
 		$polyString = $x . ' ' . $y;
-		$isInEmbay = $this->checkGeometryInEmbay('point', $polyString);
+		$isInEmbay = $this->checkGeometryInEmbay('point', $polyString, $techId);
 		$scenarioid = session('scenarioid');
 		$scenario = Scenario::find($scenarioid);
 		$embay_id = $scenario->AreaID;
@@ -57,8 +57,9 @@ class MapController extends Controller
 		// Obtain request data
 		$data = $data->all();
 		$polyString = $data['coordString'];
+		$tech_id = $data['tech_id'];
 
-		$isInEmbay = $this->checkGeometryInEmbay('polygon', $polyString);
+		$isInEmbay = $this->checkGeometryInEmbay('polygon', $polyString, $tech_id);
 
 		if ($isInEmbay)
 		{
