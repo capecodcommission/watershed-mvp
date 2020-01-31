@@ -147,5 +147,9 @@ const showControlPannel = () => {
     document.getElementById("angle_up_button").style.display = "none";
     document.getElementById("new_accordion").style.opacity = "1";
     document.getElementById("new_accordion").style.animation = "1s ease-in 0s 1 slideInFromBottom";
+    setTimeout(function() {
+        document.getElementById("new_accordion").style = "";
+      }, 900);
     document.getElementById("angle_down_button").style.opacity = "1";
+
 };

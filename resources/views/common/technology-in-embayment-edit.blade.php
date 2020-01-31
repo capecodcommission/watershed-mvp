@@ -38,6 +38,7 @@
 		icon = '{{$tech->icon}}';
 		techId = '{{$tech->technology_id}}';
 		$('#select_area').data('icon', icon.toString());
+		$('#select_area').data('techId', techId);
 		pointCoords = '{{$treatment->POLY_STRING}}';
 		let subembaymentUrl = "{{url('/get_subembayment')}}"  + '/' + pointCoords;
 
