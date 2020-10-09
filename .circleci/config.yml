@@ -27,6 +27,8 @@ jobs:
             echo MAIL_DRIVER=${MAIL_DRIVER} >> .env
             echo MAIL_HOST=${MAIL_HOST} >> .env
             echo MAIL_PORT=${MAIL_PORT} >> .env
+            echo MAIL_USERNAME=${MAIL_USERNAME} >> .env
+            echo MAIL_PASSWORD=${MAIL_PASSWORD} >> .env
             echo LARAVEL_DEBUGBAR=${LARAVEL_DEBUGBAR} >> .env
             echo CCC_ICONS_SVG=${CCC_ICONS_SVG} >> .env
             echo CCC_ICONS_PNG=${CCC_ICONS_PNG} >> .env
@@ -61,6 +63,8 @@ jobs:
             echo MAIL_DRIVER=${MAIL_DRIVER} >> .env
             echo MAIL_HOST=${MAIL_HOST} >> .env
             echo MAIL_PORT=${MAIL_PORT} >> .env
+            echo MAIL_USERNAME=${MAIL_USERNAME} >> .env
+            echo MAIL_PASSWORD=${MAIL_PASSWORD} >> .env
             echo LARAVEL_DEBUGBAR=${LARAVEL_DEBUGBAR} >> .env
             echo CCC_ICONS_SVG=${CCC_ICONS_SVG} >> .env
             echo CCC_ICONS_PNG=${CCC_ICONS_PNG} >> .env
