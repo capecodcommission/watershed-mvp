@@ -7466,11 +7466,12 @@ nav.toolbar .tool {
   bottom: auto;
   left: auto;
   height: auto;
+	max-height: 35%; /*To avoid overlapping with the Scenario Controller*/
   width: 220px;
   -webkit-transform: translateX(420px);
   transform: translateX(420px);
   transition: all 0.25s linear;
-  background: #efefef;
+	background: black;
   z-index: 2;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -7513,20 +7514,35 @@ nav.toolbar .tool {
 #progress {
   width: 250px;
   position: absolute;
-  left: 0;
-  top: 8em;
-  background: #fff;
+	left: 20px;
+	top: 5em;
+	background: black;
+	border-radius: 0.5em;
+}
+#progress h2 {
+		color: white;
+		text-transform: uppercase;
+		margin: .9em .5em 1.9em .5em;
 }
 #progress .subembayment {
-  width: 100%;
-  background: #efefef;
-  border-bottom: 1px solid #efefef;
+		background: black;
+		width: 94%;
+		margin-left: auto;
+		margin-right: auto;
+		padding-bottom: 10px;
+		background: black;
+		cursor: pointer;
+}
+#progress .subembayment:last-child {
+  margin-bottom: 15px;
 }
 #progress .subembayment .sub-progress-container {
   position: relative;
+  width: 100%;
   height: 2em;
   margin: 0;
   overflow: hidden;
+  border-radius: .3em;
 }
 #progress .subembayment .sub-progress-container div {
   position: absolute;
@@ -7536,12 +7552,14 @@ nav.toolbar .tool {
   margin: 0;
 }
 #progress .subembayment .sub-progress-container h3 {
-  vertical-align: middle;
-  text-align: center;
-  color: #fff;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+  color: white;
+  /* z-index: 20;  */
+  position: relative; 
   z-index: 3;
-  position: absolute;
-  top: 0;
 }
 #progress .subembayment .sub-progress-container h3 span {
   display: inline;
@@ -7550,19 +7568,26 @@ nav.toolbar .tool {
   font-size: 0.9em;
 }
 #progress .subembayment .sub-progress-container div.sub-target {
-  background-color: #525319;
+  background-color: #0A2833;
   height: 2em;
   width: 100%;
+  transition: background .3s ease;
+}
+#progress .subembayment .sub-progress-container div.sub-target:hover {
+  background-color: #0b1116;
 }
 #progress .subembayment .sub-progress-container div.sub-progress {
-  background-color: #2caae4;
+  background-color:  #1565c0;
   height: 2em;
 }
 #progress .subembayment .stats {
   display: none;
-  background-color: #ddd;
+  background-color: #0b1116;
+  color: white;
   margin-bottom: 0;
-  padding-left: 0.25em;
+  padding-top: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
   font-size: 0.9em;
 }
 #progress .subembayment:hover .stats {
@@ -7572,7 +7597,6 @@ nav.toolbar .tool {
   width: 100%;
   display: block;
   padding: 5px 0;
-  border-bottom: 1px solid #333;
 }
 #progress .subembayment:hover .stats .stat-group .stat-label {
   display: table-cell;
