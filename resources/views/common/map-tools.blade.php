@@ -1,11 +1,12 @@
 <div class="tool" style="padding: .8em 1em;">
-	<label id = 'mapLayersIcon'>
-		<i class="fa fa-globe fa-globe-white fa-2x js-menu-trigger sliding-panel-button"></i>
-	</label>
-	<label style="position:absolute; right:50px; top:20px; z-index: 2;">
-		<i id='disable-popups' class="fa fa-eye fa-eye-white fa-2x js-menu-trigger enabled"></i>
-	</label>
-	<div style="position:absolute; right:95px; top:20px; z-index: 3;">
+	<div id='legendWrapper' class="darktool smaller">
+		<div data-dojo-type="dijit/TitlePane" data-dojo-props="title:'Legend', closable:false, open:false">
+			<div data-dojo-type="dijit/layout/ContentPane" style="width:200px; height:420px; overflow:auto; ">
+				<div id="legendDiv"></div>
+			</div>
+		</div>
+	</div>
+	<div class="darktool smaller">
 		<div data-dojo-type="dijit/TitlePane" data-dojo-props="title:'Switch Basemap', closable:false, open:false">
 			<div data-dojo-type="dijit/layout/ContentPane" style="width:380px; height:280px; overflow:auto;">
 				<div id="basemapGallery"></div>
@@ -13,14 +14,14 @@
 		</div>
 		<div id="basemaps-wrapper" class="leaflet-bar"></div>
 	</div>
-	<div id='legendWrapper' style="position:absolute; right:250px; top:20px; z-index: 2; display:none">
-		<div data-dojo-type="dijit/TitlePane" data-dojo-props="title:'Legend', closable:false, open:false">
-			<div data-dojo-type="dijit/layout/ContentPane" style="width:200px; height:420px; overflow:auto; ">
-				<div id="legendDiv"></div>
-			</div>
-		</div>
-	</div>
-	<div class="js-menu sliding-panel-content is-visible" style="z-Index: 2;">
+	<label id = 'mapLayersIcon' class="darktool">
+		<i class="fa fa-globe fa-globe-white fa-2x js-menu-trigger sliding-panel-button"></i>
+	</label>
+	<label class="darktool">
+		<i id='disable-popups' class="fa fa-eye fa-eye-white fa-2x js-menu-trigger enabled"></i>
+	</label>
+	
+	<div class="js-menu sliding-panel-content dark is-visible" style="z-Index: 2;">
 
 		<div class="info" data-dojo-type="dijit/layout/ContentPane">
 			<h4>Map Layers</h4>
