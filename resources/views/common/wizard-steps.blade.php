@@ -261,7 +261,7 @@
             
         $('#fim').on('click', function(e) {
             // if below doesn't work, add to fim button above ----> href = "http://2016.watershedmvp.org/fim/scenario/{{session('scenarioid')}}/treatmentsDetails"
-            window.open("http://www.watershedmvp.org/fim/scenario/" + scenario + "/treatmentsDetails")
+            window.open("https://www.watershedmvp.org/fim/scenario/" + scenario + "/treatmentsDetails")
         });
 
         // $('#sam').on('click', function(e) {

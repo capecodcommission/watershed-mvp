@@ -17,7 +17,7 @@
 	</head>
 	<body class="claro">
 		<div data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'headline', gutters:false" style="width:100%;height:100%;margin:0;">
-			<div id="map"></div>
+			<div id="map" class="dark"></div>
 		</div>
 		<div class="wrapper">
 			<div class="content">

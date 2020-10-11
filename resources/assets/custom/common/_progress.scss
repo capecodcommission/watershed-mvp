@@ -2,24 +2,39 @@
 {
 	width: 250px;
 	position: absolute;
-	left: 0;
-	top: 8em;
-	background: #fff;
+	left: 20px;
+	top: 5em;
+	background: black;
+	border-radius: 0.5em;
+
+	h2 {
+		color: $white;
+		text-transform: uppercase;
+		margin: .9em .5em 1.9em .5em;
+	}
 
 	.subembayment
 	{
-		width: 100%;
-		background: #efefef;
-		border-bottom: 1px solid #efefef;
+		background: black;
+		width: 94%;
+		margin-left: auto;
+		margin-right: auto;
+		padding-bottom: 10px;
+		background: black;
+		cursor: pointer;
 
-
+		&:last-child {
+			margin-bottom: 15px;
+		}
 
 		.sub-progress-container		
 		{	
 			position: relative; 
+			width: 100%;
 			height: 2em; 
 			margin: 0; 
 			overflow: hidden;
+			border-radius: .3em;
 
 			div	
 			{	
@@ -32,12 +47,13 @@
 			
 			h3 	
 			{	
-				vertical-align: middle; 
-				text-align: center; 
-				color: #fff; 
+				height: 100%;
+				display: flex;
+				align-items: center;
+				margin-left: 8px;
+				color: $white;
 				z-index: 20; 
-				position: absolute; 
-				top: 0;
+				position: relative; 
 
 				span 
 				{ 
@@ -52,14 +68,19 @@
 
 			div.sub-target 	
 			{	
-				background-color: $murky-green; 
+				background-color: #0A2833;
 				height: 2em; 
 				width: 100%;
+				transition: background .3s ease;
+
+				&:hover {
+					background-color: #0b1116;
+				}
 			}
 			
 			div.sub-progress 	
 			{ 
-				background-color: $reduction-blue; 
+				background-color: $blue;
 				height: 2em;
 			}
 
@@ -70,9 +91,12 @@
 		.stats
 		{
 			display:none;
-			background-color: $light-gray;
+			background-color: #0b1116;
+			color: $white;
 			margin-bottom: 0;
-			padding-left: 0.25em;
+			padding-top: 8px;
+			padding-left: 8px;
+			padding-right: 8px;
 			font-size: 0.90em;
 
 		}
@@ -88,7 +112,6 @@
 					width: 100%;
 					display: block;
 					padding: 5px 0;
-					border-bottom: 1px solid $dark-gray;
 
 					.stat-label 
 					{

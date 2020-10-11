@@ -24,6 +24,7 @@ nav.toolbar
 	right: 0px;
 	bottom: auto;
 	left: auto;
+	max-height: 35%; // To avoid overlapping with the Scenario Controller
 	height: auto;
 	width: 220px;
 	-webkit-transform: translateX(420px);
@@ -34,7 +35,7 @@ nav.toolbar
 	-webkit-transition: all 0.25s linear;
 	-moz-transition: all 0.25s linear;
 	transition: all 0.25s linear;
-	background: #efefef;
+	background: black;
 	z-index: 999999;
 	overflow-y: auto;
 	-webkit-overflow-scrolling: touch;

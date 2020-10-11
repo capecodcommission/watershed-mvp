@@ -7385,6 +7385,18 @@ include flash mixins
   width: 100%;
 }
 
+#map.dark .esriSimpleSlider  {
+  background: #0064C7;
+  color: white;
+  border: none;
+}
+#map.dark .esriSimpleSlider >div:hover {
+  background: #0064C7;
+}
+#map.dark .esriSimpleSlider  .esriSimpleSliderDecrementButton {
+  border-right: 1px solid white;
+}
+
 .secondary.start {
   width: 25%;
   float: left;
@@ -7422,12 +7434,12 @@ div.selected-treatments button#save_polygon {
 }
 
 div.selected-treatments {
+  flex: 1;
   width: 80%;
-  margin: auto;
-  padding: 20px;
   background: transparent;
   border-radius: 15px;
-  height: 7em;
+  height: 100%;
+  padding-top: 10px;
 }
 div.selected-treatments ul {
   visibility: visible;
@@ -7435,7 +7447,8 @@ div.selected-treatments ul {
   list-style-type: none;
 }
 div.selected-treatments ul li.technology {
-  width: 6em;
+  width: 4em;
+  margin-left: 5px;
 }
 div.selected-treatments ul li.technology img {
   width: 5em;
@@ -7452,11 +7465,49 @@ nav.toolbar {
   position: absolute;
   top: 0;
   right: 0;
+
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-start;
+  width: 100%;
+  height: 70px;
+  padding-left: 100px;
 }
 nav.toolbar .tool {
   visibility: visible;
   pointer-events: auto;
   float: right;
+  display: flex;
+  flex: 1;
+  min-width: 360px;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+nav.toolbar .tool .darktool {
+  background: #0064C7;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 0px;
+  margin-left: 5px;
+}
+nav.toolbar .tool .darktool.smaller {
+  padding: 3px;
+}
+nav.toolbar .tool .darktool .dijitTitlePane .dijitTitlePaneContentOuter {
+  background: #000000;
+  color: white;
+  border: none;
+}
+nav.toolbar .tool .darktool .dijitTitlePane .dijitTitlePaneContentOuter *{
+  color: white;
+}
+nav.toolbar .tool .darktool .dijitTitlePaneTitle, 
+nav.toolbar .tool .darktool .dijitTitlePaneTitleOpen,
+nav.toolbar .tool .darktool .dijitTitlePaneTitleHover   {
+  background: none;
+  color: white;
+  border: none;
+  font-weight: bold;
 }
 
 .sliding-panel-content {
@@ -7465,7 +7516,7 @@ nav.toolbar .tool {
   right: 0px;
   bottom: auto;
   left: auto;
-  height: auto;
+	max-height: 35%; /*To avoid overlapping with the Scenario Controller*/
   width: 220px;
   -webkit-transform: translateX(420px);
   transform: translateX(420px);
@@ -7473,7 +7524,29 @@ nav.toolbar .tool {
   background: #efefef;
   z-index: 2;
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+}
+.sliding-panel-content.dark {
+	background: black;
+  right: 20px;
+  width: 280px;
+  overflow-y: hidden;
+  height: 100%;
+  padding-bottom: 25px;
+  border-radius: .5em;
+}
+.sliding-panel-content.dark .dijitContentPane {
+  height: 100%;
+  overflow: hidden;
+}
+.sliding-panel-content.dark .dijitContentPane h4 {
+    margin: 0;
+    margin-bottom: 5px;
+    text-align: center;
+    font: 3vh bolder Arial, Helvetica, sans-serif;
+    font-variant: small-caps;
+    font-weight: bold;
+    color: #ddd;
+    display: inline-flex;
 }
 .sliding-panel-content.is-visible {
   -webkit-transform: translateX(0);
@@ -7483,15 +7556,52 @@ nav.toolbar .tool {
   padding: 0;
   margin: 0;
 }
+.sliding-panel-content.dark ul {
+  padding-bottom: 35px;
+  -webkit-overflow-scrolling: touch;
+  overflow-y: scroll;
+  height: 100%;
+}
 .sliding-panel-content ul li {
   margin-left: 0;
+}
+.sliding-panel-content.dark ul li {
+    margin-bottom: 5px;
+    border-radius: 0.5em;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.4em;
+    background: rgb(10, 40, 51);
+    cursor: pointer;
+    transition: background .3s ease;
+}
+.sliding-panel-content.dark ul li:hover {
+  background: #0b1116;
 }
 .sliding-panel-content ul li a {
   border-bottom: 1px solid #333;
   color: #2caae4;
   display: block;
-  padding: 0.5em 0.25em;
+  padding: 0.5em  0.25em;
   text-decoration: none;
+}
+.sliding-panel-content.dark ul li a {
+  border-bottom: none;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 0;
+  font-size: 12px;
+}
+.sliding-panel-content ul li a:hover {
+  background-color: #8fc64e;
+  color: #fff;
+}
+.sliding-panel-content.dark ul li a:hover {
+  background-color: transparent;
+  color: #fff;
 }
 .sliding-panel-content ul li a[data-visible="off"] i.fa-eye-slash {
   display: inline-block;
@@ -7505,28 +7615,39 @@ nav.toolbar .tool {
 .sliding-panel-content ul li a[data-visible="on"] i.fa-eye-slash {
   display: none;
 }
-.sliding-panel-content ul li a:hover {
-  background-color: #8fc64e;
-  color: #fff;
-}
 
 #progress {
   width: 250px;
   position: absolute;
-  left: 0;
-  top: 8em;
-  background: #fff;
+	left: 20px;
+	top: 5em;
+	background: black;
+	border-radius: 0.5em;
+}
+#progress h2 {
+		color: white;
+		text-transform: uppercase;
+		margin: .9em .5em 1.9em .5em;
 }
 #progress .subembayment {
-  width: 100%;
-  background: #efefef;
-  border-bottom: 1px solid #efefef;
+		background: black;
+		width: 94%;
+		margin-left: auto;
+		margin-right: auto;
+		padding-bottom: 10px;
+		background: black;
+		cursor: pointer;
+}
+#progress .subembayment:last-child {
+  margin-bottom: 15px;
 }
 #progress .subembayment .sub-progress-container {
   position: relative;
+  width: 100%;
   height: 2em;
   margin: 0;
   overflow: hidden;
+  border-radius: .3em;
 }
 #progress .subembayment .sub-progress-container div {
   position: absolute;
@@ -7536,12 +7657,14 @@ nav.toolbar .tool {
   margin: 0;
 }
 #progress .subembayment .sub-progress-container h3 {
-  vertical-align: middle;
-  text-align: center;
-  color: #fff;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+  color: white;
+  /* z-index: 20;  */
+  position: relative; 
   z-index: 3;
-  position: absolute;
-  top: 0;
 }
 #progress .subembayment .sub-progress-container h3 span {
   display: inline;
@@ -7550,19 +7673,26 @@ nav.toolbar .tool {
   font-size: 0.9em;
 }
 #progress .subembayment .sub-progress-container div.sub-target {
-  background-color: #525319;
+  background-color: #0A2833;
   height: 2em;
   width: 100%;
+  transition: background .3s ease;
+}
+#progress .subembayment .sub-progress-container div.sub-target:hover {
+  background-color: #0b1116;
 }
 #progress .subembayment .sub-progress-container div.sub-progress {
-  background-color: #2caae4;
+  background-color:  #1565c0;
   height: 2em;
 }
 #progress .subembayment .stats {
   display: none;
-  background-color: #ddd;
+  background-color: #0b1116;
+  color: white;
   margin-bottom: 0;
-  padding-left: 0.25em;
+  padding-top: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
   font-size: 0.9em;
 }
 #progress .subembayment:hover .stats {
@@ -7572,7 +7702,6 @@ nav.toolbar .tool {
   width: 100%;
   display: block;
   padding: 5px 0;
-  border-bottom: 1px solid #333;
 }
 #progress .subembayment:hover .stats .stat-group .stat-label {
   display: table-cell;
