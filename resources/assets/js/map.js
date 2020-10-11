@@ -274,7 +274,7 @@ console.log(data);
 								   ),
 							   new Color([0, 0, 0, 0.0])
 							   );
-					var imageURL = "http://www.cch2o.org/Matrix/icons/"+Treatment.treatment_icon;
+					var imageURL = "https://www.cch2o.org/Matrix/icons/"+Treatment.treatment_icon;
 				}
 				// treatments[i]
 				if (Treatment.Custom_POLY == 1) 

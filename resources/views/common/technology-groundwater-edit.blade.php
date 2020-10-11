@@ -18,7 +18,7 @@
 <p>{{$treatment->Treatment_Class}}</p>
 			<div class="technology">
 				<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
-					<img src="http://www.cch2o.org/Matrix/icons/{{$treatment->treatment_icon}}" width="75">
+					<img src="https://www.cch2o.org/Matrix/icons/{{$treatment->treatment_icon}}" width="75">
 				 {{$tech->Technology_Strategy}}&nbsp;<i class="fa fa-question-circle"></i>
 				</a>			
 			</div>

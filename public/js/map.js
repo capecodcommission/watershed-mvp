@@ -381,7 +381,7 @@ require([
     function addPointOnSelect(evt) {
         // Create point graphic based on clicked-coordinates
         var icon = $("#select_area").data("icon");
-        var imageURL = "http://www.cch2o.org/assets/icons/SVG/" + icon;
+        var imageURL = "https://www.cch2o.org/assets/icons/SVG/" + icon;
         var pointSymbology = new PictureMarkerSymbol(imageURL, 30, 30);
         var pointGeometry = new Point({
             x: evt.geometry.x,
@@ -663,7 +663,7 @@ require([
             const customPoly = row.Custom_POLY;
             const treatmentid = row.TreatmentID;
             const imageURL =
-                "http://www.cch2o.org/assets/icons/SVG/" + row.treatment_icon;
+                "https://www.cch2o.org/assets/icons/SVG/" + row.treatment_icon;
             const treatmentArea = Math.round(row.Treatment_Acreage);
             const parcels = row.Treatment_Parcels;
             const n_removed = Math.round(row.Nload_Reduction);
