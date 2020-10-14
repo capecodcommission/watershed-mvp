@@ -41,7 +41,7 @@ module.exports = {
           ,[ParcSEPTIC]
           ,[ParcGWDP]
           ,[ParcSEWERED]
-        FROM [wMVP3_CapeCodMA].[CapeCodMA].[SubEmbayments]
+        FROM [wMVP4].[CapeCodMA].[SubEmbayments]
       `)
       .then((result) => {
         return queryInterface.bulkInsert('SubEmbayments', result.recordset)

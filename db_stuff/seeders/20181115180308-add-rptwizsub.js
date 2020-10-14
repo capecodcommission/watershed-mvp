@@ -21,7 +21,7 @@ module.exports = {
         ,[n_load_unatt]
         ,convert(nvarchar(max),[shape]) as shape
         ,[n_load_target]
-      FROM [wMVP3_CapeCodMA].[CapeCodMA].[rpt_wiz_subembayments]`)
+      FROM [wMVP4].[CapeCodMA].[rpt_wiz_subembayments]`)
       .then((result) => {
         return queryInterface.bulkInsert('rpt_wiz_subembayments', result.recordset)
       })
