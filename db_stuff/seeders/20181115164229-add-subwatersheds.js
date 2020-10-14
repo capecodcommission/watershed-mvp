@@ -26,7 +26,7 @@ module.exports = {
           ,[Acreage]
           ,convert(nvarchar(max),[Shape]) as Shape
           ,[GeoString]
-        FROM [wMVP3_CapeCodMA].[CapeCodMA].[Subwatersheds]
+        FROM [wMVP4].[CapeCodMA].[Subwatersheds]
       `)
       .then((result) => {
         return queryInterface.bulkInsert('Subwatersheds', result.recordset)

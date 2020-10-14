@@ -26,7 +26,7 @@ module.exports = {
           ,[MEAN_BLDG_VAL_PRI]
           ,[MEAN_BLDG_VAL_SEC]
           ,[TOT_ASSESSED_VAL]
-        FROM [wMVP3_CapeCodMA].[CapeCodMA].[MATowns]
+        FROM [wMVP4].[CapeCodMA].[MATowns]
       `)
       .then((result) => {
         return queryInterface.bulkInsert('MATowns', result.recordset)
