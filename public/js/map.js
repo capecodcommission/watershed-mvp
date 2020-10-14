@@ -102,6 +102,8 @@ require([
         showAttribution: false
     });
 
+    const TreatmentLayerClassName="Treatment_layer";
+
     map.on("load", function (e) {
         initToolbar();
         map.infoWindow.resize(375, 400);
@@ -144,8 +146,8 @@ require([
 
             // Activate toolbar for treatment geometry
             let treatment_id = $(this).data("treatment");
-            let layers = map.graphics.graphics;
-            let treatmentGraphic = layers.filter(graphic => {
+            let graphics = getGraphics();
+            let treatmentGraphic = graphics.filter(graphic => {
                 let attribs = graphic.attributes;
                 if (attribs) {
                     return attribs.treatment_id == treatment_id;
@@ -396,7 +398,10 @@ require([
         });
 
         // Add point graphic to the map, deactivate draw toolbar, enable map navigation
-        map.graphics.add(pointGraphic);
+        let graphicLayer = new esri.layers.GraphicsLayer();
+        graphicLayer.add(pointGraphic);
+        map.addLayer(graphicLayer);
+
         tb.deactivate();
         map.enableMapNavigation();
 
@@ -425,7 +430,7 @@ require([
                 alert(
                     "Error: Geometry falls outside of Scenario Embayment or lies within previous Septic treatment. Please redraw geometry or contact info@capecodcommission.org for technical assistance. Thank you."
                 );
-                map.graphics.remove(pointGraphic);
+                map.removeLayer(graphicLayer)
                 tb.activate("point");
             }
         });
@@ -467,14 +472,16 @@ require([
         });
 
         // Add polygon and symbology to map with attached treatment id 
-        map.graphics.add(polyGraphic);
+        let graphicLayer = new esri.layers.GraphicsLayer();
+        graphicLayer.add(polyGraphic);
+        map.addLayer(graphicLayer);
+
         // Deactivate the toolbar and enable map navigation
         tb.deactivate();
         map.enableMapNavigation();
 
         // Retrieve coordinate arrays
         let nodeString = parsePolyOnSelect(evt.geometry.rings[0]);
-
         // Save coordinate string to session
         var url = "/map/poly";
         var data = { coordString: nodeString, tech_id: techId };
@@ -497,7 +504,7 @@ require([
             }
             else {
                 alert('Error: Geometry falls outside of Scenario Embayment or lies within previous Septic treatment. Please redraw geometry or contact info@capecodcommission.org for technical assistance. Thank you.');
-                map.graphics.remove(polyGraphic);
+                map.removeLayer(graphicLayer)
                 tb.activate('polygon');
             }
         })
@@ -595,8 +602,11 @@ require([
 
         // Assign popup template to point graphic
         // Add graphic to map
-        pointGraphic.setInfoTemplate(template);
-        map.graphics.add(pointGraphic);
+        let graphicLayer = new esri.layers.GraphicsLayer();
+        graphicLayer.className=TreatmentLayerClassName;
+        graphicLayer.add(pointGraphic);
+        graphicLayer.setInfoTemplate(template);
+        map.addLayer(graphicLayer);
     }
 
     // Add polygon graphic with treatment properties to map
@@ -651,8 +661,12 @@ require([
 
         // Assign popup template to polygon graphic
         // Add graphic to map
-        polyGraphic.setInfoTemplate(template);
-        map.graphics.add(polyGraphic);
+        let graphicLayer = new esri.layers.GraphicsLayer();
+        graphicLayer.className=TreatmentLayerClassName;
+        graphicLayer.add(polyGraphic);
+        graphicLayer.setInfoTemplate(template);
+        map.addLayer(graphicLayer);
+
     }
 
     // Add point and polygon graphics based on treatment geometry on-load of map
@@ -758,10 +772,27 @@ require([
     let treatmentGraphics = null;
     let pointURL = "";
 
+    // Retrieves all graphics layers in the map by layer className (optional)
+    // @param className Optional classname to identify layer.
+    function getGraphicsLayers(className) {
+        const layerIds = map.graphicsLayerIds;
+        let graphicLayers = [];
+        layerIds.forEach(id => graphicLayers.push(map.getLayer(id)))
+        if (className) {
+            graphicLayers = graphicLayers.filter(layer => layer.className === className);
+        }
+        return graphicLayers;
+    }
+
+    // Retrieves all graphics in the map
+    function getGraphics() {
+        return getGraphicsLayers().map(layer => layer.graphics[0] || null).filter(g => !!g)
+    }
+
     // Highlight symbololgy based on geometry type
     function highlightSymbolOnEnter(treatment_id) {
         // Retrieve graphic by treatment id, matching to graphic treatment id or graphic parent id
-        let layerGraphics = map.graphics.graphics;
+        let layerGraphics = getGraphics();
         treatmentGraphics = layerGraphics.filter(graphic => {
             let attribs = graphic.attributes;
             if (attribs) {
@@ -838,7 +869,7 @@ require([
     // Handler to reset edited geometry to its original position on-close of a new edit modal
     $(document).on("click", ".blade_container .modal-close", function (e) {
         e.preventDefault();
-        let layerGraphics = map.graphics.graphics;
+        let layerGraphics = getGraphics();
 
         $( "#update" ).trigger( "click" );
     });
@@ -856,17 +887,8 @@ require([
             .done(function (treatments) {
                 if (treatments) {
                     // Obtain and remove treatment graphics from map
-                    let layerGraphics = map.graphics.graphics;
-                    layerGraphics
-                        .filter(graphic => {
-                            let attribs = graphic.attributes;
-                            if (attribs) {
-                                return attribs;
-                            }
-                        })
-                        .map(graphic => {
-                            map.graphics.remove(graphic);
-                        });
+                    let graphicsLayers = getGraphicsLayers(TreatmentLayerClassName);
+                    graphicsLayers.map(layer => map.removeLayer(layer))
 
                     // Recreate graphics and popups with new treatment data
                     addGraphicsOnLoad(treatments);
