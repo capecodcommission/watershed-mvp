@@ -42,7 +42,7 @@
 
                 
                 <p>
-                        <button type="submit" class="button">
+                        <button type="submit" class="button--cta">
                             <i class="fa fa-btn fa-user"></i> Register
                         </button>
                 </p>
