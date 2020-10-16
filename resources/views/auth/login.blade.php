@@ -1,9 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.start')
 
 @section('content')
-<div class="wrapper">
+<div class="wrapper centered" id="login">
     <div class="centered">
         <div class="login-register">
+            <button class="close-button" id ="closeButton">
+                <i class="fa fa-times"></i>
+            </button>
             <img class = 'login-image' src = 'https://user-images.githubusercontent.com/16725828/70354678-3e457600-183e-11ea-8a95-6baf544ec121.jpg'/>
             <h2 class="section-title">Welcome to the new and improved WatershedMVP 4.0!</h2>
             <p>The Cape Cod Commission developed the WatershedMVP application for professionals, municipal officials and community members in order to assist in creating the most cost-effective and efficient solutions to Cape Cod’s wastewater problem.</p>
@@ -33,7 +36,12 @@
                     <input type="checkbox" name="remember"> Remember Me
                 </p>
                 <p>
-                    <button type="submit" class="button round"><i class="fa fa-check"></i> Login</button> <span>&nbsp;<a href="{{ url('/password/reset') }}">Forgot Password?</a></span>
+                    <button type="submit" class="button--cta round"><i class="fa fa-check"></i> Login</button>
+                    <span>&nbsp;<a href="{{ url('/password/reset') }}">Forgot Password?</a></span>
+                    <span class="right">
+                        <a href="{{ url('/register') }}" class="button--cta"><i class="fa fa-btn fa-user-plus"></i> Register</a>
+                        <a href="{{url('/help')}}" class="button--cta"><i class="fa fa-btn fa-question-circle"></i> Help</a>
+                    </span>
                 </p>
             </form>
             <p style = 'padding-top: 10px'>If you are looking for the old watershedMVP, it can still be found <a href="http://2014.watershedmvp.org" target="_blank">here.</a></p>
@@ -44,6 +52,10 @@
     $(document).ready(function() {
         // Add scrolling to main body on login only
         $('#app-layout').addClass('scrollable');
+
+        $('#closeButton').click(function()  {
+            $('#login').hide();
+        });
     })
 </script>
 @endsection

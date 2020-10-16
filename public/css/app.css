@@ -7126,6 +7126,15 @@ html {
   margin-left: auto;
   margin-right: auto;
 }
+.wrapper.centered {
+    width: 800px;
+    height: 800px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -400px;
+    margin-top: -400px;
+}
 .wrapper::after {
   clear: both;
   content: "";
@@ -7397,6 +7406,11 @@ include flash mixins
   border-right: 1px solid white;
 }
 
+.start .start-margin {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
 .secondary.start {
   width: 25%;
   float: left;
@@ -7416,7 +7430,26 @@ include flash mixins
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
   border-top-left-radius: 10px;
-  border: 1px solid #999;
+  color: white;
+  background: #104071;
+}
+
+.login-register a {
+  color: white;
+  text-decoration: underline;
+}
+
+.login-register .close-button {
+    position: absolute;
+    right: 0px;
+    top: 4px;
+    background: none;
+    font-size: 1.4em;
+}
+
+.login-register .section-title {
+  font-size: 1.5em;
+  text-align: center;
 }
 
 div.selected-treatments button#edit_geometry {
@@ -7513,7 +7546,7 @@ nav.toolbar .tool .darktool .dijitTitlePaneTitleHover   {
 .sliding-panel-content {
   position: fixed;
   top: 5em;
-  right: 0px;
+  right: 20px;
   bottom: auto;
   left: auto;
 	max-height: 35%; /*To avoid overlapping with the Scenario Controller*/
