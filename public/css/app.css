@@ -7660,7 +7660,10 @@ nav.toolbar .tool .darktool .dijitTitlePaneTitleHover   {
 #progress h2 {
 		color: white;
 		text-transform: uppercase;
-		margin: .9em .5em 1.9em .5em;
+    margin: .9em .5em 1.9em .5em;
+    text-align: center;
+    margin-top: 22px;
+    font-size: 1em;
 }
 #progress .subembayment {
 		background: black;
@@ -7783,9 +7786,10 @@ nav.toolbar .tool .darktool .dijitTitlePaneTitleHover   {
 }
 
 #new_accordion {
+  display: flex;
+  flex-direction: column;
   padding: 0 1em 1em;
   border-radius: 0.5em;
-  display: flex 12;
   max-height: 75%;
   height: auto;
   width: 25%;
@@ -7805,10 +7809,19 @@ nav.toolbar .tool .darktool .dijitTitlePaneTitleHover   {
   animation: 1s ease-out 0s 1 slideInFromBottom;
 }
 
+#title_top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 6em;
+}
+
 #new_accordion_title {
-  margin: 0.5em 0 0 0;
+  margin: 0;
+  margin-right: 14px;
   text-align: center;
-  font: 3vh bolder Arial, Helvetica, sans-serif;
+  font-size: 32px;
+  /* font: 3vh bolder Arial, Helvetica, sans-serif; */
   font-variant: small-caps;
   color: #ddd;
   display: inline-flex;
@@ -7850,8 +7863,8 @@ nav.toolbar .tool .darktool .dijitTitlePaneTitleHover   {
 }
 
 .accordion_container {
-  display: grid;
-  grid-template-columns: 2fr;
+  display: flex;
+  flex-direction: column;
 }
 
 #the_progress {
@@ -8142,54 +8155,76 @@ nav.toolbar .tool .darktool .dijitTitlePaneTitleHover   {
 
 .accordion_top_row {
   color: white;
-  display: grid;
-  grid-template-columns: 1fr 10fr 1fr;
-  grid-auto-rows: auto;
-  vertical-align: bottom;
+  /* display: grid; */
+  /* grid-template-columns: 1fr 10fr 1fr; */
+  /* grid-auto-rows: auto; */
+  /* vertical-align: bottom; */
+  width: 100%;
+  display: flex;
+  height: 80px;
+  align-items: center;
 }
 
 /* https://plot.ly/javascript/responsive-fluid-layout/ */
 /* single bar chart layout */
-/* #plotlyDiv {
-  margin: 8% 1% 0 1%;
-  height: 50%;
-  font-variant: small-caps;
-  font: 4vh;
-} */
+.plotlyDiv {
+  /* margin: 8% 1% 0 1%; */
+  /* height: 50%; */
+  /* font-variant: small-caps; */
+  /* font: 4vh; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 100%;
+}
 
 #scenario_progress_text {
-  margin-top: 2em;
+  margin: 0;
   vertical-align: middle;
   text-align: center;
   font-variant: small-caps;
   font-weight: bolder;
 }
 
+#accordion_top_row_close {
+  width: 10%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
 #accordion_top_row_button {
-  margin-top: 25%;
-  display: inline-flex;
-  width: 25%;
-  height: 25%t;
+  width: 40%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 #accordion_top_row_button > .button {
-  font-size: 2vmax;
-  width: fit-content;
-  height: fit-content;
-  margin: 2% 2%;
-  padding: 0 1% 0 1%;
+  margin-left: 6px;
   border-radius: 20%;
+
+  width: 30px;
+  height: 30px;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
 }
 
 .accordion_item_close {
   text-align: center;
   padding: 3%;
-  margin-top: 100%;
+  /* margin-top: 100%; */
   font-size: 1.5em;
   background: rgb(255, 182, 18);
   cursor: pointer;
   border-radius: 20%;
-  height: 40%;
+  width: 30px;
+  height: 30px;
 }
 .accordion_item_close:hover {
   color: black;

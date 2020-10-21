@@ -332,11 +332,9 @@
     <div class="start-margin">
 
         <!-- TOP NAVIGATION -->
-        @if (Auth::guest())
             <div align='center' class="content full-width">
                 @include('common.navigation')
             </div>
-        @endif
 
         <!-- EMBAYMENT SELECTION PANEL -->
         <div class="secondary start">
@@ -365,7 +363,10 @@
             </p>
 
             <p>
-                <a href="{{url('/map')}}" id="startwizard" class="button">Get Started</a>
+                <a href="{{url('/map')}}" id="startwizard" class="button--cta">Get Started</a>
+                @if (!Auth::guest())
+                    <a href="{{url('/')}}" class="button">Saved Scenarios</a>
+                @endif
                 <a id="select_polygon" class="button pull-right">Draw polygon</a>
             </p>
 

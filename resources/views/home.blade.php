@@ -55,7 +55,8 @@
 	<script>
 	$(document).ready(function(){
 		// Remove scrolling from body if routed from login to home
-		$('#app-layout').removeClass('scrollable');
+		// $('#app-layout').removeClass('scrollable');
+		$('#app-layout').addClass('scrollable');
 
 		$('.deletescenario').on('click', function(e){
 			var scenario = $(this).data('scenario');
