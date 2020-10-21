@@ -1,12 +1,14 @@
 <div class="accordion" id="new_accordion">
-    <!-- <div id="title_top"> -->
+    <div id="title_top">
         <p id="new_accordion_title"><b>Scenario Controller</b></p>
         <a id="angle_down_button" class="fa fa-angle-down button" title="Hide Scenario Controller"></a>
-    <!-- </div> -->
+    </div>
     <section class="accordion_container">
         <div class="accordion_top_row">
-            <input type="radio" class="accordion_item_input" id="close_accordion_items" name="rd">
-            <label for="close_accordion_items" class="accordion_item_close">&times;</label>
+            <div id="accordion_top_row_close">
+                <input type="radio" class="accordion_item_input" id="close_accordion_items" name="rd">
+                <label for="close_accordion_items" class="accordion_item_close">&times;</label>
+            </div>
             <div class="plotlyDiv"><p id="scenario_progress_text"></p></div>
             <div id="accordion_top_row_button">
                 <a class="button" href="{{ url('/') }}" title="Start New Scenario" target="_blank"><i class="fa fa-undo"></i></a>

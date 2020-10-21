@@ -1,6 +1,9 @@
 
-<div id="progress"><br />
-	<h2>Subembayments for {{$embayment->EMBAY_DISP}}</h2>
+<div id="progress">
+	<h2>
+		<div>Subembayments for </div>
+		<div>{{$embayment->EMBAY_DISP}}</div>
+	</h2>
 	
 	@foreach($subembayments as $subem)
 	<?php 
