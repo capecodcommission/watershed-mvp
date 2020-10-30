@@ -43,13 +43,18 @@ class AuthController extends Controller
     {
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
 
-		$embayments = Embayment::orderBy('EMBAY_DISP')->get();
+        $embayments = Embayment::orderBy('EMBAY_DISP')->get();
+        $groupedEmbayments = array();
+        foreach($embayments as $embayment) {
+            $groupedEmbayments[$embayment['Region']][] = $embayment;
+        }
+
 		session()->forget('scenarioid');
 		session()->forget('n_removed');
 		session()->forget('fert_applied');
         session()->forget('storm_applied');
         
-        view()->share('embayments', $embayments);
+        view()->share('groupedEmbayments', $groupedEmbayments);
     }
 
     /**

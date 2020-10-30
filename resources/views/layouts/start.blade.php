@@ -356,19 +356,30 @@
             <p>
                 <select id="embayment" class="Filter">
                     <option value="">Select an embayment</option>
-                    @foreach ($embayments as $embayment)
-                    <option value="{{$embayment->EMBAY_ID}}">{{$embayment->EMBAY_DISP}}</option>
+                    @foreach ($groupedEmbayments as $region => $embayments)
+                        <optgroup label="{{$region}}">
+                        @foreach ($embayments as $embayment)
+                            <option value="{{$embayment->EMBAY_ID}}">{{$embayment->EMBAY_DISP}}</option>
+                        @endforeach
+                        </optgroup>
                     @endforeach
                 </select>
             </p>
 
+            @if (Auth::guest())
+            <p>
+                <a href="{{url('/map')}}" id="startwizard" class="button--cta disabled">Get Started</a>
+                <a id="select_polygon" class="button pull-right disabled">Draw polygon</a>
+            </p>
+            @endif
+
+            @if (!Auth::guest())
             <p>
                 <a href="{{url('/map')}}" id="startwizard" class="button--cta">Get Started</a>
-                @if (!Auth::guest())
-                    <a href="{{url('/')}}" class="button">Saved Scenarios</a>
-                @endif
+                <a href="{{url('/')}}" class="button">Saved Scenarios</a>
                 <a id="select_polygon" class="button pull-right">Draw polygon</a>
             </p>
+            @endif
 
             <p>
                 <div id='parcelcount'></div>
