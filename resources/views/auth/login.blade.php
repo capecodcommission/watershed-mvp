@@ -1,6 +1,7 @@
 @extends('layouts.start')
 
 @section('content')
+<div id="login-backdrop"></div>
 <div class="wrapper centered" id="login">
     <div class="centered">
         <div class="login-register">
@@ -52,8 +53,10 @@
     $(document).ready(function() {
         // Add scrolling to main body on login only
         $('#app-layout').addClass('scrollable');
+        $('#login-backdrop').show();
 
         $('#closeButton').click(function()  {
+            $('#login-backdrop').hide();
             $('#login').hide();
         });
     })

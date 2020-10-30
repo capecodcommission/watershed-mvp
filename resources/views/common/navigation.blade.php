@@ -17,6 +17,7 @@
         $('#loginButton').click(function()  {
             // If current URL is /login, open login panel
             if (window.location.pathname === '/login') {
+                $('#login-backdrop').show();
                 $('#login').show();
             }
 

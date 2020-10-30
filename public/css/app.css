@@ -3959,7 +3959,7 @@ button:focus {
   background-color: #11519a;
   color: #fff;
 }
-button:disabled,
+button:disabled, button.disabled,
 input[type="button"]:disabled,
 input[type="reset"]:disabled,
 input[type="submit"]:disabled,
@@ -3967,14 +3967,15 @@ input[type="submit"]:disabled,
 .inactive:disabled,
 .active:disabled,
 .complete:disabled,
-.button--cta:disabled,
+.button--cta:disabled, .button--cta.disabled,
 .button--small:disabled,
 .button--small .button--alert:disabled,
 button:disabled {
+  pointer-events: none;
   cursor: not-allowed;
   opacity: 0.5;
 }
-button:disabled:hover,
+button:disabled:hover, button.disabled:hover
 input[type="button"]:disabled:hover,
 input[type="reset"]:disabled:hover,
 input[type="submit"]:disabled:hover,
@@ -3982,7 +3983,7 @@ input[type="submit"]:disabled:hover,
 .inactive:disabled:hover,
 .active:disabled:hover,
 .complete:disabled:hover,
-.button--cta:disabled:hover,
+.button--cta:disabled:hover,.button--cta.disabled:hover,
 .button--small:disabled:hover,
 .button--small .button--alert:disabled:hover,
 button:disabled:hover {
@@ -7418,6 +7419,38 @@ include flash mixins
   border-radius: 25px;
   padding: 1.5em;
   border: 2px solid #2caae4;
+}
+
+.Filter#embayment optgroup {
+  background:#EFEFEF;
+  color:black;
+  font-weight:bold;
+}
+
+.Filter#embayment option {
+  background:white;
+  color:black;
+  font-weight:normal;
+}
+
+#login {
+  z-index: 101;
+}
+
+#login-backdrop {
+  position: absolute;
+  backdrop-filter: blur(5px) grayscale(.5);
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  display: none;
 }
 
 .login-register {
