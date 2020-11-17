@@ -12,6 +12,10 @@
 		{
 			$percent = 100;
 		}
+		else if (($subem->n_load_att - $subem->n_load_att_removed) == 0)
+		{
+			$percent = 0;
+		}
 		else
 		{
 			$percent = $subem->n_load_target / ($subem->n_load_att - $subem->n_load_att_removed);
