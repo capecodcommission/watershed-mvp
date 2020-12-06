@@ -61,7 +61,7 @@ class ScenarioController extends Controller
 		{
 			$remaining = 0;
 		}
-		if ($progress > 0 & $progress <= 100) {
+		if ($progress >= 0 & $progress <= 100) {
 			$progress;
 		}
 		else

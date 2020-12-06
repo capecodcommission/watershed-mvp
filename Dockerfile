@@ -23,6 +23,7 @@ RUN chgrp -R www-data /var/www/storage && \
   chgrp -R www-data /var/www/bootstrap/cache && \
   chmod -R 777 /var/www/storage
 
+RUN php artisan cache:clear
 
 EXPOSE 80
 CMD ["php","artisan","serve", "--port=80","--host=0.0.0.0"]

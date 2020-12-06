@@ -112,13 +112,13 @@ class WizardController extends Controller
 			$progress = 100;
 		}
 		else if ($current == 0) {
-			$progress = 0;
+			$progress = 100;
 		}
 		else {
 			$progress = round($total_goal/$current * 100);
 		}
 
-		if ($progress > 0 && $progress <= 100) {
+		if ($progress >= 0 && $progress <= 100) {
 			$progress;
 		}
 		else {
