@@ -52,4 +52,11 @@ $app->singleton(
 |
 */
 
+// Disable Logs to prevent multiple "Invalid request (Unexpected EOF)" messages
+// from evicting the k8s deployment. This is a Laravel bug fixed in Laravel 7.2+
+$app->configureMonologUsing(function($monolog) {
+  $nullLogger = new \Monolog\Handler\NullHandler();
+  $monolog->setHandlers(array($nullLogger));
+});
+
 return $app;
