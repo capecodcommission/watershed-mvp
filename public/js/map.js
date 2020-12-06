@@ -8,6 +8,7 @@ var popupsDisabled;
 require([
     "esri/map",
     "esri/dijit/BasemapGallery",
+    "esri/graphicsUtils",
     "esri/arcgis/utils",
     "dojo/parser",
     "esri/layers/ArcGISDynamicMapServiceLayer",
@@ -45,6 +46,7 @@ require([
 ], function (
     Map,
     BasemapGallery,
+    graphicsUtils,
     arcgisUtils,
     parser,
     ArcGISDynamicMapServiceLayer,
@@ -94,7 +96,7 @@ require([
 
     map = new Map("map", {
         center: [center_x, center_y],
-        zoom: 14,
+        // zoom: 14,
         basemap: "dark-gray",
         slider: true,
         sliderOrientation: "horizontal",
@@ -930,6 +932,14 @@ require([
     embayments.setDefinitionExpression("EMBAY_ID = " + selectlayer);
 
     map.addLayer(embayments);
+
+    embayments.on('load', () => {
+        var query = new Query();
+        query.where = "EMBAY_ID = " + selectlayer;
+        embayments.queryExtent(query, result => {
+            map.setExtent(result.extent);
+        });
+    })
 
     var subwater_template = new InfoTemplate({
         title: "<b>Subwatershed</b>",
