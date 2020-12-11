@@ -85,7 +85,7 @@
 													<strong><?php echo '$'.number_format($scenario_cost_town,0,'.',',');?></strong>
 												</td>
 												<td>
-													<strong><?php echo '$'.number_format(($scenario_cost_town/$n_removed_town),0,'.',','); ?></strong>
+													<strong><?php echo '$'.number_format(($scenario_cost_town/max($n_removed_town, 1)),0,'.',','); ?></strong>
 												</td>
 												<?php $n_removed_town = 0; $scenario_cost_town = 0 ?>
 											</tr>
