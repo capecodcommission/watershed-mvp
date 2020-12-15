@@ -119,7 +119,7 @@
 											<strong><?php echo '$'.number_format($scenario_cost,0,'.',',');?></strong>
 										</td>
 										<td>
-											<strong><?php echo '$'.number_format(($scenario_cost/$n_removed),0,'.',','); ?></strong>
+											<strong><?php echo '$'.number_format(($scenario_cost/max($n_removed, 1)),0,'.',','); ?></strong>
 										</td>
 									</tr>
 								</tbody>

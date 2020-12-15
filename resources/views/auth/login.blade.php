@@ -21,7 +21,7 @@
 
             @include('common.errors')
             
-            <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
+            <form class="form-horizontal" role="form" method="POST" action="{{ secure_url('/login') }}">
                 {!! csrf_field() !!}
                 <p>
                     <label>Email</label>
@@ -38,7 +38,7 @@
                 </p>
                 <p>
                     <button type="submit" class="button--cta round"><i class="fa fa-check"></i> Login</button>
-                    <span>&nbsp;<a href="{{ url('/password/reset') }}">Forgot Password?</a></span>
+                    <span>&nbsp;<a href="{{ secure_url('/password/reset') }}">Forgot Password?</a></span>
                     <span class="right">
                         <a href="{{ url('/register') }}" class="button--cta"><i class="fa fa-btn fa-user-plus"></i> Register</a>
                         <a href="{{url('/help')}}" class="button--cta"><i class="fa fa-btn fa-question-circle"></i> Help</a>
