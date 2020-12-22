@@ -12,6 +12,7 @@
 		</h4>
 		<a title="{{$tech->technology_strategy}} - Technology Matrix" class="blade_image" href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->TM_ID}}" target="_blank">
 			<img src="{{$_ENV['CCC_ICONS_SVG'].$tech->icon}}">  
+			<span>Click icon for more info.</span>
 		</a>
 		<div class="blade_slider" title="Select the amount to be treated.">
 			<button title="Draw Treatment" class="blade_button" id="draw_collection">Draw Collection</button>
@@ -63,11 +64,17 @@
 			let rate = $('#collect-rate').val();
 			let linearFeet = $('#unit_metric').val() || null;
 			let url = "{{url('/apply_collectStay')}}" + '/' + rate + '/' + techId + '/' + linearFeet;
+
+			destroyModalContents();
+			$(".modal-loading").toggle();
+			$('.modal-wrapper').toggle();
+
 			$.ajax({
 				method: 'GET',
 				url: url
 			})
 			.done(function(treatment_id){
+				$(".modal-loading").toggle();
 				destroyModalContents();
 				$( "#update" ).trigger( "click" );
 				addTreatmentIdToGraphic(treatment_id);

@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title>WatershedMVP 4.0</title>
+    <title>WatershedMVP 4.1</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <?php if( env('APP_ENV') == 'production' ) : ?>
     <link rel="stylesheet" href="{{secure_url('/css/app.css')}}">
@@ -25,6 +25,9 @@
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            error: function(x, status, error) {
+                alert("An error occurred");
             }
         });
         var map;
@@ -60,7 +63,7 @@
                 var spatialReference = new esri.SpatialReference({
                     wkid: 102100
                 });
-                var extent = new esri.geometry.Extent(-7893678, 5069311, -7769404, 5192999, spatialReference);
+                var extent = new esri.geometry.Extent(-7893678, 5099911, -7769404, 5112999, spatialReference);
                 var map = new esri.Map("map", {
                     wrapAround180: true,
                     // infoWindow: popup, 
@@ -338,7 +341,7 @@
 
         <!-- EMBAYMENT SELECTION PANEL -->
         <div class="secondary start">
-            <img src="https://www.watershedmvp.org/images/mvplogo.png" alt="WatershedMVP 4.0 by Cape Cod Commission">
+            <!-- <img src="{{$_ENV['CCC_ICONS_PNG']}}mvplogo.png" alt="WatershedMVP 4.1 by Cape Cod Commission"> -->
 
 
 

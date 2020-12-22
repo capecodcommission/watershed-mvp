@@ -12,6 +12,7 @@
 		</h4>
 		<a title="{{$tech->technology_strategy}} - Technology Matrix" class="blade_image" href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->TM_ID}}" target="_blank">
 			<img src="{{$_ENV['CCC_ICONS_SVG'].$tech->icon}}">  
+			<span>Click icon for more info.</span>
 		</a>
 		<div class="blade_slider" title="Select the amount to be treated.">
 			<button title="Select Subembayment" class="blade_button" id="select_area">Select Subembayment</button>
@@ -57,11 +58,17 @@
 			let rate = $('#subembayment-rate').val();
 			let units = $('#unit_metric').val();
 			let url = "{{url('apply_embayment')}}" + '/' + rate + '/' + units + '/' + techId;
+
+			destroyModalContents();
+			$(".modal-loading").toggle();
+			$('.modal-wrapper').toggle();
+
 			$.ajax({
 				method: 'GET',
 				url: url
 			})
 			.done(function(treatment_id){
+				$(".modal-loading").toggle();
 				destroyModalContents();
 				$( "#update" ).trigger( "click" );
 				addTreatmentIdToGraphic(treatment_id);

@@ -17,8 +17,9 @@
 	<section class="body">
 <p>{{$treatment->Treatment_Class}}</p>
 			<div class="technology">
-				<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank">
+				<a href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->id}}" target="_blank" class="blade_image">
 					<img src="https://www.cch2o.org/Matrix/icons/{{$treatment->treatment_icon}}" width="75">
+					<span>Click icon for more info.</span>
 				 {{$tech->Technology_Strategy}}&nbsp;<i class="fa fa-question-circle"></i>
 				</a>			
 			</div>
@@ -76,7 +77,7 @@
 				<input type="range" id="ground-percent" min="{{$tech->Nutri_Reduc_N_Low}}" max="{{$tech->Nutri_Reduc_N_High}}" v-model="ground_percent" value="{{$treatment->Treatment_Value}}" style="display:inline;"> @{{ground_percent}}%
 			</p>
 			<p>
-				<button title="Update geometry" class="blade_button" id="edit_geometry" data-treatment="{{$treatment->TreatmentID}}">Update Geometry</button>
+				<button title="Edit Polygon" class="blade_button" id="edit_geometry" data-treatment="{{$treatment->TreatmentID}}">Edit Polygon</button>
 				<button id="updatetreatment">Update</button>
 				<button id="deletetreatment" class='button--cta right'><i class="fa fa-trash-o"></i> Delete</button>
 			</p>
@@ -142,11 +143,17 @@
 					e.preventDefault();
 					var rate = $('#ground-percent').val();
 					var url = "{{url('/update', $treatment->TreatmentID)}}"  + '/' + rate;
+
+					destroyModalContents();
+					$(".modal-loading").toggle();
+					$('.modal-wrapper').toggle();
+
 					$.ajax({
 						method: 'GET',
 						url: url
 					})
 						.done(function(msg){
+							$(".modal-loading").toggle();
 							destroyModalContents();
 							resetGraphicPropsAfterUpdate(msg);
 							$( "#update" ).trigger( "click" );

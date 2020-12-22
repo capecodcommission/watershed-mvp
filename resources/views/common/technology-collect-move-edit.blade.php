@@ -12,9 +12,10 @@
 		</h4>
 		<a title="{{$tech->technology_strategy}} - Technology Matrix" class="blade_image" href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->TM_ID}}" target="_blank">
 			<img src="{{$_ENV['CCC_ICONS_SVG'].$tech->icon}}">
+			<span>Click icon for more info.</span>
 		</a>
 		<div class="blade_slider" title="Update the amount to be treated.">
-			<button title="Update geometry" class="blade_button" id="edit_geometry" data-treatment="{{$treatment->TreatmentID}}">Update Collection</button>
+			<button title="Edit Polygon" class="blade_button" id="edit_geometry" data-treatment="{{$treatment->TreatmentID}}">Edit Polygon</button>
 			<button v-show="{{$dumpTreatment->TreatmentID}} > 0" title="Update Move Site" class="blade_button" id="edit_geometry" data-treatment="{{$dumpTreatment->TreatmentID}}">Update Move Site</button>
 			<label id = "collect-label-reduc">Update the valid reduction rate between {{$tech->Nutri_Reduc_N_Low_ppm}} and {{$tech->Nutri_Reduc_N_High_ppm}} ppm.</label>
 			<input type="range" id="collect-rate" min="{{$tech->Nutri_Reduc_N_Low_ppm}}" max="{{$tech->Nutri_Reduc_N_High_ppm}}" v-model="collect_rate" value="{{$treatment->Treatment_Value}}" step="1">
@@ -40,11 +41,17 @@
 			let setUpdateTreatmentButtonStyling = updateTreatmentButton.setAttribute("style", "display:none;");
 			let treatmentValue = $('#collect-rate').val();
 			let url = "{{url('/update', $treatment->TreatmentID)}}"  + '/' + treatmentValue;
+
+			destroyModalContents();
+			$(".modal-loading").toggle();
+			$('.modal-wrapper').toggle();
+
 			$.ajax({
 				method: 'GET',
 				url: url
 			})
 			.done(function(msg){
+				$(".modal-loading").toggle();
 				destroyModalContents();
 				resetGraphicPropsAfterUpdate(msg);
 				$( "#update" ).trigger( "click" );
