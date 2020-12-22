@@ -96,7 +96,7 @@ require([
 
     map = new Map("map", {
         center: [center_x, center_y],
-        // zoom: 14,
+        // zoom: 13,
         basemap: "dark-gray",
         slider: true,
         sliderOrientation: "horizontal",
@@ -1272,7 +1272,7 @@ require([
     landuseSymbol.setSize("5");
 
     var landuseRenderer = new UniqueValueRenderer(
-        landuseSymbol,
+        null,
         "LandUseCatExisting"
     );
 

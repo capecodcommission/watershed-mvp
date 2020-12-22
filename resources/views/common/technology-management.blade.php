@@ -9,8 +9,9 @@
 	</h4>
 	<a title="{{$tech->technology_strategy}} - Technology Matrix" class="blade_image" href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->TM_ID}}" target="_blank">
 		<img src="{{$_ENV['CCC_ICONS_SVG'].$tech->icon}}">
+		<span>Click icon for more info.</span>
 	</a>
-	<div class="blade_slider" title="Enter a valid JAY reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.">
+	<div class="blade_slider" title="Enter a valid reduction rate between {{$tech->Nutri_Reduc_N_Low}} and {{$tech->Nutri_Reduc_N_High}} percent.">
 		<label>Nutrient Reduction Rate</label>
 		<label v-if="{{$tech->technology_id == 400}}">@{{fert_percent}}%</label>
 		<label v-else="{{$tech->technology_id == 401}}">@{{storm_percent}}%</label>
@@ -39,10 +40,15 @@
 			let applyTreatmentButton = document.getElementById("applytreatment");
 			let setapplyTreatmentButtonStyling = applyTreatmentButton.setAttribute("style", "display:none;");
 			e.preventDefault();
+
 			setapplyTreatmentButtonStyling;
 			if ("{{$tech->technology_id == 400}}") {
 				let percent = $('#fert-percent').val();
 				let url = "{{url('/apply_management')}}" + '/' + percent + '/' + techId;
+				destroyModalContents();
+				$(".modal-loading").toggle();
+				$('.modal-wrapper').toggle();
+
 				$.ajax({
 					method: 'GET',
 					url: url
@@ -50,6 +56,7 @@
 				// Once the GET method is complete, hide the modal, update the subembayments and embayment progresses,
 				// set the newtreatment variable and add it to the treatment stack using the popdown generator
 				.done(function(treatment_id) {
+					$(".modal-loading").toggle();
 					destroyModalContents();
 					$( "#update" ).trigger( "click" );
 					addToStack(treatment_id, '{{$tech->icon}}');
@@ -59,6 +66,10 @@
 			else {
 				let percent = $('#storm-percent').val();
 				let url = "{{url('/apply_management')}}" + '/' + percent + '/' + techId;
+				destroyModalContents();
+				$(".modal-loading").toggle();
+				$('.modal-wrapper').toggle();
+
 				$.ajax({
 					method: 'GET',
 					url: url
@@ -66,6 +77,7 @@
 				// Once the GET method is complete, hide the modal, update the subembayments and embayment progresses,
 				// set the newtreatment variable and add it to the treatment stack using the popdown generator
 				.done(function(treatment_id) {
+					$(".modal-loading").toggle();
 					destroyModalContents();
 					$( "#update" ).trigger( "click" );
 					addToStack(treatment_id, '{{$tech->icon}}');

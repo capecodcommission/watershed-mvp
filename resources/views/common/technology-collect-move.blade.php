@@ -12,10 +12,11 @@
 		</h4>
 		<a title="{{$tech->technology_strategy}} - Technology Matrix" class="blade_image" href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->TM_ID}}" target="_blank">
 			<img src="{{$_ENV['CCC_ICONS_SVG'].$tech->icon}}">
+			<span>Click icon for more info.</span>
 		</a>
 		<div class="blade_slider" title="Select the amount to be treated.">
 			<button title="Draw Collection" class="blade_button" id="draw_collection">Draw Collection</button>
-			<button title="Select Move Site" class="blade_button" id="select_area" style="display:none;">Select Move Site</button>
+			<button title="Select New Disposal Site" class="blade_button" id="select_area" style="display:none;">Select New Disposal Site</button>
 			<label id = "collect-label-reduc" style="display:none;">Select a valid reduction rate between {{$tech->Nutri_Reduc_N_Low_ppm}} and {{$tech->Nutri_Reduc_N_High_ppm}} ppm.</label>
 			<input type="range" id="collect-rate" min="{{$tech->Nutri_Reduc_N_Low_ppm}}" max="{{$tech->Nutri_Reduc_N_High_ppm}}" v-model="collect_rate" value="{{$tech->Nutri_Reduc_N_Default_ppm}}" step="1" style="display:none;">
 			<label id = "collect-label-rate" style="display:none;">@{{collect_rate}} ppm</label>
@@ -71,11 +72,17 @@
 			let setApplyTreatmentButtonStyling = applyTreatmentButton.setAttribute("style", "display:none;");
 			let rate = $('#collect-rate').val();
 			let url = "{{url('/apply_collectStay')}}" + '/' + rate + '/' + techId;
+
+			destroyModalContents();
+			$(".modal-loading").toggle();
+			$('.modal-wrapper').toggle();
+
 			$.ajax({
 				method: 'GET',
 				url: url
 			})
 			.done(function(treatment_id){
+				$(".modal-loading").toggle();
 				destroyModalContents();
 				$( "#update" ).trigger( "click" );
 				addTreatmentIdToGraphic(treatment_id);

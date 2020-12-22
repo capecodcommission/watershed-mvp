@@ -14,10 +14,10 @@
 		</div>
 		<div id="basemaps-wrapper" class="leaflet-bar"></div>
 	</div>
-	<label id = 'mapLayersIcon' class="darktool">
+	<label id = 'mapLayersIcon' class="darktool"  title="Layers">
 		<i class="fa fa-globe fa-globe-white fa-2x js-menu-trigger sliding-panel-button"></i>
 	</label>
-	<label class="darktool">
+	<label class="darktool" title="Labels on/off">
 		<i id='disable-popups' class="fa fa-eye fa-eye-white fa-2x js-menu-trigger enabled"></i>
 	</label>
 	

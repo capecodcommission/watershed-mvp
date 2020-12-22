@@ -9,10 +9,11 @@
 		</button>
 		<h4 class="blade_title" title="{{$tech->technology_strategy}}">
 			{{$tech->technology_strategy}}
-			<button title="Update geometry" class="blade_button" id="edit_geometry" data-treatment="{{$treatment->TreatmentID}}">Update Geometry</button>
+			<button title="Edit Polygon" class="blade_button" id="edit_geometry" data-treatment="{{$treatment->TreatmentID}}">Edit Polygon</button>
 		</h4>
 		<a title="{{$tech->technology_strategy}} - Technology Matrix" class="blade_image" href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->TM_ID}}" target="_blank">
 			<img src="{{$_ENV['CCC_ICONS_SVG'].$tech->icon}}"> 
+			<span>Click icon for more info.</span>
 		</a>
 		<div class="blade_slider" title="Update the amount to be treated.">
 			<label v-if = "{{in_array($tech->technology_type,['Innovative and Resource-Management Technologies']) && $tech->unit_metric=='Linear Foot'}}" id="unit_metric_label">Enter length (Linear Feet) of PRB to be treated:</label>
@@ -43,11 +44,17 @@
 			let treatmentValue = $('#collect-rate').val();
 			let linearFeet = $('#unit_metric').val() || null;
 			let url = "{{url('/update', $treatment->TreatmentID)}}"  + '/' + treatmentValue  + '/' + linearFeet;
+
+			destroyModalContents();
+			$(".modal-loading").toggle();
+			$('.modal-wrapper').toggle();
+
 			$.ajax({
 				method: 'GET',
 				url: url
 			})
 			.done(function(msg){
+				$(".modal-loading").toggle();
 				destroyModalContents();
 				resetGraphicPropsAfterUpdate(msg);
 				$( "#update" ).trigger( "click" );

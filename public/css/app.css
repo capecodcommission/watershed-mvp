@@ -8325,6 +8325,7 @@ nav.toolbar .tool .darktool .dijitTitlePaneTitleHover   {
 }
 
 .modal-loading {
+  z-index: 999;
   display: block;
   position: absolute;
   width: 100vw;
@@ -8373,11 +8374,18 @@ nav.toolbar .tool .darktool .dijitTitlePaneTitleHover   {
   grid-column: 1;
   grid-row: row-start 1 / 4;
   align-self: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .blade_image img {
   width: 10vh;
   height: 10vh;
+}
+
+.blade_image span {
+  color: black;
+  font-size: 12px;
 }
 
 .blade_slider {

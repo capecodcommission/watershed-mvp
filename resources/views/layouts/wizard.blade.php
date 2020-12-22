@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>WatershedMVP 4.0 Wizard</title>
+		<title>WatershedMVP 4.1 Wizard</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<?php if( env('APP_ENV') == 'production' ) : ?>
 			<link rel="stylesheet" href="{{secure_url('/css/app.css')}}">
@@ -43,6 +43,15 @@
 		<script src="{{url('/js/jquery.popdown.js')}}"></script>
 		<script src="{{url('/js/helpers.js')}}"></script>
 		<script type="text/javascript">
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+				error: function(x, status, error) {
+					alert("An error occurred");
+				}
+			});
+
 			$(document).ready(function() {
 				// Remove scrolling from body if routed from login to map
 				$('#app-layout').removeClass('scrollable');

@@ -8,7 +8,7 @@
 				
 
 				<div class="panel-body">
-				   <h2>Welcome to WatershedMVP 4.0</h2>
+				   <h2>Welcome to WatershedMVP 4.1</h2>
 				   <p>The Cape Cod Commission developed the WatershedMVP application for professionals, municipal officials and community members in order to assist in creating the most cost-effective and efficient solutions to Cape Cod’s wastewater problem.</p>
 
             <p>The application is an informational resource intended to provide regional estimates for planning purposes. WatershedMVP is an initiative of the Cape Cod Commission’s Strategic Information Office (SIO). To learn more about the WatershedMVP application and the Cape Cod Commission and its SIO, please <a href="http://www.capecodcommission.org/index.php?id=205" target="_blank">contact us</a>.</p>

@@ -9,6 +9,7 @@
 		</h4>
 		<a title="{{$tech->technology_strategy}} - Technology Matrix" class="blade_image" href="http://www.cch2o.org/Matrix/detail.php?treatment={{$tech->TM_ID}}" target="_blank">
 			<img src="{{$_ENV['CCC_ICONS_SVG'].$tech->icon}}">
+			<span>Click icon for more info.</span>
 		</a>
 		<div class="blade_slider" title="Enter number of {{$tech->unit_metric}} to be treated.">
 			<button title="Select Location" class="blade_button" id="select_area">Select Location</button>
@@ -41,11 +42,16 @@
 
 			// Create and trigger API route url from parsed properties
 			var url = "{{url('/apply_storm')}}" + '/' + units + '/' + techId;
+			destroyModalContents();
+			$(".modal-loading").toggle();
+			$('.modal-wrapper').toggle();
+
 			$.ajax({
 				method: 'GET',
 				url: url
 			})
 			.done(function(treatment_id) {
+				$(".modal-loading").toggle();
 				destroyModalContents();
 				$( "#update" ).trigger( "click" );
 				addTreatmentIdToGraphic(treatment_id);
