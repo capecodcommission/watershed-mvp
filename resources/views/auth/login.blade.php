@@ -9,6 +9,7 @@
                 <i class="fa fa-times"></i>
             </button>
             <!-- <img class = 'login-image' src = 'https://user-images.githubusercontent.com/16725828/70354678-3e457600-183e-11ea-8a95-6baf544ec121.jpg'/> -->
+            <img width="300" style="align-self: center;" src="{{substr($_ENV['CCC_ICONS_PNG'],0, -4)}}wmvp_large.jpg" alt="WatershedMVP 4.1 by Cape Cod Commission">
             <h2 class="section-title">Welcome to the new and improved WatershedMVP 4.1!</h2>
             <p>The Cape Cod Commission developed the WatershedMVP application for professionals, municipal officials and community members in order to assist in creating the most cost-effective and efficient solutions to Cape Cod’s wastewater problem.</p>
 

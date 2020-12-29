@@ -7465,6 +7465,8 @@ include flash mixins
   border-top-left-radius: 10px;
   color: white;
   background: #104071;
+  display: flex;
+    flex-direction: column;
 }
 
 .login-register a {
@@ -8480,4 +8482,31 @@ input[type=number]::-webkit-outer-spin-button {
 
 .scrollable {
   overflow: scroll !important;
+}
+
+.save-scenario {
+  width: 100%;
+  height: 300px;
+  background: white;
+  border-radius: 4px;
+}
+
+.save-scenario .modal-close {
+  display: inline-block;
+  float: right;
+  margin: 9px;
+}
+
+.save-scenario .save-modal-content {
+  padding-top: 100px;
+  flex-direction: column;
+  width: 75%;
+  margin: auto;
+}
+
+.save-scenario #scenario-save-button {
+  margin: 9px;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
 }

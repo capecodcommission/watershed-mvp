@@ -5,7 +5,7 @@ Route::group(['middleware' => 'auth'], function () {
    
 	Route::get('/start', 'StartController@index');
 	Route::get('/map/{embayment}/{scenarioid?}', 'WizardController@start');
-	Route::get('/save/{id}', 'ScenarioController@saveScenario');
+	Route::get('/save/{id}/{description?}', 'ScenarioController@saveScenario');
 	Route::get('/tech/{techId}', 'TechnologyController@associateTech');
 	Route::get('/edit/{treatment}', 'TechnologyController@edit');
 	Route::get('/update/{treatment}/{treatmentValue}/{units?}/{subemid?}', 'TechnologyController@update');

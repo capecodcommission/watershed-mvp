@@ -163,8 +163,13 @@ class ScenarioController extends Controller
 		return 1;
 	}
 
-	public function saveScenario($id) 
+	public function saveScenario($id, $description = null) 
 	{
 		$result = DB::select('exec dbo.SAVE_Scenario ' . $id);
+		if (isset($description) && strlen($description) > 0) {
+			$scenario = Scenario::find($id);
+			$scenario->ScenarioDescription = $description;
+			$scenario->save();
+		}
 	}
 }
