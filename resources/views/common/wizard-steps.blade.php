@@ -11,10 +11,22 @@
             </div>
             <div class="plotlyDiv"><p id="scenario_progress_text"></p></div>
             <div id="accordion_top_row_button">
-                <a class="button" href="{{ url('/') }}" title="Start New Scenario" target="_blank"><i class="fa fa-undo"></i></a>
+                <a class="button" href="{{ url('/') }}" title="Start New Scenario"><i class="fa fa-undo"></i></a>
                 <a href="{{url('results', session('scenarioid'))}}" class="fa fa-external-link button" title="Results" target="wmvp_results_{{session('scenarioid')}}"></a>
                 <a id = 'saved' class="fa fa-save save button" title="Save"></a>
                 <a href="{{url('download', session('scenarioid'))}}" class="fa fa-download button" aria-hidden="true" title="Download"></a>
+            </div>
+            <div class="scenario-container">
+                <div class="save-scenario" style="visibility: hidden;">
+                    <button class="modal-close" id ="closeModal">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <div class="save-modal-content">
+                        <label>Scenario Description (optional)</label>
+                        <textarea id="save-scenario-input" maxlength="256" rows="4" cols="50"></textarea>
+                    </div>
+                    <button class="blade_button" id="scenario-save-button">Save</button>
+                </div>
             </div>
             </div>
             <div class="accordion_item">
@@ -277,14 +289,44 @@
 
         $('.save').on('click', function(e) {
             e.preventDefault();
-            var url = "{{url('save')}}" + '/' + scenario;
+
+            const saveModalContent = $('.save-scenario');
+            saveModalContent.css('visibility', 'visible');
+            $('.modal-wrapper').show();
+            $(".modal-content").append(saveModalContent);
+            $("#closeModal").show();
+        });
+
+        $('#scenario-save-button').on('click', function(e) {
+            e.preventDefault();
+
+            let scenarioDescription = $('#save-scenario-input').val();
+            scenarioDescription = scenarioDescription.slice(0, 256);
+
+            var url = "{{url('save')}}" + '/' + scenario + '/' + scenarioDescription;
+
             $.ajax({
                 method: 'GET',
                 url: url
             }).done(function(msg){
                 $('#saved').addClass('button--cta')
+                closeModal();
             });
         });
+
+        
+        $('.modal-close').on("click", function(e) {
+            e.preventDefault();
+            closeModal();
+        });
+
+        function closeModal() {
+            const scenarioCont = $('.scenario-container');
+            const saveModalContent = $('.save-scenario');
+            scenarioCont.append(saveModalContent);
+            saveModalContent.css('visibility', 'hidden');
+            destroyModalContents();
+        }
 
         $('#angle_down_button').on('click', function(e) {
             e.preventDefault();

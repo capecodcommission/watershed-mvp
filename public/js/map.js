@@ -434,6 +434,7 @@ require([
                 );
                 map.removeLayer(graphicLayer)
                 tb.activate("point");
+                toggleUI(true);
             }
         });
 
@@ -508,6 +509,7 @@ require([
                 alert('Error: Geometry falls outside of Scenario Embayment or lies within previous Septic treatment. Please redraw geometry or contact info@capecodcommission.org for technical assistance. Thank you.');
                 map.removeLayer(graphicLayer)
                 tb.activate('polygon');
+                toggleUI(true);
             }
         })
     }
@@ -766,6 +768,7 @@ require([
                 map.setInfoWindowOnClick(false);
                 editGeoClicked = 1;
                 activateToolbar(evt);
+                toggleUI(true);
             }
         });
     }
@@ -1184,7 +1187,7 @@ require([
     treattypeSymbol.setSize("5");
 
     var treattypeRenderer = new UniqueValueRenderer(
-        treattypeSymbol,
+        null,
         "WWTreatmentExisting"
     );
     treattypeRenderer.addValue(

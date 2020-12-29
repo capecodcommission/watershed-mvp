@@ -32,7 +32,9 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/start';
+    protected $loginPath = 'auth/login';
+    protected $redirectPath = 'start';
+    protected $redirectTo = 'start';
 
     /**
      * Create a new authentication controller instance.
@@ -55,6 +57,7 @@ class AuthController extends Controller
         session()->forget('storm_applied');
         
         view()->share('groupedEmbayments', $groupedEmbayments);
+
     }
 
     /**

@@ -49,6 +49,7 @@
 				},
 				error: function(x, status, error) {
 					alert("An error occurred");
+					toggleUI(true)
 				}
 			});
 
