@@ -48,8 +48,10 @@
 					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				},
 				error: function(x, status, error) {
+					//On error, hide modal and display map tools
 					alert("An error occurred");
-					toggleUI(true)
+					toggleUI(true);
+					destroyModalContents();
 				}
 			});
 
