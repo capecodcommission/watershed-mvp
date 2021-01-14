@@ -8360,7 +8360,7 @@ nav.toolbar .tool .darktool .dijitTitlePaneTitleHover   {
   grid-row: 1;
   font: 1.5vh bold;
   justify-self: end;
-  display: none;
+  /* display: none; */
 }
 
 .blade_title {

@@ -17,7 +17,7 @@
                 <a href="{{url('download', session('scenarioid'))}}" class="fa fa-download button" aria-hidden="true" title="Download"></a>
             </div>
             <div class="scenario-container">
-                <div class="save-scenario" style="visibility: hidden;">
+                <div class="save-scenario" style="display: none;">
                     <button class="modal-close" id ="closeModal">
                         <i class="fa fa-times"></i>
                     </button>
@@ -291,7 +291,8 @@
             e.preventDefault();
 
             const saveModalContent = $('.save-scenario');
-            saveModalContent.css('visibility', 'visible');
+            // saveModalContent.css('visibility', 'visible');
+            saveModalContent.css('display', 'block');
             $('.modal-wrapper').show();
             $(".modal-content").append(saveModalContent);
             $("#closeModal").show();
@@ -324,7 +325,8 @@
             const scenarioCont = $('.scenario-container');
             const saveModalContent = $('.save-scenario');
             scenarioCont.append(saveModalContent);
-            saveModalContent.css('visibility', 'hidden');
+            // saveModalContent.css('visibility', 'hidden');
+            saveModalContent.css('display', 'none');
             destroyModalContents();
         }
 

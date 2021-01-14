@@ -417,7 +417,7 @@ require([
         }).done(function (allClear) {
             if (allClear != 0) {
                 toggleUI(true);
-                $('#select_area').text('Reselect')
+                $('#select_area').text('Reselect').on('click', () => map.removeLayer(graphicLayer))
                 $("#unit_metric_label").show();
                 $("#unit_metric").show();
                 $("#subembayment-rate-label").show();
@@ -433,9 +433,16 @@ require([
                     "Error: Geometry falls outside of Scenario Embayment or lies within previous Septic treatment. Please redraw geometry or contact info@capecodcommission.org for technical assistance. Thank you."
                 );
                 map.removeLayer(graphicLayer)
-                tb.activate("point");
+                // tb.activate("point");
+                tb.deactivate();
                 toggleUI(true);
             }
+        }).fail(() => {
+            map.removeLayer(graphicLayer)
+            // tb.activate("point");
+            tb.deactivate();
+            toggleUI(true);
+            destroyModalContents();
         });
 
         // Finish addGraphic function
@@ -501,17 +508,24 @@ require([
                 $('#select_area').show();
                 $('#unit_metric').show();
                 $('#unit_metric_label').show();
-                $('#draw_collection').text('Redraw');
+                $('#draw_collection').text('Redraw').on('click', () => map.removeLayer(graphicLayer))
                 $("#applytreatment").show();
                 toggleUI(true);
             }
             else {
                 alert('Error: Geometry falls outside of Scenario Embayment or lies within previous Septic treatment. Please redraw geometry or contact info@capecodcommission.org for technical assistance. Thank you.');
                 map.removeLayer(graphicLayer)
-                tb.activate('polygon');
+                tb.deactivate();
+                // tb.activate('polygon');
                 toggleUI(true);
             }
-        })
+        }).fail(() => {
+            map.removeLayer(graphicLayer)
+            // tb.activate("point");
+            tb.deactivate();
+            toggleUI(true);
+            destroyModalContents();
+        });
     }
 
     // Handle draw-end event by creating a point or polygon graphic on the map

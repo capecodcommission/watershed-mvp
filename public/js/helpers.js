@@ -36,7 +36,8 @@ $(document).on('click', '.blade_container .modal-close', function(e) {
 
 // Hide relevant modal elements
 const destroyModalContents = () => {
-    $(".modal-wrapper").toggle();
+    // $(".modal-wrapper").toggle();
+    $(".modal-wrapper").hide();
     $("#closeModal").toggle();
     $(".modal-content").empty(function () {
         return 1;
@@ -119,12 +120,14 @@ const toggleUI = (show) => {
 
     if (show) {
         $('.modal-wrapper').show();
+        // $('.modal-wrapper').hide();
         $('#new_accordion').show();
         $('#progress').show();
         $('#overall_progress').show();
         $('.selected-treatments').show();
     } else {
         $('.modal-wrapper').hide();
+        // $('.modal-wrapper').show();
         $('#new_accordion').hide();
         $('#progress').hide();
         $('#overall_progress').hide();
