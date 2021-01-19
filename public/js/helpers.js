@@ -72,6 +72,7 @@ $(document).on('click', '.selected-treatments .technology', function(e) {
 // Remove map graphic by associated treatment id
 // Graphics created mid-process, such as points or polygons, are given an id of 1 until applied
 const deleteGraphic = (treatment_id = null) => {
+    const mapLayer = map.getLayer(treatment_id);
     let layerGraphics = map.graphics.graphics;
     layerGraphics.filter((graphic) => {
         return graphic.attributes;

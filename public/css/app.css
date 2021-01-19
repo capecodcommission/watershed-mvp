@@ -4351,6 +4351,10 @@ table.esriLegendLayer circle {
   transform: matrix(1, 0, 0, 1, 17.5, 17.5);
 }
 
+.esriBasemapGallerySelectedNode .esriBasemapGalleryThumbnail {
+  margin: 1px !important;
+}
+
 #legendDiv_graphicsLayer5_13 table:nth-child(2) {
   display: none;
 }
@@ -8407,6 +8411,17 @@ nav.toolbar .tool .darktool .dijitTitlePaneTitleHover   {
   margin: 0 auto;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
+}
+
+.blade_buttons_group {
+  grid-column: 3;
+  grid-row: row-start 1 / 4;
+  font: 1.5vh bold;
+  text-transform: uppercase;
+  align-self: center;
+  margin-bottom: 0.5em;
+  display: flex;
+  flex-direction: column;
 }
 
 .blade_button {

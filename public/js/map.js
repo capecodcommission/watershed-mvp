@@ -400,7 +400,7 @@ require([
         });
 
         // Add point graphic to the map, deactivate draw toolbar, enable map navigation
-        let graphicLayer = new esri.layers.GraphicsLayer();
+        let graphicLayer = new esri.layers.GraphicsLayer({id: treatment_id});
         graphicLayer.add(pointGraphic);
         map.addLayer(graphicLayer);
 
@@ -482,7 +482,7 @@ require([
         });
 
         // Add polygon and symbology to map with attached treatment id 
-        let graphicLayer = new esri.layers.GraphicsLayer();
+        let graphicLayer = new esri.layers.GraphicsLayer({id: treatment_id});
         graphicLayer.add(polyGraphic);
         map.addLayer(graphicLayer);
 
