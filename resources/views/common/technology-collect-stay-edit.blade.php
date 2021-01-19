@@ -25,9 +25,12 @@
 			<label v-if = "{{in_array($tech->technology_type,['Green Infrastructure', 'Innovative and Resource-Management Technologies', 'System Alterations'])}}" id = "collect-label-rate">@{{collect_rate}}%</label>
 			<label v-if = "{{in_array($tech->technology_type,['Waste Reduction Toilets','On-Site Treatment Systems'])}}" id = "collect-label-rate">@{{collect_rate}} ppm</label>
 		</div>
-		<button title="Update Strategy" data-treatment="{{$treatment->TreatmentID}}" class="blade_button" style = 'display:none;' v-show="{{$treatment->Treatment_Value}} != collect_rate || {{$treatment->Treatment_MetricValue}} != uMetric" id="updateCollectStay">Update</button>
-		<button v-if = "{{in_array($tech->technology_type,['Green Infrastructure', 'System Alterations', 'Waste Reduction Toilets','On-Site Treatment Systems'])}}" title="Delete Strategy" data-treatment="{{$treatment->TreatmentID}}" class="blade_button" v-show="{{$treatment->Treatment_Value}} == collect_rate" id="deletetreatment">Delete</button>
-		<button v-if = "{{in_array($tech->technology_type,['Innovative and Resource-Management Technologies']) && $tech->unit_metric=='Linear Foot'}}" title="Delete Strategy" data-treatment="{{$treatment->TreatmentID}}" class="blade_button" v-show="{{$treatment->Treatment_Value}} == collect_rate && {{$treatment->Treatment_MetricValue}} == uMetric" id="deletetreatment">Delete</button>
+		<div class="blade_buttons_group">
+			<button title="Update Strategy" data-treatment="{{$treatment->TreatmentID}}" class="blade_button" style = 'display:none;' v-show="{{$treatment->Treatment_Value}} != collect_rate || {{$treatment->Treatment_MetricValue}} != uMetric" id="updateCollectStay">Update</button>
+			<button v-if = "{{in_array($tech->technology_type,['Green Infrastructure', 'System Alterations', 'Waste Reduction Toilets','On-Site Treatment Systems'])}}" title="Delete Strategy" data-treatment="{{$treatment->TreatmentID}}" class="blade_button" v-show="{{$treatment->Treatment_Value}} == collect_rate" id="deletetreatment">Delete</button>
+			<!-- <button v-if = "{{in_array($tech->technology_type,['Innovative and Resource-Management Technologies']) && $tech->unit_metric=='Linear Foot'}}" title="Delete Strategy" data-treatment="{{$treatment->TreatmentID}}" class="blade_button" v-show="{{$treatment->Treatment_Value}} == collect_rate && {{$treatment->Treatment_MetricValue}} == uMetric" id="deletetreatment">Delete</button> -->
+			<button v-if = "{{in_array($tech->technology_type,['Innovative and Resource-Management Technologies'])}}" title="Delete Strategy" data-treatment="{{$treatment->TreatmentID}}" class="blade_button" v-show="{{$treatment->Treatment_Value}} == collect_rate" id="deletetreatment">Delete</button>
+		</div>
 </div>
 
 <script src="{{url('/js/main.js')}}"></script>
