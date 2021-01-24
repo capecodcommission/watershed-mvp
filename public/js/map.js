@@ -778,10 +778,8 @@ require([
                 alert(
                     "Error: Geometry falls outside of Scenario Embayment or lies within previous Septic treatment. Please redraw geometry or contact info@capecodcommission.org for technical assistance. Thank you."
                 );
-                map.disableDoubleClickZoom();
-                map.setInfoWindowOnClick(false);
-                editGeoClicked = 1;
-                activateToolbar(evt);
+                editGeoClicked = 0;
+                editToolbar.deactivate();
                 toggleUI(true);
             }
         });
