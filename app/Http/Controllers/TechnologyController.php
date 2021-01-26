@@ -478,7 +478,7 @@ class TechnologyController extends Controller
 		switch ($polyType)
 		{
 			case 'polygon':
-				$isInEmbay = app('App\Http\Controllers\MapController')->checkGeometryInEmbay('polygon', $geoObj, $techId);
+				$isInEmbay = app('App\Http\Controllers\MapController')->checkGeometryInEmbay('polygon', $geoObj, $techId, $treatmentId);
 				if ($isInEmbay)
 				{
 					session(['polyString_' . $treatmentId => $geoObj]);
