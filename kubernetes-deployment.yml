@@ -1,241 +1,293 @@
 apiVersion: v1
 items:
-- apiVersion: v1
-  kind: Service
-  metadata:
-    labels:
-      io.kompose.service: wmvpdev
-    name: wmvpdev
-    namespace: wmvp
-  spec:
-    type: LoadBalancer
-    ports:
-    - name: "3000"
-      port: 3000
-      targetPort: 80
-    selector:
-      io.kompose.service: wmvpdev
-  status:
-    loadBalancer: {}
-- apiVersion: extensions/v1beta1
+
+# # wmvp dev deployment
+# - apiVersion: apps/v1
+#   kind: Deployment
+#   metadata:
+#     name: wmvpdevdeploy
+#     namespace: ccc
+#     labels:
+#       keel.sh/policy: force
+#       keel.sh/match-tag: "true"
+#       app: wmvpfrontdev
+#   spec:
+#     selector:
+#       matchLabels:
+#         app: wmvpfrontdev
+#     replicas: 1 # tells deployment to run 3 pods matching the template
+#     revisionHistoryLimit: 1
+#     strategy: {}
+#     template:
+#       metadata:
+#         labels:
+#           app: wmvpfrontdev
+#       spec:
+#         containers:
+#         - name: wmvp-dev
+#           image: ccccontainers.azurecr.io/wmvp:dev
+#           imagePullPolicy: Always
+#           ports:
+#           - name: "wmvp-dev-port"
+#             containerPort: 80
+#             protocol: TCP
+#           resources: {}
+#         restartPolicy: Always
+#   status: {}
+
+# # wmvp dev service
+# - apiVersion: v1 # for versions before 1.9.0 use apps/v1beta2
+#   kind: Service
+#   metadata:
+#       name: wmvpdevsvc
+#       namespace: ccc
+#   spec:
+#     type: LoadBalancer
+#     selector:
+#         app: wmvpfrontdev
+#     ports:
+#       - name: "wmvp-dev-80"
+#         port: 80
+#         targetPort: 80
+#         protocol: TCP
+
+# wmvp prod deployment
+- apiVersion: apps/v1
   kind: Deployment
   metadata:
+    name: wmvpdeploy
+    namespace: ccc
     labels:
-      io.kompose.service: wmvpdev
       keel.sh/policy: force
       keel.sh/match-tag: "true"
-    name: wmvpdev
-    namespace: wmvp
+      app: wmvpfront
   spec:
-    replicas: 1
-    revisionHistoryLimit: 5
     selector:
       matchLabels:
-        app: wmvpdev
+        app: wmvpfront
+    replicas: 3 # tells deployment to run 3 pods matching the template
+    revisionHistoryLimit: 1
     strategy: {}
     template:
       metadata:
-        name: wmvpdev
-        creationTimestamp: null
         labels:
-          io.kompose.service: wmvpdev
-          app: wmvpdev
+          app: wmvpfront
       spec:
         containers:
-        - image: ccccontainers.azurecr.io/wmvp:dev
+        - name: wmvpfront
+          image: ccccontainers.azurecr.io/wmvp:dev
           imagePullPolicy: Always
-          name: wmvpdev
           ports:
-          - containerPort: 3000
+          - name: "wmvp-port"
+            containerPort: 80
+            protocol: TCP
           resources: {}
         restartPolicy: Always
   status: {}
-- apiVersion: v1
+
+# wmvp prod service
+- apiVersion: v1 # for versions before 1.9.0 use apps/v1beta2
   kind: Service
   metadata:
-    labels:
-      io.kompose.service: wmvp
-    name: wmvp
-    namespace: wmvp
+      name: wmvpsvc
+      namespace: ccc
   spec:
     type: LoadBalancer
+    selector:
+        app: wmvpfront
     ports:
-    - name: "8080"
-      port: 8080
-      targetPort: 80
-    selector:
-      io.kompose.service: wmvp
-  status:
-    loadBalancer: {}
+      - name: "wmvp-latest-80"
+        port: 80
+        targetPort: 80
+        protocol: TCP
+
+# CCC INGRESS RESOURCE
 - apiVersion: extensions/v1beta1
-  kind: Deployment
+  kind: Ingress
   metadata:
-    labels:
-      io.kompose.service: wmvp
-      keel.sh/policy: force
-      keel.sh/match-tag: "true"
-    name: wmvp
-    namespace: wmvp
+    name: ccc-ingress
+    namespace: ccc
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      # certmanager.k8s.io/cluster-issuer: letsencrypt-staging
+      certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/rewrite-target: /
   spec:
-    replicas: 1
-    revisionHistoryLimit: 5
-    selector:
-      matchLabels:
-        app: wmvp
-    strategy: {}
-    template:
-      metadata:
-        name: wmvp
-        creationTimestamp: null
-        labels:
-          io.kompose.service: wmvp
-          app: wmvp
-      spec:
-        containers:
-        - image: ccccontainers.azurecr.io/wmvp:latest
-          imagePullPolicy: Always
-          name: wmvp
-          ports:
-          - containerPort: 8080
-          resources: {}
-        restartPolicy: Always
-  status: {}
-- apiVersion: v1
-  kind: PersistentVolume
-  metadata:
-    name: wmvpdb
-    namespace: wmvp
-    labels:
-      name: wmvpdb
-      type: local
-  spec:
-    capacity:
-      storage: 1Gi
-    accessModes:
-      - ReadWriteOnce
-    hostPath:
-      path: "/var/lib/postgresql/data"
-  status: {}
-- apiVersion: v1
-  kind: PersistentVolumeClaim
-  metadata:
-    name: wmvpdb-claim
-    namespace: wmvp
-    labels:
-      name: wmvpdb-claim
-  spec:
-    accessModes:
-    - ReadWriteOnce
-    volumeMode: Filesystem
-    resources:
-      requests:
-        storage: 1Gi
-  status: {}
-- apiVersion: extensions/v1beta1
-  kind: Deployment
-  metadata:
-    creationTimestamp: null
-    labels:
-      io.kompose.service: wmvpdb
-    name: wmvpdb
-    namespace: wmvp
-  spec:
-    replicas: 1
-    strategy:
-      type: Recreate
-    template:
-      metadata:
-        creationTimestamp: null
-        labels:
-          io.kompose.service: wmvpdb
-      spec:
-        containers:
-        - env:
-          - name: POSTGRES_PASSWORD
-            value: ${DB_PASSWORD}
-          - name: POSTGRES_USER
-            value: ${DB_USERNAME}
-          - name: POSTGRES_DB
-            value: ${DB_DATABASE}
-          image: mdillon/postgis
-          name: wmvpdb
-          resources: {}
-          volumeMounts:
-          - mountPath: /var/lib/postgresql/data
-            name: wmvpdb
-            subPath: postgres
-        restartPolicy: Always
-        volumes:
-        - name: wmvpdb
-          persistentVolumeClaim:
-            claimName: wmvpdb-claim
-  status: {}
-- apiVersion: v1
-  kind: Service
-  metadata:
-    labels:
-      io.kompose.service: wmvpdb
-    name: wmvpdb
-    namespace: wmvp
-  spec:
-    type: LoadBalancer
-    ports:
-    - name: "5432"
-      port: 5432
-      targetPort: 5432
-    selector:
-      io.kompose.service: wmvpdb
-  status:
-    loadBalancer: {}
-- apiVersion: extensions/v1beta1
-  kind: Deployment
-  metadata:
-    labels:
-      io.kompose.service: wmvpadmin
-      keel.sh/policy: force
-      keel.sh/match-tag: "true"
-    name: wmvpadmin
-    namespace: wmvp
-  spec:
-    replicas: 1
-    revisionHistoryLimit: 5
-    selector:
-      matchLabels:
-        app: wmvpadmin
-    strategy: {}
-    template:
-      metadata:
-        name: wmvpadmin
-        creationTimestamp: null
-        labels:
-          io.kompose.service: wmvpadmin
-          app: wmvpadmin
-      spec:
-        containers:
-        - image: ccccontainers.azurecr.io/wmvpadmin:latest
-          imagePullPolicy: Always
-          name: wmvpadmin
-          ports:
-          - containerPort: 8080
-          resources: {}
-        restartPolicy: Always
-  status: {}
-- apiVersion: v1
-  kind: Service
-  metadata:
-    labels:
-      io.kompose.service: wmvpadmin
-    name: wmvpadmin
-    namespace: wmvp
-  spec:
-    type: LoadBalancer
-    ports:
-    - name: "8082"
-      port: 8082
-      targetPort: 8080
-    selector:
-      io.kompose.service: wmvpadmin
-  status:
-    loadBalancer: {}
+    tls:
+    - hosts:
+      - www.capecodcoast.org
+      # secretName: cccpsvc-staging-cert
+      secretName: cccpsvc-prod-cert
+    - hosts:
+      - uat.capecodcoast.org
+      # secretName: cccpuatsvc-staging-cert
+      secretName: cccpuatsvc-prod-cert
+    - hosts:
+      - dev.capecodcoast.org
+      # secretName: cccpdevsvc-staging-cert
+      secretName: cccpdevsvc-prod-cert
+    - hosts:
+      - dev.watershedmvp.org
+      # secretName: wmvpdevsvc-staging-cert
+      secretName: wmvpdevsvc-prod-cert
+    - hosts:
+      - www.watershedmvp.org
+      # secretName: wmvpdevsvc-staging-cert
+      # secretName: wmvpsvc-prod-cert
+    - hosts:
+      - slrv.apps.capecodcommission.org
+      # secretName: slrvsvc-staging-cert
+      secretName: slrvsvc-prod-cert
+    - hosts:
+      - uat.slrv.apps.capecodcommission.org
+      # secretName: slrvuatsvc-staging-cert
+      secretName: slrvuatsvc-prod-cert
+    - hosts:
+      - dev.slrv.apps.capecodcommission.org
+      # secretName: slrvdevsvc-staging-cert
+      secretName: slrvdevsvc-prod-cert
+    rules:
+    - host: www.capecodcoast.org
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: cccpsvc
+            servicePort: 80
+    - host: uat.capecodcoast.org
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: cccpuatsvc
+            servicePort: 80
+    - host: dev.capecodcoast.org
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: cccpdevsvc
+            servicePort: 80
+    - host: dev.watershedmvp.org
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: wmvpdevsvc
+            servicePort: 80
+    - host: www.watershedmvp.org
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: wmvpsvc
+            servicePort: 80
+    # - host: www.watershedmvp.org
+    #   http:
+    #     paths:
+    #     - path: /
+    #       backend:
+    #         serviceName: wmvpsvc
+    #         servicePort: 80
+    - host: slrv.apps.capecodcommission.org
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: slrvsvc
+            servicePort: 80
+    - host: uat.slrv.apps.capecodcommission.org
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: slrvuatsvc
+            servicePort: 80
+    - host: dev.slrv.apps.capecodcommission.org
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: slrvdevsvc
+            servicePort: 80
+
+# # https://docs.cert-manager.io/en/latest/tutorials/acme/http-validation.html
+# # CLUSTERISSUER = CLUSTER-SCOPED (ANY NAMESPACE)
+# # YOU MUST DECIDE BETWEEN STAGING OR PRODUCTION WHEN ISSUING CERTS
+# #  ---
+# - apiVersion: certmanager.k8s.io/v1alpha1
+#   kind: Certificate
+#   metadata:
+#     name: ccc-tls-secret
+#     namespace: ccc
+#   spec:
+#     secretName: ccc-tls-secret
+#     renewBefore: 360h #15 days
+#     dnsNames:
+#     - 'capecodcoast.org'
+#     - 'www.capecodcoast.org'
+#     - 'uat.capecodcoast.org'
+#     - 'dev.capecodcoast.org'
+    
+#     - 'slrv.apps.capecodcommission.org'
+#     - 'slrv.apps.capecodcommission.org/uat'
+#     - 'slrv.apps.capecodcommission.org/dev'
+
+#     - 'watershedmvp.org'
+#     - 'www.watershedmvp.org'
+#     - 'watershedmvp.org/uat'
+#     - 'www.watershedmvp.org/uat'
+#     - 'watershedmvp.org/dev'
+#     - 'www.watershedmvp.org/dev'
+#     issuerRef:
+#       name: letsencrypt-prod
+#       kind: ClusterIssuer
+#     acme:
+#       config:
+#       - http01:
+#           ingressClass: nginx
+#         domains:
+#         - 'capecodcoast.org'
+#       - http01:
+#           ingressClass: nginx
+#         domains:
+#         - 'www.capecodcoast.org'
+#       - http01:
+#           ingressClass: nginx
+#         domains:
+#         - 'uat.capecodcoast.org'
+#       - http01:
+#           ingressClass: nginx
+#         domains:
+#         - 'dev.capecodcoast.org'
+#       - http01:
+#           ingressClass: nginx
+#         domains:
+#          - 'slrv.apps.capecodcommission.org'
+#       - http01:
+#           ingressClass: nginx
+#         domains:
+#          - 'slrv.apps.capecodcommission.org/uat'
+#       - http01:
+#           ingressClass: nginx
+#         domains:
+#          - 'slrv.apps.capecodcommission.org/dev'
+#       - http01:
+#           ingressClass: nginx
+#         domains:
+#          - 'watershedmvp.org'
+#       - http01:
+#           ingressClass: nginx
+#         domains:
+#          - 'www.watershedmvp.org'
+#       - http01:
+#           ingressClass: nginx
+#         domains:
+#          - 'uat.watershedmvp.org'
+#       - http01:
+#           ingressClass: nginx
+#         domains:
+#          - 'dev.watershedmvp.org'
+
 kind: List
 metadata: {}
