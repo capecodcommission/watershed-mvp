@@ -53,10 +53,10 @@ jobs:
             echo DEV_SQLSRV_DATABASE=${DEV_SQLSRV_DATABASE} >> .env
             echo DEV_SQLSRV_USERNAME=${DEV_SQLSRV_USERNAME} >> .env
             echo DEV_SQLSRV_PASSWORD=${DEV_SQLSRV_PASSWORD} >> .env
-            echo SQLSRV_HOST=${SQLSRV_HOST} >> .env
-            echo SQLSRV_DATABASE=${SQLSRV_DATABASE} >> .env
-            echo SQLSRV_USERNAME=${SQLSRV_USERNAME} >> .env
-            echo SQLSRV_PASSWORD=${SQLSRV_PASSWORD} >> .env
+            echo SQLSRV_HOST=${DEV_SQLSRV_HOST} >> .env
+            echo SQLSRV_DATABASE=${DEV_SQLSRV_DATABASE} >> .env
+            echo SQLSRV_USERNAME=${DEV_SQLSRV_USERNAME} >> .env
+            echo SQLSRV_PASSWORD=${DEV_SQLSRV_PASSWORD} >> .env
             echo CACHE_DRIVER=${CACHE_DRIVER} >> .env
             echo SESSION_DRIVER=${SESSION_DRIVER} >> .env
             echo QUEUE_DRIVER=${QUEUE_DRIVER} >> .env
