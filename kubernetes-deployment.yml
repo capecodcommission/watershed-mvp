@@ -75,7 +75,7 @@ items:
       spec:
         containers:
         - name: wmvpfront
-          image: ccccontainers.azurecr.io/wmvp:dev
+          image: ccccontainers.azurecr.io/wmvp:latest
           imagePullPolicy: Always
           ports:
           - name: "wmvp-port"
@@ -133,7 +133,7 @@ items:
     - hosts:
       - www.watershedmvp.org
       # secretName: wmvpdevsvc-staging-cert
-      # secretName: wmvpsvc-prod-cert
+      secretName: wmvpsvc-prod-cert
     - hosts:
       - slrv.apps.capecodcommission.org
       # secretName: slrvsvc-staging-cert
