@@ -124,12 +124,9 @@ require([
 			});
 			
 			editToolbar = new Edit(map);
-			// $('.edit_poly').on('click', function(e){
+			
 			on(dom.byId('edit_polygon'), 'click', function(e){
-				// console.log(e);
 				edit_active = 1;
-				// polyGLs[0].on('click', function(evt){
-					// console.log(this);
 
 				map.graphics.on("click", function(evt) {
 					// console.log(edit_active);
@@ -277,7 +274,7 @@ console.log(data);
 								   ),
 							   new Color([0, 0, 0, 0.0])
 							   );
-					var imageURL = "http://www.cch2o.org/Matrix/icons/"+Treatment.treatment_icon;
+					var imageURL = "https://www.cch2o.org/Matrix/icons/"+Treatment.treatment_icon;
 				}
 				// treatments[i]
 				if (Treatment.Custom_POLY == 1) 

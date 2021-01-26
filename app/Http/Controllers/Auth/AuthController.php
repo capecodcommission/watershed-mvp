@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use Validator;
+use App\Embayment;
+use Auth;
+use Session;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -29,7 +32,9 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $loginPath = 'auth/login';
+    protected $redirectPath = 'start';
+    protected $redirectTo = 'start';
 
     /**
      * Create a new authentication controller instance.
@@ -39,6 +44,20 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+
+        $embayments = Embayment::orderBy('EMBAY_DISP')->get();
+        $groupedEmbayments = array();
+        foreach($embayments as $embayment) {
+            $groupedEmbayments[$embayment['Region']][] = $embayment;
+        }
+
+		session()->forget('scenarioid');
+		session()->forget('n_removed');
+		session()->forget('fert_applied');
+        session()->forget('storm_applied');
+        
+        view()->share('groupedEmbayments', $groupedEmbayments);
+
     }
 
     /**

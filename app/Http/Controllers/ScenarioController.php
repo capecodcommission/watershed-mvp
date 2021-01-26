@@ -31,7 +31,6 @@ class ScenarioController extends Controller
 
 	public function getCurrentProgress()
 	{
-		// dd(session('scenarioid'));
 		$scenarioid = session('scenarioid');
 		$scenario = Scenario::find($scenarioid);
 
@@ -45,14 +44,14 @@ class ScenarioController extends Controller
 		$total_goal = 0;
 		// $subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
 
-		$subembayments = DB::select('exec dbo.Calc_ScenarioNitrogen_Subembayments1 ' . $scenarioid);
+		$subembayments = DB::select('exec dbo.CALCscenarioNitrogenSubembayments ' . $scenarioid);
 		// $subembayments = DB::select('exec CapeCodMA.GET_SubembaymentNitrogen ' . $id);
 		$total_goal = 0;
 		foreach ($subembayments as $key) 
 		{
-			$n_load_orig += $key->n_load_att;
-			$removed += $key->n_load_att_removed;
-			$total_goal += $key->n_load_target;
+			$n_load_orig += round($key->n_load_att);
+			$removed += round($key->n_load_att_removed);
+			$total_goal += round($key->n_load_target);
 		}
 		$current = $n_load_orig - $removed;
 		$remaining = $current - $total_goal;
@@ -62,13 +61,19 @@ class ScenarioController extends Controller
 		{
 			$remaining = 0;
 		}
-		if ($progress > 0 & $progress <= 100) {
+		if ($progress >= 0 & $progress <= 100) {
 			$progress;
 		}
 		else
 		{
 			$progress = 100;
 		}
+
+		$fertApplied = session()->get('fert_applied');
+		$stormApplied = session()->get('storm_applied');
+
+		$data['fertapplied'] = $fertApplied;
+		$data['stormapplied'] = $stormApplied;
 		
 		$data['remaining'] = $remaining;
 		$data['embayment'] = $progress;
@@ -79,52 +84,14 @@ class ScenarioController extends Controller
 	}
 	
 
-	/**
-	 * Show results page in the browser
-	 *
-	 * @return void
-	 * @author 
-	 **/
+	// Retrieve scenario-wide technology nitrogen loads and costs by town and subembayment
 	public function getScenarioResults($scenarioid)
 	{	
-		// TODO: Can we get/set from global variable? If so, use that, else findorfail()
 		$scenario = Scenario::find($scenarioid);
-		
-		// $towns = DB::table('CapeCodMA.parcelMaster')
-		// 	->join('CapeCodMA.MAtowns','CapeCodMA.MAtowns.TOWN_ID', '=', 'CapeCodMA.parcelMaster.town_id')
-		// 	->select(
-		// 		DB::raw('CapeCodMA.MATowns.TOWN as town'), 
-		// 		DB::raw('CapeCodMA.parcelMaster.treatment_id as wtt_treatment_id'),
-		// 		DB::raw('count(CapeCodMA.parcelMaster.parcel_id) as wtt_tot_parcels'),
-		// 		DB::raw('sum(CapeCodMA.parcelMaster.running_nload_removed) as wtt_unatt_n_removed')
-		// 	)
-		// 	->where('CapeCodMA.parcelMaster.scenario_id', '=', $scenarioid)
-		// 	->groupBy('CapeCodMA.MAtowns.TOWN','CapeCodMA.parcelMaster.treatment_id')
-		// 	->get();
+		$towns =  DB::select('exec dbo.GETtreatmentCostsByTown ' . $scenarioid);
+		$subembayments = DB::select('exec dbo.CALCscenarioNitrogenSubembayments ' . $scenarioid);
 
-		// TODO: Can $towns be set and gotten globally? If so, use that, else query
-		$towns = DB::select('
-			select 
-				wtt.*, 
-				t.town 
-
-			from dbo.wiz_treatment_towns wtt 
-			
-			inner join dbo.MATowns t 
-			on t.town_id = wtt.wtt_town_id 
-
-			where wtt.wtt_unatt_n_removed is not null and wtt.wtt_scenario_id = ' . $scenarioid);
-
-		// $subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
-
-		// TODO: Check if we can remove stored proc and get $subembayments global variable to pass into view
-		$subembayments = DB::select('exec dbo.Calc_ScenarioNitrogen_Subembayments1 ' . $scenarioid);
-
-		//  'subembayments' => session('subembayments')
 		return view('layouts/results', ['scenario'=>$scenario, 'towns'=>$towns, 'subembayments'=>$subembayments]);
-		
-		
-
 	}
 
 	/**
@@ -143,56 +110,41 @@ class ScenarioController extends Controller
 
 
 
-	/**
-	 * Download Scenario as .xls
-	 *
-	 * @return void
-	 * @author 
-	 **/
+	// Export subembayment, town, and scenario-wide totals into Excel (laravel-excel https://docs.laravel-excel.com/2.1/export/)
 	public function downloadScenarioResults($scenarioid)
 	{
-		$scenario = Scenario::find($scenarioid);
-		// $embayment = DB::select('select * from capecodma.embayments where embay_id = ' . $scenario->AreaID);
-		// $embay_id = $scenario->AreaID;
-		Log::info($scenario->treatments);
-		// $results = DB::select('exec CapeCodMA.Get_ScenarioResults '. $scenarioid);
+		// Retrieve scenario, town, and subembayment arrays from ORM, query and stored proc
+		$subembayments = DB::select('exec dbo.CALCscenarioNitrogenSubembayments ' . $scenarioid);
 		$towns = DB::select('select wtt.*, t.town from dbo.wiz_treatment_towns wtt inner join dbo.matowns t on t.town_id = wtt.wtt_town_id where wtt.wtt_scenario_id = ' . $scenarioid);
+		$scenario = Scenario::find($scenarioid);
+		
+		$filename = 'wMVP_Export_' . $scenarioid;
 
-		// $towns = DB::table('CapeCodMA.parcelMaster')
-		// 	->join('CapeCodMA.MAtowns','CapeCodMA.MAtowns.TOWN_ID', '=', 'CapeCodMA.parcelMaster.town_id')
-		// 	->select(
-		// 		DB::raw('CapeCodMA.MATowns.TOWN as town'), 
-		// 		DB::raw('CapeCodMA.parcelMaster.treatment_id as wtt_treatment_id'),
-		// 		DB::raw('count(CapeCodMA.parcelMaster.parcel_id) as wtt_tot_parcels'),
-		// 		DB::raw('sum(CapeCodMA.parcelMaster.running_nload_removed) as wtt_unatt_n_removed')
-		// 	)
-		// 	->where('CapeCodMA.parcelMaster.scenario_id', '=', $scenarioid)
-		// 	->groupBy('CapeCodMA.MAtowns.TOWN','CapeCodMA.parcelMaster.treatment_id')
-		// 	->get();
-		// $subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
-		$subembayments = DB::select('exec dbo.Calc_ScenarioNitrogen_Subembayments1 ' . $scenarioid);
-		$filename = 'scenario_' . $scenarioid;
-		Excel::create($filename, function($excel) use($scenario, $towns, $subembayments) 
-		{
+		// Create subsheets for each breakdown
+		// Use comma-separation and currency formatting on relevant columns for cost and nitrogen outputs
+		// Export sheet as '.xls' format
+		Excel::create(
+			$filename, 
+			function($excel) use($scenario, $towns, $subembayments) 
+			{
+				$excel->sheet('Scenario Results', function($sheet) use ($scenario, $towns){
+					$sheet->setColumnFormat(array('C:D' => '#,##0_-', 'E' => '"$"#,##0_-', 'F' => '"$"#,##0.00_-'));
+					$sheet->loadView('downloads.treatments', array( 'scenario'=>$scenario,  'towns'=>$towns));
 
-			$excel->sheet('Scenario Results', function($sheet) use ($scenario, $towns){
-				$sheet->setColumnFormat(array('C:D' => '#,##0_-', 'E' => '"$"#,##0_-', 'F' => '"$"#,##0.00_-'));
-				$sheet->loadView('downloads.treatments', array( 'scenario'=>$scenario,  'towns'=>$towns));
+				});
 
-			});
+				$excel->sheet('Subembayment Results', function($sheet) use ($scenario, $subembayments){
+					$sheet->setColumnFormat(array('B:H' => '#,##0_-'));
+					$sheet->loadView('downloads.subembayments', array( 'scenario'=>$scenario, 'subembayments'=>$subembayments));
+				});
 
-			$excel->sheet('Subembayment Results', function($sheet) use ($scenario, $subembayments){
-				$sheet->setColumnFormat(array('B:F' => '#,##0_-'));
-				$sheet->loadView('downloads.subembayments', array( 'scenario'=>$scenario, 'subembayments'=>$subembayments));
-			});
+				$excel->sheet('Cost Breakdown', function($sheet) use ($scenario){
+					$sheet->setColumnFormat(array('C:D' => '#,##0_-', 'E:L' => '"$"#,##0_-'));
+					$sheet->loadView('downloads.costs', array('scenario'=>$scenario));
 
-			$excel->sheet('Cost Breakdown', function($sheet) use ($scenario){
-				$sheet->setColumnFormat(array('C:D' => '#,##0_-', 'E:L' => '"$"#,##0_-'));
-				$sheet->loadView('downloads.costs', array('scenario'=>$scenario));
-
-			});			
-
-		})->export('xls');
+				});			
+			}
+		)->export('xls');
 	}
 
 	/**
@@ -211,8 +163,13 @@ class ScenarioController extends Controller
 		return 1;
 	}
 
-	public function saveScenario($id) 
+	public function saveScenario($id, $description = null) 
 	{
 		$result = DB::select('exec dbo.SAVE_Scenario ' . $id);
+		if (isset($description) && strlen($description) > 0) {
+			$scenario = Scenario::find($id);
+			$scenario->ScenarioDescription = $description;
+			$scenario->save();
+		}
 	}
 }

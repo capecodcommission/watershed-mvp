@@ -11,7 +11,7 @@ services:
       - ./resources:/var/www/resources:rw
       - ./app:/var/www/app:rw
       - .env:/var/www/.env:rw
-
+      - ./public:/var/www/public:rw
 #   wmvpseeds:
 #     container_name: wmvpseeds
 #     build: './db_stuff'

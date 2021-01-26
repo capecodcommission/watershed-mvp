@@ -8,51 +8,78 @@ use App\Http\Requests;
 use DB;
 use JavaScript;
 use App\Treatment;
+use App\Scenario;
 
 class MapController extends Controller
 {
-	//
 
-	/**
-	 * Return the subembayment & subwatershed for the point sent (x,y)
-	 *
-	 * @return void
-	 * @author 
-	 **/
-	public function point($x, $y, $treatment)
+	// Check if geometry lies partially or fully within scenario embayment geometry
+	public function checkGeometryInEmbay($type, $polyString, $tech_id=null, $treatment_id = null)
 	{
-		// DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
+		// Obtain embayment id from scenario
+		$scenarioid = session('scenarioid');
+		$scenario = Scenario::find($scenarioid);
+		$embay_id = $scenario->AreaID;
+		
+		// Check if point falls within, or polygon falls partially within, embayment geometry using embayment id
+		$checkGeometry = DB::select("exec dbo.CHKgeoInEmbayment @polyString='$polyString', @embay_id='$embay_id', @type='$type', @scenario_id='$scenarioid', @tech_id='$tech_id', @treatment_id='$treatment_id'");
 
-		// $subembayment = DB::select("exec [CapeCodMA].[UPD_Credit_Subembayment] @x='$x', @y='$y', @treatment=$treatment");
-		$subembayment = DB::select("exec [dbo].[UPD_Credit_Subembayment1] @x='$x', @y='$y', @treatment=$treatment");
-  		
-		// need to update the record in the treatment_wiz table with the location of the treatment
-		// use point as the polygon value; 
-		// add the point to wiz_treatment_parcels so the N removed gets credited to the subembayment
-
-		return json_encode($subembayment[0]);
+		return $checkGeometry[0]->inEmbay;
 	}
 
-	/**
-	 * Return the subembayment & subwatershed for the point sent (x,y)
-	 *	Move Nitrogen being treated to the destination point.
-	 *
-	 * @return void
-	 * @author 
-	 **/
+	// Save map click geometry to session
+	public function setPointCoords($x, $y, $techId= null)
+	{
+		$polyString = $x . ' ' . $y;
+		$isInEmbay = $this->checkGeometryInEmbay('point', $polyString, $techId);
+		$scenarioid = session('scenarioid');
+		$scenario = Scenario::find($scenarioid);
+		$embay_id = $scenario->AreaID;
+		
+		// Save coordinates to session
+		// Check subembayment
+		if ($isInEmbay) 
+		{
+			session(['pointX' => $x]);
+			session(['pointY' => $y]);
+			$subembayment = DB::select("exec dbo.GETsubembaymentFromPoint @pointCoords='$x $y', @embay_id=$embay_id");
+			return $subembayment;
+		}
+		else 
+		{
+			return 0;
+		}
+	}
+
+	// Save custom polygon coordinate array to session
+	public function setCoordArray(Request $data)
+	{
+		// Obtain request data
+		$data = $data->all();
+		$polyString = $data['coordString'];
+		$tech_id = $data['tech_id'];
+
+		$isInEmbay = $this->checkGeometryInEmbay('polygon', $polyString, $tech_id);
+
+		if ($isInEmbay)
+		{
+			// Save to session
+			session(['polyString' => $polyString]);
+			return 1;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+
+	// Find selected subembayment using coordinates from map-click
+	// Dump nitrogen load from parcels within custom polygon to a single selected parcel
 	public function moveNitrogen($x, $y, $treatment)
 	{
-		// DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING ON');
-		$subembayment = DB::select("exec [dbo].[GET_Subembayment_from_Point] @x='$x', @y='$y'");
-  
-		// need to create a new record in the treatment_wiz table with the destination of the Nitrogen and the parent_treatment_id
-		// use point as the polygon value; use treatment as parent_treatment_id
-		// need to add the Nitrogen to the selected destination and have it ADDED to that subembayment's total
+		$subembayment = DB::select("exec dbo.GETsubembaymentFromPoint @x='$x', @y='$y'");
 		$scenarioid = session('scenarioid');
-		// $move = DB::select("exec CapeCodMA.CALC_MoveNitrogen '$x', '$y', $treatment, $scenarioid");
-		$move = DB::select("exec dbo.CALC_MoveNitrogen1 '$x', '$y', $treatment, $scenarioid");
-
+		$move = DB::select("exec dbo.CALCmoveNitrogen '$x', '$y', $treatment, $scenarioid");
 		return json_encode($subembayment[0]);
 	}
-
 }

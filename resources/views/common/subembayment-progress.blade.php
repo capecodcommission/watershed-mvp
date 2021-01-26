@@ -1,7 +1,9 @@
 
-<div id="progress"><br />
-<img src="http://www.watershedmvp.org/images/mvplogo.png" alt="WatershedMVP 3.0 by Cape Cod Commission"><br /><br />
-	<h2>Subembayments for {{$embayment->EMBAY_DISP}}</h2>
+<div id="progress">
+	<h2>
+		<div>Subembayments for </div>
+		<div>{{$embayment->EMBAY_DISP}}</div>
+	</h2>
 	
 	@foreach($subembayments as $subem)
 	<?php 
@@ -9,6 +11,10 @@
 		if ($subem->n_load_target == 0 and $subem->n_load_att == 0) 
 		{
 			$percent = 100;
+		}
+		else if (($subem->n_load_att - $subem->n_load_att_removed) == 0)
+		{
+			$percent = 0;
 		}
 		else
 		{

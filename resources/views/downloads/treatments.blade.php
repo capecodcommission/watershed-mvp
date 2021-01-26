@@ -19,31 +19,35 @@
 				</tr>
 				<tr>
 					<td><strong>Total Parcels</strong></td>
-					<td>{{$scenario->Total_Parcels}}</td>
+					<td>{{round($scenario->Total_Parcels)}}</td>
 				</tr>
 				<tr>
 					<td>Total Water Use</td>
-					<td>{{$scenario->Total_WaterUse}}</td>
+					<td>{{round($scenario->Total_WaterUse)}}</td>
 				</tr>
 				<tr>
 					<td>Total WWFlow</td>
-					<td>{{$scenario->Total_WaterFlow}}</td>
+					<td>{{round($scenario->Total_WaterFlow)}}</td>
 				</tr>
 				<tr>
 					<td>Unattenuated Existing Total Nitrogen (kg)</td>
-					<td>{{$scenario->Nload_Existing}}</td>
+					<td>{{round($scenario->Nload_Existing)}}</td>
 				</tr>
 				<tr>
 					<td>Unattenuated Existing Nitrogen - Fertilizer</td>
-					<td>{{$scenario->Nload_Fert}}</td>
+					<td>{{round($scenario->Nload_Fert)}}</td>
 				</tr>
 				<tr>
 					<td>Unattenuated Existing Nitrogen - Septic</td>
-					<td>{{$scenario->Nload_Sept}}</td>
+					<td>{{round($scenario->Nload_Sept)}}</td>
 				</tr>
 				<tr>
 					<td>Unattenuated Existing Nitrogen - Stormwater</td>
-					<td>{{$scenario->Nload_Storm}}</td>
+					<td>{{round($scenario->Nload_Storm)}}</td>
+				</tr>
+				<tr>
+					<td>Unattenuated Existing Nitrogen - Atmosphere</td>
+					<td>{{round($scenario->Nload_Atmosphere)}}</td>
 				</tr>
 			</table>
 
@@ -76,12 +80,12 @@
 						<td>{{$result->Treatment_Parcels}}</td>
 						<td>{{round($result->Nload_Reduction)}}</td>
 						<td>{{money_format('%10.0n', $result->Cost_Total)}}</td>
-						<td>@if($result->Nload_Reduction > 0) {{($result->Cost_Total/$result->Nload_Reduction)/12.46}} @endif <?php $row++; ?></td>
+						<td>@if($result->Nload_Reduction > 0) {{($result->Cost_Total/$result->Nload_Reduction)}} @endif <?php $row++; ?></td>
 						<td>{{$result->Treatment_UnitMetric}}</td>
-						<td>{{$result->Treatment_MetricValue}}</td>
+						<td>{{round($result->Treatment_MetricValue)}}</td>
 						<td>{{$result->Treatment_Wastewater_Flow}}</td>
 						<td>{{$result->Treatment_WaterUse}}</td>
-						<td>{{$result->Clipped_Rds_LinFeet}}</td>
+						<td>@if($result->Treatment_Class == 'CollectMove') {{$result->Clipped_Rds_LinFeet}} @else 0 @endif</td>
 					</tr>
 					@endforeach
 					<tr style="border-top: 2px double #000000;">
@@ -116,7 +120,7 @@
 						<td class="total_nitrogen">=SUM(C{{$start_row}}:C{{$row}})</td>
 						<td class="total_nitrogen">=SUM(D{{$start_row}}:D{{$row}})</td>
 						<td class="total_cost">=SUM(E{{$start_row}}:E{{$row}})</td>
-						<td class="avg_cost_per_kg">=((SUM(E{{$start_row}}:E{{$row}})/SUM(D{{$start_row}}:D{{$row}}))/12.46)</td>
+						<td class="avg_cost_per_kg">=((SUM(E{{$start_row}}:E{{$row}})/SUM(D{{$start_row}}:D{{$row}})))</td>
 						<td></td>
 						<td></td>
 						<td></td>

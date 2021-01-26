@@ -18,11 +18,12 @@ use Excel;
 
 class WizardController extends Controller
 {
-	//
+	// TODO: If possible, look into saving all variables to the session, then just using from there (e.g. $id, $scenarioid, etc.)
+	// TODO: Clean up below logic
+	// Start a scenario, establish the id and scenario is as null 
 	public function start($id, $scenarioid = null)
 	{
 		$user = Auth::user();
-
 		$embayment = Embayment::find($id);
 		
 		// Need to create a new scenario or find existing one that the user is editing
@@ -30,11 +31,12 @@ class WizardController extends Controller
 		{
 			if (session('scenarioid')) 
 			{
-				$scenarioid = Session::get('scenarioid');
+				$scenarioid = session()->get('scenarioid');
 				$scenario = Scenario::find($scenarioid);
+
 				if ($scenario->AreaID == $id) 
 				{
-					// user is still working on the same scenario. 
+					// user is still working on the same scenario
 				}
 				else
 				{
@@ -43,62 +45,58 @@ class WizardController extends Controller
 					]);
 					// user selected a different embayment, need to create a new scenario 
 					$scenarioid = $scenario->ScenarioID;
-					
-					Session::put('scenarioid', $scenarioid);
-					Session::put('n_removed', 0);
-					Session::put('fert_applied', 0);
-					Session::put('storm_applied', 0);
-					Session::save();
+					session(['scenarioid' => $scenarioid]);
+					session(['n_removed' => 0]);
+					session(['fert_applied' => 0]);
+					session(['storm_applied' => 0]);
 				}
 			}
 			else
 			{
-					//  need to create a new scenario 
-					// $scenarioid = DB::select('exec CapeCodMA.CreateScenario ' . $id);
+				//  Need to create a new scenario
 				$scenario = $user->scenarios()->create([
-						'AreaID'=>$id, 'ScenarioPeriod'=>'Existing', 'AreaName'=>$embayment->EMBAY_DISP
-					]);
+					'AreaID'=>$id, 'ScenarioPeriod'=>'Existing', 'AreaName'=>$embayment->EMBAY_DISP
+				]);
 
-					$scenarioid = $scenario->ScenarioID;
+				$scenarioid = $scenario->ScenarioID;
 
-					Session::put('scenarioid', $scenarioid);
-					Session::put('n_removed', 0);
-					Session::put('fert_applied', 0);
-					Session::put('storm_applied', 0);
-					Session::save();
+				session(['scenarioid' => $scenarioid]);
+				session(['n_removed' => 0]);
+				session(['fert_applied' => 0]);
+				session(['storm_applied' => 0]);
 			}
-			
-			Session::put('embay_id', $id);
-			Session::save();
-			
+			session(['embay_id' => $id]);
 		}
 		else
 		{
-			Session::put('scenarioid', $scenarioid);
-			Session::save();
+			session(['scenarioid' => $scenarioid]);
 		}
 
+		// Find scenario row by id, parse treatments
 		$scenario = Scenario::find($scenarioid);
 		$treatments = $scenario->treatments;
 
+		// Set default management applied session variables
+		session(['fert_applied' => 0]);
+		session(['storm_applied' => 0]);
+
+		// If fert/storm applied previously, update management session variables
 		foreach ($treatments as $key) {
-			if ($key->TreatmentType_Name == 'Fertilizer Management') {
-				Session::put('fert_applied', 1);
+			if ($key->TreatmentType_ID == 400) {
+				session(['fert_applied' => 1]);
 			}
-			else if ($key->TreatmentType_Name == 'Stormwater Management') {
-				Session::put('storm_applied', 1);
-			}
-			else {
-				Session::put('fert_applied', 0);
-				Session::put('storm_applied', 0);
+			if ($key->TreatmentType_ID == 401) {
+				session(['storm_applied' => 1]);
 			}
 		}
-		// TODO: Determine if global values can be initially set and updated without initializing additoinal variables
-		// Can we use existing global values? If so, use those, else init
+
+		// TODO: Determine if global values can be initially set and updated without initializing additonal variables
+		// Make these session variables (e.g. is $removed == session n_removed, can we add n_load_orig (is it att or unatt)
+		// a session variable, etc.)
 		$removed = 0;
 		$n_load_orig = 0;
 		// $subembayments = DB::select('exec CapeCodMA.Calc_ScenarioNitrogen_Subembayments ' . $scenarioid);
-		$subembayments = DB::select('exec dbo.Calc_ScenarioNitrogen_Subembayments1 ' . $scenarioid);
+		$subembayments = DB::select('exec dbo.CALCscenarioNitrogenSubembayments ' . $scenarioid);
 		$total_goal = 0;
 
 		foreach ($subembayments as $key) 
@@ -107,51 +105,59 @@ class WizardController extends Controller
 			$removed += $key->n_load_att_removed;
 			$total_goal += $key->n_load_target;
 		}
+		
 		$current = $n_load_orig - $removed;
 
-		if ($total_goal == 0 || $n_load_orig == 0) 
-		{
+		if ($total_goal == 0 || $n_load_orig == 0) {
 			$progress = 100;
 		}
-		else
-		{
+		else if ($current == 0) {
+			$progress = 100;
+		}
+		else {
 			$progress = round($total_goal/$current * 100);
 		}
 
-		if ($progress > 0 && $progress <= 100) {
-
+		if ($progress >= 0 && $progress <= 100) {
 			$progress;
 		}
-		else
-		{
-			
+		else {
 			$progress = 100;
 		}
+
 		$remaining = $current - $total_goal;
-		if($remaining < 0)
-		{
+
+		if($remaining < 0) {
 			$remaining = 0;
 		}
+
 		$nitrogen = DB::select('exec dbo.GET_AreaNitrogen_Unattenuated ' . $id);
-
 		$nitrogen_att = DB::select('exec dbo.GET_AreaNitrogen_attenuated ' . $id);
-		$nitrogen_att = [
-			'Total_Att' => $n_load_orig
-		];
 
-		JavaScript::put([
+		JavaScript::put (
+			[
 				'nitrogen_unatt' => $nitrogen[0],
-				'nitrogen_att' => $nitrogen_att,
+				'nitrogen_att' => $nitrogen_att[0],
 				'center_x'	=> $embayment->longitude,
 				'center_y'	=> $embayment->latitude,
 				'selectlayer' => $embayment->embay_id,
 				'treatments' => $treatments
-			]);
-		
+			]
+		);
 
-		return view('layouts/wizard', ['embayment'=>$embayment, 'subembayments'=>$subembayments, 
-			// 'nitrogen_att'=>$nitrogen_att[0], 'nitrogen_unatt'=>$nitrogen[0], 
-			'goal'=>$total_goal, 'treatments'=>$treatments, 'progress'=>$progress, 'remaining'=>$remaining]);
+		app('App\Http\Controllers\TechnologyController')->deleteSessionGeometry();
+
+		return view (
+			'layouts/wizard',
+			[ 
+				'embayment'=>$embayment,
+				'subembayments'=>$subembayments,
+				'goal'=>$total_goal,
+				'treatments'=>$treatments,
+				'progress'=>$progress,
+				'remaining'=>$remaining
+			]
+		);
 
 	}
 
@@ -162,119 +168,16 @@ class WizardController extends Controller
 	 * @author 
 	 **/
 	
-
+	// TODO: Either use or abandon for another test
 	public function test($id)
 	{
 		$embayment = Embayment::find($id);
-		// $subembayments = DB::table('CapeCodMA.SubEmbayments')
-		// 	->select('SUBEM_NAME', 'SUBEM_DISP', 'Nload_Total', 'Total_Tar_Kg', 'MEP_Total_Tar_Kg')
-		// 	->where('EMBAY_ID', $embayment->EMBAY_ID)->get();
 		$subembayments = DB::select('exec dbo.GET_SubembaymentNitrogen ' . $id);
 		$nitrogen = DB::select('exec dbo.GET_EmbaymentNitrogen ' . $id);
-
-		 JavaScript::put([
-				'nitrogen' => $nitrogen[0]
-			]);
-
+		
+		JavaScript::put (
+			['nitrogen' => $nitrogen[0] ]
+		);
 		return view('layouts/test', ['embayment'=>$embayment, 'subembayments'=>$subembayments]);
 	}
-
-
-	/**
-	 * Get Nitrogen Totals from a polygon string
-	 *
-	 * @return void
-	 * @author 
-	 **/
-	public function getPolygon($treatment_id, $poly, $part2 = null)
-	{
-		if ($part2) 
-		{
-			// this means the poly string was too long to be sent as a single url parameter so we are going to concatenate the strings	
-			$poly = $poly + $part2;
-		}
-		// DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING, NOCOUNT ON');
-		$scenarioid = Session::get('scenarioid');
-		$scenario = Scenario::find($scenarioid);
-		$embay_id = $scenario->AreaID;
-
-
-		// $parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
-
-		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon1 ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
-
-		if ($parcels) {
-			$poly_nitrogen = $parcels[0]->Septic;
-		}
-		else
-		{
-			$parcels = 0;
-			$poly_nitrogen = 0;
-		}
-		
-
-		JavaScript::put([
-				'poly_nitrogen' => $parcels
-			]);
-
-		return $parcels;
-	}
-
-
-	/**
-	 * Get Nitrogen Totals from a polygon string
-	 *
-	 * @return void
-	 * @author 
-	 **/
-
-	//  TODO: Rename to acount for custom polygon creation
-	public function getPolygon2(Request $data)
-	{
-		// dd($data);
-		    // Log::info('Data received '.$data);
-		$data = $data->all();
-		// return $test;
-		$treatment_id = $data['treatment'];
-		$poly = $data['polystring'];
-		// DB::connection('sqlsrv')->statement('SET ANSI_NULLS, QUOTED_IDENTIFIER, CONCAT_NULL_YIELDS_NULL, ANSI_WARNINGS, ANSI_PADDING, NOCOUNT ON');
-		$scenarioid = Session::get('scenarioid');
-		$scenario = Scenario::find($scenarioid);
-		$embay_id = $scenario->AreaID;
-
-		// $query = 'exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'';
-		// Log::info($query);
-		// $parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');
-
-
-		$parcels = DB::select('exec dbo.GET_PointsFromPolygon1 ' . $embay_id . ', ' . $scenarioid . ', ' . $treatment_id . ', \'' . $poly . '\'');	
-
-		if ($parcels) {
-			$poly_nitrogen = $parcels[0]->Septic;
-		}
-		else
-		{
-			$parcels = 0;
-			$poly_nitrogen = 0;
-		}
-		
-
-		JavaScript::put([
-				'poly_nitrogen' => $parcels
-			]);
-
-		return $parcels;
-	}
-
-	public function getPolygon3(Request $data)
-	{
-		$user = Auth::user();
-		$data = $data->all();
-		$poly = $data['polystring'];
-
-		$parcels = DB::select('exec CapeCodMA.GET_PointsFromPolygon2 ' . '\'' . $poly . '\'');
-
-		return $parcels;
-	}
-	
 }

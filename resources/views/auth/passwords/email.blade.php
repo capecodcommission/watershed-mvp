@@ -24,7 +24,7 @@
                         </p>
                         
                         <p>
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="button--cta">
                                     <i class="fa fa-btn fa-envelope"></i> Send Password Reset Link
                                 </button>
                         </p>
