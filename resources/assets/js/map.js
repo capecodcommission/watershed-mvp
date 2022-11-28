@@ -391,7 +391,7 @@ console.log(data);
 		var extent;
 
 
-		var embayments = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/4', {
+		var embayments = new FeatureLayer('https://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/4', {
 			mode: FeatureLayer.MODE_ONDEMAND,
 			outFields: ["*"],
 			// maxAllowableOffset: map.extent,
@@ -405,7 +405,7 @@ console.log(data);
 		// map.setExtent(embayments.fullExtent);
 
 
-		var Subwatersheds = new FeatureLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/6", {
+		var Subwatersheds = new FeatureLayer("https://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/6", {
 			mode: FeatureLayer.MODE_ONDEMAND,
 			outFields: ["*"],
 			// maxAllowableOffset: map.extent,
@@ -423,7 +423,7 @@ console.log(data);
 			subem_template.setTitle("<b>${SUBEM_DISP}</b>");
 			subem_template.setContent("${SUBEM_DISP}");  
 
-		var Subembayments = new FeatureLayer("http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/11", {
+		var Subembayments = new FeatureLayer("https://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/11", {
 			mode: FeatureLayer.MODE_ONDEMAND,
 			outFields: ["SUBEM_DISP"],
 			template: subem_template,
@@ -435,7 +435,7 @@ console.log(data);
 		// console.log(Subembayments);
 		map.addLayer(Subembayments);
 
-		var NitrogenLayer = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/0', {
+		var NitrogenLayer = new FeatureLayer('https://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/0', {
 				mode: FeatureLayer.MODE_ONDEMAND,
 				outFields: ["*"],
 				opacity: 1
@@ -447,7 +447,7 @@ console.log(data);
 		map.addLayer(NitrogenLayer);
 
 
-		var WasteWater = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/1', {
+		var WasteWater = new FeatureLayer('https://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/1', {
 				mode: FeatureLayer.MODE_ONDEMAND,
 				outFields: ["*"],
 				opacity: 1
@@ -460,7 +460,7 @@ console.log(data);
 		map.addLayer(WasteWater);
 
 
-		var Towns = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/5', {
+		var Towns = new FeatureLayer('https://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/5', {
 				mode: FeatureLayer.MODE_ONDEMAND,
 				outFields: ["*"],
 				opacity: .4,
@@ -474,7 +474,7 @@ console.log(data);
 		map.addLayer(Towns);
 
 
-		var TreatmentType = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/10', {
+		var TreatmentType = new FeatureLayer('https://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/10', {
 				mode: FeatureLayer.MODE_ONDEMAND,
 				outFields: ["*"],
 				opacity: 1
@@ -487,7 +487,7 @@ console.log(data);
 		map.addLayer(TreatmentType);
 
 
-		var TreatmentFacilities = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/9', {
+		var TreatmentFacilities = new FeatureLayer('https://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/9', {
 				mode: FeatureLayer.MODE_ONDEMAND,
 				outFields: ["*"],
 				opacity: 1
@@ -498,7 +498,7 @@ console.log(data);
 		map.addLayer(TreatmentFacilities);
 
 
-		var EcologicalIndicators = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/Projects/208_Plan/MapServer/10', {
+		var EcologicalIndicators = new FeatureLayer('https://gis-services.capecodcommission.org/arcgis/rest/services/Reference/208Layers/MapServer/0', {
 				mode: FeatureLayer.MODE_ONDEMAND,
 				outFields: ["*"],
 				opacity: 1
@@ -508,7 +508,7 @@ console.log(data);
 		EcologicalIndicators.hide();
 		map.addLayer(EcologicalIndicators);
 
-		var ShallowGroundwater = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/Projects/208_Plan/MapServer/32', {
+		var ShallowGroundwater = new FeatureLayer('https://gis-services.capecodcommission.org/arcgis/rest/services/Reference/208Layers/MapServer/7', {
 				mode: FeatureLayer.MODE_ONDEMAND,
 				outFields: ["*"],
 				opacity: .5
@@ -519,7 +519,7 @@ console.log(data);
 		map.addLayer(ShallowGroundwater);
 
 
-		var LandUse = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/3', {
+		var LandUse = new FeatureLayer('https://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/3', {
 				mode: FeatureLayer.MODE_ONDEMAND,
 				outFields: ["*"],
 				opacity: .5
@@ -531,7 +531,7 @@ console.log(data);
 		LandUse.hide();
 		map.addLayer(LandUse);
 
-		var FlowThrough = new FeatureLayer('http://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/12', {
+		var FlowThrough = new FeatureLayer('https://gis-services.capecodcommission.org/arcgis/rest/services/wMVP/wMVP3/MapServer/12', {
 			mode: FeatureLayer.MODE_ONDEMAND,
 			outFields: ["*"]
 				// opacity: 1	
