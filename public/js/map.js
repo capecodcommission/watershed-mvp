@@ -1248,7 +1248,7 @@ require([
     map.addLayer(TreatmentFacilities);
 
     var EcologicalIndicators = new FeatureLayer(
-        "https://gis-services.capecodcommission.org/arcgis/rest/services/Projects/208_Plan/MapServer/10",
+        "https://gis-services.capecodcommission.org/arcgis/rest/services/Reference/208Layers/MapServer/0",
         {
             mode: FeatureLayer.MODE_ONDEMAND,
             outFields: ["*"],
@@ -1259,7 +1259,7 @@ require([
     map.addLayer(EcologicalIndicators);
 
     var ShallowGroundwater = new FeatureLayer(
-        "https://gis-services.capecodcommission.org/arcgis/rest/services/Projects/208_Plan/MapServer/32",
+        "https://gis-services.capecodcommission.org/arcgis/rest/services/Reference/208Layers/MapServer/7",
         {
             mode: FeatureLayer.MODE_ONDEMAND,
             outFields: ["*"],
